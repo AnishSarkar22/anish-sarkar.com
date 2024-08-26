@@ -1,16 +1,14 @@
-## Personal Website
+# Features
 
-(not yet live)
-
-### Features:
-  - Open-source code 
+  - Open-source code
   - JavaScript to collapse and toggle elements
   - Swiper to add slides for projects
   - Light/dark mode remembered by each user's localStorage
   - Responsive web design
   - Downloadable Resume
----
-### Technologies used: 
+
+# Technologies Used
+
 - HTML
 - CSS (grid & flexbox)
 - JavaScript
@@ -19,8 +17,9 @@
 - Flask-Mail
 - WTForms for CSRF protection
 - Flask-Compress to speed up load times
----
-### Setup on your local machine:
+
+# Setup on your local machine:
+
   - First clone this git on your local machine `git clone https://github.com/AnishSarkar22/Personal-Portfolio.git`
   - Install virtual environment `python3 -m venv .venv`
   - Run the virtual environment `. .venv/bin/activate`
