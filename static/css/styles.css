@@ -804,6 +804,11 @@ img {
     justify-content: center;
     align-items: center;
 }
+.footer__social-container {
+    display: flex;
+    column-gap: var(--footer-social-gap, 10px); /* Adjust the gap as needed */
+    margin-left: var(--footer-social-margin-left, 150px); /* Adjust the value as needed */
+}
 
 .footer__bg {
     background-color: var(--first-color-second);
@@ -974,9 +979,6 @@ img {
     .contact__container,
     .footer__container {
         grid-template-columns: repeat(2, 1fr);
-        display: flex;
-    justify-content: space-between; /* Adjust as needed */
-    align-items: center;
     }
 
     .history__sections {
