@@ -800,6 +800,9 @@ img {
 
 .footer__container {
     row-gap: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .footer__bg {
@@ -829,6 +832,7 @@ img {
 .footer__social {
     font-size: 1.2rem;
     margin-right: var(--mb-1-5);
+    
 }
 
 .footer__social:hover {
@@ -970,6 +974,9 @@ img {
     .contact__container,
     .footer__container {
         grid-template-columns: repeat(2, 1fr);
+        display: flex;
+    justify-content: space-between; /* Adjust as needed */
+    align-items: center;
     }
 
     .history__sections {
