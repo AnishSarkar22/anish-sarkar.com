@@ -807,7 +807,7 @@ img {
 .footer__social-container {
     display: flex;
     column-gap: var(--footer-social-gap, 10px); /* Adjust the gap as needed */
-    margin-left: var(--footer-social-margin-left, 150px); /* Adjust the value as needed */
+    margin-left: var(--footer-social-margin-left, 30%); /* Adjust the value as needed */
 }
 
 .footer__bg {
