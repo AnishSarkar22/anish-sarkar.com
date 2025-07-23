@@ -8,7 +8,6 @@ const Footer = () => {
           <a href={social.href} key={index}>
             <img src={social.icon} className="w-5 h-5" alt={social.name} />
           </a>
-          
         ))}
       </div>
       <p className="order-2 sm:order-2">© 2025 Anish. All rights reserved.</p>
