@@ -1,6 +1,5 @@
 "use client";
 import { useScroll, useTransform, motion } from "framer-motion";
-// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 

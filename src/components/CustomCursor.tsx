@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 
 const CustomCursor = () => {
   const [isMobile, setIsMobile] = useState(false);
-  // eslint-disable-next-line no-unused-vars
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isHovering, setIsHovering] = useState(false);
   const [cursorText, setCursorText] = useState("");
   const [cursorVariant, setCursorVariant] = useState("default");

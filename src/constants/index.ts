@@ -271,15 +271,7 @@ export const experiences = [
       "✅ Delivered remote features like over-the-air updates, real-time tracking, and remote start capabilities.",
     ],
   },
-  {
-    title: "Freelance Developer",
-    job: "Self-Employed",
-    date: "2025-Present",
-    contents: [
-      "Created a personal portfolio using Three.js, React, Vite, and WebAPI to showcase technical expertise.",
-      "Continuously enhancing technical skills and expanding expertise in modern web development and back-end technologies.",
-    ],
-  },
+
 ];
 export const reviews = [
   {
