@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const CustomCursor = () => {
   const [isMobile, setIsMobile] = useState(false);
-  
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isHovering, setIsHovering] = useState(false);
   const [cursorText, setCursorText] = useState("");
@@ -16,6 +16,12 @@ const CustomCursor = () => {
   const springConfig = { damping: 25, stiffness: 700 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
+
+  
+  // To use direct motion values for no bounciness
+
+  // const cursorXSpring = cursorX;
+  // const cursorYSpring = cursorY;
 
   useEffect(() => {
     // Check if device is mobile/tablet
@@ -176,26 +182,16 @@ const CustomCursor = () => {
   };
 
   // Arrow Cursor SVG
-  const ArrowCursorSVG = ({
-    fill = "#FFF",
-    stroke = "#41FFF5",
-    size = 24,
-    strokeWidth = 2,
-  }) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
+  const ArrowCursorSVG = ({ size = 24 }) => (
+    <img
+      src="/assets/arrow-pointer.svg"
       width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      className="pointer-events-none"
-    >
-      <path
-        fill={fill}
-        stroke={stroke}
-        strokeWidth={strokeWidth}
-        d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"
-      />
-    </svg>
+      height={size * 1.33} // 36x48 ratio
+      alt="Arrow Cursor"
+      draggable={false}
+      className="pointer-events-none select-none"
+      style={{ display: "block" }}
+    />
   );
 
   // Text/I-beam Cursor SVG
@@ -215,27 +211,16 @@ const CustomCursor = () => {
   );
 
   // Hand/Pointer Cursor SVG
-  const HandCursorSVG = ({
-    size = 24,
-    fill = "#FFF",
-    stroke = "#00FFD0",
-    strokeWidth = "2.25",
-  }) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
+  const HandCursorSVG = ({ size = 24 }) => (
+    <img
+      src="/assets/hand-pointer.svg"
       width={size}
       height={size}
-      viewBox="0 0 24 24"
-      className="pointer-events-none"
-    >
-      <path
-        fill={fill}
-        stroke={stroke}
-        strokeWidth={strokeWidth}
-        strokeLinejoin="round"
-        d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"
-      />
-    </svg>
+      alt="Hand Cursor"
+      draggable={false}
+      className="pointer-events-none select-none"
+      style={{ display: "block" }}
+    />
   );
 
   ArrowCursorSVG.propTypes = {
@@ -286,41 +271,13 @@ const CustomCursor = () => {
       case "text":
         return <TextCursorSVG fill="#ffffff" size={24} />;
       case "pointer":
-        return (
-          <HandCursorSVG
-            fill="#5c33cc"
-            stroke="#7a57db"
-            size={32}
-            strokeWidth={2.5}
-          />
-        );
+        return <HandCursorSVG size={32} />;
       case "grab":
-        return (
-          <HandCursorSVG
-            fill="#33c2cc"
-            stroke="#57db96"
-            size={28}
-            strokeWidth={2}
-          />
-        );
+        return <HandCursorSVG size={28} />;
       case "hover":
-        return (
-          <ArrowCursorSVG
-            fill="#7a57db"
-            stroke="#ca2f8c"
-            size={60}
-            strokeWidth={3}
-          />
-        );
+        return <ArrowCursorSVG size={60} />;
       default:
-        return (
-          <ArrowCursorSVG
-            fill="#FFF"
-            stroke="#41FFF5"
-            size={48}
-            strokeWidth={2}
-          />
-        );
+        return <ArrowCursorSVG size={48} />;
     }
   };
 
@@ -355,7 +312,7 @@ const CustomCursor = () => {
         animate={cursorVariant}
         variants={variants}
         transition={{
-          type: "spring",
+          type: "spring",  // if you don't want to use spring then replace it with "tween"
           stiffness: 500,
           damping: 28,
         }}
