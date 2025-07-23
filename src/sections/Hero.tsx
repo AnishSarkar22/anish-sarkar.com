@@ -1,6 +1,5 @@
 import HeroText from "../components/HeroText";
 import { useMediaQuery } from "react-responsive";
-// import { Particles } from "../components/Particles";
 import StarsCanvas from "../components/StarsCanvas";
 
 
@@ -28,13 +27,6 @@ const Hero = () => {
       </video>
 
       <div className="relative flex flex-col h-full w-full">
-        {/* <Particles
-          className="absolute inset-0 pointer-events-none"
-          quantity={100}
-          ease={80}
-          color={"#ffffff"}
-          refresh
-        /> */}
         <StarsCanvas className="absolute inset-0 -z-10" />
 
         <HeroText />
