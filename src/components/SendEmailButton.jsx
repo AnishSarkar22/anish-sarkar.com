@@ -20,7 +20,7 @@ const SendEmailButton = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.1 }}
         >
-          <img src="assets/send-mail.svg" className="w-5" alt="send icon" style={{ transform: "rotate(-30deg)" }} />
+          <img src="/assets/send-mail.svg" className="w-5" alt="send icon" style={{ transform: "rotate(-30deg)" }} />
           Mail Me
         </motion.p>
       </AnimatePresence>
