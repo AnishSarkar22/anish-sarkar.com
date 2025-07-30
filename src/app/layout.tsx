@@ -1,15 +1,15 @@
 import "~/styles/globals.css";
-import "~/styles/transition.css"
+import "~/styles/transition.css";
 import NavBar from "~/components/NavBar";
 import TransitionWrapper from "~/components/utils/TransitionWrapper";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import BackToTop from "~/components/utils/BackToTop";
-import { Analytics } from "@vercel/analytics/react"
 import LoadingScreen from "~/components/utils/LoadingScreen";
+import { PostHogProvider } from "~/components/utils/PostHogProvider";
+import { Suspense } from "react";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -46,7 +46,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -54,28 +53,29 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-foreground font-mono relative overflow-x-hidden`}
-      >       
-          {/* Loading Screen */}
-          <LoadingScreen />
-          
-          {/* Content wrapper */}
-          <div className="content-fade-mask relative z-10">
-            <div className="relative">
-              <TransitionWrapper>{children}</TransitionWrapper>
+      >
+        <Suspense fallback={null}>
+          <PostHogProvider>
+            {/* Loading Screen */}
+            <LoadingScreen />
+
+            {/* Content wrapper */}
+            <div className="content-fade-mask relative z-10">
+              <div className="relative">
+                <TransitionWrapper>{children}</TransitionWrapper>
+              </div>
             </div>
-          </div>
-          
-          {/* NavBar wrapper */}
-          <div className="relative z-50">
-            <NavBar />
-          </div>
-          
-          {/* Analytics */}
-          <Analytics/>
-          <SpeedInsights />
-          <div className="relative z-[100]">
-            <BackToTop threshold={400} />
-          </div>
+
+            {/* NavBar wrapper */}
+            <div className="relative z-50">
+              <NavBar />
+            </div>
+
+            <div className="relative z-[100]">
+              <BackToTop />
+            </div>
+          </PostHogProvider>
+        </Suspense>
       </body>
     </html>
   );

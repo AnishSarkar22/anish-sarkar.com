@@ -8,7 +8,6 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
   const [progress, setProgress] = useState(0);
   const [showContent, setShowContent] = useState(false);
   const [showStartButton, setShowStartButton] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [showParticles, setShowParticles] = useState(false);
 
   // Optimize loading progress - reduce waiting time to 2.5s instead of 4.5s
