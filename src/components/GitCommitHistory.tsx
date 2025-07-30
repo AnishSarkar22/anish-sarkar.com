@@ -547,6 +547,7 @@ export default function GitCommitHistory() {
   const monthLabels = useMemo(() => {
     const labels: { month: string; position: number }[] = [];
     let currentMonth = -1;
+    let lastPosition = -1;
 
     contributions.forEach((week, weekIndex) => {
       const firstDayOfMonth = week.find((d) => d?.date !== "");
@@ -554,12 +555,15 @@ export default function GitCommitHistory() {
         const date = new Date(firstDayOfMonth.date);
         const month = date.getMonth();
         if (month !== currentMonth) {
-          if (weekIndex > 0 || month === 0) {
+          // Only add label if there's enough space from the last label
+          // Each month label needs about 20px width, so we need at least 20px spacing
+          const minSpacing = 20;
+          const currentPosition = weekIndex * 12;
+          
+          if (currentPosition - lastPosition >= minSpacing || lastPosition === -1) {
             currentMonth = month;
-            labels.push({ month: MONTHS[month]!, position: weekIndex });
-          } else if (currentMonth === -1) {
-            currentMonth = month;
-            labels.push({ month: MONTHS[month]!, position: weekIndex });
+            labels.push({ month: MONTHS[month]!, position: currentPosition });
+            lastPosition = currentPosition;
           }
         }
       }
@@ -594,6 +598,18 @@ export default function GitCommitHistory() {
   const visibleContributions = useMemo(() => {
     return contributions;
   }, [contributions]);
+
+  // Add state for showing help modal
+  const [showHelpModal, setShowHelpModal] = useState(false);
+
+  // Add click handler
+  const handleHelpClick = () => {
+    window.open(
+      'https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/managing-contribution-settings-on-your-profile/why-are-my-contributions-not-showing-up-on-my-profile',
+      '_blank',
+      'noopener,noreferrer'
+    );
+  };
 
   return (
     <div className="w-full">
@@ -719,8 +735,7 @@ export default function GitCommitHistory() {
                   strokeLinejoin="round"
                   className="text-emerald-400"
                 >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
+                  <path d="m19 12l-6-6m6 6l-6 6m6-6H5"></path>
                 </svg>
               </div>
               <div>
@@ -741,13 +756,12 @@ export default function GitCommitHistory() {
                   height="8px"
                   width="8px"
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 611.999 611.999"
+                  viewBox="0 0 24 24"
                   xmlSpace="preserve"
                   className="text-emerald-400"
                 >
-                  <g>
-                    <path d="M216.02,611.195c5.978,3.178,12.284-3.704,8.624-9.4c-19.866-30.919-38.678-82.947-8.706-149.952 c49.982-111.737,80.396-169.609,80.396-169.609s16.177,67.536,60.029,127.585c42.205,57.793,65.306,130.478,28.064,191.029 c-3.495,5.683,2.668,12.388,8.607,9.349c46.1-23.582,97.806-70.885,103.64-165.017c2.151-28.764-1.075-69.034-17.206-119.851 c-20.741-64.406-46.239-94.459-60.992-107.365c-4.413-3.861-11.276-0.439-10.914,5.413c4.299,69.494-21.845,87.129-36.726,47.386 c-5.943-15.874-9.409-43.33-9.409-76.766c0-55.665-16.15-112.967-51.755-159.531c-9.259-12.109-20.093-23.424-32.523-33.073 c-4.5-3.494-11.023,0.018-10.611,5.7c2.734,37.736,0.257,145.885-94.624,275.089c-86.029,119.851-52.693,211.896-40.864,236.826 C153.666,566.767,185.212,594.814,216.02,611.195z" />
-                  </g>
+                  <path fill="currentColor" d="M12.832 21.801c3.126-.626 7.168-2.875 7.168-8.69c0-5.291-3.873-8.815-6.658-10.434c-.619-.36-1.342.113-1.342.828v1.828c0 1.442-.606 4.074-2.29 5.169c-.86.559-1.79-.278-1.894-1.298l-.086-.838c-.1-.974-1.092-1.565-1.87-.971C4.461 8.46 3 10.33 3 13.11C3 20.221 8.289 22 10.933 22q.232 0 .484-.015c.446-.056 0 .099 1.415-.185" opacity={0.5}></path>
+                  <path fill="currentColor" d="M8 18.444c0 2.62 2.111 3.43 3.417 3.542c.446-.056 0 .099 1.415-.185C13.871 21.434 15 20.492 15 18.444c0-1.297-.819-2.098-1.46-2.473c-.196-.115-.424.03-.441.256c-.056.718-.746 1.29-1.215.744c-.415-.482-.59-1.187-.59-1.638v-.59c0-.354-.357-.59-.663-.408C9.495 15.008 8 16.395 8 18.445"></path>
                 </svg>
               </div>
               <div>
@@ -782,7 +796,7 @@ export default function GitCommitHistory() {
                       key={`month-${i}`}
                       className="absolute"
                       style={{
-                        left: `${label.position * 12}px`,
+                        left: `${label.position}px`,
                       }}
                     >
                       {label.month}
@@ -816,7 +830,8 @@ export default function GitCommitHistory() {
         {/* Footer with minimal effects - without Activity and Overview buttons */}
         <div className="flex justify-end items-center relative z-10 mt-1">
           <motion.div
-            className="text-[8px] text-zinc-500/70 flex items-center"
+            className="text-[8px] text-zinc-500/70 flex items-center cursor-pointer hover:text-zinc-400/80 transition-colors"
+            onClick={handleHelpClick}
             initial={{ opacity: 0 }}
             animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ duration: 0.3, delay: 0.3 }}
@@ -839,7 +854,7 @@ export default function GitCommitHistory() {
                 <path d="M8 12h8" />
               </svg>
             </div>
-            <span>Learn how we count contributions</span>
+            <span>Learn how GitHub counts contributions</span>
           </motion.div>
         </div>
       </motion.div>
