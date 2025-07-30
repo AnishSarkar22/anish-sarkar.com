@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { fetchGitHubContributions } from "../utils/githubAPI";
 
 interface ContributionDay {
   date: string;
@@ -27,17 +28,17 @@ const MONTHS = [
   "Dec",
 ];
 const BASE_COLORS = [
-  "rgba(22, 27, 34, 0.06)",
-  "rgba(52, 211, 153, 0.2)",
+  "rgba(22, 27, 34, 0.1)",
   "rgba(52, 211, 153, 0.4)",
-  "rgba(52, 211, 153, 0.7)",
+  "rgba(52, 211, 153, 0.6)",
+  "rgba(52, 211, 153, 0.8)",
   "rgba(52, 211, 153, 1)",
 ];
 const HOVER_COLORS = [
-  "rgba(22, 27, 34, 0.1)",
-  "rgba(52, 211, 153, 0.3)",
-  "rgba(52, 211, 153, 0.6)",
-  "rgba(52, 211, 153, 0.85)",
+  "rgba(22, 27, 34, 0.2)",
+  "rgba(52, 211, 153, 0.5)",
+  "rgba(52, 211, 153, 0.7)",
+  "rgba(52, 211, 153, 0.9)",
   "rgba(52, 211, 153, 1)",
 ];
 const GLOW_INTENSITIES = [0, 2, 5, 10, 15];
@@ -282,163 +283,251 @@ export default function GitCommitHistory() {
   useEffect(() => {
     let isMounted = true;
 
-    const generateContributions = () => {
-      const today = new Date();
-      const oneYearAgo = new Date();
-      oneYearAgo.setFullYear(today.getFullYear() - 1);
-      oneYearAgo.setDate(oneYearAgo.getDate() - oneYearAgo.getDay());
+    const generateContributions = async () => {
+      try {
+        const username = process.env.NEXT_PUBLIC_GITHUB_USERNAME;
+        const githubToken = process.env.NEXT_PUBLIC_GITHUB_TOKEN; // Optional: for higher rate limits
 
-      const days: ContributionDay[][] = [];
-      let currentDate = new Date(oneYearAgo);
-      let weekData: ContributionDay[] = [];
-      let total = 0;
-      let maxStreak = 0;
-      let currentStrk = 0;
-
-      // Pre-allocate memory for date strings to reduce string operations
-      const dateCache = new Map<number, string>();
-      const getFormattedDate = (date: Date) => {
-        const timestamp = date.getTime();
-        if (!dateCache.has(timestamp)) {
-          dateCache.set(timestamp, date.toISOString().split("T")[0]!);
-        }
-        return dateCache.get(timestamp)!;
-      };
-
-      // Pre-allocate memory for tooltips to reduce string operations
-      const tooltipCache = new Map<string, string>();
-      const getTooltip = (date: Date, count: number) => {
-        const dateString = date.toDateString();
-        const cacheKey = `${dateString}-${count}`;
-        if (!tooltipCache.has(cacheKey)) {
-          tooltipCache.set(
-            cacheKey,
-            count === 0
-              ? `No contributions on ${dateString}`
-              : `${count} contribution${
-                  count === 1 ? "" : "s"
-                } on ${dateString}`
+        if (!username) {
+          throw new Error(
+            "github username environment variable is not set"
           );
         }
-        return tooltipCache.get(cacheKey)!;
-      };
 
-      while (currentDate <= today) {
-        const dayData: ContributionDay = {
-          date: getFormattedDate(currentDate),
-          count: 0,
-          level: 0,
-          tooltip: getTooltip(currentDate, 0),
-        };
+        const calendar = await fetchGitHubContributions(username, githubToken);
 
-        if (currentDate <= today) {
-          const isWeekday =
-            currentDate.getDay() > 0 && currentDate.getDay() < 6;
-          const isSpecialDay = Math.random() < 0.1;
+        // Transform GitHub data to your UI format with better level mapping
+        const transformedWeeks = calendar.weeks.map((week) =>
+          week.contributionDays.map((day) => {
+            // Map contribution count to level more aggressively for visibility
+            let level: 0 | 1 | 2 | 3 | 4 = 0;
+            if (day.contributionCount === 0) level = 0;
+            else if (day.contributionCount <= 2) level = 1;
+            else if (day.contributionCount <= 5) level = 2;
+            else if (day.contributionCount <= 10) level = 3;
+            else level = 4;
 
-          let count = 0;
-          if (isSpecialDay) {
-            count = Math.floor(Math.random() * 15) + 10;
-          } else if (isWeekday) {
-            const rand = Math.random();
-            if (rand < 0.3) count = 0;
-            else if (rand < 0.6) count = Math.floor(Math.random() * 3) + 1;
-            else if (rand < 0.85) count = Math.floor(Math.random() * 5) + 3;
-            else count = Math.floor(Math.random() * 7) + 6;
-          } else {
-            const rand = Math.random();
-            if (rand < 0.6) count = 0;
-            else if (rand < 0.9) count = Math.floor(Math.random() * 3) + 1;
-            else count = Math.floor(Math.random() * 5) + 3;
-          }
+            return {
+              date: day.date,
+              count: day.contributionCount,
+              level: level,
+              tooltip:
+                day.contributionCount === 0
+                  ? `No contributions on ${new Date(day.date).toDateString()}`
+                  : `${day.contributionCount} contribution${
+                      day.contributionCount === 1 ? "" : "s"
+                    } on ${new Date(day.date).toDateString()}`,
+            };
+          })
+        );
 
-          let level: 0 | 1 | 2 | 3 | 4 = 0;
-          if (count === 0) level = 0;
-          else if (count <= 3) level = 1;
-          else if (count <= 6) level = 2;
-          else if (count <= 10) level = 3;
-          else level = 4;
+        // Calculate streaks from real data
+        let maxStreak = 0;
+        let currentStrk = 0;
+        let finalCurrentStreak = 0;
+        let foundNonContribution = false;
 
-          if (count > 0) {
+        // Calculate longest streak
+        const allDays = transformedWeeks.flat().filter((day) => day.date);
+        allDays.forEach((day) => {
+          if (day.count > 0) {
             currentStrk++;
-            if (currentStrk > maxStreak) maxStreak = currentStrk;
+            maxStreak = Math.max(maxStreak, currentStrk);
           } else {
             currentStrk = 0;
           }
+        });
 
-          dayData.count = count;
-          dayData.level = level;
-          dayData.tooltip = getTooltip(currentDate, count);
-
-          total += count;
-        }
-
-        weekData.push(dayData);
-        currentDate.setDate(currentDate.getDate() + 1);
-
-        if (weekData.length === 7) {
-          days.push([...weekData]);
-          weekData = [];
-        }
-      }
-
-      if (weekData.length > 0) {
-        const emptyDay: ContributionDay = {
-          date: "",
-          count: -1,
-          level: 0 as const,
-          tooltip: "Future date",
-        };
-
-        // Fill remaining days with empty placeholders
-        while (weekData.length < 7) {
-          weekData.push({ ...emptyDay });
-        }
-        days.push([...weekData]);
-      }
-
-      let finalCurrentStreak = 0;
-      let foundNonContribution = false;
-
-      // Optimized streak calculation
-      for (let w = days.length - 1; w >= 0 && !foundNonContribution; w--) {
-        const week = days[w];
-        if (!week) continue;
-
-        for (let d = week.length - 1; d >= 0 && !foundNonContribution; d--) {
-          const day = week[d];
-          if (!day) continue;
-
-          if (day.date && new Date(day.date) <= today) {
+        // Calculate current streak (from today backwards)
+        for (let i = allDays.length - 1; i >= 0 && !foundNonContribution; i--) {
+          const day = allDays[i];
+          if (day && new Date(day.date) <= new Date()) {
             if (day.count > 0) {
               finalCurrentStreak++;
             } else {
               foundNonContribution = true;
             }
-          } else if (!day.date) {
-            continue;
-          } else {
-            foundNonContribution = true;
           }
         }
-      }
 
-      // Use requestAnimationFrame for smoother animations
-      if (isMounted) {
-        requestAnimationFrame(() => {
-          if (isMounted) {
-            setContributions(days);
-            setTotalContributions(total);
-            setLongestStreak(maxStreak);
-            setCurrentStreak(finalCurrentStreak);
+        if (isMounted) {
+          requestAnimationFrame(() => {
+            if (isMounted) {
+              setContributions(transformedWeeks);
+              setTotalContributions(calendar.totalContributions);
+              setLongestStreak(maxStreak);
+              setCurrentStreak(finalCurrentStreak);
 
-            setTimeout(() => {
-              if (isMounted) {
-                setIsLoaded(true);
+              setTimeout(() => {
+                if (isMounted) {
+                  setIsLoaded(true);
+                }
+              }, 300);
+            }
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch GitHub contributions:", error);
+
+        // Fallback to the existing mock data generation
+        const generateContributions = () => {
+          const today = new Date();
+          const oneYearAgo = new Date();
+          oneYearAgo.setFullYear(today.getFullYear() - 1);
+          oneYearAgo.setDate(oneYearAgo.getDate() - oneYearAgo.getDay());
+          const days: ContributionDay[][] = [];
+          let currentDate = new Date(oneYearAgo);
+          let weekData: ContributionDay[] = [];
+          let total = 0;
+          let maxStreak = 0;
+          let currentStrk = 0;
+
+          // Pre-allocate memory for date strings to reduce string operations
+          const dateCache = new Map<number, string>();
+          const getFormattedDate = (date: Date) => {
+            const timestamp = date.getTime();
+            if (!dateCache.has(timestamp)) {
+              dateCache.set(timestamp, date.toISOString().split("T")[0]!);
+            }
+            return dateCache.get(timestamp)!;
+          };
+
+          // Pre-allocate memory for tooltips to reduce string operations
+          const tooltipCache = new Map<string, string>();
+          const getTooltip = (date: Date, count: number) => {
+            const dateString = date.toDateString();
+            const cacheKey = `${dateString}-${count}`;
+            if (!tooltipCache.has(cacheKey)) {
+              tooltipCache.set(
+                cacheKey,
+                count === 0
+                  ? `No contributions on ${dateString}`
+                  : `${count} contribution${
+                      count === 1 ? "" : "s"
+                    } on ${dateString}`
+              );
+            }
+            return tooltipCache.get(cacheKey)!;
+          };
+
+          while (currentDate <= today) {
+            const dayData: ContributionDay = {
+              date: getFormattedDate(currentDate),
+              count: 0,
+              level: 0,
+              tooltip: getTooltip(currentDate, 0),
+            };
+
+            if (currentDate <= today) {
+              const isWeekday =
+                currentDate.getDay() > 0 && currentDate.getDay() < 6;
+              const isSpecialDay = Math.random() < 0.1;
+              let count = 0;
+
+              if (isSpecialDay) {
+                count = Math.floor(Math.random() * 15) + 10;
+              } else if (isWeekday) {
+                const rand = Math.random();
+                if (rand < 0.3) count = 0;
+                else if (rand < 0.6) count = Math.floor(Math.random() * 3) + 1;
+                else if (rand < 0.85) count = Math.floor(Math.random() * 5) + 3;
+                else count = Math.floor(Math.random() * 7) + 6;
+              } else {
+                const rand = Math.random();
+                if (rand < 0.6) count = 0;
+                else if (rand < 0.9) count = Math.floor(Math.random() * 3) + 1;
+                else count = Math.floor(Math.random() * 5) + 3;
               }
-            }, 300);
+
+              let level: 0 | 1 | 2 | 3 | 4 = 0;
+              if (count === 0) level = 0;
+              else if (count <= 3) level = 1;
+              else if (count <= 6) level = 2;
+              else if (count <= 10) level = 3;
+              else level = 4;
+
+              if (count > 0) {
+                currentStrk++;
+                if (currentStrk > maxStreak) maxStreak = currentStrk;
+              } else {
+                currentStrk = 0;
+              }
+
+              dayData.count = count;
+              dayData.level = level;
+              dayData.tooltip = getTooltip(currentDate, count);
+              total += count;
+            }
+
+            weekData.push(dayData);
+            currentDate.setDate(currentDate.getDate() + 1);
+
+            if (weekData.length === 7) {
+              days.push([...weekData]);
+              weekData = [];
+            }
           }
-        });
+
+          if (weekData.length > 0) {
+            const emptyDay: ContributionDay = {
+              date: "",
+              count: -1,
+              level: 0 as const,
+              tooltip: "Future date",
+            };
+            // Fill remaining days with empty placeholders
+            while (weekData.length < 7) {
+              weekData.push({ ...emptyDay });
+            }
+            days.push([...weekData]);
+          }
+
+          let finalCurrentStreak = 0;
+          let foundNonContribution = false;
+          // Optimized streak calculation
+          for (let w = days.length - 1; w >= 0 && !foundNonContribution; w--) {
+            const week = days[w];
+            if (!week) continue;
+            for (
+              let d = week.length - 1;
+              d >= 0 && !foundNonContribution;
+              d--
+            ) {
+              const day = week[d];
+              if (!day) continue;
+              if (day.date && new Date(day.date) <= today) {
+                if (day.count > 0) {
+                  finalCurrentStreak++;
+                } else {
+                  foundNonContribution = true;
+                }
+              } else if (!day.date) {
+                continue;
+              } else {
+                foundNonContribution = true;
+              }
+            }
+          }
+
+          // Use requestAnimationFrame for smoother animations
+          if (isMounted) {
+            requestAnimationFrame(() => {
+              if (isMounted) {
+                setContributions(days);
+                setTotalContributions(total);
+                setLongestStreak(maxStreak);
+                setCurrentStreak(finalCurrentStreak);
+                setTimeout(() => {
+                  if (isMounted) {
+                    setIsLoaded(true);
+                  }
+                }, 300);
+              }
+            });
+          }
+        };
+
+        generateContributions();
       }
     };
 
