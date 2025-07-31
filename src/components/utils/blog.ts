@@ -19,12 +19,15 @@ export type MDXFileData = FrontmatterParseResult & {
 // Function to fetch cached data from GitHub API
 export const fetchBlogPosts = cache(async (): Promise<MDXFileData[]> => {
   try {
+    // use the github token if you want the "blog-data" repo to be private
+    const githubToken = process.env.NEXT_PUBLIC_BLOG_GITHUB_TOKEN;
     // Fetch list of files from GitHub API
     const response = await fetch(
       'https://api.github.com/repos/AnishSarkar22/blog-data/contents',
       {
         headers: {
           'Accept': 'application/vnd.github.v3+json',
+          ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
         },
         next: { revalidate: 60 }
       }
@@ -35,6 +38,8 @@ export const fetchBlogPosts = cache(async (): Promise<MDXFileData[]> => {
     }
 
     const files = await response.json();
+
+    console.log("Fetched files from GitHub:", files);
     
     // Filter to only get markdown files
     const mdFiles = files.filter((file: any) => 
