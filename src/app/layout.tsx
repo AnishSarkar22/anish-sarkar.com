@@ -65,7 +65,8 @@ export default function RootLayout({
                 <TransitionWrapper>{children}</TransitionWrapper>
               </div>
             </div>
-
+            
+            </LoadingScreen>
             {/* NavBar wrapper */}
             <div className="relative z-50">
               <NavBar />

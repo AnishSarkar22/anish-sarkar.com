@@ -53,7 +53,7 @@ const NavBar = () => {
         className="fixed bottom-0 left-0 right-0 z-40 pb-6 px-4 flex justify-center"
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
         onMouseEnter={() => setIsHoveringNav(true)}
         onMouseLeave={() => setIsHoveringNav(false)}
       >
