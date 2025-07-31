@@ -17,16 +17,16 @@ const edu = [
     position: "Secondary High School",
     date: "(2019 - 2021)",
     description:
-      "specialized in putting off assignments to build random websites and break stuff for fun",
-    color: "#fcd34d",
+      "made it through somehow",
+    color: "#fff87e",
   },
   {
     title: "St. Xavier's School",
     position: "High School",
     date: "(2007 - 2019)",
     description:
-      "specialized in putting off assignments to build random websites and break stuff for fun",
-    color: "#fcd34d",
+      "was a seasoned procrastinator… until the all-nighters caught up to me",
+    color: "#04bade",
   }
 ];
 

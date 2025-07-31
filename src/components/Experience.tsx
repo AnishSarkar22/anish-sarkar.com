@@ -11,7 +11,7 @@ const experience = [
     description:
       "Enhanced the evolutionary computation and Genetic Algorithms for optimizing ligand-protein interaction energy and benchmarking NBGA performance with TSPLIB datasets",
     link: "https://github.com/AnishSarkar22/nbga-optimization",
-    color: "#f87171",
+    color: "#ffffff",
   }
 ];
 
