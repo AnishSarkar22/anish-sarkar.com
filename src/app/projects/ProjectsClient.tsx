@@ -11,11 +11,35 @@ export default function Projects() {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const mainRef = useRef<HTMLDivElement>(null);
 
+  const techList = [
+    "Appwrite",
+    "Docker",
+    "Flask",
+    "Matplotlib",
+    "NumPy",
+    "Pandas",
+    "PyTorch",
+    "Python",
+    "React",
+    "Svelte",
+    "Sveltekit",
+    "Supabase",
+    "Streamlit",
+    "TypeScript",
+    "scikit-learn",
+  ];
+
   // Extract unique categories from projects
-  const categories = ["All", ...Array.from(new Set(
-    projectList.flatMap(project => project.technologies)
-      .filter(tech => ["React", "Next.js", "TypeScript", "Vue.js", "Node.js"].includes(tech))
-  ))];
+  const categories = [
+    "All",
+    ...Array.from(
+      new Set(
+        projectList
+          .flatMap((project) => project.technologies)
+          .filter((tech) => techList.includes(tech))
+      )
+    ).sort(),
+  ];
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -35,48 +59,50 @@ export default function Projects() {
   }, []);
 
   return (
-    <main 
-      ref={mainRef} 
+    <main
+      ref={mainRef}
       className="relative min-h-screen text-white p-8 md:p-16 lg:p-24 max-w-4xl mx-auto overflow-hidden"
     >
       {/* Enhanced cosmic background elements */}
       <div className="fixed inset-0 -z-10 bg-black pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)] pointer-events-none" />
-        
-        <motion.div 
+
+        <motion.div
           className="absolute top-0 left-0 w-full h-1 pointer-events-none"
           style={{
-            background: "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent)",
+            background:
+              "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent)",
           }}
-          animate={{ 
+          animate={{
             scaleX: [0, 1, 0],
             opacity: [0, 0.5, 0],
-            x: ["-100%", "0%", "100%"]
+            x: ["-100%", "0%", "100%"],
           }}
-          transition={{ 
-            duration: 8, 
+          transition={{
+            duration: 8,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         />
-        
-        <motion.div 
+
+        <motion.div
           className="absolute bottom-0 left-0 w-full h-1 pointer-events-none"
           style={{
-            background: "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.2), transparent)",
+            background:
+              "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.2), transparent)",
           }}
-          animate={{ 
+          animate={{
             scaleX: [0, 1, 0],
             opacity: [0, 0.3, 0],
-            x: ["100%", "0%", "-100%"]
+            x: ["100%", "0%", "-100%"],
           }}
-          transition={{ 
-            duration: 12, 
+          transition={{
+            duration: 12,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         />
-        
+
         {/* Ultra-enhanced animated cosmic particles */}
         {[...Array(30)].map((_, i) => (
           <motion.div
@@ -87,9 +113,13 @@ export default function Projects() {
               height: Math.random() * 4 + 1,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              background: `rgba(${52 + Math.random() * 30}, ${211 + Math.random() * 30}, ${153 + Math.random() * 30}, ${0.2 + Math.random() * 0.3})`,
+              background: `rgba(${52 + Math.random() * 30}, ${
+                211 + Math.random() * 30
+              }, ${153 + Math.random() * 30}, ${0.2 + Math.random() * 0.3})`,
               filter: "blur(1px)",
-              boxShadow: `0 0 ${Math.random() * 5 + 2}px rgba(52, 211, 153, ${0.3 + Math.random() * 0.4})`,
+              boxShadow: `0 0 ${Math.random() * 5 + 2}px rgba(52, 211, 153, ${
+                0.3 + Math.random() * 0.4
+              })`,
             }}
             animate={{
               opacity: [0, 0.8, 0],
@@ -106,17 +136,18 @@ export default function Projects() {
             }}
           />
         ))}
-        
+
         {/* Reactive glow effect that follows mouse */}
-        
+
         {/* Cosmic grid lines */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+        <div
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
           style={{
             backgroundImage: `
               linear-gradient(to right, rgba(52, 211, 153, 0.5) 1px, transparent 1px),
               linear-gradient(to bottom, rgba(52, 211, 153, 0.5) 1px, transparent 1px)
             `,
-            backgroundSize: '80px 80px',
+            backgroundSize: "80px 80px",
           }}
         />
       </div>
@@ -129,7 +160,7 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <motion.h1 
+          <motion.h1
             className="text-5xl font-bold text-white relative inline-block"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -144,7 +175,6 @@ export default function Projects() {
             </span>{" "}
             <span className="relative">
               projects
-
               {/* Animated underline with glow */}
               {/* <motion.span 
                 className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
@@ -160,7 +190,8 @@ export default function Projects() {
             transition={{ delay: 0.7 }}
             className="text-gray-400 mt-3 max-w-xl"
           >
-            A showcase of my creative work, experiments, and technical explorations.
+            A showcase of my creative work, experiments, and technical
+            explorations.
           </motion.p>
         </motion.div>
 
@@ -172,20 +203,20 @@ export default function Projects() {
           className="mb-12 flex flex-wrap gap-3 relative"
         >
           {/* Animated background glow for active category */}
-          <motion.div 
+          <motion.div
             className="absolute inset-0 -z-10 rounded-full bg-green-300/5 filter blur-xl"
-            animate={{ 
-              x: categories.findIndex(cat => cat === activeCategory) * 110,
+            animate={{
+              x: categories.findIndex((cat) => cat === activeCategory) * 110,
               opacity: [0.5, 0.8, 0.5],
               scale: [0.9, 1.1, 0.9],
             }}
-            transition={{ 
+            transition={{
               x: { type: "spring", stiffness: 200, damping: 30 },
               opacity: { duration: 2, repeat: Infinity },
               scale: { duration: 3, repeat: Infinity },
             }}
           />
-          
+
           {categories.map((category, index) => (
             <motion.button
               key={category}
@@ -200,25 +231,27 @@ export default function Projects() {
               transition={{ delay: 0.5 + index * 0.1 }}
             >
               {/* Background for button */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 -z-10 rounded-full"
-                animate={{ 
-                  backgroundColor: category === activeCategory 
-                    ? 'rgba(52, 211, 153, 0.2)' 
-                    : 'rgba(39, 39, 42, 0.5)',
-                  borderColor: category === activeCategory 
-                    ? 'rgba(52, 211, 153, 0.3)' 
-                    : 'rgba(82, 82, 91, 0.5)',
+                animate={{
+                  backgroundColor:
+                    category === activeCategory
+                      ? "rgba(52, 211, 153, 0.2)"
+                      : "rgba(39, 39, 42, 0.5)",
+                  borderColor:
+                    category === activeCategory
+                      ? "rgba(52, 211, 153, 0.3)"
+                      : "rgba(82, 82, 91, 0.5)",
                 }}
                 style={{
-                  border: '1px solid',
+                  border: "1px solid",
                 }}
                 transition={{ duration: 0.3 }}
               />
-              
+
               {/* Hover effect */}
               {hoveredCategory === category && category !== activeCategory && (
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 -z-10 rounded-full opacity-0 bg-green-300/10"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -226,7 +259,7 @@ export default function Projects() {
                   transition={{ duration: 0.2 }}
                 />
               )}
-              
+
               {/* Cosmic particles on active button */}
               {category === activeCategory && (
                 <>
@@ -256,14 +289,15 @@ export default function Projects() {
                   ))}
                 </>
               )}
-              
+
               {/* Text with glow effect for active category */}
               <motion.span
-                animate={{ 
-                  color: category === activeCategory ? '#86efac' : '#a1a1aa',
-                  textShadow: category === activeCategory 
-                    ? '0 0 8px rgba(134, 239, 172, 0.5)' 
-                    : 'none',
+                animate={{
+                  color: category === activeCategory ? "#86efac" : "#a1a1aa",
+                  textShadow:
+                    category === activeCategory
+                      ? "0 0 8px rgba(134, 239, 172, 0.5)"
+                      : "none",
                 }}
                 transition={{ duration: 0.3 }}
               >
@@ -282,10 +316,10 @@ export default function Projects() {
         >
           {/* Pass the active category to ProjectCards */}
           <ProjectCards activeCategory={activeCategory} />
-          
+
           {/* Cosmic light rays */}
         </motion.div>
-        
+
         {/* Ultra-enhanced cosmic footer - Completely redesigned */}
         <motion.footer
           initial={{ opacity: 0 }}
@@ -297,46 +331,50 @@ export default function Projects() {
           <div className="text-center pt-12 border-t border-zinc-800/30">
             {/* Elegant divider with animated particles */}
             <div className="relative w-full max-w-xs mx-auto mb-8">
-              <motion.div 
+              <motion.div
                 className="h-px w-full bg-gradient-to-r from-transparent via-green-300/50 to-transparent"
-                animate={{ 
+                animate={{
                   opacity: [0.3, 0.7, 0.3],
-                  width: ["70%", "100%", "70%"]
+                  width: ["70%", "100%", "70%"],
                 }}
-                transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
                 style={{ margin: "0 auto" }}
               />
-              
+
               {/* Elegant floating particles */}
               {[...Array(7)].map((_, i) => (
                 <motion.div
                   key={`line-particle-${i}`}
                   className="absolute top-0 h-[2px] w-[2px] rounded-full bg-green-300"
                   initial={{ left: `${i * 16.6}%`, opacity: 0 }}
-                  animate={{ 
+                  animate={{
                     opacity: [0, 1, 0],
                     y: [-1, 1, -1],
                     boxShadow: [
                       "0 0 2px rgba(52, 211, 153, 0.3)",
                       "0 0 4px rgba(52, 211, 153, 0.8)",
-                      "0 0 2px rgba(52, 211, 153, 0.3)"
-                    ]
+                      "0 0 2px rgba(52, 211, 153, 0.3)",
+                    ],
                   }}
-                  transition={{ 
+                  transition={{
                     duration: 2 + i * 0.5,
                     repeat: Infinity,
-                    delay: i * 0.3
+                    delay: i * 0.3,
                   }}
                 />
               ))}
             </div>
-            
+
             {/* Ultra-enhanced signature with elegant glass effect */}
             <motion.div
               className="inline-block mb-6"
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
-                y: -2
+                y: -2,
               }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
@@ -347,39 +385,41 @@ export default function Projects() {
                 transition={{ duration: 1 }}
               >
                 {/* Subtle glass background */}
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 rounded-full opacity-10"
                   animate={{
                     background: [
                       "linear-gradient(120deg, rgba(52, 211, 153, 0.05) 0%, rgba(52, 211, 153, 0.1) 50%, rgba(52, 211, 153, 0.05) 100%)",
                       "linear-gradient(240deg, rgba(52, 211, 153, 0.05) 0%, rgba(52, 211, 153, 0.1) 50%, rgba(52, 211, 153, 0.05) 100%)",
-                      "linear-gradient(120deg, rgba(52, 211, 153, 0.05) 0%, rgba(52, 211, 153, 0.1) 50%, rgba(52, 211, 153, 0.05) 100%)"
+                      "linear-gradient(120deg, rgba(52, 211, 153, 0.05) 0%, rgba(52, 211, 153, 0.1) 50%, rgba(52, 211, 153, 0.05) 100%)",
                     ],
                   }}
                   transition={{ duration: 10, repeat: Infinity }}
                 />
-                
+
                 {/* Subtle border */}
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 rounded-full opacity-20"
-                  style={{ 
-                    border: "1px solid rgba(52, 211, 153, 0.2)"
+                  style={{
+                    border: "1px solid rgba(52, 211, 153, 0.2)",
                   }}
                 />
-                
+
                 {/* Animated text with elegant styling */}
-                <motion.div 
-                  className="text-base font-medium tracking-wider relative z-10"
-                >
+                <motion.div className="text-base font-medium tracking-wider relative z-10">
                   <motion.span
                     className="text-transparent bg-clip-text bg-gradient-to-r from-green-200 via-green-300 to-green-200 font-medium"
                     animate={{
-                      backgroundPosition: ["0% center", "100% center", "0% center"],
+                      backgroundPosition: [
+                        "0% center",
+                        "100% center",
+                        "0% center",
+                      ],
                     }}
                     transition={{
                       duration: 8,
                       repeat: Infinity,
-                      repeatType: "mirror"
+                      repeatType: "mirror",
                     }}
                     style={{
                       backgroundSize: "200% auto",
@@ -389,14 +429,14 @@ export default function Projects() {
                   </motion.span>
                   <motion.span
                     className="inline-block relative"
-                    animate={{ 
+                    animate={{
                       scale: [1, 1.2, 1],
-                      y: [0, -2, 0]
+                      y: [0, -2, 0],
                     }}
-                    transition={{ 
+                    transition={{
                       duration: 2,
                       repeat: Infinity,
-                      repeatDelay: 3
+                      repeatDelay: 3,
                     }}
                   >
                     <span className="relative z-10">❤️</span>
@@ -409,68 +449,78 @@ export default function Projects() {
                       transition={{
                         duration: 2,
                         repeat: Infinity,
-                        repeatDelay: 3
+                        repeatDelay: 3,
                       }}
                       style={{
-                        background: "radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 70%)"
+                        background:
+                          "radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 70%)",
                       }}
                     />
                   </motion.span>
                   <motion.span
                     className="text-transparent bg-clip-text bg-gradient-to-r from-green-200 via-green-300 to-green-200 font-medium"
                     animate={{
-                      backgroundPosition: ["0% center", "100% center", "0% center"],
+                      backgroundPosition: [
+                        "0% center",
+                        "100% center",
+                        "0% center",
+                      ],
                     }}
                     transition={{
                       duration: 8,
                       repeat: Infinity,
-                      repeatType: "mirror"
+                      repeatType: "mirror",
                     }}
                     style={{
                       backgroundSize: "200% auto",
                     }}
                   >
-                    {" "}by{" "}
+                    {" "}
+                    by{" "}
                   </motion.span>
                   <motion.span
                     className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-green-300 via-green-400 to-green-300 font-bold"
                     animate={{
-                      backgroundPosition: ["0% center", "100% center", "0% center"],
+                      backgroundPosition: [
+                        "0% center",
+                        "100% center",
+                        "0% center",
+                      ],
                     }}
                     transition={{
                       duration: 8,
                       repeat: Infinity,
-                      repeatType: "mirror"
+                      repeatType: "mirror",
                     }}
                     style={{
                       backgroundSize: "200% auto",
                     }}
                     whileHover={{
                       letterSpacing: "0.05em",
-                      textShadow: "0 0 8px rgba(52, 211, 153, 0.5)"
+                      textShadow: "0 0 8px rgba(52, 211, 153, 0.5)",
                     }}
                   >
                     anish
-                    
                     {/* Elegant animated underline */}
                     <motion.div
                       className="absolute -bottom-1 left-0 h-[1px] w-full"
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: [0, 1, 1, 0] }}
-                      transition={{ 
-                        duration: 4, 
+                      transition={{
+                        duration: 4,
                         repeat: Infinity,
                         times: [0, 0.2, 0.8, 1],
-                        repeatDelay: 1
+                        repeatDelay: 1,
                       }}
                       style={{
-                        background: "linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), rgba(52, 211, 153, 0.8), transparent)",
-                        transformOrigin: "left"
+                        background:
+                          "linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), rgba(52, 211, 153, 0.8), transparent)",
+                        transformOrigin: "left",
                       }}
                     />
                   </motion.span>
                 </motion.div>
-                
+
                 {/* Subtle floating particles */}
                 {[...Array(5)].map((_, i) => (
                   <motion.div
@@ -497,20 +547,20 @@ export default function Projects() {
                 ))}
               </motion.div>
             </motion.div>
-            
+
             {/* Copyright with elegant styling */}
-            <motion.div 
+            <motion.div
               className="mb-6 text-xs text-gray-500/70"
-              whileHover={{ 
+              whileHover={{
                 color: "rgba(134, 239, 172, 0.8)",
                 letterSpacing: "0.05em",
-                textShadow: "0 0 5px rgba(52, 211, 153, 0.2)"
+                textShadow: "0 0 5px rgba(52, 211, 153, 0.2)",
               }}
               transition={{ duration: 0.3 }}
             >
               © {new Date().getFullYear()} • All rights reserved
             </motion.div>
-            
+
             {/* Code signature with elegant animation - Enhanced */}
             <motion.div
               className="flex justify-center"
@@ -521,33 +571,37 @@ export default function Projects() {
             >
               <motion.div
                 className="relative"
-                whileHover={{ 
+                whileHover={{
                   scale: 1.1,
-                  y: -2
+                  y: -2,
                 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
                 <motion.div
                   className="text-lg font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-300/60 via-green-300 to-green-300/60"
                   animate={{
-                    backgroundPosition: ["0% center", "100% center", "0% center"],
+                    backgroundPosition: [
+                      "0% center",
+                      "100% center",
+                      "0% center",
+                    ],
                   }}
                   transition={{
                     duration: 10,
                     repeat: Infinity,
-                    repeatType: "mirror"
+                    repeatType: "mirror",
                   }}
                   style={{
                     backgroundSize: "200% auto",
                   }}
                   whileHover={{
                     letterSpacing: "0.2em",
-                    textShadow: "0 0 8px rgba(52, 211, 153, 0.5)"
+                    textShadow: "0 0 8px rgba(52, 211, 153, 0.5)",
                   }}
                 >
                   &lt;/&gt;
                 </motion.div>
-                
+
                 {/* Removed typing cursor effect */}
               </motion.div>
             </motion.div>

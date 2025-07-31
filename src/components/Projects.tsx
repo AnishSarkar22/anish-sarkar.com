@@ -8,35 +8,29 @@ export type Project = {
 
 export const projectList: Project[] = [
   {
-    title: "Cosmic Portfolio",
-    description: "A stunning portfolio website with advanced animations and interactive elements. Features a custom-built animation system and responsive design for all devices.",
-    link: "https://example.com/cosmic-portfolio",
-    technologies: ["React", "TypeScript", "Framer Motion", "TailwindCSS", "Three.js"],
+    title: "Loopr",
+    description: "Intelligent URL & API Monitoring, Webhook Scheduling & Uptime Service.",
+    link: "https://loopr-pi.vercel.app",
+    technologies: ["Svelte", "Docker", "Sveltekit", "Appwrite"],
     featured: true
   },
   {
-    title: "Neural Canvas",
-    description: "An AI-powered digital art creation platform that transforms text prompts into stunning visual masterpieces using advanced machine learning algorithms.",
-    link: "https://example.com/neural-canvas",
-    technologies: ["Next.js", "Python", "TensorFlow", "WebGL", "Firebase"],
+    title: "Farmalyze",
+    description: "A smart farming assistant that leverages AI to provide crop recommendations, fertilizer suggestions, and disease detection through image analysis.",
+    link: "https://farmalyze-snowy.vercel.app",
+    technologies: ["React", "Flask", "NumPy", "Pandas", "PyTorch", "Supabase", "scikit-learn"],
     featured: true
   },
   {
-    title: "Quantum Dashboard",
-    description: "A comprehensive analytics dashboard with real-time data visualization, customizable widgets, and advanced filtering capabilities for enterprise applications.",
-    link: "https://example.com/quantum-dashboard",
-    technologies: ["Vue.js", "D3.js", "GraphQL", "Node.js", "MongoDB"],
+    title: "NBGA Optimization",
+    description: "Optimization algorithms and tools for solving the Traveling Salesman Problem (TSP) and ligand optimization, with datasets and interactive visualizations.",
+    link: "https://genetic-optimization.streamlit.app",
+    technologies: ["Python", "NumPy", "Matplotlib", "Streamlit"],
   },
   {
-    title: "Ethereal Chat",
-    description: "A secure, end-to-end encrypted messaging platform with real-time translation, voice messages, and ephemeral content that disappears after viewing.",
-    link: "https://example.com/ethereal-chat",
+    title: "GuideMe",
+    description: "Platform that matches mentors and mentees, enabling skill-building and career growth through smart features and easy communication",
+    link: "https://github.com/AnishSarkar22/SIH-2024",
     technologies: ["React Native", "Socket.io", "Express", "PostgreSQL", "AWS"],
   },
-  {
-    title: "Nebula Commerce",
-    description: "A full-featured e-commerce platform with AR product previews, personalized recommendations, and seamless payment processing integration.",
-    link: "https://example.com/nebula-commerce",
-    technologies: ["Next.js", "Redux", "Stripe API", "Sanity CMS", "Vercel"],
-  }
 ];
