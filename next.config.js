@@ -22,19 +22,37 @@ const config = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  serverExternalPackages: ['posthog-js'],
+  allowedDevOrigins: [
+    "https://eu.posthog.com",
+    "https://eu.i.posthog.com",
+    "https://eu-assets.i.posthog.com"
+  ],
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
+        ],
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
         source: "/ingest/static/:path*",
-        destination: "https://us-assets.i.posthog.com/static/:path*",
+        destination: "https://eu-assets.i.posthog.com/static/:path*",
       },
       {
         source: "/ingest/:path*",
-        destination: "https://us.i.posthog.com/:path*",
+        destination: "https://eu.i.posthog.com/:path*",
       },
       {
         source: "/ingest/decide",
-        destination: "https://us.i.posthog.com/decide",
+        destination: "https://eu.i.posthog.com/decide",
       },
     ];
   },
