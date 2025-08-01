@@ -112,7 +112,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
               </h1>
 
               <div className="mb-12 flex items-center justify-between text-sm">
-                <time className="text-gray-400 block flex items-center space-x-2 group relative overflow-hidden">
+                <time className="text-gray-400 flex items-center space-x-2 group relative overflow-hidden">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mr-2 text-green-400/70 group-hover:text-green-300 transition-colors duration-300"

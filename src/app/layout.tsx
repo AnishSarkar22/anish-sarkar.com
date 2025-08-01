@@ -9,7 +9,7 @@ import LoadingScreen from "~/components/utils/LoadingScreen";
 import { PostHogProvider } from "~/components/utils/PostHogProvider";
 import { Suspense } from "react";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -54,10 +54,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-foreground font-mono relative overflow-x-hidden`}
       >
-        <Suspense fallback={null}>
-          {/* Loading Screen */}
-          <LoadingScreen />
+        {/* Loading Screen */}
+        <LoadingScreen />
 
+        {/* NavBar wrapper */}
+        <div className="relative z-50">
+          <NavBar />
+        </div>
+
+        <Suspense fallback={null}>
           <PostHogProvider>
             {/* Content wrapper */}
             <div className="content-fade-mask relative z-10">
@@ -66,16 +71,11 @@ export default function RootLayout({
               </div>
             </div>
           </PostHogProvider>
-
-          {/* NavBar wrapper */}
-          <div className="relative z-50">
-            <NavBar />
-          </div>
-
-          <div className="relative z-[100]">
-            <BackToTop />
-          </div>
         </Suspense>
+
+        <div className="relative z-[100]">
+          <BackToTop />
+        </div>
       </body>
     </html>
   );
