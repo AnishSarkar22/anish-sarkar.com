@@ -33,4 +33,10 @@ export const projectList: Project[] = [
     link: "https://github.com/AnishSarkar22/SIH-2024",
     technologies: ["React Native", "Socket.io", "Express", "PostgreSQL", "AWS"],
   },
+  {
+    title: "Conway's Game of Life",
+    description: "Implementation of infamous Conway's Game of Life",
+    link: "https://conways-game-of-life-sigma-neon.vercel.app",
+    technologies: ["Svelte", "Pygame"],
+  },
 ];
