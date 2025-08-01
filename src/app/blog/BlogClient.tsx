@@ -511,8 +511,8 @@ export default function BlogClient({
                           fill="none" 
                           viewBox="0 0 24 24" 
                           stroke="currentColor"
-                          animate={{ rotate: hoveredBlog === blog.slug ? [0, 15, 0, -15, 0] : 0 }}
-                          transition={{ duration: 2, repeat: hoveredBlog === blog.slug ? Infinity : 0, repeatDelay: 1 }}
+                          // animate={{ rotate: hoveredBlog === blog.slug ? [0, 15, 0, -15, 0] : 0 }}
+                          // transition={{ duration: 2, repeat: hoveredBlog === blog.slug ? Infinity : 0, repeatDelay: 1 }}
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </motion.svg>
@@ -525,7 +525,7 @@ export default function BlogClient({
                         </p>
                       </div>
                       
-                      {/* Read more link with enhanced hover animation */}
+                      {/* Read more link with hover animation */}
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ 
@@ -610,32 +610,6 @@ export default function BlogClient({
             onPageChange={searchTerm ? handleSearchPageChange : undefined}
           />
         )}
-
-        {/* Custom cursor effect */}
-        <motion.div
-          className="fixed w-8 h-8 rounded-full pointer-events-none z-50 mix-blend-screen opacity-50 hidden md:block"
-          animate={{
-            x: mousePosition.x - 16,
-            y: mousePosition.y - 16,
-            scale: hoveredBlog ? 1.5 : 1,
-          }}
-          transition={{ type: "spring", damping: 20, stiffness: 300, mass: 0.5 }}
-          style={{ 
-            background: "radial-gradient(circle, rgba(52, 211, 153, 0.8) 0%, rgba(52, 211, 153, 0) 70%)",
-            filter: "blur(5px)"
-          }}
-        />
-        
-        <motion.div
-          className="fixed w-4 h-4 rounded-full pointer-events-none z-50 bg-green-300 hidden md:block"
-          animate={{
-            x: mousePosition.x - 2,
-            y: mousePosition.y - 2,
-            scale: hoveredBlog ? 0.5 : 1,
-            opacity: hoveredBlog ? 1 : 0.7,
-          }}
-          transition={{ type: "spring", damping: 30, stiffness: 400, mass: 0.3 }}
-        />
 
         {/* Enhanced footer */}
         <motion.div
