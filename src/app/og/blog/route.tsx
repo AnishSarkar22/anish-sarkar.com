@@ -55,7 +55,10 @@ export async function GET(request: Request) {
     let fontData, fontDataBold;
     try {
       fontData = await loadGoogleFont("Geist+Mono", "anish's tech blog");
-      fontDataBold = await loadGoogleFont("Inter:wght@700", "anish's tech blog");
+      fontDataBold = await loadGoogleFont(
+        "Inter:wght@700",
+        "anish's tech blog"
+      );
     } catch (error) {
       console.error("Font loading error:", error);
       fontData = null;
@@ -77,7 +80,7 @@ export async function GET(request: Request) {
         name: "Inter",
         data: fontDataBold,
         style: "normal" as const,
-        weight: 700,
+        weight: 700 as const,
       });
     }
 

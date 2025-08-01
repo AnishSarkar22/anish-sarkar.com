@@ -94,15 +94,39 @@ async function Pre({
     try {
       // List of supported languages in Shiki by default
       const supportedLanguages = [
-        'javascript', 'typescript', 'jsx', 'tsx', 'html', 'css', 'json', 'markdown', 'md',
-        'python', 'ruby', 'go', 'rust', 'c', 'cpp', 'java', 'php', 'bash', 'shell',
-        'plaintext', 'txt', 'text', 'ascii'
+        "javascript",
+        "typescript",
+        "jsx",
+        "tsx",
+        "html",
+        "css",
+        "json",
+        "markdown",
+        "md",
+        "python",
+        "ruby",
+        "go",
+        "rust",
+        "c",
+        "cpp",
+        "java",
+        "php",
+        "bash",
+        "shell",
+        "plaintext",
+        "txt",
+        "text",
+        "ascii",
       ];
-      
+
       // Use plaintext as fallback for unsupported languages
-      const languageToUse = supportedLanguages.includes(lang.toLowerCase()) ? lang : 'plaintext';
-      
-      const html = await codeToHtml(String(codeElement?.props.children), {
+      const languageToUse = supportedLanguages.includes(lang.toLowerCase())
+        ? lang
+        : "plaintext";
+
+      const codeContent = String(codeElement?.props.children || "");
+
+      const html = await codeToHtml(codeContent, {
         lang: languageToUse,
         themes: {
           dark: "vesper",
@@ -119,9 +143,10 @@ async function Pre({
     } catch (error) {
       console.error(`Error highlighting code with language '${lang}':`, error);
       // Fallback to basic pre/code rendering
+      const codeContent = String(codeElement?.props.children || "");
       return (
         <pre className="border border-zinc-800 p-4 my-6 overflow-x-auto">
-          <code>{codeElement?.props.children}</code>
+          <code>{codeContent}</code>
         </pre>
       );
     }

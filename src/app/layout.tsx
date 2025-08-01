@@ -9,7 +9,7 @@ import LoadingScreen from "~/components/utils/LoadingScreen";
 import { PostHogProvider } from "~/components/utils/PostHogProvider";
 import { Suspense } from "react";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -55,7 +55,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-foreground font-mono relative overflow-x-hidden`}
       >
         {/* Loading Screen */}
-        <LoadingScreen />
+        <LoadingScreen children={undefined} />
 
         {/* NavBar wrapper */}
         <div className="relative z-50">

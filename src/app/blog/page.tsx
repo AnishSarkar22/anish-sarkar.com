@@ -1,7 +1,7 @@
 import BlogClient from "./BlogClient";
 import { fetchBlogPosts } from "~/components/utils/blog";
 import { metadata as blogPageMetadata } from './metadata';
-import { Metadata } from "next";
+import { type Metadata } from "next";
 import TransitionWrapper from "~/components/utils/TransitionWrapper";
 
 export const metadata: Metadata = blogPageMetadata;

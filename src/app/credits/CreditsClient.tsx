@@ -22,148 +22,153 @@ export default function CreditsPage() {
   const technologies: Technology[] = [
     {
       name: "Next.js",
-      description: "React framework for production with server-side rendering and static site generation",
+      description:
+        "React framework for production with server-side rendering and static site generation",
       url: "https://nextjs.org/",
-      category: "frontend"
+      category: "frontend",
     },
     {
       name: "React",
       description: "JavaScript library for building user interfaces",
       url: "https://reactjs.org/",
-      category: "frontend"
+      category: "frontend",
     },
     {
       name: "TypeScript",
-      description: "Typed superset of JavaScript that compiles to plain JavaScript",
+      description:
+        "Typed superset of JavaScript that compiles to plain JavaScript",
       url: "https://www.typescriptlang.org/",
-      category: "frontend"
+      category: "frontend",
     },
     {
       name: "Framer Motion",
       description: "Production-ready motion library for React",
       url: "https://www.framer.com/motion/",
-      category: "frontend"
+      category: "frontend",
     },
     {
       name: "Tailwind CSS",
-      description: "Utility-first CSS framework for rapidly building custom designs",
+      description:
+        "Utility-first CSS framework for rapidly building custom designs",
       url: "https://tailwindcss.com/",
-      category: "styling"
+      category: "styling",
     },
     {
       name: "MDX",
       description: "Markdown for the component era",
       url: "https://mdxjs.com/",
-      category: "frontend"
+      category: "frontend",
     },
     {
       name: "Shiki",
       description: "Beautiful syntax highlighting",
       url: "https://shiki.matsu.io/",
-      category: "frontend"
+      category: "frontend",
     },
     {
       name: "Geist Font",
       description: "Modern, minimal typeface designed by Vercel",
       url: "https://vercel.com/font",
-      category: "styling"
+      category: "styling",
     },
     {
       name: "gray-matter",
       description: "Parse front-matter from markdown files",
       url: "https://github.com/jonschlinkert/gray-matter",
-      category: "tools"
+      category: "tools",
     },
     {
       name: "next/font",
       description: "Font optimization for Next.js",
       url: "https://nextjs.org/docs/basic-features/font-optimization",
-      category: "styling"
+      category: "styling",
     },
     {
       name: "next/image",
       description: "Image optimization for Next.js",
       url: "https://nextjs.org/docs/basic-features/image-optimization",
-      category: "frontend"
+      category: "frontend",
     },
     {
       name: "next/og",
       description: "Open Graph image generation",
       url: "https://nextjs.org/docs/api-reference/next/head",
-      category: "tools"
+      category: "tools",
     },
     {
       name: "Vercel",
       description: "Platform for frontend frameworks and static sites",
       url: "https://vercel.com/",
-      category: "deployment"
+      category: "deployment",
     },
     {
       name: "Contentlayer",
       description: "Content SDK for your website or app",
       url: "https://www.contentlayer.dev/",
-      category: "tools"
+      category: "tools",
     },
     {
       name: "Radix UI",
-      description: "Unstyled, accessible components for building high‑quality design systems",
+      description:
+        "Unstyled, accessible components for building high‑quality design systems",
       url: "https://www.radix-ui.com/",
-      category: "frontend"
+      category: "frontend",
     },
     {
       name: "Lucide Icons",
       description: "Beautiful & consistent icon toolkit made by the community",
       url: "https://lucide.dev/",
-      category: "styling"
+      category: "styling",
     },
     {
       name: "ESLint",
       description: "Pluggable JavaScript linter",
       url: "https://eslint.org/",
-      category: "tools"
+      category: "tools",
     },
     {
       name: "Prettier",
       description: "Opinionated code formatter",
       url: "https://prettier.io/",
-      category: "tools"
+      category: "tools",
     },
     {
       name: "Rehype",
       description: "HTML processor powered by plugins",
       url: "https://github.com/rehypejs/rehype",
-      category: "tools"
+      category: "tools",
     },
     {
       name: "Remark",
       description: "Markdown processor powered by plugins",
       url: "https://github.com/remarkjs/remark",
-      category: "tools"
+      category: "tools",
     },
     {
       name: "Unified",
       description: "Interface for processing content with syntax trees",
       url: "https://unifiedjs.com/",
-      category: "tools"
+      category: "tools",
     },
     {
       name: "GitHub Actions",
       description: "Automate your workflow from idea to production",
       url: "https://github.com/features/actions",
-      category: "deployment"
+      category: "deployment",
     },
     {
       name: "Zod",
-      description: "TypeScript-first schema validation with static type inference",
+      description:
+        "TypeScript-first schema validation with static type inference",
       url: "https://zod.dev/",
-      category: "tools"
+      category: "tools",
     },
     {
       name: "SWR",
       description: "React Hooks for data fetching",
       url: "https://swr.vercel.app/",
-      category: "frontend"
-    }
+      category: "frontend",
+    },
   ];
 
   const categories = [
@@ -172,7 +177,7 @@ export default function CreditsPage() {
     { id: "backend", name: "Backend" },
     { id: "styling", name: "Styling" },
     { id: "tools", name: "Tools" },
-    { id: "deployment", name: "Deployment" }
+    { id: "deployment", name: "Deployment" },
   ];
 
   const handleCategoryChange = (categoryId: string) => {
@@ -185,9 +190,10 @@ export default function CreditsPage() {
     }
   };
 
-  const filteredTechnologies = activeCategory === "all" 
-    ? technologies 
-    : technologies.filter(tech => tech.category === activeCategory);
+  const filteredTechnologies =
+    activeCategory === "all"
+      ? technologies
+      : technologies.filter((tech) => tech.category === activeCategory);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -214,8 +220,8 @@ export default function CreditsPage() {
       transition: {
         delay: 0.05 * i,
         duration: 0.5,
-        ease: [0.215, 0.61, 0.355, 1]
-      }
+        ease: [0.215, 0.61, 0.355, 1],
+      },
     }),
     exit: (i: number) => ({
       opacity: 0,
@@ -223,9 +229,9 @@ export default function CreditsPage() {
       transition: {
         delay: 0.03 * i,
         duration: 0.3,
-        ease: [0.215, 0.61, 0.355, 1]
-      }
-    })
+        ease: [0.215, 0.61, 0.355, 1],
+      },
+    }),
   };
 
   const cardVariants = {
@@ -237,10 +243,10 @@ export default function CreditsPage() {
       transition: {
         delay: 0.06 * i,
         duration: 0.6,
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
-        damping: 15
-      }
+        damping: 15,
+      },
     }),
     exit: (i: number) => ({
       opacity: 0,
@@ -249,85 +255,86 @@ export default function CreditsPage() {
       transition: {
         delay: 0.03 * i,
         duration: 0.3,
-        ease: "easeInOut"
-      }
+        ease: "easeInOut" as const,
+      },
     }),
     hover: {
       scale: 1.03,
       y: -5,
       transition: {
         duration: 0.4,
-        type: "spring",
-        stiffness: 200
-      }
-    }
+        type: "spring" as const,
+        stiffness: 200,
+      },
+    },
   };
 
   const categoryButtonVariants = {
     initial: { scale: 1 },
-    active: { 
-      scale: 1.05, 
+    active: {
+      scale: 1.05,
       backgroundColor: "rgb(134, 239, 172)",
       color: "rgb(0, 0, 0)",
-      transition: { 
-        type: "spring", 
-        stiffness: 300, 
-        damping: 15 
-      }
+      transition: {
+        type: "spring" as const,
+        stiffness: 300,
+        damping: 15,
+      },
     },
-    inactive: { 
+    inactive: {
       scale: 1,
       backgroundColor: "rgba(39, 39, 42, 0.5)",
       color: "rgb(161, 161, 170)",
-      transition: { 
-        duration: 0.3 
-      }
+      transition: {
+        duration: 0.3,
+      },
     },
-    hover: { 
+    hover: {
       scale: 1.05,
       backgroundColor: "rgba(63, 63, 70, 1)",
       color: "rgb(228, 228, 231)",
-      transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 10 
-      }
+      transition: {
+        type: "spring" as const,
+        stiffness: 400,
+        damping: 10,
+      },
     },
-    tap: { 
+    tap: {
       scale: 0.95,
-      transition: { 
-        duration: 0.1 
-      }
-    }
+      transition: {
+        duration: 0.1,
+      },
+    },
   };
 
   return (
-    <main 
+    <main
       ref={mainRef}
       className="relative min-h-screen text-white p-8 md:p-16 lg:p-24 max-w-4xl mx-auto overflow-hidden"
     >
       {/* Cosmic background elements */}
       <div className="fixed inset-0 -z-10 bg-black pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)] pointer-events-none" />
-        
-        <motion.div 
+
+        <motion.div
           className="absolute top-0 left-0 w-full h-1 pointer-events-none"
           style={{
-            background: "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent)",
+            background:
+              "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent)",
           }}
           initial={{ scaleX: 0, opacity: 0, x: "-100%" }}
-          animate={{ 
-            scaleX: 1, 
-            opacity: 0.5, 
-            x: "100%"
+          animate={{
+            scaleX: 1,
+            opacity: 0.5,
+            x: "100%",
           }}
-          transition={{ 
-            duration: 8, 
+          transition={{
+            duration: 8,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         />
-        
+
         {/* Removed the animated particles section */}
         {/* 
         {[...Array(30)].map((_, i) => {
@@ -390,7 +397,7 @@ export default function CreditsPage() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <motion.h1 
+          <motion.h1
             className="text-5xl font-bold text-white relative inline-block"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -405,7 +412,6 @@ export default function CreditsPage() {
             </span>{" "}
             <span className="relative">
               credits
-
               {/* Animated underline with glow */}
               {/* <motion.span 
                 className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
@@ -421,7 +427,8 @@ export default function CreditsPage() {
             transition={{ delay: 0.7 }}
             className="text-gray-400 mt-3 max-w-xl"
           >
-            A tribute to the amazing technologies and tools that power this website.
+            A tribute to the amazing technologies and tools that power this
+            website.
           </motion.p>
         </motion.div>
 
@@ -432,12 +439,15 @@ export default function CreditsPage() {
           className="mb-12 p-6 rounded-lg border border-green-300/20 bg-zinc-900/40 backdrop-blur-sm"
         >
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-            <motion.div 
+            <motion.div
               className="w-16 h-16 rounded-full overflow-hidden border-2 border-green-300/30 flex-shrink-0"
-              whileHover={{ scale: 1.1, borderColor: "rgba(52, 211, 153, 0.5)" }}
+              whileHover={{
+                scale: 1.1,
+                borderColor: "rgba(52, 211, 153, 0.5)",
+              }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <Image 
+              <Image
                 src="https://avatars.githubusercontent.com/u/59052194?v=4"
                 alt="Karan's avatar"
                 width={64}
@@ -445,16 +455,16 @@ export default function CreditsPage() {
                 className="w-full h-full object-cover"
               />
             </motion.div>
-            
+
             <div className="flex-1">
-              <motion.h3 
+              <motion.h3
                 className="text-xl font-bold text-white mb-1 flex items-center gap-2"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
                 Karan
-                <motion.span 
+                <motion.span
                   className="inline-block text-green-300 text-sm px-2 py-0.5 rounded-full border border-green-300/30 bg-green-300/10"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -463,16 +473,18 @@ export default function CreditsPage() {
                   Inspiration
                 </motion.span>
               </motion.h3>
-              
-              <motion.p 
+
+              <motion.p
                 className="text-zinc-400 mb-3"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.9 }}
                 transition={{ delay: 0.6 }}
               >
-                Original portfolio design that inspired this project. While this site has been completely redesigned and modified, the initial concept came from Karan's work.
+                Original portfolio design that inspired this project. While this
+                site has been completely redesigned and modified, the initial
+                concept came from Karan's work.
               </motion.p>
-              
+
               <motion.a
                 href="https://github.com/puang59/puang"
                 target="_blank"
@@ -481,24 +493,34 @@ export default function CreditsPage() {
                 whileHover={{ x: 5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                 </svg>
                 Original Repository
               </motion.a>
             </div>
-            
+
             <motion.div
               className="hidden md:block"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8, type: "spring", stiffness: 100 }}
             >
-              <motion.div 
+              <motion.div
                 className="px-4 py-2 rounded-full bg-green-300/10 border border-green-300/20 text-green-300 text-sm"
-                whileHover={{ 
-                  y: -5, 
-                  boxShadow: "0 10px 25px -5px rgba(52, 211, 153, 0.3)" 
+                whileHover={{
+                  y: -5,
+                  boxShadow: "0 10px 25px -5px rgba(52, 211, 153, 0.3)",
                 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
@@ -509,7 +531,7 @@ export default function CreditsPage() {
         </motion.div>
 
         {/* Enhanced Category filters with improved animations */}
-        <motion.div 
+        <motion.div
           className="flex flex-wrap gap-3 mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -528,32 +550,32 @@ export default function CreditsPage() {
               custom={index}
             >
               {activeCategory === category.id && (
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 bg-green-300 -z-10"
                   layoutId="activeCategoryBackground"
                   initial={{ borderRadius: 9999 }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 300, 
-                    damping: 30 
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30,
                   }}
                 />
               )}
               <span className="relative z-10">{category.name}</span>
-              
+
               {/* Subtle pulse effect for active category */}
               {activeCategory === category.id && (
                 <motion.div
                   className="absolute inset-0 rounded-full bg-green-300/30 -z-20"
                   initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ 
-                    scale: [0.8, 1.2, 0.8], 
-                    opacity: [0, 0.5, 0] 
+                  animate={{
+                    scale: [0.8, 1.2, 0.8],
+                    opacity: [0, 0.5, 0],
                   }}
-                  transition={{ 
+                  transition={{
                     duration: 2,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: "easeInOut",
                   }}
                 />
               )}
@@ -566,25 +588,25 @@ export default function CreditsPage() {
           <AnimatePresence mode="wait" initial={false}>
             {/* Loading indicator during transitions */}
             {isTransitioning && (
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 flex items-center justify-center z-20"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <motion.div 
+                <motion.div
                   className="w-16 h-16 border-t-2 border-green-300 rounded-full"
                   animate={{ rotate: 360 }}
-                  transition={{ 
-                    duration: 1, 
-                    repeat: Infinity, 
-                    ease: "linear" 
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    ease: "linear",
                   }}
                 />
               </motion.div>
             )}
-            
+
             {/* Empty state - Not Found */}
             {!isTransitioning && filteredTechnologies.length === 0 && (
               <motion.div
@@ -594,46 +616,58 @@ export default function CreditsPage() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <motion.div 
+                <motion.div
                   className="relative w-24 h-24 mb-6"
                   initial={{ rotate: 0 }}
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                 >
-                  <motion.div 
+                  <motion.div
                     className="absolute inset-0 rounded-full border-2 border-dashed border-green-300/30"
                     initial={{ rotate: 0 }}
                     animate={{ rotate: -360 }}
-                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 30,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                   />
-                  <motion.div 
+                  <motion.div
                     className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-zinc-900/80 flex items-center justify-center"
                     whileHover={{ scale: 1.1 }}
                   >
                     <motion.div
                       initial={{ opacity: 0.5 }}
                       animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                     >
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        className="h-8 w-8 text-green-300" 
-                        fill="none" 
-                        viewBox="0 0 24 24" 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8 text-green-300"
+                        fill="none"
+                        viewBox="0 0 24 24"
                         stroke="currentColor"
                       >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={1.5} 
-                          d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                       </svg>
                     </motion.div>
                   </motion.div>
                 </motion.div>
-                
-                <motion.h3 
+
+                <motion.h3
                   className="text-2xl font-bold text-white mb-2"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -641,8 +675,8 @@ export default function CreditsPage() {
                 >
                   No technologies found
                 </motion.h3>
-                
-                <motion.p 
+
+                <motion.p
                   className="text-zinc-400 text-center max-w-md"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.7 }}
@@ -652,7 +686,7 @@ export default function CreditsPage() {
                   <br />
                   Check out the other categories or check back later!
                 </motion.p>
-                
+
                 <motion.div
                   className="mt-8"
                   initial={{ opacity: 0, y: 10 }}
@@ -670,7 +704,7 @@ export default function CreditsPage() {
                 </motion.div>
               </motion.div>
             )}
-            
+
             {/* Technologies grid */}
             {!isTransitioning && filteredTechnologies.length > 0 && (
               <motion.div
@@ -699,59 +733,83 @@ export default function CreditsPage() {
                       className="block relative p-6 rounded-lg border border-zinc-800 bg-zinc-900/30 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(52,211,153,0.3)] overflow-hidden" // Removed transform-gpu
                       onMouseEnter={() => setHoveredTech(tech.name)}
                       onMouseLeave={() => setHoveredTech(null)}
-                      whileHover={{ 
+                      whileHover={{
                         scale: 1.02, // Removed rotateX and rotateY
-                        transition: { duration: 0.4, type: "spring", stiffness: 300 }
+                        transition: {
+                          duration: 0.4,
+                          type: "spring",
+                          stiffness: 300,
+                        },
                       }}
                       // Removed style={{ transformStyle: "preserve-3d" }}
                     >
                       {/* Glassmorphism overlay */}
-                      <motion.div 
+                      <motion.div
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-sm bg-gradient-to-br from-green-300/10 to-transparent rounded-lg pointer-events-none" // Added pointer-events-none
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                       />
-                      
+
                       {/* Animated border gradient */}
-                      <motion.div 
+                      <motion.div
                         className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none" // Added pointer-events-none
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                       >
-                        <motion.div 
+                        <motion.div
                           className="absolute top-[-50%] left-[-50%] right-[-50%] bottom-[-50%] bg-transparent"
                           style={{
-                            background: "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 60deg, rgba(52, 211, 153, 0.5) 120deg, transparent 180deg, transparent 240deg, rgba(52, 211, 153, 0.5) 300deg, transparent 360deg)",
+                            background:
+                              "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 60deg, rgba(52, 211, 153, 0.5) 120deg, transparent 180deg, transparent 240deg, rgba(52, 211, 153, 0.5) 300deg, transparent 360deg)",
                           }}
                           animate={{ rotate: 360 }}
-                          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                          transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
                         />
                       </motion.div>
-                      
+
                       {/* Animated spotlight effect */}
-                      <motion.div 
+                      <motion.div
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                         style={{
                           background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(52, 211, 153, 0.15) 0%, transparent 50%)`,
                         }}
                       />
-                      
+
                       {/* Content */}
-                      <div className="relative z-10 transition-transform duration-500"> 
+                      <div className="relative z-10 transition-transform duration-500">
                         {/* Removed transform-gpu and group-hover:translate-z-10 */}
                         <div className="flex items-center mb-4">
                           {/* Placeholder for icon - replace with actual icons if available */}
                           <div className="w-8 h-8 rounded-full bg-green-300/20 flex items-center justify-center mr-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4 text-green-300"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                              />
                             </svg>
                           </div>
-                          <h3 className="text-lg font-semibold text-white">{tech.name}</h3>
+                          <h3 className="text-lg font-semibold text-white">
+                            {tech.name}
+                          </h3>
                         </div>
-                        <p className="text-sm text-zinc-400 leading-relaxed">{tech.description}</p>
+                        <p className="text-sm text-zinc-400 leading-relaxed">
+                          {tech.description}
+                        </p>
                         {/* --- End of added content --- */}
                       </div>
-                      
+
                       {/* Simplified Hover Effects */}
                       <AnimatePresence>
                         {hoveredTech === tech.name && (
@@ -764,35 +822,41 @@ export default function CreditsPage() {
                               exit={{ opacity: 0 }}
                               transition={{ duration: 0.5 }}
                             />
-                            
+
                             {/* Simple Pulsing Border */}
                             <motion.div
                               className="absolute inset-0 rounded-lg border-2 border-green-300/0 pointer-events-none"
-                              initial={{ opacity: 0, borderColor: "rgba(52, 211, 153, 0)" }}
-                              animate={{ 
+                              initial={{
+                                opacity: 0,
+                                borderColor: "rgba(52, 211, 153, 0)",
+                              }}
+                              animate={{
                                 opacity: [0, 0.5, 0],
                                 borderColor: [
                                   "rgba(52, 211, 153, 0)",
                                   "rgba(52, 211, 153, 0.5)",
-                                  "rgba(52, 211, 153, 0)"
-                                ]
+                                  "rgba(52, 211, 153, 0)",
+                                ],
                               }}
-                              exit={{ opacity: 0, borderColor: "rgba(52, 211, 153, 0)" }}
+                              exit={{
+                                opacity: 0,
+                                borderColor: "rgba(52, 211, 153, 0)",
+                              }}
                               transition={{
                                 duration: 2,
                                 repeat: Infinity,
-                                ease: "easeInOut"
+                                ease: "easeInOut",
                               }}
                             />
                           </>
                         )}
                       </AnimatePresence>
-                      
+
                       {/* Enhanced glowing dot in corner (Keep this simple one) */}
-                      <motion.div 
+                      <motion.div
                         className="absolute top-3 right-3 w-2 h-2 rounded-full bg-green-300/50 opacity-0 group-hover:opacity-100 pointer-events-none" // Added pointer-events-none
                         initial={{ boxShadow: "0 0 0px rgba(52, 211, 153, 0)" }}
-                        whileHover={{ 
+                        whileHover={{
                           boxShadow: "0 0 10px rgba(52, 211, 153, 0.8)",
                         }}
                         transition={{ duration: 0.3 }}
@@ -815,10 +879,10 @@ export default function CreditsPage() {
           <Link href="/">
             <motion.div
               className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-green-300/10 to-emerald-500/10 text-green-300 hover:from-green-300/20 hover:to-emerald-500/20 transition-all border border-green-300/20 group relative overflow-hidden"
-              whileHover={{ 
-                scale: 1.05, 
+              whileHover={{
+                scale: 1.05,
                 boxShadow: "0 0 30px rgba(52, 211, 153, 0.3)",
-                borderColor: "rgba(52, 211, 153, 0.4)"
+                borderColor: "rgba(52, 211, 153, 0.4)",
               }}
               whileTap={{ scale: 0.98 }}
             >
@@ -827,7 +891,7 @@ export default function CreditsPage() {
                 style={{
                   transform: "translateX(-100%)",
                   animation: "slideRight 1s ease-in-out forwards",
-                  animationPlayState: "paused"
+                  animationPlayState: "paused",
                 }}
               />
               <style>{`
@@ -839,19 +903,24 @@ export default function CreditsPage() {
                   100% { transform: translateX(100%); opacity: 1; }
                 }
               `}</style>
-              
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" 
-                fill="none" 
-                viewBox="0 0 24 24" 
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
                 style={{
                   animation: "moveLeftRight 1.5s infinite ease-in-out",
-                  animationPlayState: "paused"
+                  animationPlayState: "paused",
                 }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                />
               </svg>
               <style>{`
                  .group:hover svg {
@@ -863,12 +932,12 @@ export default function CreditsPage() {
                   100% { transform: translateX(0); }
                 }
               `}</style>
-              
-              <span className="relative z-10 font-medium tracking-wide">Back to home</span>
-              
-              <div
-                className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-green-300/0 via-green-300/70 to-green-300/0 w-0 group-hover:w-full transition-all duration-700"
-              />
+
+              <span className="relative z-10 font-medium tracking-wide">
+                Back to home
+              </span>
+
+              <div className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-green-300/0 via-green-300/70 to-green-300/0 w-0 group-hover:w-full transition-all duration-700" />
             </motion.div>
           </Link>
         </motion.div>

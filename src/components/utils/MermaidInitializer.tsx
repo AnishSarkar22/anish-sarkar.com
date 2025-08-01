@@ -31,6 +31,7 @@ export default function MermaidInitializer() {
         htmlLabels: true,
         curve: "basis",
         diagramPadding: 8,
+        useMaxWidth: true,
       },
       sequence: {
         diagramMarginX: 50,
@@ -43,69 +44,74 @@ export default function MermaidInitializer() {
         noteMargin: 10,
         messageMargin: 35,
       },
-      // Configure the graph
-      graph: {
-        useMaxWidth: true,
-        htmlLabels: true,
-        diagramPadding: 8,
-      }
     });
 
     // Find and render all mermaid diagrams
     const renderMermaid = () => {
       try {
         mermaid.init(undefined, document.querySelectorAll(".mermaid"));
-        
+
         // Apply styles to nodes after rendering
         setTimeout(() => {
           // Apply style to all nodes
-          document.querySelectorAll('.node rect, .node polygon, .node circle, .node ellipse').forEach(node => {
-            node.setAttribute('fill', '#ffffff');
-            node.setAttribute('stroke', '#333333');
-            node.setAttribute('stroke-width', '1px');
-          });
-          
+          document
+            .querySelectorAll(
+              ".node rect, .node polygon, .node circle, .node ellipse"
+            )
+            .forEach((node) => {
+              node.setAttribute("fill", "#ffffff");
+              node.setAttribute("stroke", "#333333");
+              node.setAttribute("stroke-width", "1px");
+            });
+
           // Apply styles to specific nodes
-          document.querySelectorAll('.node.B rect, .node.B polygon').forEach(node => {
-            node.setAttribute('fill', '#ff99cc'); // Pink as pictured
-            node.setAttribute('stroke', '#333333');
-            node.setAttribute('stroke-width', '1px');
-          });
-          
-          document.querySelectorAll('.node.E rect, .node.E polygon').forEach(node => {
-            node.setAttribute('fill', '#ccccff'); // Light purple as pictured
-            node.setAttribute('stroke', '#333333');
-            node.setAttribute('stroke-width', '1px');
-          });
-          
-          document.querySelectorAll('.node.F rect, .node.F polygon').forEach(node => {
-            node.setAttribute('fill', '#ccffcc'); // Light green as pictured
-            node.setAttribute('stroke', '#333333');
-            node.setAttribute('stroke-width', '1px');
-          });
-          
+          document
+            .querySelectorAll(".node.B rect, .node.B polygon")
+            .forEach((node) => {
+              node.setAttribute("fill", "#ff99cc"); // Pink as pictured
+              node.setAttribute("stroke", "#333333");
+              node.setAttribute("stroke-width", "1px");
+            });
+
+          document
+            .querySelectorAll(".node.E rect, .node.E polygon")
+            .forEach((node) => {
+              node.setAttribute("fill", "#ccccff"); // Light purple as pictured
+              node.setAttribute("stroke", "#333333");
+              node.setAttribute("stroke-width", "1px");
+            });
+
+          document
+            .querySelectorAll(".node.F rect, .node.F polygon")
+            .forEach((node) => {
+              node.setAttribute("fill", "#ccffcc"); // Light green as pictured
+              node.setAttribute("stroke", "#333333");
+              node.setAttribute("stroke-width", "1px");
+            });
+
           // Apply style to seams
-          document.querySelectorAll('.edgePath .path').forEach(path => {
-            path.setAttribute('stroke', '#00ff99'); // Green for seams
-            path.setAttribute('stroke-width', '1.5px');
+          document.querySelectorAll(".edgePath .path").forEach((path) => {
+            path.setAttribute("stroke", "#00ff99"); // Green for seams
+            path.setAttribute("stroke-width", "1.5px");
           });
-          
+
           // Apply styles to labels
-          document.querySelectorAll('.edgeLabel').forEach(label => {
-            const labelBg = label.querySelector('rect');
+          document.querySelectorAll(".edgeLabel").forEach((label) => {
+            const labelBg = label.querySelector("rect");
             if (labelBg) {
-              labelBg.setAttribute('fill', 'transparent');
+              labelBg.setAttribute("fill", "transparent");
             }
           });
-          
-          document.querySelectorAll('.label').forEach(label => {
-            if (label.tagName === 'g') {
-              const foreignObject = label.querySelector('foreignObject');
+
+          document.querySelectorAll(".label").forEach((label) => {
+            if (label.tagName === "g") {
+              const foreignObject = label.querySelector("foreignObject");
               if (foreignObject) {
-                const div = foreignObject.querySelector('div');
+                const div = foreignObject.querySelector("div");
                 if (div) {
-                  div.style.color = '#000000';
-                  div.style.fontFamily = "'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace";
+                  div.style.color = "#000000";
+                  div.style.fontFamily =
+                    "'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace";
                 }
               }
             }
@@ -123,16 +129,19 @@ export default function MermaidInitializer() {
     const observer = new MutationObserver((mutations) => {
       let shouldRender = false;
       mutations.forEach((mutation) => {
-        if (mutation.type === "childList" && 
-            Array.from(mutation.addedNodes).some(node => 
-              node.nodeType === 1 && 
-              ((node as Element).classList?.contains('mermaid') || 
-               (node as Element).querySelector?.('.mermaid'))
-            )) {
+        if (
+          mutation.type === "childList" &&
+          Array.from(mutation.addedNodes).some(
+            (node) =>
+              node.nodeType === 1 &&
+              ((node as Element).classList?.contains("mermaid") ||
+                (node as Element).querySelector?.(".mermaid"))
+          )
+        ) {
           shouldRender = true;
         }
       });
-      
+
       if (shouldRender) {
         renderMermaid();
       }
