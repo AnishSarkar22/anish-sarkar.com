@@ -1,20 +1,18 @@
-
-
 /** @type {import("next").NextConfig} */
 const config = {
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'i.pinimg.com' },
-      { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
-      { protocol: 'https', hostname: 'i.scdn.co' },
-      { protocol: 'https', hostname: 'upload.wikimedia.org' },
-      { protocol: 'https', hostname: 'user-images.githubusercontent.com' },
-      { protocol: 'https', hostname: 'mdxjs.com' },
-      { protocol: 'https', hostname: 'raw.githubusercontent.com' },
-      { protocol: 'https', hostname: 'github.com' },
-      { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
-      { protocol: 'https', hostname: 'www.svgrepo.com' },
-      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: "https", hostname: "i.pinimg.com" },
+      { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "i.scdn.co" },
+      { protocol: "https", hostname: "upload.wikimedia.org" },
+      { protocol: "https", hostname: "user-images.githubusercontent.com" },
+      { protocol: "https", hostname: "mdxjs.com" },
+      { protocol: "https", hostname: "raw.githubusercontent.com" },
+      { protocol: "https", hostname: "github.com" },
+      { protocol: "https", hostname: "cdn.jsdelivr.net" },
+      { protocol: "https", hostname: "www.svgrepo.com" },
+      { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
   typescript: {
@@ -37,6 +35,20 @@ const config = {
       {
         source: "/ingest/decide",
         destination: "https://us.i.posthog.com/decide",
+      },
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: "/photos",
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/credits",
+        destination: "/",
+        permanent: false,
       },
     ];
   },
