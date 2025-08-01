@@ -55,10 +55,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-foreground font-mono relative overflow-x-hidden`}
       >
         <Suspense fallback={null}>
+          {/* Loading Screen */}
+          <LoadingScreen />
+          
           <PostHogProvider>
-            {/* Loading Screen */}
-            <LoadingScreen />
-
             {/* Content wrapper */}
             <div className="content-fade-mask relative z-10">
               <div className="relative">
