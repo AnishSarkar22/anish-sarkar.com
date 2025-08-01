@@ -3,6 +3,7 @@
 import { projectList } from "./Projects";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
+import { trackEvent, trackProjectView } from "~/utils/posthog";
 
 interface ProjectCardsProps {
   activeCategory?: string;
@@ -35,6 +36,24 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
+
+  // Track project card interaction (for posthog analytics)
+  const handleProjectClick = (project: any) => {
+    trackProjectView(project.title, project.link);
+    trackEvent('project_card_click', {
+      project_title: project.title,
+      project_technologies: project.technologies,
+      project_featured: project.featured || false,
+      click_type: 'external_link',
+    });
+  };
+  // for posthog analytics
+  const handleProjectHover = (project: any) => {
+    trackEvent('project_card_hover', {
+      project_title: project.title,
+      project_featured: project.featured || false,
+    });
+  };
 
   return (
     <div ref={containerRef} className="text-white my-10 relative">
@@ -88,8 +107,12 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                     duration: 0.5, 
                     delay: index * 0.1,
                   }}
-                  onHoverStart={() => setHoveredIndex(index)}
+                  onHoverStart={() => {
+                    setHoveredIndex(index);
+                    handleProjectHover(project); // for posthog analytics
+                  }}
                   onHoverEnd={() => setHoveredIndex(null)}
+                  onClick={() => handleProjectClick(project)} // for posthog analytics
                   whileHover={{ 
                     y: -2,
                     transition: { type: "spring", stiffness: 300, damping: 15 }

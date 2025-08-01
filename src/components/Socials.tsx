@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, React } from "react";
+import React, { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
   useMotionValue,
   useTransform,
 } from "framer-motion";
+import { trackSocialClick } from "~/utils/posthog";
 
 const socials = [
   {
@@ -162,6 +163,11 @@ export default function Socials() {
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
 
+  // for posthog analytics
+  const handleSocialClick = (platform: string, url: string) => {
+    trackSocialClick(platform, url);
+  };
+
   return (
     <div
       id="socials-section"
@@ -180,14 +186,13 @@ export default function Socials() {
         whileHover={{ scale: 1.03 }}
       >
         <span className="text-green-300 inline-block will-change-transform">
-            &gt;
-          </span>{" "}
+          &gt;
+        </span>{" "}
         <span className="relative group">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white bg-[length:200%_100%] animate-shimmer">
             socials
           </span>
         </span>
-        
         {/* Animated underline with glow */}
         {/* <motion.span
           className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-transparent via-green-300 to-transparent"
@@ -234,6 +239,7 @@ export default function Socials() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 py-3 px-4 rounded-lg relative z-10 group-hover:text-white transition-colors duration-300"
+                onClick={() => handleSocialClick(social.title, social.link)} // for posthog analytics
               >
                 {/* Cosmic background glow effect */}
                 <motion.div
@@ -461,7 +467,9 @@ export default function Socials() {
                         className="text-sm inline-block"
                         style={{
                           color: isHovered ? social.color : undefined,
-                          textShadow: isHovered ? `0 0 5px ${social.color}50` : undefined,
+                          textShadow: isHovered
+                            ? `0 0 5px ${social.color}50`
+                            : undefined,
                         }}
                       >
                         {social.username}

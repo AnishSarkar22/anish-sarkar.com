@@ -601,8 +601,6 @@ export default function Projects() {
                 >
                   &lt;/&gt;
                 </motion.div>
-
-                {/* Removed typing cursor effect */}
               </motion.div>
             </motion.div>
           </div>

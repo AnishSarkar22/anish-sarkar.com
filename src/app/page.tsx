@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
+import { trackEvent } from "~/utils/posthog";
 
 // Dynamically import components for server-side rendering
 const About = dynamic(() => import("~/components/About"), { ssr: true });
@@ -44,8 +45,29 @@ export default function HomePage() {
 
   useEffect(() => {
     setMounted(true);
+
+    // Track home page view (for posthog analytics)
+    trackEvent("home_page_view", {
+      viewport_width: window.innerWidth,
+      viewport_height: window.innerHeight,
+      user_agent: navigator.userAgent,
+    });
+
     const handleScroll = () => {
       setScrollY(window.scrollY);
+
+      // Track scroll behavior (for posthog analytics)
+      const scrollPercentage =
+        (window.scrollY /
+          (document.documentElement.scrollHeight - window.innerHeight)) *
+        100;
+
+      if (scrollPercentage > 50) {
+        trackEvent("home_scroll_engagement", {
+          scroll_percentage: Math.round(scrollPercentage),
+          engagement_level: "high",
+        });
+      }
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -84,6 +106,14 @@ export default function HomePage() {
     };
   }, []);
 
+  // Track profile hover (for posthog analytics)
+  const handleProfileHover = () => {
+    setHoverProfile(true);
+    trackEvent("profile_image_hover", {
+      interaction_type: "hover",
+    });
+  };
+
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
     return null;
@@ -97,7 +127,7 @@ export default function HomePage() {
       transition: {
         delay: 0.1 * i,
         duration: 0.6,
-        ease: [0.215, 0.61, 0.355, 1],
+        ease: "easeOut" as const,
       },
     }),
   };
@@ -210,11 +240,13 @@ export default function HomePage() {
           ))}
 
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-5 p-3 sm:p-5">
-            {/* Ultra enhanced profile image with cosmic effects */}
+            {/* profile image with cosmic effects */}
             <motion.div
               className="relative"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              onHoverStart={handleProfileHover}
+              onHoverEnd={() => setHoverProfile(false)}
             >
               {/* Cosmic energy field */}
               <motion.div
@@ -1318,9 +1350,7 @@ export default function HomePage() {
           className="mt-8 text-center text-xs text-zinc-500"
           suppressHydrationWarning
         >
-          <p>
-            © {new Date().getFullYear()} Anish Sarkar. All rights reserved.
-          </p>
+          <p>© {new Date().getFullYear()} Anish Sarkar. All rights reserved.</p>
           <p className="mt-1">
             Built with Next.js, Tailwind CSS, and Framer Motion.
           </p>

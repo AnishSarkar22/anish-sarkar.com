@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import TransitionLink from "~/components/utils/TransitionLink";
 import dynamic from "next/dynamic";
 import Pagination from "~/components/Pagination";
+import { trackEvent, trackBlogSearch } from "~/utils/posthog";
 
 // Dynamically import mermaid to avoid SSR issues
 const MermaidInitializer = dynamic(
@@ -39,14 +40,46 @@ export default function BlogClient({
   const [searchPage, setSearchPage] = useState(1);
 
   useEffect(() => {
+    // Track blog page view (for posthog analytics)
+    trackEvent('blog_page_view', {
+      page_number: currentPage,
+      total_pages: totalPages,
+      posts_per_page: postsPerPage,
+      total_posts: blogs.length,
+    })
+  }, [currentPage, totalPages, postsPerPage, blogs.length])
+
+  useEffect(() => {
     // Filter blogs based on search term
     const results = blogs.filter((blog) => 
       blog.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredBlogs(results);
-    // Reset to page 1 when search term changes
     setSearchPage(1);
+
+    // Track search if search term exists (for posthog analytics)
+    if (searchTerm.trim()) {
+      trackBlogSearch(searchTerm, results.length);
+    }
   }, [searchTerm, blogs]);
+
+  // Track blog card hover (for posthog analytics)
+  const handleBlogHover = (blogSlug: string, blogTitle: string) => {
+    setHoveredBlog(blogSlug);
+    trackEvent('blog_card_hover', {
+      blog_slug: blogSlug,
+      blog_title: blogTitle,
+    });
+  };
+
+  // Track blog click (for posthog analytics)
+  const handleBlogClick = (blogSlug: string, blogTitle: string) => {
+    trackEvent('blog_card_click', {
+      blog_slug: blogSlug,
+      blog_title: blogTitle,
+      click_type: 'blog_navigation',
+    });
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -424,10 +457,10 @@ export default function BlogClient({
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
                 className="group"
-                onHoverStart={() => setHoveredBlog(blog.slug)}
+                onHoverStart={() => handleBlogHover(blog.slug, blog.title)}
                 onHoverEnd={() => setHoveredBlog(null)}
               >
-                <TransitionLink href={`/blog/${blog.slug}`} className="block">
+                <TransitionLink href={`/blog/${blog.slug}`} className="block" onClick={() => handleBlogClick(blog.slug, blog.title)}>
                   <motion.div 
                     className="bg-zinc-900/30 border border-zinc-800/50 rounded-lg p-6 transition-all duration-500 relative overflow-hidden"
                     whileHover={{ 

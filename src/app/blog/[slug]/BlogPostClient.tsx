@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import GitHubComments from "~/components/GitHubComments";
+import { trackEvent, trackBlogRead } from "~/utils/posthog";
 
 export default function BlogPostClient({ 
   children, 
@@ -14,15 +15,46 @@ export default function BlogPostClient({
 }) {
   const [readingProgress, setReadingProgress] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [startTime] = useState(Date.now());
+  const [hasTrackedRead, setHasTrackedRead] = useState(false);
   
   useEffect(() => {
+    // Track blog post view (for posthog analytics)
+    trackEvent('blog_post_view', {
+      blog_slug: slug,
+      view_type: 'initial_load',
+    });
+
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       const windowScrollTop = window.scrollY || document.documentElement.scrollTop;
-      if (windowScrollTop === 0) {
-        setReadingProgress(0);
-      } else {
-        setReadingProgress(Math.min(windowScrollTop / totalHeight, 1));
+      const progress = windowScrollTop === 0 ? 0 : Math.min(windowScrollTop / totalHeight, 1);
+      
+      setReadingProgress(progress);
+
+      // Track reading milestones (for posthog analytics)
+      if (progress >= 0.25 && progress < 0.5) {
+        trackEvent('blog_reading_progress', {
+          blog_slug: slug,
+          progress_percentage: 25,
+          reading_time_seconds: Math.floor((Date.now() - startTime) / 1000),
+        });
+      } else if (progress >= 0.5 && progress < 0.75) {
+        trackEvent('blog_reading_progress', {
+          blog_slug: slug,
+          progress_percentage: 50,
+          reading_time_seconds: Math.floor((Date.now() - startTime) / 1000),
+        });
+      } else if (progress >= 0.75 && progress < 0.9) {
+        trackEvent('blog_reading_progress', {
+          blog_slug: slug,
+          progress_percentage: 75,
+          reading_time_seconds: Math.floor((Date.now() - startTime) / 1000),
+        });
+      } else if (progress >= 0.9 && !hasTrackedRead) {
+        const readingTime = Math.floor((Date.now() - startTime) / 1000);
+        trackBlogRead(slug, document.title, readingTime);
+        setHasTrackedRead(true);
       }
     };
     
@@ -33,14 +65,35 @@ export default function BlogPostClient({
       });
     };
 
+    // Track page exit (for posthog analytics)
+    const handleBeforeUnload = () => {
+      const readingTime = Math.floor((Date.now() - startTime) / 1000);
+      trackEvent('blog_post_exit', {
+        blog_slug: slug,
+        reading_time_seconds: readingTime,
+        reading_progress: readingProgress,
+      });
+    };
+
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("beforeunload", handleBeforeUnload);
     
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [slug, startTime, readingProgress, hasTrackedRead]);
+
+  // Track social sharing (for posthog analytics)
+  const handleSocialShare = (platform: string, url: string) => {
+    trackEvent('blog_social_share', {
+      blog_slug: slug,
+      social_platform: platform,
+      share_url: url,
+    });
+  };
 
   return (
     <>
@@ -215,6 +268,7 @@ export default function BlogPostClient({
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-5 py-2.5 rounded-full bg-gradient-to-r from-green-300/10 to-emerald-500/10 text-green-300 hover:from-green-300/20 hover:to-emerald-500/20 transition-all border border-green-300/20 text-sm backdrop-blur-sm"
+              onClick={() => handleSocialShare('twitter', window.location.href)} // for posthog analytics
               whileHover={{ 
                 scale: 1.05, 
                 y: -2, 

@@ -14,8 +14,9 @@ export default async function BlogPage({
 }: { 
   searchParams: { page?: string } 
 }) {
+  const params = await searchParams;
   // Get page parameter from URL, default is page 1
-  const currentPage = searchParams?.page ? parseInt(searchParams.page) : 1;
+  const currentPage = params?.page ? parseInt(params.page) : 1;
   const postsPerPage = 5; // Number of posts per page
   
   // Fetch blog data from GitHub API
