@@ -57,7 +57,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           {/* Loading Screen */}
           <LoadingScreen />
-          
+
           <PostHogProvider>
             {/* Content wrapper */}
             <div className="content-fade-mask relative z-10">
@@ -65,16 +65,16 @@ export default function RootLayout({
                 <TransitionWrapper>{children}</TransitionWrapper>
               </div>
             </div>
-
-            {/* NavBar wrapper */}
-            <div className="relative z-50">
-              <NavBar />
-            </div>
-
-            <div className="relative z-[100]">
-              <BackToTop />
-            </div>
           </PostHogProvider>
+
+          {/* NavBar wrapper */}
+          <div className="relative z-50">
+            <NavBar />
+          </div>
+
+          <div className="relative z-[100]">
+            <BackToTop />
+          </div>
         </Suspense>
       </body>
     </html>
