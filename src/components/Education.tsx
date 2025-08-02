@@ -230,7 +230,7 @@ export default function Education() {
               
               {/* Title */}
               <div className="overflow-hidden">
-                <motion.a
+                <motion.span
                   className="text-xl font-bold inline-block relative"
                   // whileHover={{ scale: 1.02, x: 5 }}
                   // transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -249,7 +249,7 @@ export default function Education() {
                     animate={{ width: isHovered ? "100%" : "0%" }}
                     transition={{ duration: 0.3 }}
                   /> */}
-                </motion.a>
+                </motion.span>
               </div>
               
               {/* Position and date with animation */}
