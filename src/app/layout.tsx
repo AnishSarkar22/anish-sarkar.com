@@ -9,7 +9,7 @@ import LoadingScreen from "~/components/utils/LoadingScreen";
 import { PostHogProvider } from "~/components/utils/PostHogProvider";
 import { Suspense } from "react";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -27,15 +27,32 @@ export const metadata: Metadata = {
     default: "Anish Sarkar | Portfolio",
     template: "%s | Anish Sarkar",
   },
-  description: "University Undergrad, full time coder",
+  description: "University Undergrad, full time coder, and AIML enthusiast. Explore my projects, blog posts, and technical journey in backend development, machine learning, and modern web technologies.",
+  keywords: ["Anish Sarkar", "Portfolio", "Backend Developer", "AIML", "Machine Learning", "Web Development", "Python", "React", "Next.js", "Svelte"],
+  authors: [{ name: "Anish Sarkar" }],
+  creator: "Anish Sarkar",
   openGraph: {
-    title: "Anish Sarkar",
-    description: "University Undergrad, full time coder",
+    title: "Anish Sarkar | Portfolio",
+    description: "University Undergrad, full time coder, and AIML enthusiast. Explore my projects, blog posts, and technical journey.",
     url: siteUrl,
-    siteName: "Anish Sarkar",
+    siteName: "Anish Sarkar Portfolio",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: siteUrl + "/og/home",
+        width: 1200,
+        height: 630,
+        alt: "Anish Sarkar - Backend Developer & AIML Enthusiast",
+      }
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Anish Sarkar | Portfolio",
+    description: "University Undergrad, full time coder, and AIML enthusiast",
     images: [siteUrl + "/og/home"],
+    creator: "@AnishSarkar22",
   },
   robots: {
     index: true,
@@ -43,6 +60,9 @@ export const metadata: Metadata = {
     "max-video-preview": -1,
     "max-image-preview": "large",
     "max-snippet": -1,
+  },
+  verification: {
+    google: "your-google-verification-code", // Add if you have Google Search Console
   },
 };
 

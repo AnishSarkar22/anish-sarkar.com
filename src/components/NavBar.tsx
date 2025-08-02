@@ -3,6 +3,7 @@ import TransitionLink from "./utils/TransitionLink";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const NavBar = () => {
   const pathname = usePathname();

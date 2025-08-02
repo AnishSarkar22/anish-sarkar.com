@@ -2,6 +2,7 @@
 
 import { projectList } from "./Projects";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { trackEvent, trackProjectView } from "~/utils/posthog";
 
@@ -213,7 +214,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                   
                   {/* Content container with minimalist design */}
                   <div className="relative p-6 z-10 bg-zinc-900/20 backdrop-blur-sm">
-                    <a
+                    <Link
                       href={project.link}
                       className="block"
                     >
@@ -327,7 +328,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                           />
                         </motion.div>
                       </motion.div>
-                    </a>
+                    </Link>
                   </div>
                   
                   {/* Unique magnetic particles effect */}

@@ -234,12 +234,15 @@ export default function Socials() {
               onHoverStart={() => setHoveredItem(social.title)}
               onHoverEnd={() => setHoveredItem(null)}
             >
-              <a
+              <motion.a
                 href={social.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 py-3 px-4 rounded-lg relative z-10 group-hover:text-white transition-colors duration-300"
-                onClick={() => handleSocialClick(social.title, social.link)} // for posthog analytics
+                onMouseEnter={() => setHoveredItem(social.title)}
+                onMouseLeave={() => setHoveredItem(null)}
+                onClick={() => handleSocialClick(social.title.toLowerCase(), social.link)} // for posthog analytics
+                aria-label={`Visit ${social.title} profile`}
               >
                 {/* Cosmic background glow effect */}
                 <motion.div
@@ -616,7 +619,7 @@ export default function Socials() {
                     </>
                   )}
                 </AnimatePresence>
-              </a>
+              </motion.a>
             </motion.div>
           );
         })}
