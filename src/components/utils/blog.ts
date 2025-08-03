@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import fs from 'fs';
 import path from 'path';
+import { processMarkdown } from './markdown';
 
 export type Metadata = {
   title: string;
@@ -12,6 +13,7 @@ export type Metadata = {
 export type FrontmatterParseResult = {
   metadata: Metadata;
   content: string;
+  html: string;
 };
 
 export type MDXFileData = FrontmatterParseResult & {
@@ -37,18 +39,20 @@ export const fetchBlogPosts = cache(async (): Promise<MDXFileData[]> => {
     console.log("Found local markdown files:", mdFiles);
 
     // Process each file
-    const posts = mdFiles.map((fileName) => {
+    const posts = await Promise.all(mdFiles.map(async (fileName) => {
       const filePath = path.join(postsDirectory, fileName);
       const fileContent = fs.readFileSync(filePath, 'utf8');
       
       const { metadata, content } = parseFrontmatter(fileContent);
+      const html = await processMarkdown(content); // Process markdown to HTML
       
       return {
         slug: fileName.replace(/\.md$/, ''),
         metadata,
-        content
+        content,
+        html
       };
-    });
+    }));
 
     // Sort posts by date descending
     return posts.sort((a, b) => {
@@ -73,7 +77,6 @@ export const getAllBlogSlugs = cache(async (): Promise<string[]> => {
 // Function to get posts by slug
 export const getPostBySlug = cache(async (slug: string): Promise<MDXFileData | null> => {
   console.log("Fetching post for slug:", slug);
-  
   const posts = await fetchBlogPosts();
   console.log(
     "Available posts:",
@@ -114,5 +117,5 @@ function parseFrontmatter(fileContent: string): FrontmatterParseResult {
     }
   });
 
-  return { metadata: metadata as Metadata, content };
+  return { metadata: metadata as Metadata, content, html: '' };
 }
