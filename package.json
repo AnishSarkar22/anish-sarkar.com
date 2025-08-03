@@ -4,14 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "npm run validate-posts && next build",
     "check": "biome check .",
     "check:unsafe": "biome check --write --unsafe .",
     "check:write": "biome check --write .",
     "dev": "next dev --turbo",
     "preview": "next build && next start",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "validate-posts": "tsx scripts/validate-posts.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.2",
@@ -38,12 +39,8 @@
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^15.6.1",
     "react-tweet": "^3.2.2",
-    "rehype-autolink-headings": "^7.1.0",
     "rehype-katex": "^7.0.1",
     "rehype-pretty-code": "^0.14.1",
-    "rehype-raw": "^7.0.0",
-    "rehype-sanitize": "^6.0.0",
-    "rehype-slug": "^6.0.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",
@@ -53,7 +50,6 @@
     "sugar-high": "^0.9.3",
     "tailwind-merge": "^3.2.0",
     "type-mermaid": "^1.1.0",
-    "usehooks-ts": "^3.1.1",
     "zod": "^3.24.2"
   },
   "engines": {
@@ -69,6 +65,7 @@
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.2"
   },
   "ct3aMetadata": {
