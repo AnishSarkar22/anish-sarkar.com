@@ -1,4 +1,6 @@
 import { cache } from 'react';
+import fs from 'fs';
+import path from 'path';
 
 export type Metadata = {
   title: string;
@@ -16,58 +18,38 @@ export type MDXFileData = FrontmatterParseResult & {
   slug: string;
 };
 
-// Function to fetch cached data from GitHub API
+// Get the posts directory path
+const postsDirectory = path.join(process.cwd(), 'posts');
+
+// Function to fetch blog posts from local filesystem
 export const fetchBlogPosts = cache(async (): Promise<MDXFileData[]> => {
   try {
-    // use the github token if you want the "blog-data" repo to be private
-    const githubToken = process.env.NEXT_PUBLIC_BLOG_GITHUB_TOKEN;
-    // Fetch list of files from GitHub API
-    const response = await fetch(
-      'https://api.github.com/repos/AnishSarkar22/blog-data/contents',
-      {
-        headers: {
-          'Accept': 'application/vnd.github.v3+json',
-          ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
-        },
-        next: { revalidate: 60 }
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status}`);
+    // Check if posts directory exists
+    if (!fs.existsSync(postsDirectory)) {
+      console.warn('Posts directory not found');
+      return [];
     }
 
-    const files = await response.json();
+    // Get all markdown files
+    const fileNames = fs.readdirSync(postsDirectory);
+    const mdFiles = fileNames.filter(name => name.endsWith('.md'));
 
-    console.log("Fetched files from GitHub:", files);
-    
-    // Filter to only get markdown files
-    const mdFiles = files.filter((file: any) => 
-      file.name.endsWith('.md') && file.type === 'file'
-    );
+    console.log("Found local markdown files:", mdFiles);
 
-    // Fetch the contents of each file
-    const postsPromises = mdFiles.map(async (file: any) => {
-      const contentResponse = await fetch(file.download_url, {
-        next: { revalidate: 60 }
-      });
+    // Process each file
+    const posts = mdFiles.map((fileName) => {
+      const filePath = path.join(postsDirectory, fileName);
+      const fileContent = fs.readFileSync(filePath, 'utf8');
       
-      if (!contentResponse.ok) {
-        throw new Error(`Failed to fetch file content: ${contentResponse.status}`);
-      }
-      
-      const content = await contentResponse.text();
-      const { metadata, content: mdContent } = parseFrontmatter(content);
+      const { metadata, content } = parseFrontmatter(fileContent);
       
       return {
-        slug: file.name.replace(/\.md$/, ''),
+        slug: fileName.replace(/\.md$/, ''),
         metadata,
-        content: mdContent
+        content
       };
     });
 
-    const posts = await Promise.all(postsPromises);
-    
     // Sort posts by date descending
     return posts.sort((a, b) => {
       if (new Date(a.metadata.date) < new Date(b.metadata.date)) {
@@ -77,7 +59,7 @@ export const fetchBlogPosts = cache(async (): Promise<MDXFileData[]> => {
       }
     });
   } catch (error) {
-    console.error('Error fetching blog posts:', error);
+    console.error('Error reading local blog posts:', error);
     return [];
   }
 });

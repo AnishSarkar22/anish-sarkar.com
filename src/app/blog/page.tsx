@@ -6,9 +6,6 @@ import TransitionWrapper from "~/components/utils/TransitionWrapper";
 
 export const metadata: Metadata = blogPageMetadata;
 
-// Set revalidate for ISR to work
-export const revalidate = 60;
-
 export default async function BlogPage({ 
   searchParams 
 }: { 
@@ -19,7 +16,7 @@ export default async function BlogPage({
   const currentPage = params?.page ? parseInt(params.page) : 1;
   const postsPerPage = 5; // Number of posts per page
   
-  // Fetch blog data from GitHub API
+  // Fetch blog data from local files (will be cached)
   const allBlogPosts = await fetchBlogPosts();
   
   // Calculate total number of pages

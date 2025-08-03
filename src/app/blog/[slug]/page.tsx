@@ -10,9 +10,6 @@ import TransitionWrapper from "~/components/utils/TransitionWrapper";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
-// Set revalidate for ISR to work
-export const revalidate = 60;
-
 // Generates static parameters for all existing blog posts
 export async function generateStaticParams() {
   const slugs = await getAllBlogSlugs();
@@ -23,9 +20,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   if (!post) {
     return;
   }
@@ -54,16 +52,19 @@ export async function generateMetadata({
       description: post.metadata.description,
       card: "summary_large_image",
       creator: "@AnishSarkar22",
-      images: [
-         `${siteUrl}/og/blog?title=${encodedTitle}&top=${encodedDate}`,
-      ],
+      images: [`${siteUrl}/og/blog?title=${encodedTitle}&top=${encodedDate}`],
     },
   };
 }
 
 // Server component wrapper
-export default async function Post({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug);
+export default async function Post({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   if (!post) {
     notFound();
   }
@@ -97,7 +98,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
         />
 
         <Suspense fallback={<BlogPostSkeleton />}>
-          <BlogPostClient slug={post.slug}>
+          <BlogPostClient slug={slug}>
             <section className="max-w-4xl mx-auto px-6 font-mono text-md mt-5 p-8 relative">
               <div className="mb-8">
                 <BackButton />

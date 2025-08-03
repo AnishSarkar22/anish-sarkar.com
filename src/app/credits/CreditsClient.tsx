@@ -133,12 +133,6 @@ export default function CreditsPage() {
       category: "tools",
     },
     {
-      name: "Rehype",
-      description: "HTML processor powered by plugins",
-      url: "https://github.com/rehypejs/rehype",
-      category: "tools",
-    },
-    {
       name: "Remark",
       description: "Markdown processor powered by plugins",
       url: "https://github.com/remarkjs/remark",
