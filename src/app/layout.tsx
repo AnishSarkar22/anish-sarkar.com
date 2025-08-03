@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     "max-snippet": -1,
   },
   verification: {
-    google: "your-google-verification-code", // Add if you have Google Search Console
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION, // for Google Search Console
   },
 };
 
