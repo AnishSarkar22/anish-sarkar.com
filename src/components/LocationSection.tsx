@@ -2,12 +2,12 @@
 
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import maplibregl from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
 
 export default function LocationSection() {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<L.Map | null>(null);
+  const map = useRef<maplibregl.Map | null>(null);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
 
@@ -41,53 +41,62 @@ export default function LocationSection() {
   useEffect(() => {
     if (map.current || !mapContainer.current) return;
 
-    // Kolkata coordinates [lat, lng] for Leaflet
-    const kolkataCoords: [number, number] = [22.5726, 88.3639];
+    // Kolkata coordinates [lng, lat] for MapLibre GL (note the order change)
+    const kolkataCoords: [number, number] = [88.3639, 22.5726];
 
-    // Initialize Leaflet map
-    map.current = L.map(mapContainer.current, {
+    // Initialize MapLibre GL map
+    map.current = new maplibregl.Map({
+      container: mapContainer.current,
       center: kolkataCoords,
       zoom: 11,
-      zoomControl: false,
+      style: {
+        version: 8,
+        sources: {
+          "raster-tiles": {
+            type: "raster",
+            tiles: [
+              "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+            ],
+            tileSize: 256,
+            attribution: "Tiles © Esri",
+          },
+        },
+        layers: [
+          {
+            id: "simple-tiles",
+            type: "raster",
+            source: "raster-tiles",
+            minzoom: 0,
+            maxzoom: 18,
+          },
+        ],
+      },
       attributionControl: false,
-      scrollWheelZoom: true,
+      scrollZoom: true,
       doubleClickZoom: false,
       boxZoom: false,
       keyboard: false,
-      dragging: true,
+      dragPan: true,
     });
 
-    // Add ArcGIS raster tile layer
-    const tileLayer = L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-      {
-        attribution: "Tiles © Esri",
-        maxZoom: 18,
-      }
-    );
-
-    tileLayer.addTo(map.current);
-
-    // Create custom pulsing marker
+    // Create custom pulsing marker element
     const createPulsingMarker = () => {
-      const pulsingIcon = L.divIcon({
-        className: "pulsing-marker",
-        html: `
-          <div class="pulse-container">
-            <div class="pulse-outer"></div>
-            <div class="pulse-inner"></div>
-          </div>
-        `,
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-      });
-
-      return L.marker(kolkataCoords, { icon: pulsingIcon });
+      const el = document.createElement("div");
+      el.className = "pulsing-marker";
+      el.innerHTML = `
+        <div class="pulse-container">
+          <div class="pulse-outer"></div>
+          <div class="pulse-inner"></div>
+        </div>
+      `;
+      return el;
     };
 
     // Add marker to map
-    const marker = createPulsingMarker();
-    marker.addTo(map.current);
+    const markerElement = createPulsingMarker();
+    const marker = new maplibregl.Marker(markerElement)
+      .setLngLat(kolkataCoords)
+      .addTo(map.current);
 
     // Add custom CSS for pulsing animation
     const style = document.createElement("style");
@@ -141,8 +150,10 @@ export default function LocationSection() {
     `;
     document.head.appendChild(style);
 
-    // Set map as loaded
-    setMapLoaded(true);
+    // Set map as loaded when style loads
+    map.current.on("load", () => {
+      setMapLoaded(true);
+    });
 
     // Clean up on unmount
     return () => {
