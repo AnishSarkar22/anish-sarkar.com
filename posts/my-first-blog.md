@@ -82,9 +82,25 @@ graph TB
     class Internet,Email external
 ```
 
-temp:
+# List
+
 1. hola
 2. hello
 3. hi
 
+# Quotes
+
 > Testing the UI
+
+# Table
+
+| Header 1  | Header 2  | Header 3  |
+|-----------|-----------|-----------|
+| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
+| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
+| Row 3 Col 1 | Row 3 Col 2 | Row 3 Col 3 |
+
+
+# Link
+
+[link of something](https://anish-sarkar.com)

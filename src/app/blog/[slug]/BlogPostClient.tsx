@@ -5,6 +5,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import GitHubComments from "~/components/GitHubComments";
 import { trackEvent, trackBlogRead } from "~/utils/posthog";
+import dynamic from "next/dynamic";
+
+// Dynamically import mermaid to avoid SSR issues
+const MermaidInitializer = dynamic(
+  () => import("~/components/utils/MermaidInitializer"),
+  { ssr: false }
+);
 
 export default function BlogPostClient({ 
   children, 
@@ -97,6 +104,9 @@ export default function BlogPostClient({
 
   return (
     <>
+      {/* Initialize Mermaid */}
+      <MermaidInitializer />
+      
       {/* Reactive glow effect that follows mouse */}
       <div 
         className="fixed inset-0 opacity-30 pointer-events-none -z-5"

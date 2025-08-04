@@ -46,13 +46,21 @@ export default function BlogContent({ html }: BlogContentProps) {
         block.style.position = 'relative';
         block.appendChild(button);
       });
+
+      // Trigger Mermaid re-initialization after content is loaded
+      const mermaidElements = contentRef.current.querySelectorAll('.mermaid');
+      if (mermaidElements.length > 0) {
+        // Dispatch a custom event to trigger Mermaid re-initialization
+        const event = new CustomEvent('mermaidContentLoaded');
+        document.dispatchEvent(event);
+      }
     }
   }, [html]);
 
   return (
     <div 
       ref={contentRef}
-      className="mdx-content prose prose-invert max-w-none"
+      className="blog-content prose prose-invert max-w-none"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
