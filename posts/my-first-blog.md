@@ -82,17 +82,23 @@ graph TB
     class Internet,Email external
 ```
 
-# List
+## Numbered List
 
 1. hola
 2. hello
 3. hi
 
-# Quotes
+## List
+
+- hola
+- hello
+- hi
+
+## Quotes
 
 > Testing the UI
 
-# Table
+## Table
 
 | Header 1  | Header 2  | Header 3  |
 |-----------|-----------|-----------|
@@ -100,7 +106,8 @@ graph TB
 | Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
 | Row 3 Col 1 | Row 3 Col 2 | Row 3 Col 3 |
 
+---
 
-# Link
+## Link
 
 [link of something](https://anish-sarkar.com)
