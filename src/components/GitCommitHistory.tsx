@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchGitHubContributions } from "../utils/githubAPI";
-import GitCommitHistorySkeleton from "./GitCommitHistorySkeleton";
 
 interface ContributionDay {
   date: string;
@@ -265,7 +264,6 @@ export default function GitCommitHistory() {
   const [currentStreak, setCurrentStreak] = useState(0);
   const [longestStreak, setLongestStreak] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   // Memoized functions to avoid recreating on each render
   const getContributionColor = useCallback(
@@ -362,7 +360,6 @@ export default function GitCommitHistory() {
 
               setTimeout(() => {
                 if (isMounted) {
-                  setIsLoading(false);
                   setIsLoaded(true);
                 }
               }, 300);
@@ -522,7 +519,6 @@ export default function GitCommitHistory() {
                 setCurrentStreak(finalCurrentStreak);
                 setTimeout(() => {
                   if (isMounted) {
-                    setIsLoading(false);
                     setIsLoaded(true);
                   }
                 }, 300);
@@ -615,11 +611,6 @@ export default function GitCommitHistory() {
     );
   };
 
-  // Show skeleton while loading
-  if (isLoading) {
-    return <GitCommitHistorySkeleton />;
-  }
-
   return (
     <div className="w-full">
       <motion.div
@@ -708,7 +699,7 @@ export default function GitCommitHistory() {
       <motion.div
         className="relative overflow-hidden"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: isLoaded ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       >
         {/* Header with stats - simplified */}
@@ -716,7 +707,7 @@ export default function GitCommitHistory() {
           <motion.div
             className="flex items-center gap-1 mb-1"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
             <h3 className="text-xs font-medium text-green-400">
@@ -727,7 +718,7 @@ export default function GitCommitHistory() {
           <motion.div
             className="grid grid-cols-2 gap-1 text-[10px] mb-2"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ duration: 0.3, delay: 0.2 }}
           >
             <div className="flex items-center gap-1 rounded p-1">
@@ -842,7 +833,7 @@ export default function GitCommitHistory() {
             className="text-[8px] text-zinc-500/70 flex items-center cursor-pointer hover:text-zinc-400/80 transition-colors"
             onClick={handleHelpClick}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ duration: 0.3, delay: 0.3 }}
           >
             <div className="w-3 h-3 mr-0.5 rounded-full bg-zinc-800/30 flex items-center justify-center">
