@@ -28,6 +28,8 @@ export default function BlogContent({ html }: BlogContentProps) {
           if (href) {
             const target = document.querySelector(href);
             if (target) {
+              // Update the URL with the hash
+              window.history.pushState(null, '', href);
               target.scrollIntoView({ behavior: 'smooth' });
             }
           }
