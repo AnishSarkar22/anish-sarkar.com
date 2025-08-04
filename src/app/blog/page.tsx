@@ -27,6 +27,7 @@ export default async function BlogPage({
     slug: post.slug,
     title: post.metadata.title,
     date: post.metadata.date,
+    readingTime: post.metadata.readingTime,
   }));
 
   // Wrap Blog Client in Transition Wrapper

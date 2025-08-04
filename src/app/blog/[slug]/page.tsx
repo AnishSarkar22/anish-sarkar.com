@@ -35,6 +35,7 @@ export async function generateMetadata({
   return {
     title: post.metadata.title,
     description: post.metadata.description,
+    keywords: post.metadata.title.split(' ').concat(['backend development', 'programming', 'tech blog', 'Anish Sarkar']),
     openGraph: {
       title: post.metadata.title,
       description: post.metadata.description,
@@ -56,6 +57,9 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: `${siteUrl}/blog/${post.slug}`,
+    },
+    other: {
+      'reading-time': post.metadata.readingTime ? `${post.metadata.readingTime} minutes` : undefined,
     },
   };
 }
@@ -88,7 +92,19 @@ export default async function Post({
             author: {
               "@type": "Person",
               name: "Anish Sarkar",
+              url: siteUrl,
             },
+            publisher: {
+              "@type": "Person",
+              name: "Anish Sarkar",
+            },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `${siteUrl}/blog/${post.slug}`,
+            },
+            ...(post.metadata.readingTime && {
+              timeRequired: `PT${post.metadata.readingTime}M`,
+            }),
           }),
         }}
       />
@@ -113,6 +129,14 @@ export default async function Post({
                 <span className="text-gray-400">
                   {formatDate(post.metadata.date)}
                 </span>
+                {post.metadata.readingTime && (
+                  <>
+                    <span className="text-gray-600">•</span>
+                    <span className="text-gray-400">
+                      {post.metadata.readingTime} min read
+                    </span>
+                  </>
+                )}
               </div>
             </div>
 

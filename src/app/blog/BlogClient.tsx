@@ -17,6 +17,7 @@ type BlogPost = {
   slug: string;
   title: string;
   date: string;
+  readingTime?: number;
 };
 
 interface BlogClientProps {
@@ -544,8 +545,6 @@ export default function BlogClient({
                           fill="none" 
                           viewBox="0 0 24 24" 
                           stroke="currentColor"
-                          // animate={{ rotate: hoveredBlog === blog.slug ? [0, 15, 0, -15, 0] : 0 }}
-                          // transition={{ duration: 2, repeat: hoveredBlog === blog.slug ? Infinity : 0, repeatDelay: 1 }}
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </motion.svg>
@@ -556,6 +555,23 @@ export default function BlogClient({
                             day: "numeric",
                           })}
                         </p>
+                        {blog.readingTime && (
+                          <>
+                            <span className="mx-2 text-gray-600">•</span>
+                            <motion.svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              className="h-4 w-4 mr-1 text-green-300/70" 
+                              fill="none" 
+                              viewBox="0 0 24 24" 
+                              stroke="currentColor"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </motion.svg>
+                            <p className="text-xs">
+                              {blog.readingTime} min read
+                            </p>
+                          </>
+                        )}
                       </div>
                       
                       {/* Read more link with hover animation */}
