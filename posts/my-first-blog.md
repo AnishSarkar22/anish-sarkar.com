@@ -26,21 +26,21 @@ Let me show you how I typically structure backend systems:
 graph TB
     %% User Interface
     User[User Dashboard]
-    
+
     %% Core Application
     subgraph "Loopr Backend"
         API[SvelteKit App<br/>REST API]
         Appwrite[Appwrite BaaS<br/>Auth + Database]
     end
-    
+
     %% Serverless Functions
     subgraph "Automated Functions"
         Monitor[URL Monitor]
-        Workers[Load Balancer] 
+        Workers[Load Balancer]
         Webhooks[Webhook Scheduler]
         Cleanup[Data Cleanup]
     end
-    
+
     %% Data Storage
     subgraph "Database Collections"
         URLs[(URLs)]
@@ -48,11 +48,11 @@ graph TB
         Nodes[(Worker Nodes)]
         Alerts[(Notifications)]
     end
-    
+
     %% External
     Internet[Monitored URLs<br/>External APIs]
     Email[SMTP Alerts]
-    
+
     %% Connections
     User --> API
     API --> Appwrite
@@ -60,22 +60,22 @@ graph TB
     Appwrite --> Workers
     Appwrite --> Webhooks
     Appwrite --> Cleanup
-    
+
     Monitor --> URLs
     Monitor --> Results
     Monitor --> Internet
     Monitor --> Alerts
-    
+
     Workers --> URLs
     Workers --> Nodes
-    
+
     Webhooks --> Internet
-    
+
     Cleanup --> Results
     Cleanup --> URLs
-    
+
     Alerts --> Email
-    
+
     %% Styling
     class Monitor,Workers,Webhooks,Cleanup functions
     class URLs,Results,Nodes,Alerts data
@@ -100,8 +100,8 @@ graph TB
 
 ## Table
 
-| Header 1  | Header 2  | Header 3  |
-|-----------|-----------|-----------|
+| Header 1    | Header 2    | Header 3    |
+| ----------- | ----------- | ----------- |
 | Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
 | Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
 | Row 3 Col 1 | Row 3 Col 2 | Row 3 Col 3 |
