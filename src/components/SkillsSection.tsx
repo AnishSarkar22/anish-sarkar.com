@@ -86,13 +86,13 @@ const skills: Skill[] = [
     color: SKILL_COLORS.javascript,
     category: "Languages",
   },
-  {
-    id: "typescript",
-    name: "TypeScript",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-    color: SKILL_COLORS.typescript,
-    category: "Languages",
-  },
+  // {
+  //   id: "typescript",
+  //   name: "TypeScript",
+  //   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+  //   color: SKILL_COLORS.typescript,
+  //   category: "Languages",
+  // },
   // {
   //   id: "node",
   //   name: "Node.js",
@@ -122,13 +122,13 @@ const skills: Skill[] = [
     color: SKILL_COLORS.flask,
     category: "Backend",
   },
-  {
-    id: "react",
-    name: "React",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-    color: SKILL_COLORS.react,
-    category: "Frontend",
-  },
+  // {
+  //   id: "react",
+  //   name: "React",
+  //   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+  //   color: SKILL_COLORS.react,
+  //   category: "Frontend",
+  // },
   {
     id: "html",
     name: "HTML5",
