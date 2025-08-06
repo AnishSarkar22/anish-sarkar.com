@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Blog",
     description: "Step into Anish’s world of backend architecture, AI-driven solutions, and creative approaches to solving complex tech challenges.",
-    url: siteUrl + "/blog",
+    url: `${siteUrl}/blog`,
     images: [
       {
-         url: siteUrl + "/og/home?title=blog",
+         url: `${siteUrl}/og/home?title=blog`,
       },
     ],
   },
@@ -20,6 +20,6 @@ export const metadata: Metadata = {
     description: "Step into Anish’s world of backend architecture, AI-driven solutions, and creative approaches to solving complex tech challenges.",
     card: "summary_large_image",
     creator: "@AnishSarkar22",
-    images: [siteUrl + "/og/home?title=blog"],
+    images: [`${siteUrl}/og/home?title=blog`],
   },
 };

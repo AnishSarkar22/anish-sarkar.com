@@ -170,22 +170,22 @@ export default function LocationSection() {
 
   return (
     <motion.div
-      className="text-white mb-16 relative will-change-transform"
+      className="relative mb-16 text-white will-change-transform"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.h1
-        className="text-2xl font-bold text-white relative inline-block"
+        className="relative inline-block font-bold text-2xl text-white"
         variants={titleVariants}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
         whileHover={{ scale: 1.03 }}
       >
-        <span className="text-green-300 inline-block will-change-transform">
+        <span className="inline-block text-green-300 will-change-transform">
           &gt;
         </span>{" "}
-        <span className="relative group">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white bg-[length:200%_100%] animate-shimmer">
+        <span className="group relative">
+          <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
             location
           </span>
 
@@ -200,9 +200,9 @@ export default function LocationSection() {
         </span>
       </motion.h1>
 
-      <div className="mt-10 relative">
+      <div className="relative mt-10">
         <motion.div
-          className="relative rounded-xl overflow-hidden"
+          className="relative overflow-hidden rounded-xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{
             opacity: 1,
@@ -219,12 +219,12 @@ export default function LocationSection() {
           {/* Map container */}
           <div
             ref={mapContainer}
-            className="w-full h-[400px] rounded-xl relative z-10"
+            className="relative z-10 h-[400px] w-full rounded-xl"
           />
 
           {/* Overlay with glass effect */}
           <motion.div
-            className="absolute inset-0 pointer-events-none z-20 rounded-xl overflow-hidden"
+            className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-xl"
             initial={{ opacity: 0 }}
             animate={{
               opacity: hoveredItem === "map" ? 1 : 0,
@@ -235,7 +235,7 @@ export default function LocationSection() {
 
             {/* Animated border */}
             <motion.div
-              className="absolute top-0 left-0 w-full h-[1px]"
+              className="absolute top-0 left-0 h-[1px] w-full"
               style={{
                 background:
                   "linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.7), transparent)",
@@ -245,12 +245,12 @@ export default function LocationSection() {
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
               }}
             />
             <motion.div
-              className="absolute bottom-0 right-0 w-full h-[1px]"
+              className="absolute right-0 bottom-0 h-[1px] w-full"
               style={{
                 background:
                   "linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.7), transparent)",
@@ -260,12 +260,12 @@ export default function LocationSection() {
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
               }}
             />
             <motion.div
-              className="absolute left-0 top-0 h-full w-[1px]"
+              className="absolute top-0 left-0 h-full w-[1px]"
               style={{
                 background:
                   "linear-gradient(180deg, transparent, rgba(52, 211, 153, 0.7), transparent)",
@@ -275,7 +275,7 @@ export default function LocationSection() {
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
               }}
             />
@@ -290,7 +290,7 @@ export default function LocationSection() {
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
               }}
             />
@@ -298,19 +298,19 @@ export default function LocationSection() {
 
           {/* Loading indicator */}
           {!mapLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-zinc-900/80 z-30">
+            <div className="absolute inset-0 z-30 flex items-center justify-center bg-zinc-900/80">
               <div className="flex space-x-2">
-                {[...Array(3)].map((_, i) => (
+                {["dot-1", "dot-2", "dot-3"].map((dotKey, i) => (
                   <motion.div
-                    key={i}
-                    className="w-3 h-3 rounded-full bg-green-300"
+                    key={dotKey}
+                    className="h-3 w-3 rounded-full bg-green-300"
                     animate={{
                       scale: [1, 1.5, 1],
                       opacity: [0.3, 1, 0.3],
                     }}
                     transition={{
                       duration: 1,
-                      repeat: Infinity,
+                      repeat: Number.POSITIVE_INFINITY,
                       delay: i * 0.2,
                       ease: "easeInOut",
                     }}
@@ -323,7 +323,7 @@ export default function LocationSection() {
 
         {/* Location info */}
         <motion.div
-          className="mt-6 relative pl-6"
+          className="relative mt-6 pl-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{
             opacity: 1,
@@ -333,7 +333,7 @@ export default function LocationSection() {
         >
           {/* Circle indicator */}
           <motion.div
-            className="absolute left-0 top-1.5 w-3 h-3 rounded-full bg-green-300"
+            className="absolute top-1.5 left-0 h-3 w-3 rounded-full bg-green-300"
             animate={{
               scale: [1, 1.2, 1],
               boxShadow: [
@@ -344,20 +344,20 @@ export default function LocationSection() {
             }}
             transition={{
               duration: 2,
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
               repeatType: "reverse",
             }}
           />
 
           <motion.h3
-            className="text-xl font-medium text-green-300"
+            className="font-medium text-green-300 text-xl"
             whileHover={{ scale: 1.02 }}
           >
             Kolkata, West Bengal, India
           </motion.h3>
 
           <motion.p
-            className="text-zinc-400 mt-2"
+            className="mt-2 text-zinc-400"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}

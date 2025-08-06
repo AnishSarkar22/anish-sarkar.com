@@ -1,6 +1,6 @@
 import { cache } from 'react';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { processMarkdown } from './markdown';
 
 export type Metadata = {
@@ -65,9 +65,8 @@ export const fetchBlogPosts = cache(async (): Promise<MDXFileData[]> => {
     return posts.sort((a, b) => {
       if (new Date(a.metadata.date) < new Date(b.metadata.date)) {
         return 1;
-      } else {
-        return -1;
       }
+        return -1;
     });
   } catch (error) {
     console.error('Error reading local blog posts:', error);
@@ -122,14 +121,14 @@ function parseFrontmatter(fileContent: string): FrontmatterParseResult {
   const frontmatterLines = frontmatter.trim().split("\n");
   const metadata: Partial<Metadata> = {};
 
-  frontmatterLines.forEach((line) => {
+  for (const line of frontmatterLines) {
     const [key, ...values] = line.split(": ");
     let value = values.join(": ").trim();
     value = value.replace(/^['"](.*)['"]$/, "$1");
     if (key && value) {
       metadata[key.trim() as keyof Metadata] = value;
     }
-  });
+  }
 
   return { metadata: metadata as Metadata, content, html: '' };
 }

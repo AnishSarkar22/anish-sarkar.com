@@ -301,7 +301,7 @@ const SkillItem = memo(
     return (
       <motion.div
         ref={itemRef}
-        className="relative flex items-center justify-between rounded-xl p-5 backdrop-blur-sm group overflow-hidden"
+        className="group relative flex items-center justify-between overflow-hidden rounded-xl p-5 backdrop-blur-sm"
         style={{
           backgroundColor: isHovered
             ? `${skill.color}10`
@@ -332,11 +332,10 @@ const SkillItem = memo(
         {/* Hover particle effects */}
         <AnimatePresence>
           {isHovered && (
-            <>
-              {particles.map((particle, i) => (
+            particles.map((particle) => (
                 <motion.div
-                  key={`particle-${i}`}
-                  className="absolute rounded-full z-0 pointer-events-none"
+                  key={`particle-${particle.x}-${particle.y}-${particle.size}-${particle.delay}`}
+                  className="pointer-events-none absolute z-0 rounded-full"
                   initial={{
                     opacity: 0,
                     scale: 0,
@@ -365,8 +364,7 @@ const SkillItem = memo(
                     boxShadow: `0 0 ${particle.size * 2}px ${skill.color}`,
                   }}
                 />
-              ))}
-            </>
+              ))
           )}
         </AnimatePresence>
 
@@ -374,7 +372,7 @@ const SkillItem = memo(
         {isHovered && (
           <>
             <motion.div
-              className="absolute top-0 left-0 w-full h-[1.5px]"
+              className="absolute top-0 left-0 h-[1.5px] w-full"
               style={{
                 background: `linear-gradient(90deg, transparent, ${skill.color}, transparent)`,
               }}
@@ -383,12 +381,12 @@ const SkillItem = memo(
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
               }}
             />
             <motion.div
-              className="absolute bottom-0 right-0 w-full h-[1.5px]"
+              className="absolute right-0 bottom-0 h-[1.5px] w-full"
               style={{
                 background: `linear-gradient(90deg, transparent, ${skill.color}, transparent)`,
               }}
@@ -397,12 +395,12 @@ const SkillItem = memo(
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
               }}
             />
             <motion.div
-              className="absolute left-0 top-0 h-full w-[1.5px]"
+              className="absolute top-0 left-0 h-full w-[1.5px]"
               style={{
                 background: `linear-gradient(180deg, transparent, ${skill.color}, transparent)`,
               }}
@@ -411,7 +409,7 @@ const SkillItem = memo(
               }}
               transition={{
                 duration: 2.5,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
               }}
             />
@@ -425,7 +423,7 @@ const SkillItem = memo(
               }}
               transition={{
                 duration: 2.5,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
               }}
             />
@@ -435,7 +433,7 @@ const SkillItem = memo(
         {/* Mouse glow effect */}
         {isHovered && (
           <motion.div
-            className="absolute inset-0 -z-10 opacity-60"
+            className="-z-10 absolute inset-0 opacity-60"
             style={{
               background: `radial-gradient(circle at center, ${skill.color}30 0%, transparent 70%)`,
               filter: "blur(20px)",
@@ -448,7 +446,7 @@ const SkillItem = memo(
         {/* Skill Content */}
         <div className="flex items-center space-x-4">
           <motion.div
-            className="flex items-center justify-center w-12 h-12 rounded-lg relative"
+            className="relative flex h-12 w-12 items-center justify-center rounded-lg"
             style={{
               backgroundColor: isHovered
                 ? `${skill.color}20`
@@ -467,13 +465,13 @@ const SkillItem = memo(
             }
             transition={{
               duration: 2,
-              repeat: isHovered ? Infinity : 0,
+              repeat: isHovered ? Number.POSITIVE_INFINITY : 0,
               repeatType: "reverse",
             }}
           >
             {/* Skill Logo */}
             <motion.div
-              className="relative w-8 h-8"
+              className="relative h-8 w-8"
               animate={
                 isHovered
                   ? {
@@ -485,7 +483,7 @@ const SkillItem = memo(
                     }
                   : {}
               }
-              transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
+              transition={{ duration: 2, repeat: isHovered ? Number.POSITIVE_INFINITY : 0 }}
             >
               <Image
                 src={skill.logo}
@@ -507,7 +505,7 @@ const SkillItem = memo(
             {/* Halo effect */}
             {isHovered && (
               <motion.div
-                className="absolute inset-0 rounded-lg -z-10"
+                className="-z-10 absolute inset-0 rounded-lg"
                 initial={{ opacity: 0 }}
                 animate={{
                   opacity: [0.2, 0.6, 0.2],
@@ -515,7 +513,7 @@ const SkillItem = memo(
                 }}
                 transition={{
                   duration: 2,
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   repeatType: "reverse",
                 }}
                 style={{
@@ -528,7 +526,7 @@ const SkillItem = memo(
 
           <div>
             <motion.h3
-              className="text-base font-medium mb-1"
+              className="mb-1 font-medium text-base"
               animate={{
                 color: isHovered ? skill.color : "#fff",
                 textShadow: isHovered ? `0 0 10px ${skill.color}50` : "none",
@@ -540,7 +538,7 @@ const SkillItem = memo(
 
             {/* Show categories */}
             <motion.div
-              className="text-xs font-light opacity-70"
+              className="font-light text-xs opacity-70"
               animate={{
                 opacity: isHovered ? 0.9 : 0.7,
                 color: isHovered ? skill.color : "#aaa",
@@ -575,16 +573,16 @@ const CategorySection = memo(
     return (
       <div className="mb-10">
         <motion.h2
-          className="text-xl font-semibold mb-4 text-white/90 relative inline-block"
+          className="relative mb-4 inline-block font-semibold text-white/90 text-xl"
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <span className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white">
+          <span className="relative z-10 bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
             {category}
           </span>
           <motion.span
-            className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
+            className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -592,7 +590,7 @@ const CategorySection = memo(
           />
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {skills
             .filter((skill) => skill.category === category)
             .map((skill, index) => (
@@ -646,28 +644,28 @@ export default function SkillsSection() {
   return (
     <motion.div
       ref={sectionRef}
-      className="mb-16 text-white relative will-change-transform"
+      className="relative mb-16 text-white will-change-transform"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.h1
-        className="text-2xl font-bold text-white relative inline-block"
+        className="relative inline-block font-bold text-2xl text-white"
         variants={titleVariants}
         whileHover={{ scale: 1.03 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
       >
-        <span className="text-green-300 inline-block will-change-transform">
+        <span className="inline-block text-green-300 will-change-transform">
           &gt;
         </span>{" "}
-        <span className="relative group">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white bg-[length:200%_100%] animate-shimmer">
+        <span className="group relative">
+          <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
             skills
           </span>
 
           {/* Animated underline with glow */}
           {/* <motion.span
-            className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
+            className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 1, delay: 0.5 }}

@@ -22,8 +22,11 @@ const TOKEN_STORAGE_KEYS = {
 };
 
 export function getSpotifyAuthUrl() {
+  if (!SPOTIFY_CLIENT_ID) {
+    throw new Error("SPOTIFY_CLIENT_ID is not defined");
+  }
   const params = new URLSearchParams({
-    client_id: SPOTIFY_CLIENT_ID!,
+    client_id: SPOTIFY_CLIENT_ID,
     response_type: "code",
     scope: SCOPES.join(" "),
     show_dialog: "true",
@@ -62,11 +65,11 @@ export async function refreshAccessToken() {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Basic ${btoa(`${SPOTIFY_CLIENT_ID!}:${SPOTIFY_CLIENT_SECRET!}`)}`,
+      Authorization: `Basic ${btoa(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`)}`,
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: REFRESH_TOKEN!,
+      refresh_token: REFRESH_TOKEN || "",
     }),
   });
 

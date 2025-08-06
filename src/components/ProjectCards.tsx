@@ -39,7 +39,15 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
   }, []);
 
   // Track project card interaction (for posthog analytics)
-  const handleProjectClick = (project: any) => {
+  interface Project {
+    title: string;
+    link: string;
+    description: string;
+    technologies: string[];
+    featured?: boolean;
+  }
+
+  const handleProjectClick = (project: Project) => {
     trackProjectView(project.title, project.link);
     trackEvent('project_card_click', {
       project_title: project.title,
@@ -49,7 +57,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
     });
   };
   // for posthog analytics
-  const handleProjectHover = (project: any) => {
+  const handleProjectHover = (project: Project) => {
     trackEvent('project_card_hover', {
       project_title: project.title,
       project_featured: project.featured || false,
@@ -57,9 +65,9 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
   };
 
   return (
-    <div ref={containerRef} className="text-white my-10 relative">
+    <div ref={containerRef} className="relative my-10 text-white">
       {/* Subtle background effect */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
+      <div className="-z-10 absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.02),transparent_70%)]" />
       </div>
 
@@ -71,20 +79,21 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className="text-center py-20"
+            className="py-20 text-center"
           >
             <motion.div
-              className="inline-block text-green-300/50 mb-4"
+              className="mb-4 inline-block text-green-300/50"
               animate={{ 
                 rotate: [0, 5, 0, -5, 0],
               }}
-              transition={{ duration: 6, repeat: Infinity }}
+              transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <title>Magnifying glass icon</title>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </motion.div>
-            <h3 className="text-xl font-medium text-white/80 mb-2">No projects found</h3>
+            <h3 className="mb-2 font-medium text-white/80 text-xl">No projects found</h3>
             <p className="text-gray-400/70 text-sm">Try selecting a different category</p>
           </motion.div>
         ) : (
@@ -101,7 +110,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
               return (
                 <motion.div
                   key={project.title}
-                  className="relative overflow-hidden rounded-lg border border-zinc-800/50 group cursor-pointer"
+                  className="group relative cursor-pointer overflow-hidden rounded-lg border border-zinc-800/50"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ 
@@ -122,13 +131,14 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                 >
                   {/* Liquid gradient border effect */}
                   <motion.div 
-                    className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none"
+                    className="pointer-events-none absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: isHovered ? 1 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
                     {/* Liquid gradient that moves with mouse */}
-                    <svg className="absolute inset-0 w-full h-full">
+                    <svg className="absolute inset-0 h-full w-full">
+                      <title>Liquid gradient border effect</title>
                       <defs>
                         <linearGradient id={`gradient-${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
                           <motion.stop 
@@ -137,7 +147,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                               stopColor: ['#10b981', '#86efac', '#10b981'],
                               stopOpacity: [0.7, 1, 0.7]
                             }}
-                            transition={{ duration: 3, repeat: Infinity }}
+                            transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
                           />
                           <motion.stop 
                             offset="50%" 
@@ -145,7 +155,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                               stopColor: ['#86efac', '#10b981', '#86efac'],
                               stopOpacity: [1, 0.7, 1]
                             }}
-                            transition={{ duration: 3, repeat: Infinity }}
+                            transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
                           />
                           <motion.stop 
                             offset="100%" 
@@ -153,7 +163,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                               stopColor: ['#10b981', '#86efac', '#10b981'],
                               stopOpacity: [0.7, 1, 0.7]
                             }}
-                            transition={{ duration: 3, repeat: Infinity }}
+                            transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
                           />
                         </linearGradient>
                         <filter id={`glow-${index}`} x="-20%" y="-20%" width="140%" height="140%">
@@ -178,7 +188,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                         transition={{ 
                           strokeDashoffset: { 
                             duration: 5, 
-                            repeat: Infinity, 
+                            repeat: Number.POSITIVE_INFINITY, 
                             ease: "linear" 
                           }
                         }}
@@ -189,7 +199,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                   {/* Magnetic liquid blob effect */}
                   {isHovered && (
                     <motion.div 
-                      className="absolute pointer-events-none"
+                      className="pointer-events-none absolute"
                       initial={{ opacity: 0 }}
                       animate={{ 
                         opacity: 1,
@@ -213,7 +223,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                   )}
                   
                   {/* Content container with minimalist design */}
-                  <div className="relative p-6 z-10 bg-zinc-900/20 backdrop-blur-sm">
+                  <div className="relative z-10 bg-zinc-900/20 p-6 backdrop-blur-sm">
                     <Link
                       href={project.link}
                       className="block"
@@ -221,7 +231,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                       {/* Minimalist title with elegant underline effect */}
                       <div className="overflow-hidden">
                         <motion.h3 
-                          className="text-xl font-medium inline-block"
+                          className="inline-block font-medium text-xl"
                           animate={{ 
                             color: isHovered ? '#86efac' : '#ffffff',
                           }}
@@ -229,7 +239,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                         >
                           {project.title}
                           <motion.div 
-                            className="h-px bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 mt-1"
+                            className="mt-1 h-px bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
                             initial={{ scaleX: 0 }}
                             animate={{ 
                               scaleX: isHovered ? 1 : 0,
@@ -241,7 +251,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 
                       {/* Clean description with subtle animation */}
                       <motion.p 
-                        className="text-gray-300/80 mt-3 text-sm leading-relaxed"
+                        className="mt-3 text-gray-300/80 text-sm leading-relaxed"
                         animate={{ 
                           opacity: isHovered ? 1 : 0.7,
                         }}
@@ -251,11 +261,11 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                       </motion.p>
 
                       {/* Minimalist technology tags */}
-                      <div className="flex flex-wrap gap-2 mt-4">
+                      <div className="mt-4 flex flex-wrap gap-2">
                         {project.technologies.map((tech, techIndex) => (
                           <motion.span 
                             key={tech}
-                            className="text-xs px-2.5 py-0.5 rounded-full border"
+                            className="rounded-full border px-2.5 py-0.5 text-xs"
                             initial={{ opacity: 0, x: -5 }}
                             animate={{ 
                               opacity: 1,
@@ -291,7 +301,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                         transition={{ duration: 0.3 }}
                       >
                         <motion.div 
-                          className="inline-flex items-center text-green-300 text-sm font-medium relative"
+                          className="relative inline-flex items-center font-medium text-green-300 text-sm"
                           initial={{ x: -10, opacity: 0 }}
                           animate={{ 
                             x: isHovered ? 0 : -10,
@@ -301,11 +311,12 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                         >
                           View Project
                           <svg 
-                            className="ml-1.5 w-4 h-4" 
+                            className="ml-1.5 h-4 w-4" 
                             fill="none" 
                             stroke="currentColor" 
                             viewBox="0 0 24 24"
                           >
+                            <title>Arrow right icon</title>
                             <path 
                               strokeLinecap="round" 
                               strokeLinejoin="round" 
@@ -341,7 +352,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                         
                         return (
                           <motion.div
-                            key={`magnetic-particle-${i}`}
+                            key={`${project.title}-magnetic-particle-${i}`}
                             className="absolute rounded-full bg-green-300/80"
                             initial={{ 
                               opacity: 0,
@@ -354,12 +365,12 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                               scale: [0, 1, 0],
                               x: [
                                 `${initialX}%`,
-                                `${mousePosition.x / containerRef.current!.offsetWidth * 100}%`,
+                                `${mousePosition.x / containerRef.current?.offsetWidth * 100}%`,
                                 `${initialX}%`
                               ],
                               y: [
                                 `${initialY}%`,
-                                `${mousePosition.y / (containerRef.current!.offsetHeight / filteredProjects.length) * 100}%`,
+                                `${mousePosition.y / (containerRef.current?.offsetHeight / filteredProjects.length) * 100}%`,
                                 `${initialY}%`
                               ]
                             }}
@@ -367,7 +378,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                             transition={{ 
                               duration: 2 + Math.random() * 2,
                               ease: "easeInOut",
-                              repeat: Infinity,
+                              repeat: Number.POSITIVE_INFINITY,
                               repeatType: "loop"
                             }}
                             style={{
@@ -384,12 +395,13 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                   {/* Unique hover interaction effect - liquid splash */}
                   {isHovered && (
                     <motion.div
-                      className="absolute inset-0 pointer-events-none overflow-hidden"
+                      className="pointer-events-none absolute inset-0 overflow-hidden"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                     >
-                      <svg className="absolute inset-0 w-full h-full">
+                      <svg className="absolute inset-0 h-full w-full">
+                        <title>Liquid splash effect</title>
                         <defs>
                           <radialGradient id={`splash-${index}`} cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                             <stop offset="0%" stopColor="#86efac" stopOpacity="0.3" />
@@ -408,7 +420,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
                           }}
                           transition={{ 
                             duration: 1,
-                            repeat: Infinity,
+                            repeat: Number.POSITIVE_INFINITY,
                             repeatDelay: 0.5
                           }}
                         />

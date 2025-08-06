@@ -11,8 +11,8 @@ import { visit } from "unist-util-visit";
 
 // Custom plugin to handle Mermaid blocks for better SEO
 function remarkMermaid() {
-  return (tree: any) => {
-    visit(tree, "code", (node: any) => {
+  return (tree: import('unist').Node) => {
+    visit(tree, "code", (node: import("mdast").Code) => {
       if (node.lang === "mermaid") {
         // Convert code block to HTML with proper semantic markup
         const mermaidCode = node.value;

@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: siteUrl + "/og/home",
+        url: `${siteUrl}/og/home`,
         width: 1200,
         height: 630,
         alt: "Anish Sarkar - Backend Developer & AIML Enthusiast",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Anish Sarkar | Portfolio",
     description: "University Undergrad, full time coder, and AIML enthusiast",
-    images: [siteUrl + "/og/home"],
+    images: [`${siteUrl}/og/home`],
     creator: "@AnishSarkar22",
   },
   robots: {
@@ -72,10 +72,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-foreground font-mono relative overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} relative overflow-x-hidden bg-black font-mono text-foreground antialiased`}
       >
         {/* Loading Screen */}
-        <LoadingScreen children={undefined} />
+        <LoadingScreen />
 
         {/* NavBar wrapper */}
         <div className="relative z-50">
@@ -85,7 +85,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <PostHogProvider>
             {/* Content wrapper */}
-            <div className="content-fade-mask relative z-10">
+            <div className="relative z-10 content-fade-mask">
               <div className="relative">
                 <TransitionWrapper>{children}</TransitionWrapper>
               </div>

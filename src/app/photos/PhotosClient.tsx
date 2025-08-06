@@ -143,14 +143,14 @@ export default function PhotosClient() {
   return (
     <main 
       ref={mainRef} 
-      className="relative min-h-screen text-white p-8 md:p-16 lg:p-24 max-w-7xl mx-auto overflow-hidden"
+      className="relative mx-auto min-h-screen max-w-7xl overflow-hidden p-8 text-white md:p-16 lg:p-24"
     >
       {/* Enhanced cosmic background elements */}
-      <div className="fixed inset-0 -z-10 bg-black pointer-events-none">
-        <div className="absolute inset-0 bg-black pointer-events-none" />
+      <div className="-z-10 pointer-events-none fixed inset-0 bg-black">
+        <div className="pointer-events-none absolute inset-0 bg-black" />
         
         <motion.div 
-          className="absolute top-0 left-0 w-full h-1 pointer-events-none"
+          className="pointer-events-none absolute top-0 left-0 h-1 w-full"
           style={{
             background: "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent)",
           }}
@@ -161,13 +161,13 @@ export default function PhotosClient() {
           }}
           transition={{ 
             duration: 8, 
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: "easeInOut"
           }}
         />
         
         <motion.div 
-          className="absolute bottom-0 right-0 w-1 h-full pointer-events-none"
+          className="pointer-events-none absolute right-0 bottom-0 h-full w-1"
           style={{
             background: "linear-gradient(to top, transparent, rgba(52, 211, 153, 0.2), transparent)",
           }}
@@ -178,39 +178,42 @@ export default function PhotosClient() {
           }}
           transition={{ 
             duration: 10, 
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: "easeInOut",
             delay: 1
           }}
         />
         
         {/* Animated particles */}
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={`particle-${i}`}
-            className="absolute w-1 h-1 rounded-full bg-green-300/30 pointer-events-none"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              opacity: [0, 0.8, 0],
-              scale: [0, 1, 0.5],
-              y: [0, -Math.random() * 100],
-              x: [0, (Math.random() - 0.5) * 50],
-            }}
-            transition={{
-              duration: 5 + Math.random() * 10,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
+        {[...Array(15)].map(() => {
+          const particleKey = `particle-${crypto.randomUUID()}`;
+          return (
+            <motion.div
+              key={particleKey}
+              className="pointer-events-none absolute h-1 w-1 rounded-full bg-green-300/30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                opacity: [0, 0.8, 0],
+                scale: [0, 1, 0.5],
+                y: [0, -Math.random() * 100],
+                x: [0, (Math.random() - 0.5) * 50],
+              }}
+              transition={{
+                duration: 5 + Math.random() * 10,
+                repeat: Number.POSITIVE_INFINITY,
+                delay: Math.random() * 5,
+                ease: "easeInOut",
+              }}
+            />
+          );
+        })}
         
-        {/* Reactive glow effect that follows mouse - sửa để tránh reflow */}
+        {/* Reactive glow effect that follows mouse - fix to avoid reflow */}
         <motion.div
-          className="absolute w-[500px] h-[500px] rounded-full pointer-events-none opacity-20 -z-10"
+          className="-z-10 pointer-events-none absolute h-[500px] w-[500px] rounded-full opacity-20"
           style={{
             background: "radial-gradient(circle, rgba(52, 211, 153, 0.15) 0%, transparent 70%)",
             left: mousePosition.x - 250,
@@ -222,7 +225,7 @@ export default function PhotosClient() {
         />
       </div>
 
-      <div className="flex-1 relative z-10">
+      <div className="relative z-10 flex-1">
         {/* Enhanced header with animated styling */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -231,7 +234,7 @@ export default function PhotosClient() {
           className="mb-16"
         >
           <motion.h1 
-            className="text-5xl font-bold text-white relative inline-block"
+            className="relative inline-block font-bold text-5xl text-white"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -240,7 +243,7 @@ export default function PhotosClient() {
             // whileHover={{ scale: 1.03 }}
             // transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <span className="text-green-300 inline-block will-change-transform">
+            <span className="inline-block text-green-300 will-change-transform">
               &gt;
             </span>{" "}
             <span className="relative">
@@ -248,7 +251,7 @@ export default function PhotosClient() {
 
               {/* Animated underline with glow */}
               {/* <motion.span 
-                className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
+                className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 1, delay: 0.5 }}
@@ -259,7 +262,7 @@ export default function PhotosClient() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.7 }}
             transition={{ delay: 0.7 }}
-            className="text-gray-400 mt-3 max-w-xl"
+            className="mt-3 max-w-xl text-gray-400"
           >
             My collection of photos, capturing special moments and interesting perspectives.
           </motion.p>
@@ -267,7 +270,7 @@ export default function PhotosClient() {
 
         {/* Categories with smooth transition effects */}
         <motion.div 
-          className="flex flex-wrap gap-3 mb-10"
+          className="mb-10 flex flex-wrap gap-3"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -275,10 +278,10 @@ export default function PhotosClient() {
           {categories.map((category) => (
             <motion.button
               key={category}
-              className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 overflow-hidden ${
+              className={`relative overflow-hidden rounded-full px-4 py-2 font-medium text-sm transition-all duration-300 ${
                 activeCategory === category 
-                  ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
-                  : 'bg-zinc-800/50 text-zinc-400 border border-zinc-700/50 hover:bg-zinc-800 hover:text-zinc-300'
+                  ? "border border-green-500/30 bg-green-500/20 text-green-300" 
+                  : "border border-zinc-700/50 bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-300"
               }`}
               onClick={() => handleCategoryChange(category)}
               onMouseEnter={() => setHoveredCategory(category)}
@@ -289,7 +292,7 @@ export default function PhotosClient() {
             >
               {/* Ripple effect on click */}
               <motion.span
-                className="absolute inset-0 bg-green-400/10 rounded-full"
+                className="absolute inset-0 rounded-full bg-green-400/10"
                 initial={{ scale: 0, opacity: 0 }}
                 whileTap={{ scale: 1.5, opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -318,7 +321,7 @@ export default function PhotosClient() {
                   animate={{ 
                     boxShadow: ["0 0 0px rgba(52, 211, 153, 0)", "0 0 10px rgba(52, 211, 153, 0.3)", "0 0 5px rgba(52, 211, 153, 0.2)"] 
                   }}
-                  transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
                 />
               )}
             </motion.button>
@@ -333,7 +336,7 @@ export default function PhotosClient() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
             style={{ 
               willChange: "transform", // Optimize performance
               transform: "translateZ(0)" // Enable GPU acceleration
@@ -342,7 +345,7 @@ export default function PhotosClient() {
             {filteredPhotos.map((photo, index) => (
               <motion.div
                 key={photo.id}
-                className="relative overflow-hidden rounded-lg group"
+                className="group relative overflow-hidden rounded-lg"
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ 
                   opacity: 1, 
@@ -372,15 +375,15 @@ export default function PhotosClient() {
                 <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                   {/* Shimmer effect while loading */}
                   {!isLoaded[photo.id] && (
-                    <div className="absolute inset-0 bg-zinc-800 rounded-lg overflow-hidden">
+                    <div className="absolute inset-0 overflow-hidden rounded-lg bg-zinc-800">
                       <motion.div
-                        className="absolute inset-0 w-full h-full"
+                        className="absolute inset-0 h-full w-full"
                         style={{
                           background: "linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.1), transparent)",
                         }}
                         animate={{ x: ['-100%', '100%'] }}
                         transition={{ 
-                          repeat: Infinity, 
+                          repeat: Number.POSITIVE_INFINITY, 
                           duration: 1.5,
                           ease: "linear"
                         }}
@@ -400,7 +403,7 @@ export default function PhotosClient() {
                       src={photo.src}
                       alt={photo.alt}
                       fill
-                      className="object-cover rounded-lg transition-all duration-700"
+                      className="rounded-lg object-cover transition-all duration-700"
                       onLoad={() => handleImageLoaded(photo.id)}
                       priority={index < 9} // Priority first 9 photos
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -415,16 +418,16 @@ export default function PhotosClient() {
                   
                   {/* Overlay information with improved effects */}
                   <motion.div 
-                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-4"
+                    className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/30 to-transparent p-4"
                     initial={{ opacity: 0 }}
                     animate={{ 
                       opacity: hoveredPhoto === photo.id ? 1 : 0,
                       transition: { duration: 0.3 }
                     }}
                   >
-                    <div className="flex justify-between items-end">
+                    <div className="flex items-end justify-between">
                       <motion.span 
-                        className="text-xs font-medium px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm text-green-300 border border-green-500/20"
+                        className="rounded-full border border-green-500/20 bg-black/60 px-2 py-1 font-medium text-green-300 text-xs backdrop-blur-sm"
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ 
                           y: hoveredPhoto === photo.id ? 0 : 20, 
@@ -435,7 +438,7 @@ export default function PhotosClient() {
                         {photo.category}
                       </motion.span>
                       <motion.span 
-                        className="text-xs text-zinc-300 px-2 py-1 rounded-full bg-black/40 backdrop-blur-sm"
+                        className="rounded-full bg-black/40 px-2 py-1 text-xs text-zinc-300 backdrop-blur-sm"
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ 
                           y: hoveredPhoto === photo.id ? 0 : 20, 
@@ -462,22 +465,23 @@ export default function PhotosClient() {
             className="flex flex-col items-center justify-center py-20"
           >
             <motion.div
-              className="w-16 h-16 rounded-full bg-zinc-800/50 flex items-center justify-center mb-4"
+              className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-zinc-800/50"
               animate={{ 
                 scale: [1, 1.05, 1],
                 opacity: [0.7, 1, 0.7]
               }}
               transition={{ 
                 duration: 2,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 repeatType: "reverse"
               }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-300/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <title>No photos available</title>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </motion.div>
-            <p className="text-zinc-400 text-center">Không có ảnh nào trong danh mục này</p>
+            <p className="text-center text-zinc-400">There are no photos in this category.</p>
           </motion.div>
         )}
       </div>

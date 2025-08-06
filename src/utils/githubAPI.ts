@@ -48,7 +48,7 @@ interface GitHubContributionDay {
     };
   
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+      headers.Authorization = `Bearer ${token}`;
     }
   
     const response = await fetch('https://api.github.com/graphql', {

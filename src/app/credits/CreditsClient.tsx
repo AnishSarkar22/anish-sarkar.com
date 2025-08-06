@@ -304,14 +304,14 @@ export default function CreditsPage() {
   return (
     <main
       ref={mainRef}
-      className="relative min-h-screen text-white p-8 md:p-16 lg:p-24 max-w-4xl mx-auto overflow-hidden"
+      className="relative mx-auto min-h-screen max-w-4xl overflow-hidden p-8 text-white md:p-16 lg:p-24"
     >
       {/* Cosmic background elements */}
-      <div className="fixed inset-0 -z-10 bg-black pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)] pointer-events-none" />
+      <div className="-z-10 pointer-events-none fixed inset-0 bg-black">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)]" />
 
         <motion.div
-          className="absolute top-0 left-0 w-full h-1 pointer-events-none"
+          className="pointer-events-none absolute top-0 left-0 h-1 w-full"
           style={{
             background:
               "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent)",
@@ -324,14 +324,14 @@ export default function CreditsPage() {
           }}
           transition={{
             duration: 8,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: "easeInOut",
           }}
         />
 
         {/* Removed the animated particles section */}
-        {/* 
-        {[...Array(30)].map((_, i) => {
+        {/*
+        {[...Array(30)].map(() => {
           const width = Math.random() * 4 + 1;
           const height = Math.random() * 4 + 1;
           const left = Math.random() * 100;
@@ -348,11 +348,16 @@ export default function CreditsPage() {
           const rotation = Math.random() * 360;
           const duration = Math.random() * 15 + 10;
           const delay = Math.random() * 5;
+          // Generate a unique key using crypto.randomUUID if available, else fallback to Math.random
+          const uniqueKey =
+            typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+              ? crypto.randomUUID()
+              : `bg-particle-${Math.random().toString(36).substr(2, 9)}`;
           
           return (
             <motion.div
-              key={`bg-particle-${i}`}
-              className="absolute rounded-full pointer-events-none"
+              key={uniqueKey}
+              className="pointer-events-none absolute rounded-full"
               style={{
                 width,
                 height,
@@ -372,7 +377,7 @@ export default function CreditsPage() {
               }}
               transition={{
                 duration,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 repeatType: "reverse",
                 delay,
                 ease: "easeInOut",
@@ -383,7 +388,7 @@ export default function CreditsPage() {
         */}
       </div>
 
-      <div className="flex-1 relative z-10">
+      <div className="relative z-10 flex-1">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -392,7 +397,7 @@ export default function CreditsPage() {
           className="mb-16"
         >
           <motion.h1
-            className="text-5xl font-bold text-white relative inline-block"
+            className="relative inline-block font-bold text-5xl text-white"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -401,14 +406,14 @@ export default function CreditsPage() {
             // whileHover={{ scale: 1.03 }}
             // transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <span className="text-green-300 inline-block will-change-transform">
+            <span className="inline-block text-green-300 will-change-transform">
               &gt;
             </span>{" "}
             <span className="relative">
               credits
               {/* Animated underline with glow */}
               {/* <motion.span 
-                className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
+                className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 1, delay: 0.5 }}
@@ -419,7 +424,7 @@ export default function CreditsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.7 }}
             transition={{ delay: 0.7 }}
-            className="text-gray-400 mt-3 max-w-xl"
+            className="mt-3 max-w-xl text-gray-400"
           >
             A tribute to the amazing technologies and tools that power this
             website.
@@ -430,11 +435,11 @@ export default function CreditsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="mb-12 p-6 rounded-lg border border-green-300/20 bg-zinc-900/40 backdrop-blur-sm"
+          className="mb-12 rounded-lg border border-green-300/20 bg-zinc-900/40 p-6 backdrop-blur-sm"
         >
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
             <motion.div
-              className="w-16 h-16 rounded-full overflow-hidden border-2 border-green-300/30 flex-shrink-0"
+              className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full border-2 border-green-300/30"
               whileHover={{
                 scale: 1.1,
                 borderColor: "rgba(52, 211, 153, 0.5)",
@@ -446,20 +451,20 @@ export default function CreditsPage() {
                 alt="Karan's avatar"
                 width={64}
                 height={64}
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
               />
             </motion.div>
 
             <div className="flex-1">
               <motion.h3
-                className="text-xl font-bold text-white mb-1 flex items-center gap-2"
+                className="mb-1 flex items-center gap-2 font-bold text-white text-xl"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
                 Karan
                 <motion.span
-                  className="inline-block text-green-300 text-sm px-2 py-0.5 rounded-full border border-green-300/30 bg-green-300/10"
+                  className="inline-block rounded-full border border-green-300/30 bg-green-300/10 px-2 py-0.5 text-green-300 text-sm"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.7, type: "spring" }}
@@ -469,7 +474,7 @@ export default function CreditsPage() {
               </motion.h3>
 
               <motion.p
-                className="text-zinc-400 mb-3"
+                className="mb-3 text-zinc-400"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.9 }}
                 transition={{ delay: 0.6 }}
@@ -483,7 +488,7 @@ export default function CreditsPage() {
                 href="https://github.com/puang59/puang"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors"
+                className="inline-flex items-center gap-2 text-green-300 transition-colors hover:text-green-200"
                 whileHover={{ x: 5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
@@ -498,7 +503,8 @@ export default function CreditsPage() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                  <title>GitHub logo</title>
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                 </svg>
                 Original Repository
               </motion.a>
@@ -511,7 +517,7 @@ export default function CreditsPage() {
               transition={{ delay: 0.8, type: "spring", stiffness: 100 }}
             >
               <motion.div
-                className="px-4 py-2 rounded-full bg-green-300/10 border border-green-300/20 text-green-300 text-sm"
+                className="rounded-full border border-green-300/20 bg-green-300/10 px-4 py-2 text-green-300 text-sm"
                 whileHover={{
                   y: -5,
                   boxShadow: "0 10px 25px -5px rgba(52, 211, 153, 0.3)",
@@ -526,7 +532,7 @@ export default function CreditsPage() {
 
         {/* Enhanced Category filters with improved animations */}
         <motion.div
-          className="flex flex-wrap gap-3 mb-12"
+          className="mb-12 flex flex-wrap gap-3"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
@@ -535,7 +541,7 @@ export default function CreditsPage() {
             <motion.button
               key={category.id}
               onClick={() => handleCategoryChange(category.id)}
-              className={`px-4 py-2 rounded-full text-sm transition-all relative overflow-hidden`}
+              className={"relative overflow-hidden rounded-full px-4 py-2 text-sm transition-all"}
               variants={categoryButtonVariants}
               initial="initial"
               animate={activeCategory === category.id ? "active" : "inactive"}
@@ -545,7 +551,7 @@ export default function CreditsPage() {
             >
               {activeCategory === category.id && (
                 <motion.div
-                  className="absolute inset-0 bg-green-300 -z-10"
+                  className="-z-10 absolute inset-0 bg-green-300"
                   layoutId="activeCategoryBackground"
                   initial={{ borderRadius: 9999 }}
                   transition={{
@@ -560,7 +566,7 @@ export default function CreditsPage() {
               {/* Subtle pulse effect for active category */}
               {activeCategory === category.id && (
                 <motion.div
-                  className="absolute inset-0 rounded-full bg-green-300/30 -z-20"
+                  className="-z-20 absolute inset-0 rounded-full bg-green-300/30"
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{
                     scale: [0.8, 1.2, 0.8],
@@ -568,7 +574,7 @@ export default function CreditsPage() {
                   }}
                   transition={{
                     duration: 2,
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     ease: "easeInOut",
                   }}
                 />
@@ -583,18 +589,18 @@ export default function CreditsPage() {
             {/* Loading indicator during transitions */}
             {isTransitioning && (
               <motion.div
-                className="absolute inset-0 flex items-center justify-center z-20"
+                className="absolute inset-0 z-20 flex items-center justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
                 <motion.div
-                  className="w-16 h-16 border-t-2 border-green-300 rounded-full"
+                  className="h-16 w-16 rounded-full border-green-300 border-t-2"
                   animate={{ rotate: 360 }}
                   transition={{
                     duration: 1,
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     ease: "linear",
                   }}
                 />
@@ -604,34 +610,34 @@ export default function CreditsPage() {
             {/* Empty state - Not Found */}
             {!isTransitioning && filteredTechnologies.length === 0 && (
               <motion.div
-                className="flex flex-col items-center justify-center min-h-[400px] w-full"
+                className="flex min-h-[400px] w-full flex-col items-center justify-center"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
                 <motion.div
-                  className="relative w-24 h-24 mb-6"
+                  className="relative mb-6 h-24 w-24"
                   initial={{ rotate: 0 }}
                   animate={{ rotate: 360 }}
                   transition={{
                     duration: 20,
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     ease: "linear",
                   }}
                 >
                   <motion.div
-                    className="absolute inset-0 rounded-full border-2 border-dashed border-green-300/30"
+                    className="absolute inset-0 rounded-full border-2 border-green-300/30 border-dashed"
                     initial={{ rotate: 0 }}
                     animate={{ rotate: -360 }}
                     transition={{
                       duration: 30,
-                      repeat: Infinity,
+                      repeat: Number.POSITIVE_INFINITY,
                       ease: "linear",
                     }}
                   />
                   <motion.div
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-zinc-900/80 flex items-center justify-center"
+                    className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 flex h-16 w-16 transform items-center justify-center rounded-full bg-zinc-900/80"
                     whileHover={{ scale: 1.1 }}
                   >
                     <motion.div
@@ -639,7 +645,7 @@ export default function CreditsPage() {
                       animate={{ opacity: [0.5, 1, 0.5] }}
                       transition={{
                         duration: 3,
-                        repeat: Infinity,
+                        repeat: Number.POSITIVE_INFINITY,
                         ease: "easeInOut",
                       }}
                     >
@@ -650,6 +656,7 @@ export default function CreditsPage() {
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                       >
+                        <title>Sad face icon</title>
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -662,7 +669,7 @@ export default function CreditsPage() {
                 </motion.div>
 
                 <motion.h3
-                  className="text-2xl font-bold text-white mb-2"
+                  className="mb-2 font-bold text-2xl text-white"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
@@ -671,7 +678,7 @@ export default function CreditsPage() {
                 </motion.h3>
 
                 <motion.p
-                  className="text-zinc-400 text-center max-w-md"
+                  className="max-w-md text-center text-zinc-400"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.7 }}
                   transition={{ delay: 0.4 }}
@@ -689,7 +696,7 @@ export default function CreditsPage() {
                 >
                   <motion.button
                     onClick={() => handleCategoryChange("all")}
-                    className="px-4 py-2 rounded-full text-sm bg-green-300/20 text-green-300 hover:bg-green-300/30 transition-colors"
+                    className="rounded-full bg-green-300/20 px-4 py-2 text-green-300 text-sm transition-colors hover:bg-green-300/30"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -703,7 +710,7 @@ export default function CreditsPage() {
             {!isTransitioning && filteredTechnologies.length > 0 && (
               <motion.div
                 key={activeCategory}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                className="grid grid-cols-1 gap-6 md:grid-cols-2"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -717,14 +724,14 @@ export default function CreditsPage() {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="relative group" // Removed perspective class
+                    className="group relative"
                     layoutId={`tech-card-${tech.name}`}
                   >
                     <motion.a
                       href={tech.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block relative p-6 rounded-lg border border-zinc-800 bg-zinc-900/30 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(52,211,153,0.3)] overflow-hidden" // Removed transform-gpu
+                      className="relative block overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/30 p-6 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(52,211,153,0.3)]"
                       onMouseEnter={() => setHoveredTech(tech.name)}
                       onMouseLeave={() => setHoveredTech(null)}
                       whileHover={{
@@ -739,19 +746,19 @@ export default function CreditsPage() {
                     >
                       {/* Glassmorphism overlay */}
                       <motion.div
-                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-sm bg-gradient-to-br from-green-300/10 to-transparent rounded-lg pointer-events-none" // Added pointer-events-none
+                        className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-br from-green-300/10 to-transparent opacity-0 backdrop-blur-sm transition-opacity duration-500 group-hover:opacity-100"
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                       />
 
                       {/* Animated border gradient */}
                       <motion.div
-                        className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden pointer-events-none" // Added pointer-events-none
+                        className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                       >
                         <motion.div
-                          className="absolute top-[-50%] left-[-50%] right-[-50%] bottom-[-50%] bg-transparent"
+                          className="absolute top-[-50%] right-[-50%] bottom-[-50%] left-[-50%] bg-transparent"
                           style={{
                             background:
                               "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 60deg, rgba(52, 211, 153, 0.5) 120deg, transparent 180deg, transparent 240deg, rgba(52, 211, 153, 0.5) 300deg, transparent 360deg)",
@@ -759,7 +766,7 @@ export default function CreditsPage() {
                           animate={{ rotate: 360 }}
                           transition={{
                             duration: 4,
-                            repeat: Infinity,
+                            repeat: Number.POSITIVE_INFINITY,
                             ease: "linear",
                           }}
                         />
@@ -767,7 +774,7 @@ export default function CreditsPage() {
 
                       {/* Animated spotlight effect */}
                       <motion.div
-                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                         style={{
                           background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(52, 211, 153, 0.15) 0%, transparent 50%)`,
                         }}
@@ -775,10 +782,9 @@ export default function CreditsPage() {
 
                       {/* Content */}
                       <div className="relative z-10 transition-transform duration-500">
-                        {/* Removed transform-gpu and group-hover:translate-z-10 */}
-                        <div className="flex items-center mb-4">
-                          {/* Placeholder for icon - replace with actual icons if available */}
-                          <div className="w-8 h-8 rounded-full bg-green-300/20 flex items-center justify-center mr-3">
+                        <div className="mb-4 flex items-center">
+                          {/* Placeholder for icon */}
+                          <div className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-green-300/20">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="h-4 w-4 text-green-300"
@@ -786,6 +792,7 @@ export default function CreditsPage() {
                               viewBox="0 0 24 24"
                               stroke="currentColor"
                             >
+                              <title>Technology icon</title>
                               <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -794,7 +801,7 @@ export default function CreditsPage() {
                               />
                             </svg>
                           </div>
-                          <h3 className="text-lg font-semibold text-white">
+                          <h3 className="font-semibold text-lg text-white">
                             {tech.name}
                           </h3>
                         </div>
@@ -810,7 +817,7 @@ export default function CreditsPage() {
                           <>
                             {/* Simple Glowing Background */}
                             <motion.div
-                              className="absolute inset-0 rounded-lg pointer-events-none bg-gradient-to-br from-green-300/5 via-green-300/10 to-transparent"
+                              className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-br from-green-300/5 via-green-300/10 to-transparent"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
@@ -819,7 +826,7 @@ export default function CreditsPage() {
 
                             {/* Simple Pulsing Border */}
                             <motion.div
-                              className="absolute inset-0 rounded-lg border-2 border-green-300/0 pointer-events-none"
+                              className="pointer-events-none absolute inset-0 rounded-lg border-2 border-green-300/0"
                               initial={{
                                 opacity: 0,
                                 borderColor: "rgba(52, 211, 153, 0)",
@@ -838,7 +845,7 @@ export default function CreditsPage() {
                               }}
                               transition={{
                                 duration: 2,
-                                repeat: Infinity,
+                                repeat: Number.POSITIVE_INFINITY,
                                 ease: "easeInOut",
                               }}
                             />
@@ -848,7 +855,7 @@ export default function CreditsPage() {
 
                       {/* Enhanced glowing dot in corner (Keep this simple one) */}
                       <motion.div
-                        className="absolute top-3 right-3 w-2 h-2 rounded-full bg-green-300/50 opacity-0 group-hover:opacity-100 pointer-events-none" // Added pointer-events-none
+                        className="pointer-events-none absolute top-3 right-3 h-2 w-2 rounded-full bg-green-300/50 opacity-0 group-hover:opacity-100"
                         initial={{ boxShadow: "0 0 0px rgba(52, 211, 153, 0)" }}
                         whileHover={{
                           boxShadow: "0 0 10px rgba(52, 211, 153, 0.8)",
@@ -872,7 +879,7 @@ export default function CreditsPage() {
         >
           <Link href="/">
             <motion.div
-              className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-green-300/10 to-emerald-500/10 text-green-300 hover:from-green-300/20 hover:to-emerald-500/20 transition-all border border-green-300/20 group relative overflow-hidden"
+              className="group relative inline-flex items-center overflow-hidden rounded-full border border-green-300/20 bg-gradient-to-r from-green-300/10 to-emerald-500/10 px-6 py-3 text-green-300 transition-all hover:from-green-300/20 hover:to-emerald-500/20"
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 0 30px rgba(52, 211, 153, 0.3)",
@@ -900,7 +907,7 @@ export default function CreditsPage() {
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform"
+                className="group-hover:-translate-x-1 mr-2 h-5 w-5 transition-transform"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -909,6 +916,7 @@ export default function CreditsPage() {
                   animationPlayState: "paused",
                 }}
               >
+                <title>Arrow left icon</title>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -931,7 +939,7 @@ export default function CreditsPage() {
                 Back to home
               </span>
 
-              <div className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-green-300/0 via-green-300/70 to-green-300/0 w-0 group-hover:w-full transition-all duration-700" />
+              <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-gradient-to-r from-green-300/0 via-green-300/70 to-green-300/0 transition-all duration-700 group-hover:w-full" />
             </motion.div>
           </Link>
         </motion.div>

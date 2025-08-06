@@ -82,6 +82,7 @@ export default async function Post({
       <BlogStyles />
       <script
         type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
@@ -111,15 +112,15 @@ export default async function Post({
 
       <Suspense fallback={<BlogPostSkeleton />}>
         <BlogPostClient slug={slug}>
-          <section className="max-w-4xl mx-auto px-6 font-mono text-md mt-5 p-8 relative">
+          <section className="relative mx-auto mt-5 max-w-4xl p-8 px-6 font-mono text-md">
             <div className="mb-8">
               <BackButton />
             </div>
 
-            <h1 className="text-5xl font-bold mb-4 mt-6 text-white relative inline-block">
+            <h1 className="relative mt-6 mb-4 inline-block font-bold text-5xl text-white">
               {post.metadata.title}
               <div
-                className="absolute -bottom-2 left-0 h-[3px] w-full bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 animate-pulse"
+                className="-bottom-2 absolute left-0 h-[3px] w-full animate-pulse bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
                 style={{ animationDuration: "3s" }}
               />
             </h1>

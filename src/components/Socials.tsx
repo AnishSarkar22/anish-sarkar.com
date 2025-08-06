@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import type React from "react";
+import { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -14,7 +15,7 @@ const socials = [
     title: "github",
     username: "@AnishSarkar22",
     link: "https://github.com/AnishSarkar22",
-    icon: (props: any) => (
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={props.size || 24}
@@ -22,6 +23,7 @@ const socials = [
         viewBox="0 0 24 24"
         {...props}
       >
+        <title>GitHub icon</title>
         <g fill="none">
           <g clipPath="url(#akarIconsGithubFill0)">
             <path
@@ -45,7 +47,7 @@ const socials = [
     title: "LinkedIn",
     username: "@anishsarkar22",
     link: "https://www.linkedin.com/in/anishsarkar22/",
-    icon: (props: any) => (
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={props.size || 24}
@@ -53,6 +55,7 @@ const socials = [
         viewBox="0 0 24 24"
         {...props}
       >
+        <title>LinkedIn icon</title>
         <path
           fill="currentColor"
           fillRule="evenodd"
@@ -66,7 +69,7 @@ const socials = [
     title: "Instagram",
     username: "anishsarkar22",
     link: "https://www.instagram.com/anishsarkar22",
-    icon: (props: any) => (
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={props.size || 24}
@@ -74,12 +77,13 @@ const socials = [
         viewBox="0 0 24 24"
         {...props}
       >
+        <title>Instagram icon</title>
         <path
           fill="currentColor"
           fillRule="evenodd"
           strokeWidth={1.5}
           d="M7.465 1.066C8.638 1.012 9.012 1 12 1s3.362.013 4.534.066s1.972.24 2.672.511c.733.277 1.398.71 1.948 1.27c.56.549.992 1.213 1.268 1.947c.272.7.458 1.5.512 2.67C22.988 8.639 23 9.013 23 12s-.013 3.362-.066 4.535c-.053 1.17-.24 1.97-.512 2.67a5.4 5.4 0 0 1-1.268 1.949c-.55.56-1.215.992-1.948 1.268c-.7.272-1.5.458-2.67.512c-1.174.054-1.548.066-4.536.066s-3.362-.013-4.535-.066c-1.17-.053-1.97-.24-2.67-.512a5.4 5.4 0 0 1-1.949-1.268a5.4 5.4 0 0 1-1.269-1.948c-.271-.7-.457-1.5-.511-2.67C1.012 15.361 1 14.987 1 12s.013-3.362.066-4.534s.24-1.972.511-2.672a5.4 5.4 0 0 1 1.27-1.948a5.4 5.4 0 0 1 1.947-1.269c.7-.271 1.5-.457 2.67-.511m8.98 1.98c-1.16-.053-1.508-.064-4.445-.064s-3.285.011-4.445.064c-1.073.049-1.655.228-2.043.379c-.513.2-.88.437-1.265.822a3.4 3.4 0 0 0-.822 1.265c-.151.388-.33.97-.379 2.043c-.053 1.16-.064 1.508-.064 4.445s.011 3.285.064 4.445c.049 1.073.228 1.655.379 2.043c.176.477.457.91.822 1.265c.355.365.788.646 1.265.822c.388.151.97.33 2.043.379c1.16.053 1.507.064 4.445.064s3.285-.011 4.445-.064c1.073-.049 1.655-.228 2.043-.379c.513-.2.88-.437 1.265-.822c.365-.355.646-.788.822-1.265c.151-.388.33-.97.379-2.043c.053-1.16.064-1.508.064-4.445s-.011-3.285-.064-4.445c-.049-1.073-.228-1.655-.379-2.043c-.2-.513-.437-.88-.822-1.265a3.4 3.4 0 0 0-1.265-.822c-.388-.151-.97-.33-2.043-.379m-5.85 12.345a3.669 3.669 0 0 0 4-5.986a3.67 3.67 0 1 0-4 5.986M8.002 8.002a5.654 5.654 0 1 1 7.996 7.996a5.654 5.654 0 0 1-7.996-7.996m10.906-.814a1.337 1.337 0 1 0-1.89-1.89a1.337 1.337 0 0 0 1.89 1.89"
-        ></path>
+        />
       </svg>
     ),
     color: "#ff6600",
@@ -88,7 +92,7 @@ const socials = [
     title: "X",
     username: "AnishSarkar22",
     link: "https://x.com/AnishSarkar22",
-    icon: (props: any) => (
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={props.size || 24}
@@ -96,6 +100,7 @@ const socials = [
         viewBox="0 0 24 24"
         {...props}
       >
+        <title>X icon</title>
         <g
           fill="none"
           stroke="currentColor"
@@ -103,8 +108,8 @@ const socials = [
           strokeLinejoin="round"
           strokeWidth={1.5}
         >
-          <path d="M2.5 12c0-4.478 0-6.718 1.391-8.109S7.521 2.5 12.001 2.5c4.478 0 6.717 0 8.108 1.391S21.5 7.521 21.5 12c0 4.478 0 6.718-1.391 8.109S16.479 21.5 12 21.5c-4.478 0-6.717 0-8.109-1.391c-1.39-1.392-1.39-3.63-1.39-8.109"></path>
-          <path d="m7 17l4.194-4.193M17 7l-4.193 4.194m0 0L9.777 7H7l4.194 5.807m1.613-1.614L17 17h-2.778l-3.028-4.193"></path>
+          <path d="M2.5 12c0-4.478 0-6.718 1.391-8.109S7.521 2.5 12.001 2.5c4.478 0 6.717 0 8.108 1.391S21.5 7.521 21.5 12c0 4.478 0 6.718-1.391 8.109S16.479 21.5 12 21.5c-4.478 0-6.717 0-8.109-1.391c-1.39-1.392-1.39-3.63-1.39-8.109" />
+          <path d="m7 17l4.194-4.193M17 7l-4.193 4.194m0 0L9.777 7H7l4.194 5.807m1.613-1.614L17 17h-2.778l-3.028-4.193" />
         </g>
       </svg>
     ),
@@ -114,7 +119,7 @@ const socials = [
     title: "email",
     username: "anishsarkar282@gmail.com",
     link: "mailto:anishsarkar282@gmail.com",
-    icon: (props: any) => (
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={props.size || 24}
@@ -122,6 +127,7 @@ const socials = [
         viewBox="0 0 24 24"
         {...props}
       >
+        <title>Email icon</title>
         <g
           fill="none"
           stroke="currentColor"
@@ -129,8 +135,8 @@ const socials = [
           strokeLinejoin="round"
           strokeWidth={2}
         >
-          <path d="m7 8.5l2.942 1.74c1.715 1.014 2.4 1.014 4.116 0L17 8.5"></path>
-          <path d="M2.016 13.476c.065 3.065.098 4.598 1.229 5.733c1.131 1.136 2.705 1.175 5.854 1.254c1.94.05 3.862.05 5.802 0c3.149-.079 4.723-.118 5.854-1.254c1.131-1.135 1.164-2.668 1.23-5.733c.02-.986.02-1.966 0-2.952c-.066-3.065-.099-4.598-1.23-5.733c-1.131-1.136-2.705-1.175-5.854-1.254a115 115 0 0 0-5.802 0c-3.149.079-4.723.118-5.854 1.254c-1.131 1.135-1.164 2.668-1.23 5.733a69 69 0 0 0 0 2.952"></path>
+          <path d="m7 8.5l2.942 1.74c1.715 1.014 2.4 1.014 4.116 0L17 8.5" />
+          <path d="M2.016 13.476c.065 3.065.098 4.598 1.229 5.733c1.131 1.136 2.705 1.175 5.854 1.254c1.94.05 3.862.05 5.802 0c3.149-.079 4.723-.118 5.854-1.254c1.131-1.135 1.164-2.668 1.23-5.733c.02-.986.02-1.966 0-2.952c-.066-3.065-.099-4.598-1.23-5.733c-1.131-1.136-2.705-1.175-5.854-1.254a115 115 0 0 0-5.802 0c-3.149.079-4.723.118-5.854 1.254c-1.131 1.135-1.164 2.668-1.23 5.733a69 69 0 0 0 0 2.952" />
         </g>
       </svg>
     ),
@@ -171,12 +177,12 @@ export default function Socials() {
   return (
     <div
       id="socials-section"
-      className="mb-16 text-white relative"
+      className="relative mb-16 text-white"
       onMouseMove={handleMouseMove}
     >
       {/* Cosmic background effect */}
       <motion.h1
-        className="text-2xl font-bold text-white relative inline-block"
+        className="relative inline-block font-bold text-2xl text-white"
         initial={false}
         animate={{
           opacity: 1,
@@ -185,17 +191,17 @@ export default function Socials() {
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
         whileHover={{ scale: 1.03 }}
       >
-        <span className="text-green-300 inline-block will-change-transform">
+        <span className="inline-block text-green-300 will-change-transform">
           &gt;
         </span>{" "}
-        <span className="relative group">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white bg-[length:200%_100%] animate-shimmer">
+        <span className="group relative">
+          <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
             socials
           </span>
         </span>
         {/* Animated underline with glow */}
         {/* <motion.span
-          className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-transparent via-green-300 to-transparent"
+          className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-transparent via-green-300 to-transparent"
           initial={{ width: 0 }}
           animate={{
             width: isVisible ? "100%" : "0%",
@@ -203,12 +209,12 @@ export default function Socials() {
           }}
           transition={{
             width: { duration: 0.8, delay: 0.3 },
-            opacity: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+            opacity: { duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" },
           }}
         /> */}
       </motion.h1>
 
-      <div className="space-y-4 relative mt-6">
+      <div className="relative mt-6 space-y-4">
         {socials.map((social, index) => {
           const isHovered = hoveredItem === social.title;
 
@@ -238,7 +244,7 @@ export default function Socials() {
                 href={social.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 py-3 px-4 rounded-lg relative z-10 group-hover:text-white transition-colors duration-300"
+                className="relative z-10 flex items-center gap-3 rounded-lg px-4 py-3 transition-colors duration-300 group-hover:text-white"
                 onMouseEnter={() => setHoveredItem(social.title)}
                 onMouseLeave={() => setHoveredItem(null)}
                 onClick={() => handleSocialClick(social.title.toLowerCase(), social.link)} // for posthog analytics
@@ -246,7 +252,7 @@ export default function Socials() {
               >
                 {/* Cosmic background glow effect */}
                 <motion.div
-                  className="absolute inset-0 rounded-lg -z-10 backdrop-blur-sm"
+                  className="-z-10 absolute inset-0 rounded-lg backdrop-blur-sm"
                   initial={{ opacity: 0 }}
                   animate={{
                     opacity: isHovered ? 0.15 : 0,
@@ -263,7 +269,7 @@ export default function Socials() {
                     duration: 0.3,
                     boxShadow: {
                       duration: 2,
-                      repeat: Infinity,
+                      repeat: Number.POSITIVE_INFINITY,
                       repeatType: "reverse",
                     },
                   }}
@@ -271,7 +277,7 @@ export default function Socials() {
 
                 {/* Animated border */}
                 <motion.div
-                  className="absolute inset-0 rounded-lg z-0 overflow-hidden"
+                  className="absolute inset-0 z-0 overflow-hidden rounded-lg"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: isHovered ? 1 : 0 }}
                   transition={{ duration: 0.3 }}
@@ -279,7 +285,7 @@ export default function Socials() {
                   {isHovered && (
                     <>
                       <motion.div
-                        className="absolute top-0 left-0 w-full h-[1px]"
+                        className="absolute top-0 left-0 h-[1px] w-full"
                         style={{
                           background: `linear-gradient(90deg, transparent, ${social.color}, transparent)`,
                         }}
@@ -288,12 +294,12 @@ export default function Socials() {
                         }}
                         transition={{
                           duration: 2,
-                          repeat: Infinity,
+                          repeat: Number.POSITIVE_INFINITY,
                           ease: "linear",
                         }}
                       />
                       <motion.div
-                        className="absolute bottom-0 right-0 w-full h-[1px]"
+                        className="absolute right-0 bottom-0 h-[1px] w-full"
                         style={{
                           background: `linear-gradient(90deg, transparent, ${social.color}, transparent)`,
                         }}
@@ -302,12 +308,12 @@ export default function Socials() {
                         }}
                         transition={{
                           duration: 2,
-                          repeat: Infinity,
+                          repeat: Number.POSITIVE_INFINITY,
                           ease: "linear",
                         }}
                       />
                       <motion.div
-                        className="absolute left-0 top-0 h-full w-[1px]"
+                        className="absolute top-0 left-0 h-full w-[1px]"
                         style={{
                           background: `linear-gradient(0deg, transparent, ${social.color}, transparent)`,
                         }}
@@ -316,7 +322,7 @@ export default function Socials() {
                         }}
                         transition={{
                           duration: 2,
-                          repeat: Infinity,
+                          repeat: Number.POSITIVE_INFINITY,
                           ease: "linear",
                         }}
                       />
@@ -330,7 +336,7 @@ export default function Socials() {
                         }}
                         transition={{
                           duration: 2,
-                          repeat: Infinity,
+                          repeat: Number.POSITIVE_INFINITY,
                           ease: "linear",
                         }}
                       />
@@ -365,7 +371,7 @@ export default function Socials() {
                           exit={{ opacity: 0, scale: 0.5 }}
                           transition={{
                             duration: 2,
-                            repeat: Infinity,
+                            repeat: Number.POSITIVE_INFINITY,
                             repeatType: "reverse",
                           }}
                           style={{
@@ -384,7 +390,7 @@ export default function Socials() {
                           exit={{ opacity: 0, scale: 0.5 }}
                           transition={{
                             duration: 3,
-                            repeat: Infinity,
+                            repeat: Number.POSITIVE_INFINITY,
                             repeatType: "reverse",
                           }}
                           style={{
@@ -407,7 +413,7 @@ export default function Socials() {
                     transition={{
                       opacity: {
                         duration: 1.5,
-                        repeat: Infinity,
+                        repeat: Number.POSITIVE_INFINITY,
                         ease: "easeInOut",
                       },
                     }}
@@ -416,7 +422,7 @@ export default function Socials() {
                   {/* The actual icon */}
                   <social.icon
                     size={24}
-                    className="transition-colors duration-300 relative z-10"
+                    className="relative z-10 transition-colors duration-300"
                     style={{
                       color: isHovered ? social.color : "#ffffff80",
                       filter: isHovered
@@ -442,7 +448,7 @@ export default function Socials() {
                         social.username.split("").map((letter, i) => (
                           <motion.span
                             key={`letter-${i}`}
-                            className="text-sm inline-block"
+                            className="inline-block text-sm"
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{
@@ -460,14 +466,14 @@ export default function Socials() {
                           </motion.span>
                         ))
                       ) : (
-                        <motion.span className="text-sm inline-block text-zinc-400">
+                        <motion.span className="inline-block text-sm text-zinc-400">
                           {social.username}
                         </motion.span>
                       )} */}
 
                       {/* if you dont want animation for the username, use the below */}
                       <span
-                        className="text-sm inline-block"
+                        className="inline-block text-sm"
                         style={{
                           color: isHovered ? social.color : undefined,
                           textShadow: isHovered
@@ -494,7 +500,7 @@ export default function Socials() {
                     duration: 0.3,
                     scale: {
                       duration: 0.5,
-                      repeat: Infinity,
+                      repeat: Number.POSITIVE_INFINITY,
                       repeatType: "reverse",
                     },
                   }}
@@ -511,6 +517,7 @@ export default function Socials() {
                         : "none",
                     }}
                   >
+                    <title>Arrow icon</title>
                     <motion.path
                       d="M5 12H19M19 12L13 6M19 12L13 18"
                       stroke={social.color}
@@ -527,7 +534,7 @@ export default function Socials() {
                         duration: 0.3,
                         x: {
                           duration: 0.5,
-                          repeat: Infinity,
+                          repeat: Number.POSITIVE_INFINITY,
                           repeatType: "reverse",
                         },
                       }}
@@ -541,8 +548,8 @@ export default function Socials() {
                     <>
                       {[...Array(10)].map((_, i) => (
                         <motion.div
-                          key={`particle-${i}`}
-                          className="absolute rounded-full z-0 pointer-events-none"
+                          key={`${social.title}-particle-${i}`}
+                          className="pointer-events-none absolute z-0 rounded-full"
                           initial={{
                             opacity: 0,
                             scale: 0,
@@ -558,7 +565,7 @@ export default function Socials() {
                           exit={{ opacity: 0, scale: 0 }}
                           transition={{
                             duration: 1 + Math.random() * 1,
-                            repeat: Infinity,
+                            repeat: Number.POSITIVE_INFINITY,
                             delay: Math.random() * 0.5,
                           }}
                           style={{
@@ -577,8 +584,8 @@ export default function Socials() {
                       {/* Cosmic dust particles */}
                       {[...Array(20)].map((_, i) => (
                         <motion.div
-                          key={`dust-${i}`}
-                          className="absolute rounded-full z-0 pointer-events-none"
+                          key={`${social.title}-dust-${i}`}
+                          className="pointer-events-none absolute z-0 rounded-full"
                           initial={{
                             opacity: 0,
                             scale: 0,
@@ -603,7 +610,7 @@ export default function Socials() {
                           exit={{ opacity: 0, scale: 0 }}
                           transition={{
                             duration: 1.5 + Math.random() * 2,
-                            repeat: Infinity,
+                            repeat: Number.POSITIVE_INFINITY,
                             delay: Math.random() * 0.5,
                             ease: "easeOut",
                           }}
@@ -626,30 +633,33 @@ export default function Socials() {
       </div>
 
       {/* Cosmic background particles */}
-      <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={`bg-particle-${i}`}
-            className="absolute w-1 h-1 rounded-full bg-green-300/20"
-            initial={{
-              x: Math.random() * 100 + "%",
-              y: Math.random() * 100 + "%",
-              opacity: 0,
-              scale: 0,
-            }}
-            animate={{
-              y: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
-              x: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
-              opacity: isVisible ? [0, 0.5, 0] : 0,
-              scale: isVisible ? [0, 1, 0] : 0,
-            }}
-            transition={{
-              duration: 5 + Math.random() * 5,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
+      <div className="-z-20 pointer-events-none absolute inset-0 overflow-hidden">
+        {[...Array(15)].map(() => {
+          const uniqueKey = `bg-particle-${Date.now()}-${Math.random()}`;
+          return (
+            <motion.div
+              key={uniqueKey}
+              className="absolute h-1 w-1 rounded-full bg-green-300/20"
+              initial={{
+                x: `${Math.random() * 100}%`,
+                y: `${Math.random() * 100}%`,
+                opacity: 0,
+                scale: 0,
+              }}
+              animate={{
+                y: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
+                x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
+                opacity: isVisible ? [0, 0.5, 0] : 0,
+                scale: isVisible ? [0, 1, 0] : 0,
+              }}
+              transition={{
+                duration: 5 + Math.random() * 5,
+                repeat: Number.POSITIVE_INFINITY,
+                delay: Math.random() * 5,
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   );

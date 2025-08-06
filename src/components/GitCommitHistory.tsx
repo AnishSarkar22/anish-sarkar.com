@@ -45,7 +45,7 @@ const GLOW_INTENSITIES = [0, 2, 5, 10, 15];
 
 // Memoized components for better performance
 const WeekdayLabel = memo(({ day }: { day: string }) => (
-  <div className="h-[11px] text-right text-[10px] text-zinc-500/70 pr-1">
+  <div className="h-[11px] pr-1 text-right text-[10px] text-zinc-500/70">
     {day}
   </div>
 ));
@@ -59,7 +59,7 @@ const LegendItem = memo(
     getContributionColor: (level: number, isHovered: boolean) => string;
   }) => (
     <motion.div
-      className="w-2 h-2 rounded-sm mx-0.5"
+      className="mx-0.5 h-2 w-2 rounded-sm"
       style={{ backgroundColor: getContributionColor(level, false) }}
       whileHover={{
         scale: 1.3,
@@ -72,7 +72,7 @@ const LegendItem = memo(
 
 // Simplified background component
 const BackgroundGradient = memo(() => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+  <div className="-z-10 pointer-events-none absolute inset-0 overflow-hidden">
     <div
       className="absolute inset-0 opacity-5"
       style={{
@@ -99,12 +99,12 @@ const ContributionCell = memo(
 
     // Skip rendering cells that are not visible
     if (day.count < 0) {
-      return <div className="w-[10px] h-[10px]" />;
+      return <div className="h-[10px] w-[10px]" />;
     }
 
     return (
       <motion.div
-        className="w-[10px] h-[10px] rounded-sm relative group"
+        className="group relative h-[10px] w-[10px] rounded-sm"
         style={{
           backgroundColor: getContributionColor(day.level, isHovered),
         }}
@@ -204,7 +204,7 @@ const ContributionCell = memo(
         {/* Smaller tooltip with animation */}
         {isHovered && (
           <motion.div
-            className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1.5 px-1.5 py-0.5 text-[7px] bg-zinc-800/90 backdrop-blur-sm text-white rounded shadow-sm whitespace-nowrap z-50 border border-emerald-500/20"
+            className="-translate-x-1/2 absolute bottom-full left-1/2 z-50 mb-1.5 transform whitespace-nowrap rounded border border-emerald-500/20 bg-zinc-800/90 px-1.5 py-0.5 text-[7px] text-white shadow-sm backdrop-blur-sm"
             initial={{ opacity: 0, y: 5, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 5, scale: 0.9 }}
@@ -213,7 +213,7 @@ const ContributionCell = memo(
             <div className="flex items-center gap-1">
               {day.level > 0 && (
                 <div
-                  className="w-1.5 h-1.5 rounded-full"
+                  className="h-1.5 w-1.5 rounded-full"
                   style={{
                     backgroundColor: getContributionColor(day.level, true),
                   }}
@@ -222,7 +222,7 @@ const ContributionCell = memo(
               <span>{day.tooltip}</span>
             </div>
             <motion.div
-              className="absolute top-full left-1/2 transform -translate-x-1/2 border-[3px] border-transparent border-t-zinc-800/90"
+              className="-translate-x-1/2 absolute top-full left-1/2 transform border-[3px] border-transparent border-t-zinc-800/90"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
@@ -248,7 +248,7 @@ const ContributionWeek = memo(
     <div className="grid grid-rows-7 gap-[2px]">
       {week.map((day, dayIndex) => (
         <ContributionCell
-          key={`day-${dayIndex}`}
+          key={day.date || `empty-${dayIndex}`}
           day={day}
           getContributionColor={getContributionColor}
           getGlowIntensity={getGlowIntensity}
@@ -269,7 +269,9 @@ export default function GitCommitHistory() {
   const getContributionColor = useCallback(
     (level: number, isHovered: boolean): string => {
       const safeLevel = Math.max(0, Math.min(level, BASE_COLORS.length - 1));
-      return isHovered ? HOVER_COLORS[safeLevel]! : BASE_COLORS[safeLevel]!;
+      return isHovered
+        ? HOVER_COLORS[safeLevel] ?? HOVER_COLORS[0]
+        : BASE_COLORS[safeLevel] ?? BASE_COLORS[0];
     },
     []
   );
@@ -329,14 +331,14 @@ export default function GitCommitHistory() {
 
         // Calculate longest streak
         const allDays = transformedWeeks.flat().filter((day) => day.date);
-        allDays.forEach((day) => {
+        for (const day of allDays) {
           if (day.count > 0) {
             currentStrk++;
             maxStreak = Math.max(maxStreak, currentStrk);
           } else {
             currentStrk = 0;
           }
-        });
+        }
 
         // Calculate current streak (from today backwards)
         for (let i = allDays.length - 1; i >= 0 && !foundNonContribution; i--) {
@@ -376,7 +378,7 @@ export default function GitCommitHistory() {
           oneYearAgo.setFullYear(today.getFullYear() - 1);
           oneYearAgo.setDate(oneYearAgo.getDate() - oneYearAgo.getDay());
           const days: ContributionDay[][] = [];
-          let currentDate = new Date(oneYearAgo);
+          const currentDate = new Date(oneYearAgo);
           let weekData: ContributionDay[] = [];
           let total = 0;
           let maxStreak = 0;
@@ -387,9 +389,12 @@ export default function GitCommitHistory() {
           const getFormattedDate = (date: Date) => {
             const timestamp = date.getTime();
             if (!dateCache.has(timestamp)) {
-              dateCache.set(timestamp, date.toISOString().split("T")[0]!);
+              const isoString = date.toISOString().split("T")[0];
+              if (isoString) {
+                dateCache.set(timestamp, isoString);
+              }
             }
-            return dateCache.get(timestamp)!;
+            return dateCache.get(timestamp) ?? "";
           };
 
           // Pre-allocate memory for tooltips to reduce string operations
@@ -407,7 +412,7 @@ export default function GitCommitHistory() {
                     } on ${dateString}`
               );
             }
-            return tooltipCache.get(cacheKey)!;
+            return tooltipCache.get(cacheKey) ?? "";
           };
 
           while (currentDate <= today) {
@@ -502,7 +507,6 @@ export default function GitCommitHistory() {
                   foundNonContribution = true;
                 }
               } else if (!day.date) {
-                continue;
               } else {
                 foundNonContribution = true;
               }
@@ -533,7 +537,7 @@ export default function GitCommitHistory() {
 
     // Use requestIdleCallback for non-critical initialization
     if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      (window as any).requestIdleCallback(() => generateContributions());
+      (window as Window & { requestIdleCallback: (callback: IdleRequestCallback) => number }).requestIdleCallback(() => generateContributions());
     } else {
       setTimeout(generateContributions, 0);
     }
@@ -562,7 +566,7 @@ export default function GitCommitHistory() {
           
           if (currentPosition - lastPosition >= minSpacing || lastPosition === -1) {
             currentMonth = month;
-            labels.push({ month: MONTHS[month]!, position: currentPosition });
+            labels.push({ month: MONTHS[month] ?? "", position: currentPosition });
             lastPosition = currentPosition;
           }
         }
@@ -620,21 +624,21 @@ export default function GitCommitHistory() {
         className="relative mb-2"
       >
         <motion.h2
-          className="text-3xl font-bold mb-1 relative inline-block"
+          className="relative mb-1 inline-block font-bold text-3xl"
           whileHover={{ scale: 1.03 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
         >
-          <span className="text-green-300 inline-block will-change-transform">
+          <span className="inline-block text-green-300 will-change-transform">
             &gt;
           </span>{" "}
-          <span className="relative group">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white bg-[length:200%_100%] animate-shimmer">
+          <span className="group relative">
+            <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
               commit
             </span>
 
             {/* Animated underline with glow */}
             {/* <motion.span 
-              className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
+              className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ duration: 1, delay: 0.5 }}
@@ -643,7 +647,7 @@ export default function GitCommitHistory() {
 
             {/* Particle burst on hover - optimized with AnimatePresence */}
             <motion.div
-              className="absolute inset-0 -z-10 pointer-events-none"
+              className="-z-10 pointer-events-none absolute inset-0"
               initial={{ opacity: 0 }}
               whileHover={{ opacity: 1 }}
             >
@@ -656,9 +660,10 @@ export default function GitCommitHistory() {
                   const width = Math.random() * 4 + 2;
                   const height = Math.random() * 4 + 2;
 
+                  const uniqueKey = `title-particle-${i}-${randomX}-${randomY}-${width}-${height}`;
                   return (
                     <motion.div
-                      key={`title-particle-${i}`}
+                      key={uniqueKey}
                       className="absolute rounded-full bg-green-300"
                       initial={{
                         opacity: 0,
@@ -674,7 +679,7 @@ export default function GitCommitHistory() {
                       }}
                       transition={{
                         duration: duration,
-                        repeat: Infinity,
+                        repeat: Number.POSITIVE_INFINITY,
                         delay: delay,
                         repeatType: "loop",
                       }}
@@ -705,24 +710,24 @@ export default function GitCommitHistory() {
         {/* Header with stats - simplified */}
         <div className="relative z-10">
           <motion.div
-            className="flex items-center gap-1 mb-1"
+            className="mb-1 flex items-center gap-1"
             initial={{ opacity: 0 }}
             animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
-            <h3 className="text-xs font-medium text-green-400">
+            <h3 className="font-medium text-green-400 text-xs">
               {totalContributions.toLocaleString()} contributions in the last
               year
             </h3>
           </motion.div>
           <motion.div
-            className="grid grid-cols-2 gap-1 text-[10px] mb-2"
+            className="mb-2 grid grid-cols-2 gap-1 text-[10px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ duration: 0.3, delay: 0.2 }}
           >
             <div className="flex items-center gap-1 rounded p-1">
-              <div className="w-4 h-4 rounded-full bg-zinc-800/30 flex items-center justify-center flex-shrink-0">
+              <div className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-zinc-800/30">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="8"
@@ -735,12 +740,13 @@ export default function GitCommitHistory() {
                   strokeLinejoin="round"
                   className="text-emerald-400"
                 >
-                  <path d="m19 12l-6-6m6 6l-6 6m6-6H5"></path>
+                  <title>Current Streak Icon</title>
+                  <path d="m19 12l-6-6m6 6l-6 6m6-6H5" />
                 </svg>
               </div>
               <div>
                 <div className="text-zinc-400/80">Current Streak</div>
-                <div className="font-medium text-white flex items-center">
+                <div className="flex items-center font-medium text-white">
                   {currentStreak}
                   <span className="ml-0.5">
                     day{currentStreak !== 1 ? "s" : ""}
@@ -750,7 +756,7 @@ export default function GitCommitHistory() {
             </div>
 
             <div className="flex items-center gap-1 rounded p-1">
-              <div className="w-4 h-4 rounded-full bg-zinc-800/30 flex items-center justify-center flex-shrink-0">
+              <div className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-zinc-800/30">
                 <svg
                   fill="#81C784"
                   height="8px"
@@ -760,13 +766,14 @@ export default function GitCommitHistory() {
                   xmlSpace="preserve"
                   className="text-emerald-400"
                 >
-                  <path fill="currentColor" d="M12.832 21.801c3.126-.626 7.168-2.875 7.168-8.69c0-5.291-3.873-8.815-6.658-10.434c-.619-.36-1.342.113-1.342.828v1.828c0 1.442-.606 4.074-2.29 5.169c-.86.559-1.79-.278-1.894-1.298l-.086-.838c-.1-.974-1.092-1.565-1.87-.971C4.461 8.46 3 10.33 3 13.11C3 20.221 8.289 22 10.933 22q.232 0 .484-.015c.446-.056 0 .099 1.415-.185" opacity={0.5}></path>
-                  <path fill="currentColor" d="M8 18.444c0 2.62 2.111 3.43 3.417 3.542c.446-.056 0 .099 1.415-.185C13.871 21.434 15 20.492 15 18.444c0-1.297-.819-2.098-1.46-2.473c-.196-.115-.424.03-.441.256c-.056.718-.746 1.29-1.215.744c-.415-.482-.59-1.187-.59-1.638v-.59c0-.354-.357-.59-.663-.408C9.495 15.008 8 16.395 8 18.445"></path>
+                  <title>Longest Streak Icon</title>
+                  <path fill="currentColor" d="M12.832 21.801c3.126-.626 7.168-2.875 7.168-8.69c0-5.291-3.873-8.815-6.658-10.434c-.619-.36-1.342.113-1.342.828v1.828c0 1.442-.606 4.074-2.29 5.169c-.86.559-1.79-.278-1.894-1.298l-.086-.838c-.1-.974-1.092-1.565-1.87-.971C4.461 8.46 3 10.33 3 13.11C3 20.221 8.289 22 10.933 22q.232 0 .484-.015c.446-.056 0 .099 1.415-.185" opacity={0.5} />
+                  <path fill="currentColor" d="M8 18.444c0 2.62 2.111 3.43 3.417 3.542c.446-.056 0 .099 1.415-.185C13.871 21.434 15 20.492 15 18.444c0-1.297-.819-2.098-1.46-2.473c-.196-.115-.424.03-.441.256c-.056.718-.746 1.29-1.215.744c-.415-.482-.59-1.187-.59-1.638v-.59c0-.354-.357-.59-.663-.408C9.495 15.008 8 16.395 8 18.445" />
                 </svg>
               </div>
               <div>
                 <div className="text-zinc-400/80">Longest Streak</div>
-                <div className="font-medium text-white flex items-center">
+                <div className="flex items-center font-medium text-white">
                   {longestStreak}
                   <span className="ml-0.5">
                     day{longestStreak !== 1 ? "s" : ""}
@@ -778,7 +785,7 @@ export default function GitCommitHistory() {
         </div>
 
         {/* Contribution graph with minimal effects */}
-        <div className="overflow-x-auto relative z-10 scrollbar-thin scrollbar-thumb-zinc-700/30 scrollbar-track-transparent">
+        <div className="scrollbar-thin scrollbar-thumb-zinc-700/30 scrollbar-track-transparent relative z-10 overflow-x-auto">
           <div className="min-w-[700px]">
             <div className="flex">
               <div
@@ -788,12 +795,12 @@ export default function GitCommitHistory() {
                 {weekdayLabels}
               </div>
 
-              <div className="flex-1 relative">
+              <div className="relative flex-1">
                 {/* Month labels */}
-                <div className="flex text-[10px] text-zinc-500/70 h-5">
-                  {monthLabels.map((label, i) => (
+                <div className="flex h-5 text-[10px] text-zinc-500/70">
+                  {monthLabels.map((label) => (
                     <div
-                      key={`month-${i}`}
+                      key={`month-${label.month}-${label.position}`}
                       className="absolute"
                       style={{
                         left: `${label.position}px`,
@@ -806,20 +813,26 @@ export default function GitCommitHistory() {
 
                 {/* Contribution cells with hover glow effect */}
                 <div className="grid grid-flow-col gap-[2px]">
-                  {visibleContributions.map((week, weekIndex) => (
-                    <ContributionWeek
-                      key={`week-${weekIndex}`}
-                      week={week}
-                      getContributionColor={getContributionColor}
-                      getGlowIntensity={getGlowIntensity}
-                    />
-                  ))}
+                  {visibleContributions.map((week) => {
+                    // Use the first valid date in the week as the key, fallback to joining all dates
+                    const weekKey =
+                      week.find((d) => d.date)?.date ||
+                      week.map((d) => d.date).join("-");
+                    return (
+                      <ContributionWeek
+                        key={weekKey}
+                        week={week}
+                        getContributionColor={getContributionColor}
+                        getGlowIntensity={getGlowIntensity}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
             {/* Legend - simplified */}
-            <div className="flex items-center justify-end mt-1 text-[8px] text-zinc-500/70">
+            <div className="mt-1 flex items-center justify-end text-[8px] text-zinc-500/70">
               <span className="mr-1">Less</span>
               <div className="flex items-center gap-[2px]">{legendItems}</div>
               <span className="ml-1">More</span>
@@ -828,15 +841,15 @@ export default function GitCommitHistory() {
         </div>
 
         {/* Footer with minimal effects - without Activity and Overview buttons */}
-        <div className="flex justify-end items-center relative z-10 mt-1">
+        <div className="relative z-10 mt-1 flex items-center justify-end">
           <motion.div
-            className="text-[8px] text-zinc-500/70 flex items-center cursor-pointer hover:text-zinc-400/80 transition-colors"
+            className="flex cursor-pointer items-center text-[8px] text-zinc-500/70 transition-colors hover:text-zinc-400/80"
             onClick={handleHelpClick}
             initial={{ opacity: 0 }}
             animate={{ opacity: isLoaded ? 1 : 0 }}
             transition={{ duration: 0.3, delay: 0.3 }}
           >
-            <div className="w-3 h-3 mr-0.5 rounded-full bg-zinc-800/30 flex items-center justify-center">
+            <div className="mr-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-zinc-800/30">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="6"
@@ -849,6 +862,7 @@ export default function GitCommitHistory() {
                 strokeLinejoin="round"
                 className="text-emerald-400"
               >
+                <title>Learn more icon</title>
                 <circle cx="12" cy="12" r="10" />
                 <path d="m12 16 4-4-4-4" />
                 <path d="M8 12h8" />

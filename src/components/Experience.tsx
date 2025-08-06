@@ -52,7 +52,7 @@ export default function Experience() {
 
   const titleTransition = useMemo(() => ({ 
     duration: 2, 
-    repeat: Infinity, 
+    repeat: Number.POSITIVE_INFINITY, 
     repeatDelay: 5, 
     times: [0, 0.2, 0.5, 0.8, 1],
     repeatType: 'loop' as const
@@ -60,26 +60,26 @@ export default function Experience() {
 
   return (
     <motion.div 
-      className="text-white mb-16 relative will-change-transform"
+      className="relative mb-16 text-white will-change-transform"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.h1 
-        className="text-2xl font-bold text-white relative inline-block"
+        className="relative inline-block font-bold text-2xl text-white"
         variants={titleVariants}
         whileHover={{ scale: 1.03 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
       >
-        <span className="text-green-300 inline-block will-change-transform">
+        <span className="inline-block text-green-300 will-change-transform">
             &gt;
           </span>{" "}
-        <span className="relative group">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white bg-[length:200%_100%] animate-shimmer">experience</span>
+        <span className="group relative">
+          <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">experience</span>
 
           {/* Animated underline with glow */}
           {/* <motion.span
-            className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
+            className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 1, delay: 0.5 }}
@@ -88,10 +88,10 @@ export default function Experience() {
         </span>
       </motion.h1>
       
-      <div className="mt-10 relative">
+      <div className="relative mt-10">
         {/* Main vertical timeline line */}
         <motion.div 
-          className="absolute left-[6px] top-0 bottom-0 w-[1px] h-full bg-zinc-800 will-change-transform"
+          className="absolute top-0 bottom-0 left-[6px] h-full w-[1px] bg-zinc-800 will-change-transform"
           variants={timelineVariants}
         />
         
@@ -112,7 +112,7 @@ export default function Experience() {
           const particleEffects = useMemo(() => {
             if (!isHovered) return null;
             
-            return [...Array(6)].map((_, i) => {
+            return [...Array(6)].map(() => {
               const leftOffset = 50 + (Math.random() - 0.5) * 20;
               const topOffset = 50 + (Math.random() - 0.5) * 20;
               const xMovement = (Math.random() - 0.5) * 100;
@@ -121,11 +121,12 @@ export default function Experience() {
               const height = Math.random() * 4 + 2;
               const duration = 1 + Math.random() * 0.5;
               const delay = Math.random() * 0.5;
+              const uniqueKey = `particle-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`;
               
               return (
                 <motion.div
-                  key={`particle-${i}`}
-                  className="absolute rounded-full z-0 pointer-events-none will-change-transform"
+                  key={uniqueKey}
+                  className="pointer-events-none absolute z-0 rounded-full will-change-transform"
                   initial={{ 
                     opacity: 0,
                     scale: 0,
@@ -140,7 +141,7 @@ export default function Experience() {
                   }}
                   transition={{ 
                     duration,
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     delay,
                     repeatType: 'loop'
                   }}
@@ -160,14 +161,14 @@ export default function Experience() {
           return (
             <motion.div 
               key={exp.title} 
-              className="mt-10 group relative pl-10"
+              className="group relative mt-10 pl-10"
               variants={itemVariants}
               onHoverStart={() => handleHoverStart(exp.title)}
               onHoverEnd={handleHoverEnd}
             >
               {/* Card background with glass effect */}
               <motion.div 
-                className="absolute -inset-6 rounded-xl -z-10 backdrop-blur-sm will-change-transform"
+                className="-inset-6 -z-10 absolute rounded-xl backdrop-blur-sm will-change-transform"
                 initial={{ opacity: 0 }}
                 animate={{ 
                   opacity: isHovered ? 0.1 : 0,
@@ -179,7 +180,7 @@ export default function Experience() {
               
               {/* Timeline dot - positioned correctly */}
               <motion.div 
-                className={`absolute left-0 top-1.5 w-3 h-3 rounded-full border border-zinc-700 bg-[#121212] will-change-transform`}
+                className={"absolute top-1.5 left-0 h-3 w-3 rounded-full border border-zinc-700 bg-[#121212] will-change-transform"}
                 initial={{ scale: 0 }}
                 animate={{ 
                   scale: 1,
@@ -198,7 +199,7 @@ export default function Experience() {
               {/* Pulse effect for timeline dot when hovered - conditionally rendered */}
               {isHovered && (
                 <motion.div
-                  className="absolute left-0 top-1.5 w-3 h-3 rounded-full pointer-events-none will-change-transform"
+                  className="pointer-events-none absolute top-1.5 left-0 h-3 w-3 rounded-full will-change-transform"
                   initial={{ scale: 1, opacity: 0.7 }}
                   animate={{ 
                     scale: [1, 1.8, 1],
@@ -206,7 +207,7 @@ export default function Experience() {
                   }}
                   transition={{ 
                     duration: 2,
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     repeatType: 'loop'
                   }}
                   style={{ backgroundColor: exp.color }}
@@ -217,7 +218,7 @@ export default function Experience() {
               <div className="overflow-hidden">
                 <motion.a
                   href={exp.link}
-                  className="text-xl font-bold inline-block relative"
+                  className="relative inline-block font-bold text-xl"
                   // whileHover={{ scale: 1.02, x: 5 }}
                   // transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   style={{ 
@@ -229,7 +230,7 @@ export default function Experience() {
                   
                   {/* animated underline  */}
                   {/* <motion.span 
-                    className="absolute -bottom-1 left-0 h-[2px] will-change-transform"
+                    className="-bottom-1 absolute left-0 h-[2px] will-change-transform"
                     style={{ backgroundColor: exp.color }}
                     initial={{ width: 0 }}
                     animate={{ width: isHovered ? "100%" : "0%" }}
@@ -240,7 +241,7 @@ export default function Experience() {
               
               {/* Position and date with animation */}
               <motion.p 
-                className="text-gray-500 text-xs mt-2 flex items-center"
+                className="mt-2 flex items-center text-gray-500 text-xs"
                 animate={{ 
                   color: isHovered ? exp.color : "#6b7280",
                   x: isHovered ? 5 : 0
@@ -274,7 +275,7 @@ export default function Experience() {
               
               {/* Description with character position change */}
               <motion.p 
-                className="text-gray-400 mt-5 text-sm relative"
+                className="relative mt-5 text-gray-400 text-sm"
                 animate={{ 
                   color: isHovered ? "#d1d5db" : "#9ca3af",
                   x: isHovered ? 5 : 0
@@ -305,7 +306,7 @@ export default function Experience() {
                 >
                   View more
                   <motion.svg 
-                    className="ml-2 w-4 h-4 will-change-transform" 
+                    className="ml-2 h-4 w-4 will-change-transform" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
@@ -315,12 +316,13 @@ export default function Experience() {
                     transition={{
                       x: {
                         duration: 1.5,
-                        repeat: Infinity,
+                        repeat: Number.POSITIVE_INFINITY,
                         repeatType: "loop",
                         ease: "easeInOut"
                       }
                     }}
                   >
+                    <title>Arrow pointing right</title>
                     <path 
                       strokeLinecap="round" 
                       strokeLinejoin="round" 
@@ -340,14 +342,14 @@ export default function Experience() {
       
       {/* Decorative elements - optimized with will-change */}
       <motion.div 
-        className="absolute -left-20 top-1/2 w-40 h-40 rounded-full bg-green-300/5 blur-3xl pointer-events-none will-change-transform"
+        className="-left-20 pointer-events-none absolute top-1/2 h-40 w-40 rounded-full bg-green-300/5 blur-3xl will-change-transform"
         animate={{ 
           scale: [1, 1.2, 1],
           opacity: [0.1, 0.2, 0.1]
         }}
         transition={{ 
           duration: 5, 
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
           repeatType: 'loop'
         }}
       />

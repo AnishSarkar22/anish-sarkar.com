@@ -109,9 +109,9 @@ export default function BlogPostClient({
       
       {/* Reactive glow effect that follows mouse */}
       <div 
-        className="fixed inset-0 opacity-30 pointer-events-none -z-5"
+        className="-z-5 pointer-events-none fixed inset-0 opacity-30"
         style={{
-          background: ` rgba(0, 0, 0, 0.15)`,
+          background: " rgba(0, 0, 0, 0.15)",
         }}
       />    
       
@@ -119,7 +119,7 @@ export default function BlogPostClient({
       {children}
       
       {/* GitHub Comments Section */}
-      {/* <section className="max-w-4xl mx-auto px-6 font-mono">
+      {/* <section className="mx-auto max-w-4xl px-6 font-mono">
         <GitHubComments
           repositoryOwner="AnishSarkar22"
           repositoryName="blog-data"
@@ -130,17 +130,17 @@ export default function BlogPostClient({
       </section> */}
       
       {/* Beautiful Thank You Footnote as Footer */}
-      <footer className="max-w-4xl mx-auto px-6 font-mono">
+      <footer className="mx-auto max-w-4xl px-6 font-mono">
         {/* Enhanced separator with animated particles */}
-        <div className="relative h-24 flex items-center justify-center my-8 overflow-hidden">
-          <div className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-green-300/40 to-transparent"></div>
+        <div className="relative my-8 flex h-24 items-center justify-center overflow-hidden">
+          <div className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-300/40 to-transparent" />
           
           {/* Animated particles */}
           <div className="absolute inset-0 flex items-center justify-center">
-            {[...Array(6)].map((_, i) => (
+            {["a", "b", "c", "d", "e", "f"].map((particleKey, i) => (
               <motion.div
-                key={i}
-                className="absolute w-1 h-1 rounded-full bg-green-300/30"
+                key={`particle-${particleKey}`}
+                className="absolute h-1 w-1 rounded-full bg-green-300/30"
                 initial={{ 
                   x: Math.random() * 200 - 100, 
                   y: Math.random() * 60 - 30,
@@ -152,7 +152,7 @@ export default function BlogPostClient({
                   scale: [0, 1, 0.5]
                 }}
                 transition={{ 
-                  repeat: Infinity, 
+                  repeat: Number.POSITIVE_INFINITY, 
                   duration: 4 + Math.random() * 3,
                   delay: i * 0.5,
                   ease: "easeInOut"
@@ -162,7 +162,7 @@ export default function BlogPostClient({
           </div>
           
           <motion.div 
-            className="absolute w-40 h-[1px]"
+            className="absolute h-[1px] w-40"
             style={{ 
               background: "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.9), transparent)",
               boxShadow: "0 0 15px rgba(52, 211, 153, 0.5)"
@@ -174,7 +174,7 @@ export default function BlogPostClient({
           />
           
           <motion.div
-            className="absolute flex items-center space-x-4 backdrop-blur-sm px-6 py-2 rounded-full"
+            className="absolute flex items-center space-x-4 rounded-full px-6 py-2 backdrop-blur-sm"
             style={{ background: "rgba(10, 10, 10, 0.3)" }}
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -182,25 +182,25 @@ export default function BlogPostClient({
             viewport={{ once: true }}
           >
             <motion.div 
-              className="w-2 h-2 rounded-full bg-green-300/40"
+              className="h-2 w-2 rounded-full bg-green-300/40"
               animate={{ scale: [1, 1.5, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
             />
             <motion.div 
-              className="w-3 h-3 rounded-full bg-green-300/30 border border-green-300/50"
+              className="h-3 w-3 rounded-full border border-green-300/50 bg-green-300/30"
               animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+              transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.3 }}
             />
             <motion.div 
-              className="w-2 h-2 rounded-full bg-green-300/40"
+              className="h-2 w-2 rounded-full bg-green-300/40"
               animate={{ scale: [1, 1.5, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.6 }}
             />
           </motion.div>
         </div>
         
         <motion.div 
-          className="mb-16 text-center relative"
+          className="relative mb-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -213,23 +213,23 @@ export default function BlogPostClient({
             transition={{ delay: 0.2, duration: 1.2 }}
             viewport={{ once: true }}
           >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-400 to-zinc-500">
+            <span className="bg-gradient-to-r from-zinc-400 to-zinc-500 bg-clip-text text-transparent">
               Thanks for reading
             </span>
           </motion.div>
           
           <motion.h3 
-            className="text-3xl font-medium mb-4 relative"
+            className="relative mb-4 font-medium text-3xl"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-300 via-emerald-300 to-teal-300 relative z-10">
+            <span className="relative z-10 bg-gradient-to-r from-green-300 via-emerald-300 to-teal-300 bg-clip-text text-transparent">
               Enjoyed this article?
             </span>
             <motion.span 
-              className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-36 h-1 rounded-full opacity-20"
+              className="-bottom-2 -translate-x-1/2 absolute left-1/2 h-1 w-36 rounded-full opacity-20"
               style={{ background: "linear-gradient(to right, #10b981, #34d399)" }}
               initial={{ width: 0 }}
               whileInView={{ width: "36%" }}
@@ -239,7 +239,7 @@ export default function BlogPostClient({
           </motion.h3>
           
           <motion.p 
-            className="text-zinc-400 max-w-md mx-auto mb-8 text-sm leading-relaxed"
+            className="mx-auto mb-8 max-w-md text-sm text-zinc-400 leading-relaxed"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
@@ -250,7 +250,7 @@ export default function BlogPostClient({
           </motion.p>
           
           <motion.div 
-            className="flex flex-wrap gap-5 justify-center mb-10"
+            className="mb-10 flex flex-wrap justify-center gap-5"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
@@ -258,7 +258,7 @@ export default function BlogPostClient({
           >
             <Link href="/blog" passHref>
               <motion.span
-                className="inline-flex items-center px-5 py-2.5 rounded-full bg-zinc-900/50 text-zinc-300 hover:bg-zinc-800/70 transition-all border border-zinc-800/50 text-sm backdrop-blur-sm"
+                className="inline-flex items-center rounded-full border border-zinc-800/50 bg-zinc-900/50 px-5 py-2.5 text-sm text-zinc-300 backdrop-blur-sm transition-all hover:bg-zinc-800/70"
                 whileHover={{ 
                   scale: 1.05, 
                   y: -2,
@@ -266,7 +266,8 @@ export default function BlogPostClient({
                 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <title>Back arrow icon</title>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
                 </svg>
                 More articles
@@ -277,7 +278,7 @@ export default function BlogPostClient({
               href="https://twitter.com/intent/tweet"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-5 py-2.5 rounded-full bg-gradient-to-r from-green-300/10 to-emerald-500/10 text-green-300 hover:from-green-300/20 hover:to-emerald-500/20 transition-all border border-green-300/20 text-sm backdrop-blur-sm"
+              className="inline-flex items-center rounded-full border border-green-300/20 bg-gradient-to-r from-green-300/10 to-emerald-500/10 px-5 py-2.5 text-green-300 text-sm backdrop-blur-sm transition-all hover:from-green-300/20 hover:to-emerald-500/20"
               onClick={() => handleSocialShare('twitter', window.location.href)} // for posthog analytics
               whileHover={{ 
                 scale: 1.05, 
@@ -286,7 +287,7 @@ export default function BlogPostClient({
               }}
               whileTap={{ scale: 0.98 }}
             >
-              <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
               </svg>
               Share on Twitter
@@ -295,26 +296,26 @@ export default function BlogPostClient({
           
           {/* Enhanced bottom design */}
           <div className="relative py-8">
-            <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-green-300/10 to-transparent"></div>
+            <div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-green-300/10 to-transparent" />
             
             <motion.div 
-              className="flex justify-center items-center gap-3 mb-4"
+              className="mb-4 flex items-center justify-center gap-3"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              {[...Array(3)].map((_, i) => (
+              {["first", "second", "third"].map((particle, i) => (
                 <motion.div 
-                  key={i}
-                  className="w-1 h-1 rounded-full bg-green-300/30"
+                  key={`footer-particle-${particle}`}
+                  className="h-1 w-1 rounded-full bg-green-300/30"
                   animate={{ 
                     scale: [1, 1.5, 1],
                     opacity: [0.3, 0.6, 0.3]
                   }}
                   transition={{ 
                     duration: 2, 
-                    repeat: Infinity, 
+                    repeat: Number.POSITIVE_INFINITY, 
                     delay: i * 0.3,
                     ease: "easeInOut"
                   }}
@@ -324,14 +325,14 @@ export default function BlogPostClient({
             
             {/* Copyright text */}
             <motion.div 
-              className="text-xs text-zinc-500 flex flex-col items-center"
+              className="flex flex-col items-center text-xs text-zinc-500"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 0.7 }}
               transition={{ delay: 1 }}
               viewport={{ once: true }}
             >
               <span className="mb-1">© {new Date().getFullYear()} Anish Sarkar</span>
-              <span className="text-zinc-600/50 text-[10px]">All rights reserved</span>
+              <span className="text-[10px] text-zinc-600/50">All rights reserved</span>
             </motion.div>
           </div>
         </motion.div>

@@ -2,7 +2,7 @@ import posthog from "posthog-js";
 
 // Custom hook for PostHog
 export const usePostHog = () => {
-  const trackEvent = (eventName: string, properties?: Record<string, any>) => {
+  const trackEvent = (eventName: string, properties?: Record<string, unknown>) => {
     if (typeof window !== "undefined" && posthog.__loaded) {
       posthog.capture(eventName, {
         ...properties,
@@ -13,13 +13,13 @@ export const usePostHog = () => {
     }
   };
 
-  const identifyUser = (userId: string, properties?: Record<string, any>) => {
+  const identifyUser = (userId: string, properties?: Record<string, unknown>) => {
     if (typeof window !== "undefined" && posthog.__loaded) {
       posthog.identify(userId, properties);
     }
   };
 
-  const setUserProperties = (properties: Record<string, any>) => {
+  const setUserProperties = (properties: Record<string, unknown>) => {
     if (typeof window !== "undefined" && posthog.__loaded) {
       posthog.setPersonProperties(properties);
     }
@@ -33,7 +33,7 @@ export const usePostHog = () => {
 
   const trackPageView = (
     pathname: string,
-    properties?: Record<string, any>
+    properties?: Record<string, unknown>
   ) => {
     if (typeof window !== "undefined" && posthog.__loaded) {
       posthog.capture("$pageview", {
@@ -57,7 +57,7 @@ export const usePostHog = () => {
 // Direct exports for convenience
 export const trackEvent = (
   eventName: string,
-  properties?: Record<string, any>
+  properties?: Record<string, unknown>
 ) => {
   if (typeof window !== "undefined" && posthog.__loaded) {
     posthog.capture(eventName, {
@@ -70,14 +70,14 @@ export const trackEvent = (
 
 export const identifyUser = (
   userId: string,
-  properties?: Record<string, any>
+  properties?: Record<string, unknown>
 ) => {
   if (typeof window !== "undefined" && posthog.__loaded) {
     posthog.identify(userId, properties);
   }
 };
 
-export const setUserProperties = (properties: Record<string, any>) => {
+export const setUserProperties = (properties: Record<string, unknown>) => {
   if (typeof window !== "undefined" && posthog.__loaded) {
     posthog.setPersonProperties(properties);
   }

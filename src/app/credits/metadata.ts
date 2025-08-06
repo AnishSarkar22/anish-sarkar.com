@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Credits",
     description: "Acknowledging the amazing people, tools, and resources that made this project possible.",
-    url: siteUrl + "/credits",
+    url: `${siteUrl}/credits`,
     images: [
       {
-        url: siteUrl + "/og/home?title=credits",
+        url: `${siteUrl}/og/home?title=credits`,
       },
     ],
   },
@@ -20,6 +20,6 @@ export const metadata: Metadata = {
     description: "Acknowledging the amazing people, tools, and resources that made this project possible.",
     card: "summary_large_image",
     creator: "@AnishSarkar22",
-    images: [siteUrl + "/og/home?title=credits"],
+    images: [`${siteUrl}/og/home?title=credits`],
   },
 };

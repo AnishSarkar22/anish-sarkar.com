@@ -39,7 +39,7 @@ export default function Pagination({
   // Create URL for page
   const createPageUrl = useCallback((pageNumber: number) => {
     // Input validation
-    if (typeof pageNumber !== 'number' || isNaN(pageNumber) || pageNumber < 1 || pageNumber > totalPages) {
+    if (typeof pageNumber !== 'number' || Number.isNaN(pageNumber) || pageNumber < 1 || pageNumber > totalPages) {
       return `${basePath || pathname}`; // Returns the current URL if the parameter is invalid
     }
 
@@ -103,28 +103,29 @@ export default function Pagination({
     return (
       <AnimatePresence>
         {isActive && (
-          <>
-            {[...Array(particleCount)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 rounded-full bg-green-300/70"
-                initial={{ 
-                  x: 0, 
-                  y: 0, 
-                  opacity: 0.7,
-                  scale: 0.5
-                }}
-                animate={{ 
-                  x: [0, (Math.random() - 0.5) * 20], 
-                  y: [0, (Math.random() - 0.5) * 20],
-                  opacity: 0,
-                  scale: [0.5, Math.random() * 0.3 + 0.3]
-                }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-              />
-            ))}
-          </>
+          [...Array(particleCount)].map(() => {
+              const particleKey = `particle-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`;
+              return (
+                <motion.div
+                  key={particleKey}
+                  className="absolute h-1 w-1 rounded-full bg-green-300/70"
+                  initial={{ 
+                    x: 0, 
+                    y: 0, 
+                    opacity: 0.7,
+                    scale: 0.5
+                  }}
+                  animate={{ 
+                    x: [0, (Math.random() - 0.5) * 20], 
+                    y: [0, (Math.random() - 0.5) * 20],
+                    opacity: 0,
+                    scale: [0.5, Math.random() * 0.3 + 0.3]
+                  }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                />
+              );
+            })
         )}
       </AnimatePresence>
     );
@@ -157,7 +158,7 @@ export default function Pagination({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center gap-3 px-6 py-4 rounded-xl bg-gradient-to-r from-zinc-900/80 to-zinc-800/50 backdrop-blur-md relative overflow-hidden"
+        className="relative flex items-center gap-3 overflow-hidden rounded-xl bg-gradient-to-r from-zinc-900/80 to-zinc-800/50 px-6 py-4 backdrop-blur-md"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         whileHover={{ scale: prefersReducedMotion ? 1 : 1.02 }}
@@ -165,21 +166,21 @@ export default function Pagination({
         {/* Animated background gradient - simplified for performance */}
         {!prefersReducedMotion && (
           <motion.div 
-            className="absolute inset-0 -z-10 opacity-50"
+            className="-z-10 absolute inset-0 opacity-50"
             animate={{
               background: [
                 "linear-gradient(45deg, rgba(39, 39, 42, 0.5) 0%, rgba(24, 24, 27, 0.5) 100%)",
                 "linear-gradient(225deg, rgba(39, 39, 42, 0.5) 0%, rgba(24, 24, 27, 0.5) 100%)",
               ]
             }}
-            transition={{ duration: 8, repeat: Infinity, ease: "linear", repeatType: "reverse" }}
+            transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear", repeatType: "reverse" }}
           />
         )}
 
         {/* Animated border - only when not using reduced motion */}
         {!prefersReducedMotion && (
           <motion.div 
-            className="absolute inset-0 rounded-xl -z-5"
+            className="-z-5 absolute inset-0 rounded-xl"
             initial={{ opacity: 0 }}
             animate={{ 
               opacity: isHoveringContainer ? 1 : 0,
@@ -194,7 +195,7 @@ export default function Pagination({
         {/* Glow effect for container - only when not using reduced motion */}
         {!prefersReducedMotion && (
           <motion.div 
-            className="absolute inset-0 rounded-xl -z-10"
+            className="-z-10 absolute inset-0 rounded-xl"
             animate={{
               boxShadow: hoveredPage !== null 
                 ? "0 0 20px rgba(52, 211, 153, 0.15), inset 0 0 15px rgba(52, 211, 153, 0.08)" 
@@ -207,7 +208,7 @@ export default function Pagination({
         {/* Mouse follow glow effect - simplified and only when not using reduced motion */}
         {isHoveringContainer && !prefersReducedMotion && (
           <motion.div 
-            className="absolute w-32 h-32 rounded-full -z-5 pointer-events-none"
+            className="-z-5 pointer-events-none absolute h-32 w-32 rounded-full"
             style={{
               background: "radial-gradient(circle, rgba(74, 222, 128, 0.12) 0%, rgba(74, 222, 128, 0) 70%)",
               left: mousePosition.x - 64,
@@ -224,13 +225,13 @@ export default function Pagination({
           <Link 
             href={onPageChange ? "#" : createPageUrl(currentPage - 1)}
             onClick={(e) => onPageChange && handlePageClick(currentPage - 1, e)}
-            className="relative group"
+            className="group relative"
             onMouseEnter={createPageHoverHandler(-1)}
             onMouseLeave={createPageHoverHandler(null)}
             aria-label="Previous page"
           >
             <motion.div
-              className="flex items-center justify-center w-10 h-10 rounded-lg text-zinc-400 transition-all duration-300 relative overflow-hidden"
+              className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg text-zinc-400 transition-all duration-300"
               whileHover={{ 
                 color: "#4ade80", 
                 scale: prefersReducedMotion ? 1 : 1.1,
@@ -266,7 +267,7 @@ export default function Pagination({
               
               <motion.svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5 relative z-10" 
+                className="relative z-10 h-5 w-5" 
                 viewBox="0 0 20 20" 
                 fill="currentColor"
                 animate={{ 
@@ -278,6 +279,7 @@ export default function Pagination({
                   duration: 0.3
                 }}
               >
+                <title>Previous page</title>
                 <path 
                   fillRule="evenodd" 
                   d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" 
@@ -288,7 +290,7 @@ export default function Pagination({
               {/* Text label on hover - simplified */}
               {hoveredPage === -1 && !prefersReducedMotion && (
                 <motion.span
-                  className="absolute text-xs font-medium text-green-300 whitespace-nowrap"
+                  className="absolute whitespace-nowrap font-medium text-green-300 text-xs"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 18 }}
                   transition={{ duration: 0.2 }}
@@ -302,90 +304,94 @@ export default function Pagination({
         
         {/* Page numbers */}
         <div className="flex items-center space-x-2">
-          {pageNumbers.map((page, index) => (
-            <div key={index}>
-              {page === "..." ? (
-                <motion.span 
-                  className="w-8 h-8 flex items-center justify-center text-zinc-500 text-sm"
-                  animate={prefersReducedMotion ? {} : {
-                    y: [0, -1, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 1
-                  }}
-                >
-                  •••
-                </motion.span>
-              ) : (
-                <Link 
-                  href={onPageChange ? "#" : createPageUrl(page as number)}
-                  onClick={(e) => onPageChange && handlePageClick(page as number, e)}
-                  onMouseEnter={createPageHoverHandler(page as number)}
-                  onMouseLeave={createPageHoverHandler(null)}
-                  className="relative"
-                  aria-label={`Page ${page}`}
-                  aria-current={currentPage === page ? "page" : undefined}
-                >
-                  <motion.div
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-medium transition-all duration-300 relative overflow-hidden ${
-                      currentPage === page
-                        ? "text-green-300"
-                        : "text-zinc-400"
-                    }`}
-                    whileHover={{ 
-                      color: "#4ade80", 
-                      scale: prefersReducedMotion ? 1 : 1.1,
-                      y: prefersReducedMotion ? 0 : -2
+          {pageNumbers.map((page, index) => {
+            // Use a unique key: for numbers, use the page number; for ellipsis, use a string with index
+            const key = typeof page === "number" ? `page-${page}` : `ellipsis-${index}`;
+            return (
+              <div key={key}>
+                {page === "..." ? (
+                  <motion.span 
+                    className="flex h-8 w-8 items-center justify-center text-sm text-zinc-500"
+                    animate={prefersReducedMotion ? {} : {
+                      y: [0, -1, 0],
                     }}
-                    whileTap={{ scale: 0.95, y: 0 }}
+                    transition={{
+                      duration: 2,
+                      repeat: Number.POSITIVE_INFINITY,
+                      repeatDelay: 1
+                    }}
                   >
-                    {/* Particle effect */}
-                    <ParticleEffect isActive={hoveredPage === page} />
-                    
-                    {/* Active page background - simplified */}
-                    {currentPage === page && !prefersReducedMotion && (
-                      <motion.div 
-                        className="absolute inset-0 rounded-lg bg-green-500/20"
-                        animate={{ 
-                          boxShadow: "0 0 10px rgba(74, 222, 128, 0.3), inset 0 0 5px rgba(74, 222, 128, 0.2)",
-                        }}
-                      />
-                    )}
-                    
-                    {/* Hover background effect */}
-                    <motion.div 
-                      className="absolute inset-0 rounded-lg bg-zinc-800/0"
-                      animate={{ 
-                        backgroundColor: hoveredPage === page ? "rgba(39, 39, 42, 0.7)" : "rgba(39, 39, 42, 0)",
-                        scale: hoveredPage === page ? 1 : 0.8,
+                    •••
+                  </motion.span>
+                ) : (
+                  <Link 
+                    href={onPageChange ? "#" : createPageUrl(page as number)}
+                    onClick={(e) => onPageChange && handlePageClick(page as number, e)}
+                    onMouseEnter={createPageHoverHandler(page as number)}
+                    onMouseLeave={createPageHoverHandler(null)}
+                    className="relative"
+                    aria-label={`Page ${page}`}
+                    aria-current={currentPage === page ? "page" : undefined}
+                  >
+                    <motion.div
+                      className={`relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg font-medium text-sm transition-all duration-300 ${
+                        currentPage === page
+                          ? "text-green-300"
+                          : "text-zinc-400"
+                      }`}
+                      whileHover={{ 
+                        color: "#4ade80", 
+                        scale: prefersReducedMotion ? 1 : 1.1,
+                        y: prefersReducedMotion ? 0 : -2
                       }}
-                      transition={{ duration: 0.2 }}
-                    />
-                    
-                    {/* Glow ring - simplified */}
-                    {hoveredPage === page && !prefersReducedMotion && (
+                      whileTap={{ scale: 0.95, y: 0 }}
+                    >
+                      {/* Particle effect */}
+                      <ParticleEffect isActive={hoveredPage === page} />
+                      
+                      {/* Active page background - simplified */}
+                      {currentPage === page && !prefersReducedMotion && (
+                        <motion.div 
+                          className="absolute inset-0 rounded-lg bg-green-500/20"
+                          animate={{ 
+                            boxShadow: "0 0 10px rgba(74, 222, 128, 0.3), inset 0 0 5px rgba(74, 222, 128, 0.2)",
+                          }}
+                        />
+                      )}
+                      
+                      {/* Hover background effect */}
                       <motion.div 
-                        className="absolute inset-0 rounded-lg"
-                        initial={{ opacity: 0 }}
+                        className="absolute inset-0 rounded-lg bg-zinc-800/0"
                         animate={{ 
-                          opacity: 1,
-                          boxShadow: "0 0 10px rgba(74, 222, 128, 0.3), inset 0 0 5px rgba(74, 222, 128, 0.2)"
+                          backgroundColor: hoveredPage === page ? "rgba(39, 39, 42, 0.7)" : "rgba(39, 39, 42, 0)",
+                          scale: hoveredPage === page ? 1 : 0.8,
                         }}
                         transition={{ duration: 0.2 }}
                       />
-                    )}
-                    
-                    {/* Number */}
-                    <span className="relative z-10">
-                      {page}
-                    </span>
-                  </motion.div>
-                </Link>
-              )}
-            </div>
-          ))}
+                      
+                      {/* Glow ring - simplified */}
+                      {hoveredPage === page && !prefersReducedMotion && (
+                        <motion.div 
+                          className="absolute inset-0 rounded-lg"
+                          initial={{ opacity: 0 }}
+                          animate={{ 
+                            opacity: 1,
+                            boxShadow: "0 0 10px rgba(74, 222, 128, 0.3), inset 0 0 5px rgba(74, 222, 128, 0.2)"
+                          }}
+                          transition={{ duration: 0.2 }}
+                        />
+                      )}
+                      
+                      {/* Number */}
+                      <span className="relative z-10">
+                        {page}
+                      </span>
+                    </motion.div>
+                  </Link>
+                )}
+              </div>
+            );
+          })}
         </div>
         
         {/* Next button */}
@@ -393,13 +399,13 @@ export default function Pagination({
           <Link 
             href={onPageChange ? "#" : createPageUrl(currentPage + 1)}
             onClick={(e) => onPageChange && handlePageClick(currentPage + 1, e)}
-            className="relative group"
+            className="group relative"
             onMouseEnter={createPageHoverHandler(-2)}
             onMouseLeave={createPageHoverHandler(null)}
             aria-label="Next page"
           >
             <motion.div
-              className="flex items-center justify-center w-10 h-10 rounded-lg text-zinc-400 transition-all duration-300 relative overflow-hidden"
+              className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg text-zinc-400 transition-all duration-300"
               whileHover={{ 
                 color: "#4ade80", 
                 scale: prefersReducedMotion ? 1 : 1.1,
@@ -435,7 +441,7 @@ export default function Pagination({
               
               <motion.svg 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5 relative z-10" 
+                className="relative z-10 h-5 w-5" 
                 viewBox="0 0 20 20" 
                 fill="currentColor"
                 animate={{ 
@@ -447,6 +453,7 @@ export default function Pagination({
                   duration: 0.3
                 }}
               >
+                <title>Next page</title>
                 <path 
                   fillRule="evenodd" 
                   d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" 
@@ -457,7 +464,7 @@ export default function Pagination({
               {/* Text label on hover - simplified */}
               {hoveredPage === -2 && !prefersReducedMotion && (
                 <motion.span
-                  className="absolute text-xs font-medium text-green-300 whitespace-nowrap"
+                  className="absolute whitespace-nowrap font-medium text-green-300 text-xs"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 18 }}
                   transition={{ duration: 0.2 }}

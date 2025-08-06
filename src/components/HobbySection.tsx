@@ -91,7 +91,7 @@ const HobbyTag = memo(({
 }) => {
   return (
     <motion.div
-      className="relative inline-flex items-center rounded-full px-3 py-1.5 mr-2 mb-3 backdrop-blur-sm group overflow-hidden"
+      className="group relative mr-2 mb-3 inline-flex items-center overflow-hidden rounded-full px-3 py-1.5 backdrop-blur-sm"
       style={{ 
         backgroundColor: isHovered ? `${hobby.color}15` : 'rgba(39, 39, 42, 0.3)',
         border: `1px solid ${isHovered ? hobby.color : 'rgba(63, 63, 70, 0.3)'}`,
@@ -124,7 +124,7 @@ const HobbyTag = memo(({
     >
       {/* Animated background gradient */}
       <motion.div 
-        className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100"
+        className="-z-10 absolute inset-0 opacity-0 group-hover:opacity-100"
         initial={{ opacity: 0 }}
         animate={{ 
           opacity: isHovered ? 1 : 0,
@@ -136,14 +136,14 @@ const HobbyTag = memo(({
         }}
         transition={{ 
           duration: 3, 
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
           repeatType: "loop"
         }}
       />
 
       {/* Icon with animation */}
       <motion.span 
-        className="mr-2 relative"
+        className="relative mr-2"
         animate={isHovered ? {
           scale: [1, 1.2, 1],
           rotate: [0, 5, -5, 0],
@@ -157,7 +157,7 @@ const HobbyTag = memo(({
         {/* Icon glow effect */}
         {isHovered && (
           <motion.div
-            className="absolute inset-0 rounded-full -z-10"
+            className="-z-10 absolute inset-0 rounded-full"
             initial={{ opacity: 0 }}
             animate={{ 
               opacity: [0.3, 0.7, 0.3],
@@ -165,7 +165,7 @@ const HobbyTag = memo(({
             }}
             transition={{ 
               duration: 1.8,
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
               repeatType: "reverse"
             }}
             style={{ 
@@ -179,7 +179,7 @@ const HobbyTag = memo(({
 
       {/* Text with animation */}
       <motion.span 
-        className="text-sm font-medium relative overflow-hidden"
+        className="relative overflow-hidden font-medium text-sm"
         style={{ 
           color: isHovered ? hobby.color : '#e4e4e7',
         }}
@@ -187,7 +187,7 @@ const HobbyTag = memo(({
         {/* Text glow effect */}
         {isHovered && (
           <motion.span
-            className="absolute inset-0 pointer-events-none"
+            className="pointer-events-none absolute inset-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             style={{
@@ -261,7 +261,7 @@ const HobbyTag = memo(({
 
       {/* Shine effect */}
       <motion.div
-        className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100"
+        className="-z-10 absolute inset-0 opacity-0 group-hover:opacity-100"
         style={{
           background: `linear-gradient(90deg, transparent, ${hobby.color}30, transparent)`,
           transform: "translateX(-100%)"
@@ -269,7 +269,7 @@ const HobbyTag = memo(({
         animate={isHovered ? { x: ["100%", "-100%"] } : {}}
         transition={{
           duration: 1.2,
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
           repeatDelay: 0.5
         }}
       />
@@ -277,39 +277,41 @@ const HobbyTag = memo(({
       {/* Particle effects */}
       <AnimatePresence>
         {isHovered && (
-          <>
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={`particle-${i}`}
-                className="absolute rounded-full z-0 pointer-events-none"
-                initial={{ 
-                  opacity: 0,
-                  scale: 0,
-                  x: 0,
-                  y: 0,
-                }}
-                animate={{ 
-                  opacity: [0, 0.7, 0],
-                  scale: [0, Math.random() * 0.5 + 0.3, 0],
-                  x: [0, (Math.random() - 0.5) * 40],
-                  y: [0, (Math.random() - 0.5) * 40],
-                }}
-                exit={{ opacity: 0, scale: 0 }}
-                transition={{ 
-                  duration: 0.8 + Math.random() * 0.5,
-                  ease: "easeOut"
-                }}
-                style={{
-                  left: `${50 + (Math.random() - 0.5) * 20}%`,
-                  top: `${50 + (Math.random() - 0.5) * 20}%`,
-                  width: `${Math.random() * 3 + 1}px`,
-                  height: `${Math.random() * 3 + 1}px`,
-                  backgroundColor: hobby.color,
-                  boxShadow: `0 0 ${Math.random() * 6 + 2}px ${hobby.color}`
-                }}
-              />
-            ))}
-          </>
+          [...Array(6)].map((_, i) => {
+              // Generate a unique key using hobby.id, index, and Date.now() + Math.random()
+              const uniqueKey = `particle-${hobby.id}-${i}-${Date.now()}-${Math.random()}`;
+              return (
+                <motion.div
+                  key={uniqueKey}
+                  className="pointer-events-none absolute z-0 rounded-full"
+                  initial={{ 
+                    opacity: 0,
+                    scale: 0,
+                    x: 0,
+                    y: 0,
+                  }}
+                  animate={{ 
+                    opacity: [0, 0.7, 0],
+                    scale: [0, Math.random() * 0.5 + 0.3, 0],
+                    x: [0, (Math.random() - 0.5) * 40],
+                    y: [0, (Math.random() - 0.5) * 40],
+                  }}
+                  exit={{ opacity: 0, scale: 0 }}
+                  transition={{ 
+                    duration: 0.8 + Math.random() * 0.5,
+                    ease: "easeOut"
+                  }}
+                  style={{
+                    left: `${50 + (Math.random() - 0.5) * 20}%`,
+                    top: `${50 + (Math.random() - 0.5) * 20}%`,
+                    width: `${Math.random() * 3 + 1}px`,
+                    height: `${Math.random() * 3 + 1}px`,
+                    backgroundColor: hobby.color,
+                    boxShadow: `0 0 ${Math.random() * 6 + 2}px ${hobby.color}`
+                  }}
+                />
+              );
+            })
         )}
       </AnimatePresence>
 
@@ -326,7 +328,7 @@ const HobbyTag = memo(({
         } : {}}
         transition={{ 
           duration: 1.8,
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
           repeatType: "loop"
         }}
       />
@@ -338,7 +340,7 @@ HobbyTag.displayName = 'HobbyTag';
 
 // Background gradient component
 const BackgroundGradient = memo(() => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+  <div className="-z-10 pointer-events-none absolute inset-0 overflow-hidden">
     <motion.div
       className="absolute inset-0 opacity-10"
       animate={{
@@ -350,7 +352,7 @@ const BackgroundGradient = memo(() => (
       }}
       transition={{ 
         duration: 15, 
-        repeat: Infinity,
+        repeat: Number.POSITIVE_INFINITY,
         repeatType: "loop"
       }}
       style={{ filter: "blur(50px)" }}
@@ -392,7 +394,7 @@ export default function HobbySection() {
 
   const titleTransition = useMemo(() => ({ 
     duration: 2, 
-    repeat: Infinity, 
+    repeat: Number.POSITIVE_INFINITY, 
     repeatDelay: 5, 
     times: [0, 0.2, 0.5, 0.8, 1],
     repeatType: 'loop' as const
@@ -400,7 +402,7 @@ export default function HobbySection() {
 
   return (
     <motion.div 
-      className="mb-16 text-white relative will-change-transform"
+      className="relative mb-16 text-white will-change-transform"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -408,25 +410,25 @@ export default function HobbySection() {
       <BackgroundGradient />
       
       <motion.h1 
-        className="text-2xl font-bold text-white relative inline-block"
+        className="relative inline-block font-bold text-2xl text-white"
         variants={titleVariants}
         whileHover={{ scale: 1.03 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
       >
-        <span className="text-green-300 inline-block will-change-transform">
+        <span className="inline-block text-green-300 will-change-transform">
             &gt;
           </span>{" "}
-        <span className="relative group">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white bg-[length:200%_100%] animate-shimmer">hobbies</span>
+        <span className="group relative">
+          <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">hobbies</span>
           
           {/* Animated underline with glow */}
           {/* <motion.span
-            className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
+            className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 1, delay: 0.5 }}
             style={{ boxShadow: '0 2px 10px rgba(134, 239, 172, 0.3)' }}
-          /> */}
+          />  */}
         </span>
       </motion.h1>
       

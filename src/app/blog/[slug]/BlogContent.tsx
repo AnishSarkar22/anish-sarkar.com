@@ -21,7 +21,7 @@ export default function BlogContent({ html }: BlogContentProps) {
     if (contentRef.current) {
       // Add click handlers for anchor links
       const links = contentRef.current.querySelectorAll('a[href^="#"]');
-      links.forEach(link => {
+      for (const link of links) {
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const href = link.getAttribute('href');
@@ -34,11 +34,11 @@ export default function BlogContent({ html }: BlogContentProps) {
             }
           }
         });
-      });
+      }
 
-      // Add copy button to code blocks
-      const codeBlocks = contentRef.current.querySelectorAll('pre');
-codeBlocks.forEach(block => {
+// Add copy button to code blocks
+const codeBlocks = contentRef.current.querySelectorAll('pre');
+for (const block of codeBlocks) {
   const button = document.createElement('button');
   button.innerHTML = COPY_ICON; // Only SVG icon, no text
   button.className = 'absolute top-2 right-2 px-2 py-1 bg-zinc-700 text-white rounded hover:bg-zinc-600 transition-colors';
@@ -55,7 +55,7 @@ codeBlocks.forEach(block => {
 
   block.style.position = 'relative';
   block.appendChild(button);
-});
+}
 
       // Trigger Mermaid re-initialization after content is loaded
       const mermaidElements = contentRef.current.querySelectorAll('.mermaid');
@@ -65,12 +65,13 @@ codeBlocks.forEach(block => {
         document.dispatchEvent(event);
       }
     }
-  }, [html]);
+  }, []);
 
   return (
     <div 
       ref={contentRef}
       className="blog-content prose prose-invert max-w-none"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

@@ -1,7 +1,7 @@
 import BlogClient from "./BlogClient";
 import { fetchBlogPosts } from "~/components/utils/blog";
 import { metadata as blogPageMetadata } from './metadata';
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import TransitionWrapper from "~/components/utils/TransitionWrapper";
 
 export const metadata: Metadata = blogPageMetadata;
@@ -13,7 +13,7 @@ export default async function BlogPage({
 }) {
   const params = await searchParams;
   // Get page parameter from URL, default is page 1
-  const currentPage = params?.page ? parseInt(params.page) : 1;
+  const currentPage = params?.page ? Number.parseInt(params.page) : 1;
   const postsPerPage = 5; // Number of posts per page
   
   // Fetch blog data from local files (will be cached)

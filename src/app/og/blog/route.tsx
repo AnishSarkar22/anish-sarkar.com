@@ -18,9 +18,9 @@ async function loadGoogleFont(font: string, text: string) {
       /src: url\((.+)\) format\('(opentype|truetype)'\)/
     );
 
-    if (resource && resource[1]) {
+    if (resource?.[1]) {
       const response = await fetch(resource[1]);
-      if (response.status == 200) {
+      if (response.status === 200) {
         return await response.arrayBuffer();
       }
     }
@@ -52,7 +52,8 @@ export async function GET(request: Request) {
       title.length > 60 ? `${title.substring(0, 57)}...` : title;
 
     // Load additional fonts for title and content with error handling
-    let fontData, fontDataBold;
+    let fontData: ArrayBuffer | null;
+    let fontDataBold: ArrayBuffer | null;
     try {
       fontData = await loadGoogleFont("Geist+Mono", "anish's tech blog");
       fontDataBold = await loadGoogleFont(

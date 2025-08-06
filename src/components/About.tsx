@@ -113,7 +113,7 @@ export default function About() {
   return (
     <motion.section 
       ref={sectionRef}
-      className="mb-16 space-y-6 relative overflow-hidden p-4 rounded-xl will-change-transform"
+      className="relative mb-16 space-y-6 overflow-hidden rounded-xl p-4 will-change-transform"
       variants={sectionVariants}
       initial="hidden"
       animate="visible"
@@ -126,19 +126,19 @@ export default function About() {
         className="relative"
       >
         <motion.h2 
-          className="text-3xl font-bold mb-2 relative inline-block"
+          className="relative mb-2 inline-block font-bold text-3xl"
           whileHover={{ scale: 1.03 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
         >
-          <span className="text-green-300 inline-block will-change-transform">
+          <span className="inline-block text-green-300 will-change-transform">
             &gt;
           </span>{" "}
-          <span className="relative group">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white bg-[length:200%_100%] animate-shimmer">about</span>
+          <span className="group relative">
+            <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">about</span>
             
             {/* Animated underline with glow */}
             {/* <motion.span 
-              className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
+              className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ duration: 1, delay: 0.5 }}
@@ -147,7 +147,7 @@ export default function About() {
             
             {/* Particle burst on hover - optimized with AnimatePresence */}
             <motion.div
-              className="absolute inset-0 -z-10 pointer-events-none"
+              className="-z-10 pointer-events-none absolute inset-0"
               initial={{ opacity: 0 }}
               whileHover={{ opacity: 1 }}
             >
@@ -170,7 +170,7 @@ export default function About() {
                     }}
                     transition={{ 
                       duration: particle.duration,
-                      repeat: Infinity,
+                      repeat: Number.POSITIVE_INFINITY,
                       delay: particle.delay,
                       repeatType: 'loop'
                     }}
@@ -190,7 +190,7 @@ export default function About() {
         </motion.h2>
         
         <motion.div 
-          className="text-gray-500 italic text-xs mb-4 relative overflow-hidden"
+          className="relative mb-4 overflow-hidden text-gray-500 text-xs italic"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.7 }}
@@ -208,10 +208,10 @@ export default function About() {
       </motion.div>
 
       <div className="space-y-5 text-sm">
-  {paragraphs.map((paragraph, index) => (
+  {paragraphs.map((paragraph) => (
     <div
-      key={index}
-      className="text-gray-300 leading-relaxed tracking-wide p-4 rounded-lg bg-transparent"
+      key={paragraph}
+      className="rounded-lg bg-transparent p-4 text-gray-300 leading-relaxed tracking-wide"
     >
       {paragraph}
     </div>
@@ -219,7 +219,7 @@ export default function About() {
 </div>
       {/* Enhanced decorative elements - optimized with reduced animation complexity */}
       <motion.div 
-        className="absolute -right-20 top-1/2 w-60 h-60 rounded-full -z-10 pointer-events-none will-change-transform"
+        className="-right-20 -z-10 pointer-events-none absolute top-1/2 h-60 w-60 rounded-full will-change-transform"
         style={{
           background: 'radial-gradient(circle, rgba(134, 239, 172, 0.1), transparent 70%)',
           filter: 'blur(40px)'
@@ -232,14 +232,14 @@ export default function About() {
         }}
         transition={{ 
           duration: 8, 
-          repeat: Infinity, 
+          repeat: Number.POSITIVE_INFINITY, 
           ease: "easeInOut",
           repeatType: 'loop'
         }}
       />
       
       <motion.div 
-        className="absolute -left-20 bottom-0 w-40 h-40 rounded-full -z-10 pointer-events-none will-change-transform"
+        className="-left-20 -z-10 pointer-events-none absolute bottom-0 h-40 w-40 rounded-full will-change-transform"
         style={{
           background: 'radial-gradient(circle, rgba(74, 222, 128, 0.08), transparent 70%)',
           filter: 'blur(30px)'
@@ -252,7 +252,7 @@ export default function About() {
         }}
         transition={{ 
           duration: 10, 
-          repeat: Infinity, 
+          repeat: Number.POSITIVE_INFINITY, 
           ease: "easeInOut", 
           delay: 1,
           repeatType: 'loop'
@@ -263,7 +263,7 @@ export default function About() {
       {codeParticles.map((particle) => (
         <motion.div
           key={particle.key}
-          className="absolute text-green-300/20 pointer-events-none text-xs font-mono will-change-transform"
+          className="pointer-events-none absolute font-mono text-green-300/20 text-xs will-change-transform"
           style={{
             left: `${particle.left}%`,
             top: `${particle.top}%`,
@@ -276,7 +276,7 @@ export default function About() {
           }}
           transition={{
             duration: particle.duration,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             delay: particle.delay,
             ease: "linear",
             repeatType: 'loop'
@@ -287,13 +287,13 @@ export default function About() {
       ))}
       
       {/* Subtle grid lines - no animation, so no optimization needed */}
-      <div className="absolute inset-0 -z-30 opacity-5">
-        <div className="absolute left-1/4 top-0 bottom-0 w-px bg-green-300/30" />
-        <div className="absolute left-2/4 top-0 bottom-0 w-px bg-green-300/30" />
-        <div className="absolute left-3/4 top-0 bottom-0 w-px bg-green-300/30" />
-        <div className="absolute top-1/4 left-0 right-0 h-px bg-green-300/30" />
-        <div className="absolute top-2/4 left-0 right-0 h-px bg-green-300/30" />
-        <div className="absolute top-3/4 left-0 right-0 h-px bg-green-300/30" />
+      <div className="-z-30 absolute inset-0 opacity-5">
+        <div className="absolute top-0 bottom-0 left-1/4 w-px bg-green-300/30" />
+        <div className="absolute top-0 bottom-0 left-2/4 w-px bg-green-300/30" />
+        <div className="absolute top-0 bottom-0 left-3/4 w-px bg-green-300/30" />
+        <div className="absolute top-1/4 right-0 left-0 h-px bg-green-300/30" />
+        <div className="absolute top-2/4 right-0 left-0 h-px bg-green-300/30" />
+        <div className="absolute top-3/4 right-0 left-0 h-px bg-green-300/30" />
       </div>
     </motion.section>
   );

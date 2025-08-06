@@ -52,12 +52,12 @@ export default function NotFound() {
   return (
     <main
       ref={mainRef}
-      className="relative min-h-screen text-white overflow-hidden"
+      className="relative min-h-screen overflow-hidden text-white"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Cosmic background elements */}
-      <div className="fixed inset-0 -z-10 bg-black pointer-events-none">
+      <div className="-z-10 pointer-events-none fixed inset-0 bg-black">
         {/* Animated nebula background */}
         <motion.div
           className="absolute inset-0 opacity-30"
@@ -72,12 +72,12 @@ export default function NotFound() {
           }}
           transition={{
             duration: 20,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: "easeInOut",
           }}
         />
 
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)] pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)]" />
 
         {/* Animated gradient overlay */}
         <motion.div
@@ -92,13 +92,13 @@ export default function NotFound() {
           }}
           transition={{
             duration: 20,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: "linear",
           }}
         />
 
         <motion.div
-          className="absolute top-0 left-0 w-full h-1 pointer-events-none"
+          className="pointer-events-none absolute top-0 left-0 h-1 w-full"
           style={{
             background:
               "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent)",
@@ -110,94 +110,120 @@ export default function NotFound() {
           }}
           transition={{
             duration: 8,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: "easeInOut",
           }}
         />
 
         {/* Animated particles */}
-        {[...Array(80)].map((_, i) => (
-          <motion.div
-            key={`bg-particle-${i}`}
-            className="absolute rounded-full pointer-events-none"
-            style={{
-              width: Math.random() * 4 + 1,
-              height: Math.random() * 4 + 1,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: `rgba(${52 + Math.random() * 30}, ${
-                211 + Math.random() * 30
-              }, ${153 + Math.random() * 30}, ${0.2 + Math.random() * 0.3})`,
-              filter: "blur(1px)",
-              boxShadow: `0 0 ${Math.random() * 5 + 2}px rgba(52, 211, 153, ${
-                0.3 + Math.random() * 0.4
-              })`,
-            }}
-            animate={{
-              opacity: [0, 0.8, 0],
-              y: [0, -Math.random() * 150 - 50],
-              x: [0, (Math.random() - 0.5) * 80],
-              scale: [0, 1 + Math.random() * 0.5, 0],
-              rotate: [0, Math.random() * 360],
-            }}
-            transition={{
-              duration: Math.random() * 15 + 10,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
+        {(() => {
+          // Generate particles with unique IDs and random properties
+          const particles = Array.from({ length: 80 }, () => ({
+            id: crypto.randomUUID(),
+            width: Math.random() * 4 + 1,
+            height: Math.random() * 4 + 1,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            background: `rgba(${52 + Math.random() * 30}, ${
+              211 + Math.random() * 30
+            }, ${153 + Math.random() * 30}, ${0.2 + Math.random() * 0.3})`,
+            boxShadow: `0 0 ${Math.random() * 5 + 2}px rgba(52, 211, 153, ${
+              0.3 + Math.random() * 0.4
+            })`,
+            opacity: [0, 0.8, 0],
+            y: [0, -Math.random() * 150 - 50],
+            x: [0, (Math.random() - 0.5) * 80],
+            scale: [0, 1 + Math.random() * 0.5, 0],
+            rotate: [0, Math.random() * 360],
+            duration: Math.random() * 15 + 10,
+            delay: Math.random() * 5,
+          }));
+          return particles.map((particle) => (
+            <motion.div
+              key={particle.id}
+              className="pointer-events-none absolute rounded-full"
+              style={{
+                width: particle.width,
+                height: particle.height,
+                left: particle.left,
+                top: particle.top,
+                background: particle.background,
+                filter: "blur(1px)",
+                boxShadow: particle.boxShadow,
+              }}
+              animate={{
+                opacity: particle.opacity,
+                y: particle.y,
+                x: particle.x,
+                scale: particle.scale,
+                rotate: particle.rotate,
+              }}
+              transition={{
+                duration: particle.duration,
+                repeat: Number.POSITIVE_INFINITY,
+                delay: particle.delay,
+                ease: "easeInOut",
+              }}
+            />
+          ));
+        })()}
 
         {/* Animated grid lines */}
         {/* <div className="absolute inset-0 overflow-hidden opacity-10">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={`grid-line-h-${i}`}
-              className="absolute h-px w-full bg-gradient-to-r from-transparent via-green-300 to-transparent"
-              style={{ top: `${(i / 15) * 100}%` }}
-              animate={{
-                opacity: [0.1, 0.3, 0.1],
-                scaleX: [0.9, 1, 0.9],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 3,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={`grid-line-v-${i}`}
-              className="absolute w-px h-full bg-gradient-to-b from-transparent via-green-300 to-transparent"
-              style={{ left: `${(i / 15) * 100}%` }}
-              animate={{
-                opacity: [0.1, 0.3, 0.1],
-                scaleY: [0.9, 1, 0.9],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 3,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
+          {Array.from({ length: 15 }).map((_, i) => {
+            const key = `grid-line-h-${crypto.randomUUID()}`;
+            return (
+              <motion.div
+                key={key}
+                className="absolute h-px w-full bg-gradient-to-r from-transparent via-green-300 to-transparent"
+                style={{ top: `${(i / 15) * 100}%` }}
+                animate={{
+                  opacity: [0.1, 0.3, 0.1],
+                  scaleX: [0.9, 1, 0.9],
+                }}
+                transition={{
+                  duration: 4 + Math.random() * 3,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: Math.random() * 2,
+                }}
+              />
+            );
+          })}
+          {Array.from({ length: 15 }).map((_, i) => {
+            const key = `grid-line-v-${crypto.randomUUID()}`;
+            return (
+              <motion.div
+                key={key}
+                className="absolute h-full w-px bg-gradient-to-b from-transparent via-green-300 to-transparent"
+                style={{ left: `${(i / 15) * 100}%` }}
+                animate={{
+                  opacity: [0.1, 0.3, 0.1],
+                  scaleY: [0.9, 1, 0.9],
+                }}
+                transition={{
+                  duration: 4 + Math.random() * 3,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: Math.random() * 2,
+                }}
+              />
+            );
+          })}
         </div> */}
 
         {/* Glowing orbs */}
-        {[...Array(8)].map((_, i) => {
+        {Array.from({ length: 8 }).map(() => {
           const size = 150 + Math.random() * 200;
+          const orbKey = crypto.randomUUID();
           return (
             <motion.div
-              key={`orb-${i}`}
+              key={orbKey}
               className="absolute rounded-full blur-3xl"
               style={{
                 width: size,
                 height: size,
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                background: `radial-gradient(circle, rgba(52, 211, 153, 0.3) 0%, rgba(52, 211, 153, 0.1) 50%, transparent 80%)`,
+                background: "radial-gradient(circle, rgba(52, 211, 153, 0.3) 0%, rgba(52, 211, 153, 0.1) 50%, transparent 80%)",
                 transform: "translate(-50%, -50%)",
               }}
               animate={{
@@ -208,7 +234,7 @@ export default function NotFound() {
               }}
               transition={{
                 duration: 8 + Math.random() * 7,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
                 delay: Math.random() * 5,
               }}
@@ -217,8 +243,9 @@ export default function NotFound() {
         })}
 
         {/* Hexagon grid pattern */}
-        <div className="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-5">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <title>Hexagon grid pattern</title>
             <defs>
               <pattern
                 id="hexagons"
@@ -240,7 +267,7 @@ export default function NotFound() {
         </div>
 
         {/* Animated wave at bottom */}
-        {/* <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none">
+        {/* <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-32">
           <svg
             width="100%"
             height="100%"
@@ -249,6 +276,7 @@ export default function NotFound() {
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
           >
+            <title>Animated wave at bottom</title>
             <motion.path
               d="M0 50L48 45.7C96 41.3 192 32.7 288 30.3C384 28 480 32 576 39.2C672 46.3 768 56.7 864 58.8C960 61 1056 55 1152 51.8C1248 48.7 1344 48.3 1392 48.2L1440 48V100H1392C1344 100 1248 100 1152 100C1056 100 960 100 864 100C768 100 672 100 576 100C480 100 384 100 288 100C192 100 96 100 48 100H0V50Z"
               fill="url(#paint0_linear)"
@@ -263,7 +291,7 @@ export default function NotFound() {
               }}
               transition={{
                 duration: 20,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               }}
             />
@@ -285,7 +313,7 @@ export default function NotFound() {
       </div>
 
       {/* Content container */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-20 max-w-4xl mx-auto">
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-4xl flex-col items-center justify-center px-4 py-20">
         {/* 404 Display */}
         <motion.div
           className="relative mb-12 text-center"
@@ -304,7 +332,7 @@ export default function NotFound() {
             // }}
             // transition={{
             //   duration: 8,
-            //   repeat: Infinity,
+            //   repeat: Number.POSITIVE_INFINITY,
             //   ease: "easeInOut",
             // }}
             // style={{
@@ -313,7 +341,7 @@ export default function NotFound() {
             // }}
           >
             <motion.h1
-              className="text-[12rem] md:text-[20rem] font-bold leading-none tracking-tighter relative text-center mx-auto"
+              className="relative mx-auto text-center font-bold text-[12rem] leading-none tracking-tighter md:text-[20rem]"
               style={{ fontFamily: "monospace" }}
               animate={{
                 textShadow: isGlitching
@@ -373,7 +401,7 @@ export default function NotFound() {
 
             {/* Holographic effect */}
             {/* <motion.div
-              className="absolute inset-0 opacity-30 pointer-events-none"
+              className="pointer-events-none absolute inset-0 opacity-30"
               style={{
                 background:
                   "linear-gradient(45deg, transparent 25%, rgba(52, 211, 153, 0.3) 25%, rgba(52, 211, 153, 0.3) 50%, transparent 50%, transparent 75%, rgba(52, 211, 153, 0.3) 75%)",
@@ -385,7 +413,7 @@ export default function NotFound() {
               }}
               transition={{
                 duration: 1,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
               }}
             /> */}
@@ -414,14 +442,14 @@ export default function NotFound() {
             {isGlitching && (
               <>
                 <motion.div
-                  className="absolute top-1/4 left-0 right-0 h-1 bg-blue-500"
+                  className="absolute top-1/4 right-0 left-0 h-1 bg-blue-500"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   exit={{ scaleX: 0 }}
                   transition={{ duration: 0.1 }}
                 />
                 <motion.div
-                  className="absolute top-2/3 left-0 right-0 h-2 bg-green-500"
+                  className="absolute top-2/3 right-0 left-0 h-2 bg-green-500"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   exit={{ scaleX: 0 }}
@@ -432,68 +460,71 @@ export default function NotFound() {
           </AnimatePresence>
 
           {/* Decorative circles */}
-          <div className="absolute -z-10 inset-0 flex items-center justify-center">
+          <div className="-z-10 absolute inset-0 flex items-center justify-center">
             <motion.div
-              className="absolute w-[120%] h-[120%] rounded-full border-2 border-dashed border-green-300/20"
+              className="absolute h-[120%] w-[120%] rounded-full border-2 border-green-300/20 border-dashed"
               animate={{ rotate: 360 }}
-              transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 120, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
             />
             <motion.div
-              className="absolute w-[140%] h-[140%] rounded-full border border-green-300/10"
+              className="absolute h-[140%] w-[140%] rounded-full border border-green-300/10"
               animate={{ rotate: -360 }}
-              transition={{ duration: 180, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 180, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
             />
             <motion.div
-              className="absolute w-[160%] h-[160%] rounded-full border border-green-300/5"
+              className="absolute h-[160%] w-[160%] rounded-full border border-green-300/5"
               animate={{ rotate: 180 }}
-              transition={{ duration: 240, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 240, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
             />
           </div>
 
           {/* Decorative tech elements */}
-          {/* <div className="absolute -z-10 inset-0">
-            {[...Array(4)].map((_, i) => (
-              <motion.div
-                key={`corner-decoration-${i}`}
-                className="absolute w-16 h-16 border-2 border-green-300/30"
-                style={{
-                  top: i < 2 ? "-8px" : "auto",
-                  bottom: i >= 2 ? "-8px" : "auto",
-                  left: i % 2 === 0 ? "-8px" : "auto",
-                  right: i % 2 === 1 ? "-8px" : "auto",
-                  borderTop: i >= 2 ? "none" : undefined,
-                  borderBottom: i < 2 ? "none" : undefined,
-                  borderLeft: i % 2 === 1 ? "none" : undefined,
-                  borderRight: i % 2 === 0 ? "none" : undefined,
-                  borderTopLeftRadius: i === 0 ? "8px" : "0",
-                  borderTopRightRadius: i === 1 ? "8px" : "0",
-                  borderBottomLeftRadius: i === 2 ? "8px" : "0",
-                  borderBottomRightRadius: i === 3 ? "8px" : "0",
-                }}
-                animate={{
-                  opacity: [0.3, 0.6, 0.3],
-                  boxShadow: [
-                    "0 0 5px 0 rgba(52, 211, 153, 0.3)",
-                    "0 0 10px 2px rgba(52, 211, 153, 0.5)",
-                    "0 0 5px 0 rgba(52, 211, 153, 0.3)",
-                  ],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.5,
-                }}
-              />
-            ))}
+          {/* <div className="-z-10 absolute inset-0">
+            {[...Array(4)].map((_, i) => {
+              const uniqueKey = `corner-decoration-${crypto.randomUUID()}`;
+              return (
+                <motion.div
+                  key={uniqueKey}
+                  className="absolute h-16 w-16 border-2 border-green-300/30"
+                  style={{
+                    top: i < 2 ? "-8px" : "auto",
+                    bottom: i >= 2 ? "-8px" : "auto",
+                    left: i % 2 === 0 ? "-8px" : "auto",
+                    right: i % 2 === 1 ? "-8px" : "auto",
+                    borderTop: i >= 2 ? "none" : undefined,
+                    borderBottom: i < 2 ? "none" : undefined,
+                    borderLeft: i % 2 === 1 ? "none" : undefined,
+                    borderRight: i % 2 === 0 ? "none" : undefined,
+                    borderTopLeftRadius: i === 0 ? "8px" : "0",
+                    borderTopRightRadius: i === 1 ? "8px" : "0",
+                    borderBottomLeftRadius: i === 2 ? "8px" : "0",
+                    borderBottomRightRadius: i === 3 ? "8px" : "0",
+                  }}
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3],
+                    boxShadow: [
+                      "0 0 5px 0 rgba(52, 211, 153, 0.3)",
+                      "0 0 10px 2px rgba(52, 211, 153, 0.5)",
+                      "0 0 5px 0 rgba(52, 211, 153, 0.3)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                    delay: i * 0.5,
+                  }}
+                />
+              );
+            })}
           </div> */}
         </motion.div>
 
         {/* Error message with scramble effect */}
-        <div className="mb-12 relative">
+        <div className="relative mb-12">
           <motion.div
             ref={errorTextRef}
-            className="text-2xl md:text-4xl font-mono font-bold mb-6"
+            className="mb-6 font-bold font-mono text-2xl md:text-4xl"
             animate={{
               opacity: isGlitching ? [1, 0.5, 1] : 1,
               x: isGlitching ? [0, 3, -3, 0] : 0,
@@ -518,7 +549,7 @@ export default function NotFound() {
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               }}
             >
@@ -529,7 +560,7 @@ export default function NotFound() {
           </motion.div>
 
           <motion.p
-            className="text-zinc-300 max-w-lg mx-auto text-lg backdrop-blur-sm py-3 px-6 rounded-lg bg-black/20 border border-green-500/10"
+            className="mx-auto max-w-lg rounded-lg border border-green-500/10 bg-black/20 px-6 py-3 text-lg text-zinc-300 backdrop-blur-sm"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
@@ -546,7 +577,7 @@ export default function NotFound() {
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               }}
             >
@@ -557,9 +588,9 @@ export default function NotFound() {
           </motion.p>
 
           {/* Decorative tech elements */}
-          <div className="absolute -z-10 left-0 right-0 top-1/2 transform -translate-y-1/2 flex justify-between px-4 opacity-20 pointer-events-none">
+          <div className="-z-10 -translate-y-1/2 pointer-events-none absolute top-1/2 right-0 left-0 flex transform justify-between px-4 opacity-20">
             <motion.div
-              className="w-20 h-20 rounded-full border border-green-300/30"
+              className="h-20 w-20 rounded-full border border-green-300/30"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.2, 0.5, 0.2],
@@ -567,12 +598,12 @@ export default function NotFound() {
               }}
               transition={{
                 duration: 8,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               }}
             />
             <motion.div
-              className="w-20 h-20 rounded-full border border-green-300/30"
+              className="h-20 w-20 rounded-full border border-green-300/30"
               animate={{
                 scale: [1.2, 1, 1.2],
                 opacity: [0.2, 0.5, 0.2],
@@ -580,7 +611,7 @@ export default function NotFound() {
               }}
               transition={{
                 duration: 8,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
               }}
             />
@@ -588,9 +619,9 @@ export default function NotFound() {
         </div>
 
         {/* Interactive elements */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
+        <div className="mt-8 flex flex-col items-center justify-center gap-6 md:flex-row">
           <motion.button
-            className="group relative px-8 py-4 rounded-full overflow-hidden"
+            className="group relative overflow-hidden rounded-full px-8 py-4"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => window.history.back()}
@@ -603,7 +634,7 @@ export default function NotFound() {
               }}
               transition={{
                 duration: 3,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 repeatType: "mirror",
                 ease: "linear",
               }}
@@ -613,11 +644,11 @@ export default function NotFound() {
             />
 
             {/* Glass overlay */}
-            <div className="absolute inset-0 rounded-full bg-black/40 backdrop-blur-sm border border-white/10" />
+            <div className="absolute inset-0 rounded-full border border-white/10 bg-black/40 backdrop-blur-sm" />
 
             {/* Shine effect */}
             <motion.span
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg]"
+              className="absolute inset-0 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent"
               initial={{ x: "-100%", opacity: 0 }}
               whileHover={{
                 x: "200%",
@@ -628,7 +659,7 @@ export default function NotFound() {
 
             {/* Glow effect */}
             <motion.div
-              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               style={{
                 boxShadow: "0 0 20px 5px rgba(82, 82, 91, 0.5)",
               }}
@@ -637,13 +668,13 @@ export default function NotFound() {
             {/* Button content */}
             <span className="relative z-10 flex items-center font-medium text-white">
               <motion.div
-                className="mr-2 bg-green-300 text-zinc-800 rounded-full p-1 flex items-center justify-center"
+                className="mr-2 flex items-center justify-center rounded-full bg-green-300 p-1 text-zinc-800"
                 animate={{
                   rotate: [0, 360],
                 }}
                 transition={{
                   duration: 4,
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   ease: "linear",
                 }}
               >
@@ -653,13 +684,15 @@ export default function NotFound() {
                   height={20}
                   viewBox="0 0 24 24"
                 >
+                  <title>Go Back Icon</title>
                   <path
                     fill="currentColor"
                     d="M5.463 4.433A9.96 9.96 0 0 1 12 2c5.523 0 10 4.477 10 10c0 2.136-.67 4.116-1.81 5.74L17 12h3A8 8 0 0 0 6.46 6.228zm13.074 15.134A9.96 9.96 0 0 1 12 22C6.477 22 2 17.523 2 12c0-2.136.67-4.116 1.81-5.74L7 12H4a8 8 0 0 0 13.54 5.772z"
-                  ></path>
+                  />
                 </svg>
                 {/* <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24">
-                  <path fill="currentColor" d="M21.074 12.154a.75.75 0 0 1 .672.82c-.49 4.93-4.658 8.776-9.724 8.776c-2.724 0-5.364-.933-7.238-2.68L3 20.85a.75.75 0 0 1-.75-.75v-3.96c0-.714.58-1.29 1.291-1.29h3.97a.75.75 0 0 1 .75.75l-2.413 2.407c1.558 1.433 3.78 2.243 6.174 2.243c4.29 0 7.817-3.258 8.232-7.424a.75.75 0 0 1 .82-.672m-18.82-1.128c.49-4.93 4.658-8.776 9.724-8.776c2.724 0 5.364.933 7.238 2.68L21 3.15a.75.75 0 0 1 .75.75v3.96c0 .714-.58 1.29-1.291 1.29h-3.97a.75.75 0 0 1-.75-.75l2.413-2.408c-1.558-1.432-3.78-2.242-6.174-2.242c-4.29 0-7.817 3.258-8.232 7.424a.75.75 0 1 1-1.492-.148"></path>
+                  <title>Refresh Icon</title>
+                  <path fill="currentColor" d="M21.074 12.154a.75.75 0 0 1 .672.82c-.49 4.93-4.658 8.776-9.724 8.776c-2.724 0-5.364-.933-7.238-2.68L3 20.85a.75.75 0 0 1-.75-.75v-3.96c0-.714.58-1.29 1.291-1.29h3.97a.75.75 0 0 1 .75.75l-2.413 2.407c1.558 1.433 3.78 2.243 6.174 2.243c4.29 0 7.817-3.258 8.232-7.424a.75.75 0 0 1 .82-.672m-18.82-1.128c.49-4.93 4.658-8.776 9.724-8.776c2.724 0 5.364.933 7.238 2.68L21 3.15a.75.75 0 0 1 .75.75v3.96c0 .714-.58 1.29-1.291 1.29h-3.97a.75.75 0 0 1-.75-.75l2.413-2.408c-1.558-1.432-3.78-2.242-6.174-2.242c-4.29 0-7.817 3.258-8.232 7.424a.75.75 0 1 1-1.492-.148" />
                 </svg> */}
               </motion.div>
               <span className="font-bold tracking-wide">Go Back</span>
@@ -669,14 +702,14 @@ export default function NotFound() {
 
         {/* Decorative error icon */}
         {/* <motion.div
-          className="absolute bottom-10 right-10 opacity-10 pointer-events-none"
+          className="pointer-events-none absolute right-10 bottom-10 opacity-10"
           animate={{
             scale: [1, 1.1, 1],
             rotate: [0, 5, 0, -5, 0],
           }}
           transition={{
             duration: 8,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: "easeInOut",
           }}
         >
@@ -686,26 +719,28 @@ export default function NotFound() {
             height={300}
             viewBox="0 0 16 16"
           >
+            <title>Error Icon</title>
             <path
               fill="currentColor"
               fillRule="evenodd"
               d="m7.493.015l-.386.04c-1.873.187-3.76 1.153-5.036 2.579C.66 4.211-.057 6.168.009 8.253c.115 3.601 2.59 6.65 6.101 7.518a8.03 8.03 0 0 0 6.117-.98a8 8 0 0 0 3.544-4.904c.172-.701.212-1.058.212-1.887s-.04-1.186-.212-1.887C14.979 2.878 12.315.498 9 .064C8.716.027 7.683-.006 7.493.015m1.36 1.548a6.5 6.5 0 0 1 3.091 1.271c.329.246.976.893 1.222 1.222c.561.751.976 1.634 1.164 2.479a6.8 6.8 0 0 1 0 2.93c-.414 1.861-1.725 3.513-3.463 4.363a6.8 6.8 0 0 1-1.987.616c-.424.065-1.336.065-1.76 0c-1.948-.296-3.592-1.359-4.627-2.993a7.5 7.5 0 0 1-.634-1.332A6.2 6.2 0 0 1 1.514 8c0-1.039.201-1.925.646-2.84c.34-.698.686-1.18 1.253-1.747A6 6 0 0 1 5.16 2.16a6.45 6.45 0 0 1 3.693-.597M7.706 4.29c-.224.073-.351.201-.413.415c-.036.122-.04.401-.034 2.111c.008 1.97.008 1.971.066 2.08a.7.7 0 0 0 .346.308c.132.046.526.046.658 0a.7.7 0 0 0 .346-.308c.058-.109.058-.11.066-2.08c.008-2.152.008-2.154-.145-2.335c-.124-.148-.257-.197-.556-.205a1.7 1.7 0 0 0-.334.014m.08 6.24a.86.86 0 0 0-.467.402a.85.85 0 0 0-.025.563A.78.78 0 0 0 8 12c.303 0 .612-.22.706-.505a.85.85 0 0 0-.025-.563a.95.95 0 0 0-.348-.352c-.116-.06-.429-.089-.547-.05"
-            ></path>
+            />
           </svg>
         </motion.div> */}
 
         {/* Binary code rain effect */}
-        {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(15)].map((_, i) => {
+        {/* <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          {[...Array(15)].map(() => {
             const startPos = Math.random() * 100;
             const duration = 10 + Math.random() * 20;
             const delay = Math.random() * 10;
             const opacity = 0.05 + Math.random() * 0.1;
+            const binaryKey = `binary-${crypto.randomUUID()}`;
 
             return (
               <motion.div
-                key={`binary-${i}`}
-                className="absolute top-0 text-xs font-mono text-green-500/30"
+                key={binaryKey}
+                className="absolute top-0 font-mono text-green-500/30 text-xs"
                 style={{
                   left: `${startPos}%`,
                   opacity,
@@ -716,7 +751,7 @@ export default function NotFound() {
                 animate={{ y: "100%" }}
                 transition={{
                   duration,
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   delay,
                   ease: "linear",
                 }}
@@ -730,23 +765,24 @@ export default function NotFound() {
         </div> */}
 
         {/* Holographic circuit lines */}
-        <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-          {[...Array(8)].map((_, i) => {
+        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-10">
+          {[...Array(8)].map(() => {
             const startX = Math.random() * 100;
             const startY = Math.random() * 100;
             const endX = Math.random() * 100;
             const endY = Math.random() * 100;
+            const circuitLineKey = `circuit-line-${crypto.randomUUID()}`;
 
             return (
               <motion.div
-                key={`circuit-line-${i}`}
+                key={circuitLineKey}
                 className="absolute bg-gradient-to-r from-green-500 to-green-500/0"
                 style={{
                   height: "1px",
                   left: `${startX}%`,
                   top: `${startY}%`,
                   width: `${Math.sqrt(
-                    Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2)
+                    (endX - startX) ** 2 + (endY - startY) ** 2
                   )}%`,
                   transform: `rotate(${
                     Math.atan2(endY - startY, endX - startX) * (180 / Math.PI)
@@ -759,7 +795,7 @@ export default function NotFound() {
                 }}
                 transition={{
                   duration: 3 + Math.random() * 2,
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   delay: Math.random() * 5,
                   repeatDelay: Math.random() * 5,
                 }}
@@ -769,16 +805,17 @@ export default function NotFound() {
         </div>
 
         {/* Floating tech elements */}
-        {[...Array(12)].map((_, i) => {
+        {Array.from({ length: 12 }).map(() => {
           const size = 10 + Math.random() * 20;
           const isSquare = Math.random() > 0.5;
+          const floatingElementKey = `floating-element-${crypto.randomUUID()}`;
 
           return (
             <motion.div
-              key={`floating-element-${i}`}
+              key={floatingElementKey}
               className={`absolute ${
                 isSquare ? "rounded-md" : "rounded-full"
-              } border border-green-300/30 pointer-events-none`}
+              } pointer-events-none border border-green-300/30`}
               style={{
                 width: size,
                 height: size,
@@ -801,7 +838,7 @@ export default function NotFound() {
               }}
               transition={{
                 duration: 5 + Math.random() * 10,
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 ease: "easeInOut",
                 delay: Math.random() * 5,
               }}
@@ -811,17 +848,17 @@ export default function NotFound() {
 
         {/* Animated scanline effect */}
         <motion.div
-          className="absolute inset-0 pointer-events-none overflow-hidden opacity-10"
+          className="pointer-events-none absolute inset-0 overflow-hidden opacity-10"
           animate={{}}
         >
           <motion.div
-            className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-green-300 to-transparent"
+            className="absolute right-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-green-300 to-transparent"
             animate={{
               top: ["-2px", "100%"],
             }}
             transition={{
               duration: 8,
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
               ease: "linear",
             }}
           />

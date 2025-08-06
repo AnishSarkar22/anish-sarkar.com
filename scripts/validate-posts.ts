@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 console.log('🔍 Validating blog posts...');
 
@@ -21,12 +21,14 @@ if (files.length === 0) {
 }
 
 console.log(`📝 Found ${files.length} blog posts:`);
-files.forEach(file => console.log(`   - ${file}`));
+for (const file of files) {
+  console.log(`   - ${file}`);
+}
 
 // Validate each file
 let hasErrors = false;
 
-files.forEach(file => {
+for (const file of files) {
   try {
     const filePath = path.join(postsDir, file);
     const content = fs.readFileSync(filePath, 'utf8');
@@ -35,7 +37,7 @@ files.forEach(file => {
     if (!content.startsWith('---')) {
       console.error(`❌ ${file}: Missing frontmatter (should start with ---)`);
       hasErrors = true;
-      return;
+      continue;
     }
     
     // Extract frontmatter
@@ -43,7 +45,7 @@ files.forEach(file => {
     if (!frontmatterMatch) {
       console.error(`❌ ${file}: Invalid frontmatter format`);
       hasErrors = true;
-      return;
+      continue;
     }
     
     const frontmatter = frontmatterMatch[1];
@@ -51,14 +53,14 @@ files.forEach(file => {
     const metadata: Record<string, string> = {};
     
     // Parse frontmatter
-    lines.forEach(line => {
+    for (const line of lines) {
       const [key, ...values] = line.split(': ');
       if (key && values.length > 0) {
         let value = values.join(': ').trim();
         value = value.replace(/^['"](.*)['"]$/, '$1');
         metadata[key.trim()] = value;
       }
-    });
+    }
     
     // Required fields validation
     const requiredFields = ['title', 'description', 'date'];
@@ -67,25 +69,29 @@ files.forEach(file => {
     if (missingFields.length > 0) {
       console.error(`❌ ${file}: Missing required fields: ${missingFields.join(', ')}`);
       hasErrors = true;
-      return;
+      continue;
     }
     
     // Validate date format
     const dateStr = metadata.date;
     const date = new Date(dateStr);
-    if (isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
       console.error(`❌ ${file}: Invalid date format: ${dateStr}`);
       hasErrors = true;
-      return;
+      continue;
     }
     
     console.log(`✅ ${file}: Valid`);
     
-  } catch (error: any) {
-    console.error(`❌ ${file}: Error reading file -`, error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(`❌ ${file}: Error reading file -`, error.message);
+    } else {
+      console.error(`❌ ${file}: Unknown error occurred`);
+    }
     hasErrors = true;
   }
-});
+}
 
 if (hasErrors) {
   console.error('\n❌ Validation failed! Please fix the errors above.');

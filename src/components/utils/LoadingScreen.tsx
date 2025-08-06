@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import type React from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function LoadingScreen({ children }: { children: React.ReactNode }) {
@@ -57,7 +58,7 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
       <AnimatePresence>
         {loading && (
           <motion.div
-            className="fixed inset-0 bg-black flex flex-col items-center justify-center z-50"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black"
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
@@ -69,11 +70,11 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
               className="relative mb-12"
             >
               <motion.div
-                className="text-green-300 text-3xl font-bold tracking-wider flex overflow-hidden"
+                className="flex overflow-hidden font-bold text-3xl text-green-300 tracking-wider"
               >
                 {Array.from("Loading...").map((char, index) => (
                   <motion.span
-                    key={`char-${index}`}
+                    key={`char-${char}-${index}-${children?.toString()}`}
                     initial={{ y: 40, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{
@@ -81,7 +82,7 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
                       delay: 0.03 * index,
                       ease: [0.22, 1, 0.36, 1]
                     }}
-                    className="inline-block relative"
+                    className="relative inline-block"
                   >
                     {char}
                     <motion.span
@@ -91,7 +92,7 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
                       }}
                       transition={{
                         duration: 2,
-                        repeat: Infinity,
+                        repeat: Number.POSITIVE_INFINITY,
                         delay: 0.1 * index
                       }}
                     >
@@ -103,7 +104,7 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
 
               {/* Animated underline with glow */}
               {/* <motion.div
-                className="h-[2px] bg-gradient-to-r from-transparent via-green-400 to-transparent mt-1"
+                className="mt-1 h-[2px] bg-gradient-to-r from-transparent via-green-400 to-transparent"
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: "100%", opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
@@ -111,7 +112,7 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
             </motion.div>
             
             {/* Upgrade progress bar with super smooth effect */}
-            <div className="relative w-72 h-3">
+            <div className="relative h-3 w-72">
               {/* Glow effect */}
               <motion.div 
                 className="absolute inset-0 rounded-full blur-md"
@@ -121,7 +122,7 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
               />
               
               {/* Main progress bar background */}
-              <motion.div className="absolute inset-0 bg-zinc-900/80 backdrop-blur-sm rounded-full overflow-hidden border border-zinc-800">
+              <motion.div className="absolute inset-0 overflow-hidden rounded-full border border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
                 {/* Progress indicator */}
                 <motion.div
                   className="h-full w-full origin-left"
@@ -143,32 +144,36 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
                 />
                 
                 {/* Animated particles inside progress bar - giảm số lượng particles */}
-                {progress > 10 && Array.from({ length: 5 }).map((_, i) => (
-                  <motion.div
-                    key={`progress-particle-${i}`}
-                    className="absolute top-1/2 w-1 h-1 rounded-full bg-green-300/80"
-                    style={{ 
-                      left: `${(progress - 5) * Math.random()}%`,
-                      transform: "translateY(-50%)",
-                      opacity: 0.5 + Math.random() * 0.5
-                    }}
-                    animate={{
-                      y: ["-50%", `${(Math.random() - 0.5) * 150}%`, "-50%"],
-                      opacity: [0.3, 0.8, 0.3],
-                      scale: [0.8, 1.2, 0.8]
-                    }}
-                    transition={{
-                      duration: 1 + Math.random() * 2,
-                      repeat: Infinity,
-                      repeatType: "reverse"
-                    }}
-                  />
-                ))}
+                {progress > 10 && Array.from({ length: 5 }).map((_, i) => {
+                  // Generate a unique key using a deterministic value and the index
+                  const uniqueKey = `progress-particle-${i}-${Math.round(progress * 1000)}`;
+                  return (
+                    <motion.div
+                      key={uniqueKey}
+                      className="absolute top-1/2 h-1 w-1 rounded-full bg-green-300/80"
+                      style={{ 
+                        left: `${(progress - 5) * Math.random()}%`,
+                        transform: "translateY(-50%)",
+                        opacity: 0.5 + Math.random() * 0.5
+                      }}
+                      animate={{
+                        y: ["-50%", `${(Math.random() - 0.5) * 150}%`, "-50%"],
+                        opacity: [0.3, 0.8, 0.3],
+                        scale: [0.8, 1.2, 0.8]
+                      }}
+                      transition={{
+                        duration: 1 + Math.random() * 2,
+                        repeat: Number.POSITIVE_INFINITY,
+                        repeatType: "reverse"
+                      }}
+                    />
+                  );
+                })}
               </motion.div>
               
               {/* Progress percentage with glow */}
               <motion.div
-                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-zinc-400 text-sm"
+                className="-bottom-8 -translate-x-1/2 absolute left-1/2 transform text-sm text-zinc-400"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
@@ -178,7 +183,7 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
                   <motion.span 
                     className="absolute inset-0 text-green-300 blur-sm"
                     animate={{ opacity: [0.3, 0.7, 0.3] }}
-                    transition={{ duration: 2, repeat: Infinity }}
+                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
                   >
                     {Math.round(progress)}%
                   </motion.span>
@@ -482,7 +487,7 @@ export default function LoadingScreen({ children }: { children: React.ReactNode 
 
       {/* Particle effects on transition - render only when needed */}
       {showParticles && (
-        <div className="fixed inset-0 pointer-events-none z-40">
+        <div className="pointer-events-none fixed inset-0 z-40">
           {particles.map((i) => (
             <motion.div
               key={`transition-particle-${i}`}

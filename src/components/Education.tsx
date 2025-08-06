@@ -67,7 +67,7 @@ export default function Education() {
 
   const titleTransition = useMemo(() => ({ 
     duration: 2, 
-    repeat: Infinity, 
+    repeat: Number.POSITIVE_INFINITY, 
     repeatDelay: 5, 
     times: [0, 0.2, 0.5, 0.8, 1],
     repeatType: 'loop' as const
@@ -75,26 +75,26 @@ export default function Education() {
 
   return (
     <motion.div 
-      className="text-white mb-16 relative will-change-transform"
+      className="relative mb-16 text-white will-change-transform"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.h1 
-        className="text-2xl font-bold text-white relative inline-block"
+        className="relative inline-block font-bold text-2xl text-white"
         variants={titleVariants}
         whileHover={{ scale: 1.03 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
       >
-        <span className="text-green-300 inline-block will-change-transform">
+        <span className="inline-block text-green-300 will-change-transform">
             &gt;
           </span>{" "}
-        <span className="relative group">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-200 to-white bg-[length:200%_100%] animate-shimmer">education</span>
+        <span className="group relative">
+          <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">education</span>
 
           {/* Animated underline with glow */}
           {/* <motion.span
-            className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
+            className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 1, delay: 0.5 }}
@@ -103,10 +103,10 @@ export default function Education() {
         </span>
       </motion.h1>
       
-      <div className="mt-10 relative">
+      <div className="relative mt-10">
         {/* Main vertical timeline line */}
         <motion.div 
-          className="absolute left-[6px] top-0 bottom-0 w-[1px] h-full bg-zinc-800 will-change-transform"
+          className="absolute top-0 bottom-0 left-[6px] h-full w-[1px] bg-zinc-800 will-change-transform"
           variants={timelineVariants}
         />
         
@@ -139,8 +139,8 @@ export default function Education() {
               
               return (
                 <motion.div
-                  key={`particle-${i}`}
-                  className="absolute rounded-full z-0 pointer-events-none will-change-transform"
+                  key={`particle-${edu.title}-${i}`}
+                  className="pointer-events-none absolute z-0 rounded-full will-change-transform"
                   initial={{ 
                     opacity: 0,
                     scale: 0,
@@ -155,7 +155,7 @@ export default function Education() {
                   }}
                   transition={{ 
                     duration,
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     delay,
                     repeatType: 'loop'
                   }}
@@ -170,19 +170,19 @@ export default function Education() {
                 />
               );
             });
-          }, [isHovered, edu.color]);
+          }, [isHovered, edu.color, edu.title]);
           
           return (
             <motion.div 
               key={edu.title} 
-              className="mt-10 group relative pl-10"
+              className="group relative mt-10 pl-10"
               variants={itemVariants}
               onHoverStart={() => handleHoverStart(edu.title)}
               onHoverEnd={handleHoverEnd}
             >
               {/* Card background with glass effect */}
               <motion.div 
-                className="absolute -inset-6 rounded-xl -z-10 backdrop-blur-sm will-change-transform"
+                className="-inset-6 -z-10 absolute rounded-xl backdrop-blur-sm will-change-transform"
                 initial={{ opacity: 0 }}
                 animate={{ 
                   opacity: isHovered ? 0.1 : 0,
@@ -194,7 +194,7 @@ export default function Education() {
               
               {/* Timeline dot - positioned correctly */}
               <motion.div 
-                className={`absolute left-0 top-1.5 w-3 h-3 rounded-full border border-zinc-700 bg-[#121212] will-change-transform`}
+                className={"absolute top-1.5 left-0 h-3 w-3 rounded-full border border-zinc-700 bg-[#121212] will-change-transform"}
                 initial={{ scale: 0 }}
                 animate={{ 
                   scale: 1,
@@ -213,7 +213,7 @@ export default function Education() {
               {/* Pulse effect for timeline dot when hovered - conditionally rendered */}
               {isHovered && (
                 <motion.div
-                  className="absolute left-0 top-1.5 w-3 h-3 rounded-full pointer-events-none will-change-transform"
+                  className="pointer-events-none absolute top-1.5 left-0 h-3 w-3 rounded-full will-change-transform"
                   initial={{ scale: 1, opacity: 0.7 }}
                   animate={{ 
                     scale: [1, 1.8, 1],
@@ -221,7 +221,7 @@ export default function Education() {
                   }}
                   transition={{ 
                     duration: 2,
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     repeatType: 'loop'
                   }}
                   style={{ backgroundColor: edu.color }}
@@ -231,7 +231,7 @@ export default function Education() {
               {/* Title */}
               <div className="overflow-hidden">
                 <motion.span
-                  className="text-xl font-bold inline-block relative"
+                  className="relative inline-block font-bold text-xl"
                   // whileHover={{ scale: 1.02, x: 5 }}
                   // transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   style={{ 
@@ -254,7 +254,7 @@ export default function Education() {
               
               {/* Position and date with animation */}
               <motion.p 
-                className="text-gray-500 text-xs mt-2 flex items-center"
+                className="mt-2 flex items-center text-gray-500 text-xs"
                 animate={{ 
                   color: isHovered ? edu.color : "#6b7280",
                   x: isHovered ? 5 : 0
@@ -288,7 +288,7 @@ export default function Education() {
               
               {/* Description with character animation - optimized with memoization */}
               <motion.p 
-                className="text-gray-400 mt-5 text-sm relative"
+                className="relative mt-5 text-gray-400 text-sm"
                 animate={{ 
                   color: isHovered ? "#d1d5db" : "#9ca3af",
                   x: isHovered ? 5 : 0
@@ -353,14 +353,14 @@ export default function Education() {
       
       {/* Decorative elements - optimized with will-change */}
       <motion.div 
-        className="absolute -left-20 top-1/2 w-40 h-40 rounded-full bg-green-300/5 blur-3xl pointer-events-none will-change-transform"
+        className="-left-20 pointer-events-none absolute top-1/2 h-40 w-40 rounded-full bg-green-300/5 blur-3xl will-change-transform"
         animate={{ 
           scale: [1, 1.2, 1],
           opacity: [0.1, 0.2, 0.1]
         }}
         transition={{ 
           duration: 5, 
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
           repeatType: 'loop'
         }}
       />

@@ -77,13 +77,13 @@ export default function TransitionWrapper({
   };
 
   return (
-    <div className="transition-container relative w-full h-full">
+    <div className="relative h-full w-full transition-container">
       {/* Minimal overlay effect */}
       <AnimatePresence mode="wait">
         {isTransitioning && (
           <motion.div
             key="overlay"
-            className="fixed inset-0 z-50 pointer-events-none"
+            className="pointer-events-none fixed inset-0 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -100,14 +100,14 @@ export default function TransitionWrapper({
             
             {/* Minimal loading effect */}
             <motion.div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 transform"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
             >
               <motion.div
-                className="w-12 h-[2px] bg-green-400 rounded-full overflow-hidden"
+                className="h-[2px] w-12 overflow-hidden rounded-full bg-green-400"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -119,7 +119,7 @@ export default function TransitionWrapper({
                   }}
                   transition={{ 
                     duration: 1, 
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     ease: "linear"
                   }}
                 />
@@ -148,7 +148,7 @@ export default function TransitionWrapper({
       <AnimatePresence>
         {isTransitioning && (
           <motion.div 
-            className="fixed inset-x-0 top-0 z-50 pointer-events-none h-[1px]"
+            className="pointer-events-none fixed inset-x-0 top-0 z-50 h-[1px]"
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ 
               scaleX: 1, 
@@ -161,7 +161,7 @@ export default function TransitionWrapper({
               transition: { duration: 0.3, ease: "easeIn" }
             }}
           >
-            <div className="w-full h-full bg-gradient-to-r from-transparent via-green-400 to-transparent" />
+            <div className="h-full w-full bg-gradient-to-r from-transparent via-green-400 to-transparent" />
           </motion.div>
         )}
       </AnimatePresence>
