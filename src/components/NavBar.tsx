@@ -97,7 +97,9 @@ const NavBar = () => {
           <div className="-z-10 absolute inset-0 overflow-hidden">
             {!isCollapsed &&
               [...Array(8)].map(() => {
-                const key = `particle-${Math.random().toString(36).substr(2, 9)}`;
+                const key = `particle-${Math.random()
+                  .toString(36)
+                  .substr(2, 9)}`;
                 return (
                   <motion.div
                     key={key}
@@ -317,6 +319,7 @@ const NavBar = () => {
                   },
                 }}
               >
+                {/* HOME BUTTON */}
                 <NavItem
                   href="/"
                   icon={{
@@ -369,6 +372,7 @@ const NavBar = () => {
                   <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div>
 
+                {/* PROJECTS BUTTON */}
                 <NavItem
                   href="/projects"
                   icon={{
@@ -421,7 +425,8 @@ const NavBar = () => {
                   <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div>
 
-                <NavItem
+                {/* BLOG BUTTON */}
+                {/* <NavItem
                   href="/blog"
                   icon={{
                     filled: (props: React.ComponentProps<"svg">) => (
@@ -479,9 +484,68 @@ const NavBar = () => {
                 />
                 <div className="flex items-center">
                   <div className="mx-5 h-6 w-px bg-zinc-600/50" />
+                </div> */}
+
+                {/* RESUME BUTTON */}
+                <NavItem
+                  href="/resume.pdf"
+                  icon={{
+                    filled: (props: React.ComponentProps<"svg">) => (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={28}
+                        height={28}
+                        viewBox="0 0 24 24"
+                        {...props}
+                      >
+                        <title>Resume</title>
+                        <g
+                          fill="currentColor"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                        >
+                          <path fill="currentColor" d="M14 3v4a1 1 0 0 0 1 1h4" />
+                          <path fill="none" d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2" />
+                          <path fill="none" d="M11 12.5a1.5 1.5 0 0 0-3 0v3a1.5 1.5 0 0 0 3 0m2-4.5l1.5 6l1.5-6" />
+                        </g>
+                      </svg>
+                    ),
+                    outline: (props: React.ComponentProps<"svg">) => (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={28}
+                        height={28}
+                        viewBox="0 0 24 24"
+                        {...props}
+                      >
+                        <title>Resume</title>
+                        <g
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                        >
+                          <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                          <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2" />
+                          <path d="M11 12.5a1.5 1.5 0 0 0-3 0v3a1.5 1.5 0 0 0 3 0m2-4.5l1.5 6l1.5-6" />
+                        </g>
+                      </svg>
+                    ),
+                  }}
+                  name="resume"
+                  isActive={isActive("/resume.pdf")}
+                  hoveredIcon={hoveredIcon}
+                  setHoveredIcon={setHoveredIcon}
+                />
+
+                <div className="flex items-center">
+                  <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div>
 
-                {/* PHOTOS SECTION */}
+                {/* PHOTOS BUTTON */}
                 {/* <NavItem
                   href="/photos"
                   icon={{
@@ -493,16 +557,17 @@ const NavBar = () => {
                         viewBox="0 0 24 24"
                         {...props}
                       >
+                        <title>Photos</title>
                         <path
                           fill="currentColor"
                           fillRule="evenodd"
                           d="M7.268 4.658a54.7 54.7 0 0 1 9.465 0l1.51.132a3.14 3.14 0 0 1 2.831 2.66a30.6 30.6 0 0 1 0 9.1q-.061.397-.212.754c-.066.157-.27.181-.386.055l-4.421-4.864a.75.75 0 0 0-.792-.207l-2.531.844l-3.671-4.13A.75.75 0 0 0 7.97 8.97l-4.914 4.914a.246.246 0 0 1-.422-.159a30.6 30.6 0 0 1 .292-6.276a3.14 3.14 0 0 1 2.831-2.66zM14 9a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0"
                           clipRule="evenodd"
-                        ></path>
+                        />
                         <path
                           fill="currentColor"
                           d="M2.961 16.1a.25.25 0 0 0-.07.21l.035.24a3.14 3.14 0 0 0 2.831 2.66l1.51.131c3.15.274 6.316.274 9.466 0l1.51-.131a3.1 3.1 0 0 0 1.185-.347c.137-.071.16-.252.056-.366l-4.1-4.51a.25.25 0 0 0-.265-.07l-2.382.794a.75.75 0 0 1-.798-.213l-3.295-3.707a.25.25 0 0 0-.364-.01z"
-                        ></path>
+                        />
                       </svg>
                     ),
                     outline: (props: React.ComponentProps<"svg">) => (
@@ -513,16 +578,17 @@ const NavBar = () => {
                         viewBox="0 0 24 24"
                         {...props}
                       >
+                        <title>Photos</title>
                         <path
                           fill="currentColor"
                           d="M14 9a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0"
-                        ></path>
+                        />
                         <path
                           fill="currentColor"
                           fillRule="evenodd"
                           d="M7.268 4.658a54.7 54.7 0 0 1 9.465 0l1.51.132a3.14 3.14 0 0 1 2.831 2.66a30.6 30.6 0 0 1 0 9.1a3.14 3.14 0 0 1-2.831 2.66l-1.51.131c-3.15.274-6.316.274-9.465 0l-1.51-.131a3.14 3.14 0 0 1-2.832-2.66a30.6 30.6 0 0 1 0-9.1a3.14 3.14 0 0 1 2.831-2.66zm9.335 1.495a53 53 0 0 0-9.206 0l-1.51.131A1.64 1.64 0 0 0 4.41 7.672a29 29 0 0 0-.311 5.17L7.97 8.97a.75.75 0 0 1 1.09.032l3.672 4.13l2.53-.844a.75.75 0 0 1 .796.21l3.519 3.91l.014-.08a29.1 29.1 0 0 0 0-8.656a1.64 1.64 0 0 0-1.478-1.388zm2.017 11.435l-3.349-3.721l-2.534.844a.75.75 0 0 1-.798-.213l-3.471-3.905l-4.244 4.243q.073.748.185 1.491a1.64 1.64 0 0 0 1.478 1.389l1.51.131c3.063.266 6.143.266 9.206 0l1.51-.131c.178-.016.35-.06.507-.128"
                           clipRule="evenodd"
-                        ></path>
+                        />
                       </svg>
                     ),
                   }}
@@ -533,60 +599,8 @@ const NavBar = () => {
                 />
 
                 <div className="flex items-center">
-                  <div className="h-6 w-px bg-zinc-600/50 mx-5"></div>
+                  <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div> */}
-
-                {/* CREDITS SECTION */}
-                {/* <NavItem
-                  href="/credits"
-                  icon={{
-                    filled: (props: React.ComponentProps<"svg">) => (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={28}
-                        height={28}
-                        viewBox="0 0 256 256"
-                        {...props}
-                      >
-                        <g
-                          fill="currentColor"
-                          strokeWidth={6.5}
-                          stroke="currentColor"
-                        >
-                          <path
-                            d="M224 128a96 96 0 1 1-96-96a96 96 0 0 1 96 96"
-                            opacity={0.2}
-                          ></path>
-                          <path d="M144 176a8 8 0 0 1-8 8a16 16 0 0 1-16-16v-40a8 8 0 0 1 0-16a16 16 0 0 1 16 16v40a8 8 0 0 1 8 8m88-48A104 104 0 1 1 128 24a104.11 104.11 0 0 1 104 104m-16 0a88 88 0 1 0-88 88a88.1 88.1 0 0 0 88-88m-92-32a12 12 0 1 0-12-12a12 12 0 0 0 12 12"></path>
-                        </g>
-                      </svg>
-                    ),
-                    outline: (props: React.ComponentProps<"svg">) => (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={28}
-                        height={28}
-                        viewBox="0 0 256 256"
-                        {...props}
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24m0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88m16-40a8 8 0 0 1-8 8a16 16 0 0 1-16-16v-40a8 8 0 0 1 0-16a16 16 0 0 1 16 16v40a8 8 0 0 1 8 8m-32-92a12 12 0 1 1 12 12a12 12 0 0 1-12-12"
-                          strokeWidth={6.5}
-                          stroke="currentColor"
-                        ></path>
-                      </svg>
-                    ),
-                  }}
-                  name="credits"
-                  isActive={isActive("/credits")}
-                  hoveredIcon={hoveredIcon}
-                  setHoveredIcon={setHoveredIcon}
-                />
-
-                <div className="flex items-center">
-                  <div className="h-6 w-px bg-zinc-600/50 mx-5"></div>
-                </div>   */}
 
                 {/* Collapse button */}
                 <motion.button
