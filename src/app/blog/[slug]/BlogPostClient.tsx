@@ -3,7 +3,6 @@ import TransitionWrapper from "~/components/utils/TransitionWrapper"
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import GitHubComments from "~/components/GitHubComments";
 import { trackEvent, trackBlogRead } from "~/utils/posthog";
 import dynamic from "next/dynamic";
 
@@ -118,16 +117,8 @@ export default function BlogPostClient({
       {/* Main content */}
       {children}
       
-      {/* GitHub Comments Section */}
-      {/* <section className="mx-auto max-w-4xl px-6 font-mono">
-        <GitHubComments
-          repositoryOwner="AnishSarkar22"
-          repositoryName="blog-data"
-          repositoryId="R_kgDOOYrY-w"
-          categoryId="DIC_kwDOOYrY-84Cpsfz"
-          slug={slug}
-        />
-      </section> */}
+      {/* add Comments Section if needed */}
+        
       
       {/* Beautiful Thank You Footnote as Footer */}
       <footer className="mx-auto max-w-4xl px-6 font-mono">

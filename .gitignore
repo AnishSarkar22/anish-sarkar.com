@@ -49,9 +49,3 @@ src/utils/AuthKey_DQ362YMNMP.p8
 # idea files
 .idea
 .env.local
-
-
-# files not required
-src/components/GitHubComments.tsx
-src/components/GitHubComments.module.css
-public/photos/

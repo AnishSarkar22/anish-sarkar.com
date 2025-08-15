@@ -63,11 +63,6 @@ const config = {
         destination: "/",
         permanent: false,
       },
-      {
-        source: "/credits",
-        destination: "/",
-        permanent: false,
-      },
     ];
   },
   // This is required to support PostHog trailing slash API requests
