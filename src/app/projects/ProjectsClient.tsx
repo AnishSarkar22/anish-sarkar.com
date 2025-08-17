@@ -27,6 +27,12 @@ export default function Projects() {
     "Streamlit",
     "TypeScript",
     "scikit-learn",
+    "Java",
+    "JavaScript",
+    "Nginx",
+    "HTML",
+    "JUnit",
+    "netty-socketio",
   ];
 
   // Extract unique categories from projects

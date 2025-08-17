@@ -28,6 +28,18 @@ export const projectList: Project[] = [
     technologies: ["Python", "NumPy", "Matplotlib", "Streamlit"],
   },
   {
+    title: "HTTP Server",
+    description: "HTTP/1.1 Server from sratch.",
+    link: "https://github.com/AnishSarkar22/HTTP-Server",
+    technologies: ["Java", "Docker", "Nginx", "HTML", "JUnit"],
+  },
+  {
+    title: "Peer-to-Peer Video Call Web Application",
+    description: "WebRTC peer-to-peer video call web app",
+    link: "https://github.com/AnishSarkar22/WebRTC-Video-Call",
+    technologies: ["Java", "JavaScript", "HTML", "Docker", "netty-socketio", "JUnit"],
+  },
+  {
     title: "GuideMe",
     description: "Platform that matches mentors and mentees, enabling skill-building and career growth through smart features and easy communication",
     link: "https://github.com/AnishSarkar22/SIH-2024",
