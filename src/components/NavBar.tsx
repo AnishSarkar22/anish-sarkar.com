@@ -368,6 +368,7 @@ const NavBar = () => {
                   setHoveredIcon={setHoveredIcon}
                 />
 
+                {/* DIVIDER */}
                 <div className="flex items-center">
                   <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div>
@@ -421,6 +422,67 @@ const NavBar = () => {
                   setHoveredIcon={setHoveredIcon}
                 />
 
+                {/* DIVIDER */}
+                <div className="flex items-center">
+                  <div className="mx-5 h-6 w-px bg-zinc-600/50" />
+                </div>
+
+                {/* RESUME BUTTON */}
+                <NavItem
+                  href="/resume.pdf"
+                  icon={{
+                    filled: (props: React.ComponentProps<"svg">) => (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={28}
+                        height={28}
+                        viewBox="0 0 24 24"
+                        {...props}
+                      >
+                        <title>Resume</title>
+                        <g
+                          fill="currentColor"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                        >
+                          <path fill="currentColor" d="M14 3v4a1 1 0 0 0 1 1h4" />
+                          <path fill="none" d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2" />
+                          <path fill="none" d="M11 12.5a1.5 1.5 0 0 0-3 0v3a1.5 1.5 0 0 0 3 0m2-4.5l1.5 6l1.5-6" />
+                        </g>
+                      </svg>
+                    ),
+                    outline: (props: React.ComponentProps<"svg">) => (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={28}
+                        height={28}
+                        viewBox="0 0 24 24"
+                        {...props}
+                      >
+                        <title>Resume</title>
+                        <g
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                        >
+                          <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                          <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2" />
+                          <path d="M11 12.5a1.5 1.5 0 0 0-3 0v3a1.5 1.5 0 0 0 3 0m2-4.5l1.5 6l1.5-6" />
+                        </g>
+                      </svg>
+                    ),
+                  }}
+                  name="resume"
+                  isActive={isActive("/resume.pdf")}
+                  hoveredIcon={hoveredIcon}
+                  setHoveredIcon={setHoveredIcon}
+                />
+
+                {/* DIVIDER */}
                 <div className="flex items-center">
                   <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div>
@@ -482,68 +544,11 @@ const NavBar = () => {
                   hoveredIcon={hoveredIcon}
                   setHoveredIcon={setHoveredIcon}
                 />
+                
                 <div className="flex items-center">
                   <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div> */}
 
-                {/* RESUME BUTTON */}
-                <NavItem
-                  href="/resume.pdf"
-                  icon={{
-                    filled: (props: React.ComponentProps<"svg">) => (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={28}
-                        height={28}
-                        viewBox="0 0 24 24"
-                        {...props}
-                      >
-                        <title>Resume</title>
-                        <g
-                          fill="currentColor"
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                        >
-                          <path fill="currentColor" d="M14 3v4a1 1 0 0 0 1 1h4" />
-                          <path fill="none" d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2" />
-                          <path fill="none" d="M11 12.5a1.5 1.5 0 0 0-3 0v3a1.5 1.5 0 0 0 3 0m2-4.5l1.5 6l1.5-6" />
-                        </g>
-                      </svg>
-                    ),
-                    outline: (props: React.ComponentProps<"svg">) => (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={28}
-                        height={28}
-                        viewBox="0 0 24 24"
-                        {...props}
-                      >
-                        <title>Resume</title>
-                        <g
-                          fill="none"
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                        >
-                          <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                          <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2" />
-                          <path d="M11 12.5a1.5 1.5 0 0 0-3 0v3a1.5 1.5 0 0 0 3 0m2-4.5l1.5 6l1.5-6" />
-                        </g>
-                      </svg>
-                    ),
-                  }}
-                  name="resume"
-                  isActive={isActive("/resume.pdf")}
-                  hoveredIcon={hoveredIcon}
-                  setHoveredIcon={setHoveredIcon}
-                />
-
-                <div className="flex items-center">
-                  <div className="mx-5 h-6 w-px bg-zinc-600/50" />
-                </div>
 
                 {/* PHOTOS BUTTON */}
                 {/* <NavItem
@@ -739,6 +744,8 @@ const NavItem = ({
         className="group relative flex h-10 w-10 items-center justify-center"
         onMouseEnter={() => setHoveredIcon(name)}
         onMouseLeave={() => setHoveredIcon(null)}
+        data-tooltip-id={`navbar-tooltip-${name}`}
+        data-tooltip-content={name.charAt(0).toUpperCase() + name.slice(1)}
       >
         {/* Cosmic background effect */}
         <motion.div
@@ -942,6 +949,7 @@ const NavItem = ({
           )}
         </div>
       </TransitionLink>
+      
     </>
   );
 };

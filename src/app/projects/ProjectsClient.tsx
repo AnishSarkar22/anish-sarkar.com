@@ -110,7 +110,7 @@ export default function Projects() {
         />
 
         {/* Ultra-enhanced animated cosmic particles */}
-        {(() => {
+        {/* {(() => {
           // Generate particle data with unique IDs
           const particles = Array.from({ length: 30 }, () => ({
             id: crypto.randomUUID(),
@@ -159,12 +159,12 @@ export default function Projects() {
               }}
             />
           ));
-        })()}
+        })()} */}
 
         {/* Reactive glow effect that follows mouse */}
 
         {/* Cosmic grid lines */}
-        <div
+        {/* <div
           className="pointer-events-none absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `
@@ -173,7 +173,7 @@ export default function Projects() {
             `,
             backgroundSize: "80px 80px",
           }}
-        />
+        /> */}
       </div>
 
       <div className="relative z-10 flex-1">
@@ -214,8 +214,8 @@ export default function Projects() {
             transition={{ delay: 0.7 }}
             className="mt-3 max-w-xl text-gray-400"
           >
-            A showcase of my creative work, experiments, and technical
-            explorations.
+            a showcase of my creative work, experiments, and technical
+            explorations
           </motion.p>
         </motion.div>
 
@@ -252,7 +252,7 @@ export default function Projects() {
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 + index * 0.1 }}
+              // transition={{ delay: 0.5 + index * 0.1 }}
             >
               {/* Background for button */}
               <motion.div
@@ -285,7 +285,7 @@ export default function Projects() {
               )}
 
               {/* Cosmic particles on active button */}
-              {category === activeCategory && (
+              {/* {category === activeCategory && (
                 Array.from({ length: 5 }).map(() => {
                   const particleKey = `btn-particle-${crypto.randomUUID()}`;
                   return (
@@ -313,7 +313,7 @@ export default function Projects() {
                     />
                   );
                 })
-              )}
+              )} */}
 
               {/* Text with glow effect for active category */}
               <motion.span
@@ -550,7 +550,7 @@ export default function Projects() {
                 </motion.div>
 
                 {/* Subtle floating particles */}
-                {[...Array(5)].map(() => {
+                {/* {[...Array(5)].map(() => {
                   const particleKey = `sign-particle-${crypto.randomUUID()}`;
                   return (
                     <motion.div
@@ -575,7 +575,7 @@ export default function Projects() {
                       }}
                     />
                   );
-                })}
+                })} */}
               </motion.div>
             </motion.div>
 

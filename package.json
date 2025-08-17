@@ -33,6 +33,7 @@
     "react-hot-toast": "^2.5.2",
     "react-intersection-observer": "^9.16.0",
     "react-syntax-highlighter": "^15.6.1",
+    "react-tooltip": "^5.29.1",
     "react-tweet": "^3.2.2",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-katex": "^7.0.1",

@@ -8,6 +8,7 @@ import BackToTop from "~/components/utils/BackToTop";
 import LoadingScreen from "~/components/utils/LoadingScreen";
 import { PostHogProvider } from "~/components/utils/PostHogProvider";
 import { Suspense } from "react";
+import NavTooltips from "~/components/NavTooltips";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://anish-sarkar.com';
 
@@ -81,6 +82,9 @@ export default function RootLayout({
         <div className="relative z-50">
           <NavBar />
         </div>
+        
+        {/* Tooltips must be rendered in a client component */}
+        <NavTooltips />
 
         <Suspense fallback={null}>
           <PostHogProvider>
