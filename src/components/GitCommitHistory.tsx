@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo, memo } from "react";
+import { useRef, useState, useEffect, useCallback, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchGitHubContributions } from "../utils/githubAPI";
+import { TooltipPortal } from "./utils/TooltipPortal";
 
 interface ContributionDay {
   date: string;
@@ -96,6 +97,21 @@ const ContributionCell = memo(
     getGlowIntensity: (level: number) => number;
   }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      if (isHovered && ref.current) {
+        const updateRect = () => setAnchorRect(ref.current?.getBoundingClientRect());
+        updateRect();
+        window.addEventListener("scroll", updateRect, true);
+        window.addEventListener("resize", updateRect);
+        return () => {
+          window.removeEventListener("scroll", updateRect, true);
+          window.removeEventListener("resize", updateRect);
+        };
+      }
+    }, [isHovered]);
 
     // Skip rendering cells that are not visible
     if (day.count < 0) {
@@ -103,21 +119,23 @@ const ContributionCell = memo(
     }
 
     return (
-      <motion.div
-        className="group relative h-[10px] w-[10px] rounded-sm"
-        style={{
-          backgroundColor: getContributionColor(day.level, isHovered),
-        }}
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
-        whileHover={{
-          scale: 1.5,
-          zIndex: 10,
-          transition: { type: "spring", stiffness: 300, damping: 15 },
-        }}
-      >
-        {/* Particle effect on hover */}
-        {/* {isHovered && day.level > 0 && (
+      <>
+        <motion.div
+          ref={ref}
+          className="group relative h-[10px] w-[10px] rounded-sm"
+          style={{
+            backgroundColor: getContributionColor(day.level, isHovered),
+          }}
+          onHoverStart={() => setIsHovered(true)}
+          onHoverEnd={() => setIsHovered(false)}
+          whileHover={{
+            scale: 1.5,
+            zIndex: 10,
+            transition: { type: "spring", stiffness: 300, damping: 15 },
+          }}
+        >
+          {/* Particle effect on hover */}
+          {/* {isHovered && day.level > 0 && (
         <motion.div
           className="absolute inset-0 overflow-visible"
           initial={{ opacity: 0 }}
@@ -157,8 +175,8 @@ const ContributionCell = memo(
         </motion.div>
       )} */}
 
-        {/* Enhanced neon glow blinking effect */}
-        {/* {isHovered && day.level > 0 && (
+          {/* Enhanced neon glow blinking effect */}
+          {/* {isHovered && day.level > 0 && (
         <motion.div 
           className="absolute inset-0 rounded-sm"
           initial={{ opacity: 0 }}
@@ -178,8 +196,8 @@ const ContributionCell = memo(
         />
       )} */}
 
-        {/* Ripple effect */}
-        {/* {isHovered && day.level > 0 && (
+          {/* Ripple effect */}
+          {/* {isHovered && day.level > 0 && (
         <motion.div
           className="absolute rounded-full -inset-1"
           initial={{ opacity: 0, scale: 0.6 }}
@@ -201,8 +219,8 @@ const ContributionCell = memo(
         />
       )} */}
 
-        {/* Smaller tooltip with animation */}
-        {isHovered && (
+          {/* Smaller tooltip with animation */}
+          {/* {isHovered && (
           <motion.div
             className="-translate-x-1/2 absolute bottom-full left-1/2 z-50 mb-1.5 transform whitespace-nowrap rounded border border-emerald-500/20 bg-zinc-800/90 px-1.5 py-0.5 text-[7px] text-white shadow-sm backdrop-blur-sm"
             initial={{ opacity: 0, y: 5, scale: 0.9 }}
@@ -228,8 +246,30 @@ const ContributionCell = memo(
               transition={{ delay: 0.1 }}
             />
           </motion.div>
-        )}
-      </motion.div>
+        )} */}
+        </motion.div>
+        <TooltipPortal show={isHovered} anchorRect={anchorRect}>
+          <motion.div
+            className="-translate-x-1/2 z-50 mb-2 whitespace-nowrap rounded border border-emerald-500/20 bg-zinc-800/90 px-1.5 py-0.5 text-sm text-white shadow-lg backdrop-blur-md"
+            initial={{ opacity: 0, y: 8, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 500, damping: 25 }}
+          >
+            <div className="flex items-center gap-2">
+              {day.level > 0 && (
+                <div
+                  className="h-3 w-3 rounded-full"
+                  style={{
+                    backgroundColor: getContributionColor(day.level, true),
+                  }}
+                />
+              )}
+              <span>{day.tooltip}</span>
+            </div>
+          </motion.div>
+        </TooltipPortal>
+      </>
     );
   }
 );
@@ -291,9 +331,7 @@ export default function GitCommitHistory() {
         const githubToken = process.env.NEXT_PUBLIC_GITHUB_TOKEN; // Optional: for higher rate limits
 
         if (!username) {
-          throw new Error(
-            "github username environment variable is not set"
-          );
+          throw new Error("github username environment variable is not set");
         }
 
         const calendar = await fetchGitHubContributions(username, githubToken);
@@ -537,7 +575,11 @@ export default function GitCommitHistory() {
 
     // Use requestIdleCallback for non-critical initialization
     if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      (window as Window & { requestIdleCallback: (callback: IdleRequestCallback) => number }).requestIdleCallback(() => generateContributions());
+      (
+        window as Window & {
+          requestIdleCallback: (callback: IdleRequestCallback) => number;
+        }
+      ).requestIdleCallback(() => generateContributions());
     } else {
       setTimeout(generateContributions, 0);
     }
@@ -563,10 +605,16 @@ export default function GitCommitHistory() {
           // Each month label needs about 20px width, so we need at least 20px spacing
           const minSpacing = 20;
           const currentPosition = weekIndex * 12;
-          
-          if (currentPosition - lastPosition >= minSpacing || lastPosition === -1) {
+
+          if (
+            currentPosition - lastPosition >= minSpacing ||
+            lastPosition === -1
+          ) {
             currentMonth = month;
-            labels.push({ month: MONTHS[month] ?? "", position: currentPosition });
+            labels.push({
+              month: MONTHS[month] ?? "",
+              position: currentPosition,
+            });
             lastPosition = currentPosition;
           }
         }
@@ -609,9 +657,9 @@ export default function GitCommitHistory() {
   // Add click handler
   const handleHelpClick = () => {
     window.open(
-      'https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/managing-contribution-settings-on-your-profile/why-are-my-contributions-not-showing-up-on-my-profile',
-      '_blank',
-      'noopener,noreferrer'
+      "https://docs.github.com/en/account-and-profile/reference/why-are-my-contributions-not-showing-up-on-my-profile#about-your-contribution-graph",
+      "_blank",
+      "noopener,noreferrer"
     );
   };
 
@@ -767,8 +815,15 @@ export default function GitCommitHistory() {
                   className="text-emerald-400"
                 >
                   <title>Longest Streak Icon</title>
-                  <path fill="currentColor" d="M12.832 21.801c3.126-.626 7.168-2.875 7.168-8.69c0-5.291-3.873-8.815-6.658-10.434c-.619-.36-1.342.113-1.342.828v1.828c0 1.442-.606 4.074-2.29 5.169c-.86.559-1.79-.278-1.894-1.298l-.086-.838c-.1-.974-1.092-1.565-1.87-.971C4.461 8.46 3 10.33 3 13.11C3 20.221 8.289 22 10.933 22q.232 0 .484-.015c.446-.056 0 .099 1.415-.185" opacity={0.5} />
-                  <path fill="currentColor" d="M8 18.444c0 2.62 2.111 3.43 3.417 3.542c.446-.056 0 .099 1.415-.185C13.871 21.434 15 20.492 15 18.444c0-1.297-.819-2.098-1.46-2.473c-.196-.115-.424.03-.441.256c-.056.718-.746 1.29-1.215.744c-.415-.482-.59-1.187-.59-1.638v-.59c0-.354-.357-.59-.663-.408C9.495 15.008 8 16.395 8 18.445" />
+                  <path
+                    fill="currentColor"
+                    d="M12.832 21.801c3.126-.626 7.168-2.875 7.168-8.69c0-5.291-3.873-8.815-6.658-10.434c-.619-.36-1.342.113-1.342.828v1.828c0 1.442-.606 4.074-2.29 5.169c-.86.559-1.79-.278-1.894-1.298l-.086-.838c-.1-.974-1.092-1.565-1.87-.971C4.461 8.46 3 10.33 3 13.11C3 20.221 8.289 22 10.933 22q.232 0 .484-.015c.446-.056 0 .099 1.415-.185"
+                    opacity={0.5}
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M8 18.444c0 2.62 2.111 3.43 3.417 3.542c.446-.056 0 .099 1.415-.185C13.871 21.434 15 20.492 15 18.444c0-1.297-.819-2.098-1.46-2.473c-.196-.115-.424.03-.441.256c-.056.718-.746 1.29-1.215.744c-.415-.482-.59-1.187-.59-1.638v-.59c0-.354-.357-.59-.663-.408C9.495 15.008 8 16.395 8 18.445"
+                  />
                 </svg>
               </div>
               <div>
