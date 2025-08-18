@@ -5,6 +5,17 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
+function useIsDesktop(breakpoint = 768) {
+  const [isDesktop, setIsDesktop] = useState(true);
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= breakpoint);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [breakpoint]);
+  return isDesktop;
+}
+
 const NavBar = () => {
   const pathname = usePathname();
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
@@ -447,9 +458,18 @@ const NavBar = () => {
                           strokeLinejoin="round"
                           strokeWidth={1.5}
                         >
-                          <path fill="currentColor" d="M14 3v4a1 1 0 0 0 1 1h4" />
-                          <path fill="none" d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2" />
-                          <path fill="none" d="M11 12.5a1.5 1.5 0 0 0-3 0v3a1.5 1.5 0 0 0 3 0m2-4.5l1.5 6l1.5-6" />
+                          <path
+                            fill="currentColor"
+                            d="M14 3v4a1 1 0 0 0 1 1h4"
+                          />
+                          <path
+                            fill="none"
+                            d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2"
+                          />
+                          <path
+                            fill="none"
+                            d="M11 12.5a1.5 1.5 0 0 0-3 0v3a1.5 1.5 0 0 0 3 0m2-4.5l1.5 6l1.5-6"
+                          />
                         </g>
                       </svg>
                     ),
@@ -548,7 +568,6 @@ const NavBar = () => {
                 <div className="flex items-center">
                   <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div> */}
-
 
                 {/* PHOTOS BUTTON */}
                 {/* <NavItem
@@ -736,6 +755,7 @@ const NavItem = ({
   const isHovered = hoveredIcon === name;
   const FilledIcon = icon.filled;
   const OutlineIcon = icon.outline;
+  const isDesktop = useIsDesktop();
 
   return (
     <>
@@ -744,8 +764,13 @@ const NavItem = ({
         className="group relative flex h-10 w-10 items-center justify-center"
         onMouseEnter={() => setHoveredIcon(name)}
         onMouseLeave={() => setHoveredIcon(null)}
-        data-tooltip-id={`navbar-tooltip-${name}`}
-        data-tooltip-content={name.charAt(0).toUpperCase() + name.slice(1)}
+        {...(isDesktop
+          ? {
+              "data-tooltip-id": `navbar-tooltip-${name}`,
+              "data-tooltip-content":
+                name.charAt(0).toUpperCase() + name.slice(1),
+            }
+          : {})}
       >
         {/* Cosmic background effect */}
         <motion.div
@@ -949,7 +974,6 @@ const NavItem = ({
           )}
         </div>
       </TransitionLink>
-      
     </>
   );
 };

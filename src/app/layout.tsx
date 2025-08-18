@@ -1,6 +1,7 @@
 import "~/styles/globals.css";
 import "~/styles/transition.css";
 import NavBar from "~/components/NavBar";
+import NavTooltips from "~/components/NavTooltips";
 import TransitionWrapper from "~/components/utils/TransitionWrapper";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -8,7 +9,6 @@ import BackToTop from "~/components/utils/BackToTop";
 import LoadingScreen from "~/components/utils/LoadingScreen";
 import { PostHogProvider } from "~/components/utils/PostHogProvider";
 import { Suspense } from "react";
-import NavTooltips from "~/components/NavTooltips";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://anish-sarkar.com';
 
