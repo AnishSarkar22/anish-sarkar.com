@@ -23,7 +23,7 @@ export default function Projects() {
     "React",
     "Svelte",
     "Sveltekit",
-    "Supabase",
+    "SQLite",
     "Streamlit",
     "TypeScript",
     "scikit-learn",

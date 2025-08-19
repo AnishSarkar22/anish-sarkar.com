@@ -18,7 +18,7 @@ export const projectList: Project[] = [
     title: "Farmalyze",
     description: "A smart farming assistant that leverages AI to provide crop recommendations, fertilizer suggestions, and disease detection through image analysis.",
     link: "https://farmalyze-snowy.vercel.app",
-    technologies: ["React", "Flask", "NumPy", "Pandas", "PyTorch", "Supabase", "scikit-learn"],
+    technologies: ["React", "Flask", "NumPy", "Pandas", "PyTorch", "SQLite", "scikit-learn"],
     featured: true
   },
   {
