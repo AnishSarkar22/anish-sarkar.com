@@ -24,7 +24,9 @@ const orderedCategories = [
   "Backend",
   "Frontend",
   "Databases",
+  "Cloud",
   "Tools",
+  "Operating Systems"
 ];
 
 // Optimized color constants to avoid re-creation during rendering
@@ -49,6 +51,7 @@ const SKILL_COLORS = {
   django: "#092E20",
   flask: "#ffffff",
   fastapi: "#009688",
+  springboot: "#6DB33F",
   mysql: "#01618A",
   postgresql: "#336791",
   sqlite: "#96D7F4",
@@ -70,13 +73,6 @@ const skills: Skill[] = [
     name: "Java",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
     color: SKILL_COLORS.java,
-    category: "Languages",
-  },
-  {
-    id: "bash",
-    name: "Bash",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
-    color: SKILL_COLORS.bash,
     category: "Languages",
   },
   {
@@ -123,6 +119,13 @@ const skills: Skill[] = [
     category: "Backend",
   },
   // {
+  //   id: "springboot",
+  //   name: "Spring Boot",
+  //   logo: "https://spring.io/img/projects/spring-boot.svg",
+  //   color: SKILL_COLORS.springboot,
+  //   category: "Backend",
+  // },
+  // {
   //   id: "react",
   //   name: "React",
   //   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
@@ -144,20 +147,12 @@ const skills: Skill[] = [
     category: "Frontend",
   },
   {
-    id: "Svelte",
+    id: "svelte",
     name: "Svelte",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg",
     color: SKILL_COLORS.svelte,
     category: "Frontend",
   },
-  // {
-  //   id: "nextjs",
-  //   name: "Next.js",
-  //   level: 4,
-  //   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-  //   color: SKILL_COLORS.nextjs,
-  //   category: "Frontend"
-  // },
   {
     id: "mysql",
     name: "MySQL",
@@ -173,18 +168,25 @@ const skills: Skill[] = [
     category: "Databases",
   },
   {
-    id: "sqllite",
+    id: "sqlite",
     name: "SQLite",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg",
     color: SKILL_COLORS.sqlite,
     category: "Databases",
   },
   {
+    id: "aws",
+    name: "AWS",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+    color: SKILL_COLORS.aws,
+    category: "Cloud",
+  },
+  {
     id: "firebase",
     name: "Firebase",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
     color: SKILL_COLORS.firebase,
-    category: "Databases",
+    category: "Cloud",
   },
   {
     id: "mongodb",
@@ -215,10 +217,10 @@ const skills: Skill[] = [
     category: "Tools",
   },
   {
-    id: "aws",
-    name: "AWS",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
-    color: SKILL_COLORS.aws,
+    id: "bash",
+    name: "Bash",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
+    color: SKILL_COLORS.bash,
     category: "Tools",
   },
   {
@@ -226,7 +228,7 @@ const skills: Skill[] = [
     name: "Arch Linux",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/archlinux/archlinux-original.svg",
     color: SKILL_COLORS.archlinux,
-    category: "Tools",
+    category: "Operating Systems",
   },
 ];
 
