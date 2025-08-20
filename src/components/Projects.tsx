@@ -10,21 +10,21 @@ export const projectList: Project[] = [
   {
     title: "Loopr",
     description: "Intelligent URL & API Monitoring, Webhook Scheduling & Uptime Service.",
-    link: "https://loopr-pi.vercel.app",
+    link: "https://loopr.anish-sarkar.com",
     technologies: ["Svelte", "Docker", "Sveltekit", "Appwrite"],
     featured: true
   },
   {
     title: "Farmalyze",
     description: "A smart farming assistant that leverages AI to provide crop recommendations, fertilizer suggestions, and disease detection through image analysis.",
-    link: "https://farmalyze-snowy.vercel.app",
+    link: "https://farmalyze.anish-sarkar.com",
     technologies: ["React", "Flask", "NumPy", "Pandas", "PyTorch", "SQLite", "scikit-learn"],
     featured: true
   },
   {
     title: "NBGA Optimization",
     description: "Optimization algorithms and tools for solving the Traveling Salesman Problem (TSP) and ligand optimization, with datasets and interactive visualizations.",
-    link: "https://genetic-optimization.streamlit.app",
+    link: "https://nbga-optimization.streamlit.app",
     technologies: ["Python", "NumPy", "Matplotlib", "Streamlit"],
   },
   {
@@ -48,7 +48,7 @@ export const projectList: Project[] = [
   {
     title: "Conway's Game of Life",
     description: "Implementation of infamous Conway's Game of Life",
-    link: "https://conways-game-of-life-sigma-neon.vercel.app",
+    link: "https://game-of-life.anish-sarkar.com",
     technologies: ["Svelte", "Pygame"],
   },
 ];
