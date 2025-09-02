@@ -118,13 +118,13 @@ const skills: Skill[] = [
     color: SKILL_COLORS.flask,
     category: "Backend",
   },
-  // {
-  //   id: "springboot",
-  //   name: "Spring Boot",
-  //   logo: "https://spring.io/img/projects/spring-boot.svg",
-  //   color: SKILL_COLORS.springboot,
-  //   category: "Backend",
-  // },
+  {
+    id: "springboot",
+    name: "Spring Boot",
+    logo: "https://spring.io/img/projects/spring-boot.svg",
+    color: SKILL_COLORS.springboot,
+    category: "Backend",
+  },
   // {
   //   id: "react",
   //   name: "React",
@@ -223,13 +223,13 @@ const skills: Skill[] = [
     color: SKILL_COLORS.bash,
     category: "Tools",
   },
-  {
-    id: "archlinux",
-    name: "Arch Linux",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/archlinux/archlinux-original.svg",
-    color: SKILL_COLORS.archlinux,
-    category: "Operating Systems",
-  },
+  // {
+  //   id: "archlinux",
+  //   name: "Arch Linux",
+  //   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/archlinux/archlinux-original.svg",
+  //   color: SKILL_COLORS.archlinux,
+  //   category: "Operating Systems",
+  // },
 ];
 
 // List of skill categories

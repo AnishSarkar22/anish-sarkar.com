@@ -1410,7 +1410,7 @@ export default function HomePage() {
           </motion.section>
         </div>
 
-        {/* Footer with now playing */}
+        {/* Footer */}
         <motion.footer
           className="mt-16 border-zinc-800/50 border-t pt-8"
           initial={{ opacity: 0, y: 20 }}
@@ -1424,9 +1424,9 @@ export default function HomePage() {
             <p>
               © {new Date().getFullYear()} Anish Sarkar. All rights reserved.
             </p>
-            <p className="mt-1">
+            {/* <p className="mt-1">
               Built with Next.js, Tailwind CSS, and Framer Motion.
-            </p>
+            </p> */}
           </div>
         </motion.footer>
       </main>
