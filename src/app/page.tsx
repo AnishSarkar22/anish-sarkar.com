@@ -134,10 +134,10 @@ export default function HomePage() {
 
   // Using the below as fadeInUpVariants is very resource intensive
   const SimpleVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.3 } }
-    // hidden: { opacity: 1 },
-    // visible: { opacity: 1 } 
+    // hidden: { opacity: 0 },
+    // visible: { opacity: 1, transition: { duration: 0.3 } }
+    hidden: { opacity: 1 },
+    visible: { opacity: 1 } 
   };
 
   const structuredData = {

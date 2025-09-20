@@ -83,6 +83,8 @@ export default function LocationSection() {
     const createPulsingMarker = () => {
       const el = document.createElement("div");
       el.className = "pulsing-marker";
+      el.setAttribute("aria-hidden", "true");
+      el.tabIndex = -1;
       el.innerHTML = `
         <div class="pulse-container">
           <div class="pulse-outer"></div>
