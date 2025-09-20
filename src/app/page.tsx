@@ -37,7 +37,7 @@ interface MousePosition {
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const mousePosition = useRef<MousePosition>({ x: 0, y: 0, down: false });
   const [hoverProfile, setHoverProfile] = useState(false);
@@ -119,17 +119,25 @@ export default function HomePage() {
     return null;
   }
 
-  const fadeInUpVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: 0.1 * i,
-        duration: 0.6,
-        ease: "easeOut" as const,
-      },
-    }),
+  // const fadeInUpVariants = {
+    // hidden: { opacity: 0, y: 20 },
+    // visible: (i: number) => ({
+    //   opacity: 1,
+    //   y: 0,
+    //   transition: {
+    //     delay: 0.1 * i,
+    //     duration: 0.6,
+    //     ease: "easeOut" as const,
+    //   },
+    // }),
+  // }
+
+  // Using the below as fadeInUpVariants is very resource intensive
+  const SimpleVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.3 } }
+    // hidden: { opacity: 1 },
+    // visible: { opacity: 1 } 
   };
 
   const structuredData = {
@@ -225,7 +233,7 @@ export default function HomePage() {
           } z-50 mb-16 overflow-hidden rounded-2xl border border-zinc-800/50 bg-zinc-900/60 shadow-2xl backdrop-blur-xl`}
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.3, delay: 0 }}
           style={{
             boxShadow:
               "0 10px 40px -10px rgba(0, 0, 0, 0.7), 0 0 15px rgba(52, 211, 153, 0.15)",
@@ -1331,7 +1339,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={2}
-            variants={fadeInUpVariants}
+            variants={SimpleVariants}
           >
             <GitCommitHistory />
           </motion.section>
@@ -1341,7 +1349,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={1}
-            variants={fadeInUpVariants}
+            variants={SimpleVariants}
           >
             <About />
           </motion.section>
@@ -1351,7 +1359,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={1}
-            variants={fadeInUpVariants}
+            variants={SimpleVariants}
           >
             <HobbySection />
           </motion.section>
@@ -1362,7 +1370,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={2}
-            variants={fadeInUpVariants}
+            variants={SimpleVariants}
           >
             <Experience />
           </motion.section>
@@ -1372,7 +1380,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={3}
-            variants={fadeInUpVariants}
+            variants={SimpleVariants}
           >
             <Education />
           </motion.section>
@@ -1383,7 +1391,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={1}
-            variants={fadeInUpVariants}
+            variants={SimpleVariants}
           >
             <SkillsSection />
           </motion.section>
@@ -1394,7 +1402,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={4}
-            variants={fadeInUpVariants}
+            variants={SimpleVariants}
           >
             <Socials />
           </motion.section>
@@ -1404,7 +1412,7 @@ export default function HomePage() {
             initial="hidden"
             animate="visible"
             custom={5} // Adjust this number depending on display order.
-            variants={fadeInUpVariants}
+            variants={SimpleVariants}
           >
             <LocationSection />
           </motion.section>
@@ -1415,7 +1423,7 @@ export default function HomePage() {
           className="mt-16 border-zinc-800/50 border-t pt-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.5 }}
+          transition={{ duration: 0.3, delay: 0 }}
         >
           <div
             className="mt-8 text-center text-xs text-zinc-500"
