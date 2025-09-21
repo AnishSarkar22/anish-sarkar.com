@@ -12,7 +12,8 @@
     "preview": "next build && next start",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "validate-posts": "tsx scripts/validate-posts.ts"
+    "validate-posts": "tsx scripts/validate-posts.ts",
+    "validate-github-data": "tsx scripts/validate-github-data.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.2",
