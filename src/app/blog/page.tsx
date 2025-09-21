@@ -6,22 +6,22 @@
 
 // export const metadata: Metadata = blogPageMetadata;
 
-// export default async function BlogPage({ 
-//   searchParams 
-// }: { 
-//   searchParams: { page?: string } 
+// export default async function BlogPage({
+//   searchParams
+// }: {
+//   searchParams: { page?: string }
 // }) {
 //   const params = await searchParams;
 //   // Get page parameter from URL, default is page 1
 //   const currentPage = params?.page ? Number.parseInt(params.page) : 1;
 //   const postsPerPage = 5; // Number of posts per page
-  
+
 //   // Fetch blog data from local files (will be cached)
 //   const allBlogPosts = await fetchBlogPosts();
-  
+
 //   // Calculate total number of pages
 //   const totalPages = Math.ceil(allBlogPosts.length / postsPerPage);
-  
+
 //   // Transform data to fit BlogClient
 //   const blogs = allBlogPosts.map(post => ({
 //     slug: post.slug,
@@ -33,8 +33,8 @@
 //   // Wrap Blog Client in Transition Wrapper
 //   return (
 //     <TransitionWrapper>
-//       <BlogClient 
-//         blogs={blogs} 
+//       <BlogClient
+//         blogs={blogs}
 //         currentPage={currentPage}
 //         totalPages={totalPages}
 //         postsPerPage={postsPerPage}
@@ -43,10 +43,9 @@
 //   );
 // }
 
-
 // I am using this temporarily until I start writing blogs (which is never going to happen, I am lazy af)
 import { notFound } from "next/navigation";
 
 export default function BlogPage() {
-  notFound();
+	notFound();
 }

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 interface BlogContentProps {
-  html: string;
+	html: string;
 }
 
 // copy SVGs as string constants
@@ -13,66 +13,66 @@ const COPY_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16
 	</g></svg>`;
 const CHECK_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>`;
 
-
 export default function BlogContent({ html }: BlogContentProps) {
-  const contentRef = useRef<HTMLDivElement>(null);
+	const contentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (contentRef.current) {
-      // Add click handlers for anchor links
-      const links = contentRef.current.querySelectorAll('a[href^="#"]');
-      for (const link of links) {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const href = link.getAttribute('href');
-          if (href) {
-            const target = document.querySelector(href);
-            if (target) {
-              // Update the URL with the hash
-              window.history.pushState(null, '', href);
-              target.scrollIntoView({ behavior: 'smooth' });
-            }
-          }
-        });
-      }
+	useEffect(() => {
+		if (contentRef.current) {
+			// Add click handlers for anchor links
+			const links = contentRef.current.querySelectorAll('a[href^="#"]');
+			for (const link of links) {
+				link.addEventListener("click", (e) => {
+					e.preventDefault();
+					const href = link.getAttribute("href");
+					if (href) {
+						const target = document.querySelector(href);
+						if (target) {
+							// Update the URL with the hash
+							window.history.pushState(null, "", href);
+							target.scrollIntoView({ behavior: "smooth" });
+						}
+					}
+				});
+			}
 
-// Add copy button to code blocks
-const codeBlocks = contentRef.current.querySelectorAll('pre');
-for (const block of codeBlocks) {
-  const button = document.createElement('button');
-  button.innerHTML = COPY_ICON; // Only SVG icon, no text
-  button.className = 'absolute top-2 right-2 px-2 py-1 bg-zinc-700 text-white rounded hover:bg-zinc-600 transition-colors';
-  button.onclick = () => {
-    const code = block.querySelector('code');
-    if (code) {
-      navigator.clipboard.writeText(code.textContent || '');
-      button.innerHTML = CHECK_ICON; // Only SVG icon, no text
-      setTimeout(() => {
-        button.innerHTML = COPY_ICON; // Only SVG icon, no text
-      }, 2000);
-    }
-  };
+			// Add copy button to code blocks
+			const codeBlocks = contentRef.current.querySelectorAll("pre");
+			for (const block of codeBlocks) {
+				const button = document.createElement("button");
+				button.innerHTML = COPY_ICON; // Only SVG icon, no text
+				button.className =
+					"absolute top-2 right-2 px-2 py-1 bg-zinc-700 text-white rounded hover:bg-zinc-600 transition-colors";
+				button.onclick = () => {
+					const code = block.querySelector("code");
+					if (code) {
+						navigator.clipboard.writeText(code.textContent || "");
+						button.innerHTML = CHECK_ICON; // Only SVG icon, no text
+						setTimeout(() => {
+							button.innerHTML = COPY_ICON; // Only SVG icon, no text
+						}, 2000);
+					}
+				};
 
-  block.style.position = 'relative';
-  block.appendChild(button);
-}
+				block.style.position = "relative";
+				block.appendChild(button);
+			}
 
-      // Trigger Mermaid re-initialization after content is loaded
-      const mermaidElements = contentRef.current.querySelectorAll('.mermaid');
-      if (mermaidElements.length > 0) {
-        // Dispatch a custom event to trigger Mermaid re-initialization
-        const event = new CustomEvent('mermaidContentLoaded');
-        document.dispatchEvent(event);
-      }
-    }
-  }, []);
+			// Trigger Mermaid re-initialization after content is loaded
+			const mermaidElements = contentRef.current.querySelectorAll(".mermaid");
+			if (mermaidElements.length > 0) {
+				// Dispatch a custom event to trigger Mermaid re-initialization
+				const event = new CustomEvent("mermaidContentLoaded");
+				document.dispatchEvent(event);
+			}
+		}
+	}, []);
 
-  return (
-    <div 
-      ref={contentRef}
-      className="blog-content prose prose-invert max-w-none"
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
+	return (
+		<div
+			ref={contentRef}
+			className="blog-content prose prose-invert max-w-none"
+			// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+			dangerouslySetInnerHTML={{ __html: html }}
+		/>
+	);
 }

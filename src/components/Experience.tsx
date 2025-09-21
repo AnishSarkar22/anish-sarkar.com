@@ -1,358 +1,381 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useMemo, useCallback } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 const experience = [
-  {
-    title: "Reseach Intern",
-    position: "IEEE Computational Intelligence Society",
-    date: "(Jun 2025 - present)",
-    description:
-      "Enhanced the evolutionary computation and Genetic Algorithms for optimizing ligand-protein interaction energy and benchmarking NBGA performance with TSPLIB datasets",
-    link: "https://github.com/AnishSarkar22/nbga-optimization",
-    color: "#ffffff",
-  }
+	{
+		title: "Reseach Intern",
+		position: "IEEE Computational Intelligence Society",
+		date: "(Jun 2025 - present)",
+		description:
+			"Enhanced the evolutionary computation and Genetic Algorithms for optimizing ligand-protein interaction energy and benchmarking NBGA performance with TSPLIB datasets",
+		link: "https://github.com/AnishSarkar22/nbga-optimization",
+		color: "#ffffff",
+	},
 ];
 
 export default function Experience() {
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+	const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
-  // Memoize event handlers
-  const handleHoverStart = useCallback((title: string) => {
-    setHoveredItem(title);
-  }, []);
+	// Memoize event handlers
+	const handleHoverStart = useCallback((title: string) => {
+		setHoveredItem(title);
+	}, []);
 
-  const handleHoverEnd = useCallback(() => {
-    setHoveredItem(null);
-  }, []);
+	const handleHoverEnd = useCallback(() => {
+		setHoveredItem(null);
+	}, []);
 
-  // Memoize animation variants
-  const containerVariants = useMemo(() => ({
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  }), []);
+	// Memoize animation variants
+	const containerVariants = useMemo(
+		() => ({
+			hidden: { opacity: 0, y: 20 },
+			visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+		}),
+		[],
+	);
 
-  const titleVariants = useMemo(() => ({
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.5, delay: 0.2 } }
-  }), []);
+	const titleVariants = useMemo(
+		() => ({
+			hidden: { opacity: 0, x: -20 },
+			visible: { opacity: 1, x: 0, transition: { duration: 0.5, delay: 0.2 } },
+		}),
+		[],
+	);
 
-  const timelineVariants = useMemo(() => ({
-    hidden: { height: 0 },
-    visible: { height: "100%", transition: { duration: 0.8 } }
-  }), []);
+	const timelineVariants = useMemo(
+		() => ({
+			hidden: { height: 0 },
+			visible: { height: "100%", transition: { duration: 0.8 } },
+		}),
+		[],
+	);
 
-  // Memoize title animation
-  const titleAnimation = useMemo(() => ({
-    rotate: [0, 5, 0, -5, 0],
-    color: ['#86efac', '#4ade80', '#86efac'],
-    textShadow: ['0 0 0px rgba(134, 239, 172, 0)', '0 0 10px rgba(134, 239, 172, 0.5)', '0 0 0px rgba(134, 239, 172, 0)']
-  }), []);
+	// Memoize title animation
+	const titleAnimation = useMemo(
+		() => ({
+			rotate: [0, 5, 0, -5, 0],
+			color: ["#86efac", "#4ade80", "#86efac"],
+			textShadow: [
+				"0 0 0px rgba(134, 239, 172, 0)",
+				"0 0 10px rgba(134, 239, 172, 0.5)",
+				"0 0 0px rgba(134, 239, 172, 0)",
+			],
+		}),
+		[],
+	);
 
-  const titleTransition = useMemo(() => ({ 
-    duration: 2, 
-    repeat: Number.POSITIVE_INFINITY, 
-    repeatDelay: 5, 
-    times: [0, 0.2, 0.5, 0.8, 1],
-    repeatType: 'loop' as const
-  }), []);
+	const titleTransition = useMemo(
+		() => ({
+			duration: 2,
+			repeat: Number.POSITIVE_INFINITY,
+			repeatDelay: 5,
+			times: [0, 0.2, 0.5, 0.8, 1],
+			repeatType: "loop" as const,
+		}),
+		[],
+	);
 
-  return (
-    <motion.div 
-      className="relative mb-16 text-white will-change-transform"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.h1 
-        className="relative inline-block font-bold text-2xl text-white"
-        variants={titleVariants}
-        whileHover={{ scale: 1.03 }}
-        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-      >
-        <span className="inline-block text-green-300 will-change-transform">
-            &gt;
-          </span>{" "}
-        <span className="group relative">
-          <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">experience</span>
+	return (
+		<motion.div
+			className="relative mb-16 text-white will-change-transform"
+			variants={containerVariants}
+			initial="hidden"
+			animate="visible"
+		>
+			<motion.h1
+				className="relative inline-block font-bold text-2xl text-white"
+				variants={titleVariants}
+				whileHover={{ scale: 1.03 }}
+				transition={{ type: "spring", stiffness: 400, damping: 10 }}
+			>
+				<span className="inline-block text-green-300 will-change-transform">
+					&gt;
+				</span>{" "}
+				<span className="group relative">
+					<span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
+						experience
+					</span>
 
-          {/* Animated underline with glow */}
-          {/* <motion.span
+					{/* Animated underline with glow */}
+					{/* <motion.span
             className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 1, delay: 0.5 }}
             style={{ boxShadow: '0 2px 10px rgba(134, 239, 172, 0.3)' }}
           /> */}
-        </span>
-      </motion.h1>
-      
-      <div className="relative mt-10">
-        {/* Main vertical timeline line */}
-        <motion.div 
-          className="absolute top-0 bottom-0 left-[6px] h-full w-[1px] bg-zinc-800 will-change-transform"
-          variants={timelineVariants}
-        />
-        
-        {experience.map((exp, index) => {
-          const isHovered = hoveredItem === exp.title;
-          
-          // Memoize item variants for each experience item
-          const itemVariants = {
-            hidden: { opacity: 0, y: 20 },
-            visible: { 
-              opacity: 1, 
-              y: 0, 
-              transition: { duration: 0.5, delay: 0.3 + (index * 0.2) } 
-            }
-          };
-                    
-          // Pre-calculate particle effects for better performance
-          const particleEffects = useMemo(() => {
-            if (!isHovered) return null;
-            
-            return [...Array(6)].map(() => {
-              const leftOffset = 50 + (Math.random() - 0.5) * 20;
-              const topOffset = 50 + (Math.random() - 0.5) * 20;
-              const xMovement = (Math.random() - 0.5) * 100;
-              const yMovement = (Math.random() - 0.5) * 60;
-              const width = Math.random() * 4 + 2;
-              const height = Math.random() * 4 + 2;
-              const duration = 1 + Math.random() * 0.5;
-              const delay = Math.random() * 0.5;
-              const uniqueKey = `particle-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`;
-              
-              return (
-                <motion.div
-                  key={uniqueKey}
-                  className="pointer-events-none absolute z-0 rounded-full will-change-transform"
-                  initial={{ 
-                    opacity: 0,
-                    scale: 0,
-                    x: 0,
-                    y: 0,
-                  }}
-                  animate={{ 
-                    opacity: [0, 0.7, 0],
-                    scale: [0, 1, 0],
-                    x: [0, xMovement],
-                    y: [0, yMovement],
-                  }}
-                  transition={{ 
-                    duration,
-                    repeat: Number.POSITIVE_INFINITY,
-                    delay,
-                    repeatType: 'loop'
-                  }}
-                  style={{
-                    left: `${leftOffset}%`,
-                    top: `${topOffset}%`,
-                    width: `${width}px`,
-                    height: `${height}px`,
-                    backgroundColor: exp.color,
-                    filter: 'blur(1px)'
-                  }}
-                />
-              );
-            });
-          }, [isHovered, exp.color]);
-          
-          return (
-            <motion.div 
-              key={exp.title} 
-              className="group relative mt-10 pl-10"
-              variants={itemVariants}
-              onHoverStart={() => handleHoverStart(exp.title)}
-              onHoverEnd={handleHoverEnd}
-            >
-              {/* Card background with glass effect */}
-              <motion.div 
-                className="-inset-6 -z-10 absolute rounded-xl backdrop-blur-sm will-change-transform"
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: isHovered ? 0.1 : 0,
-                  backgroundColor: exp.color,
-                  boxShadow: isHovered ? `0 0 30px ${exp.color}30` : "none"
-                }}
-                transition={{ duration: 0.3 }}
-              />
-              
-              {/* Timeline dot - positioned correctly */}
-              <motion.div 
-                className={"absolute top-1.5 left-0 h-3 w-3 rounded-full border border-zinc-700 bg-[#121212] will-change-transform"}
-                initial={{ scale: 0 }}
-                animate={{ 
-                  scale: 1,
-                  backgroundColor: isHovered ? exp.color : '#121212',
-                  borderColor: isHovered ? exp.color : 'rgb(63, 63, 70)',
-                  boxShadow: isHovered ? `0 0 10px ${exp.color}` : 'none'
-                }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 300, 
-                  damping: 15, 
-                  delay: 0.6 + (index * 0.2) 
-                }}
-              />
-              
-              {/* Pulse effect for timeline dot when hovered - conditionally rendered */}
-              {isHovered && (
-                <motion.div
-                  className="pointer-events-none absolute top-1.5 left-0 h-3 w-3 rounded-full will-change-transform"
-                  initial={{ scale: 1, opacity: 0.7 }}
-                  animate={{ 
-                    scale: [1, 1.8, 1],
-                    opacity: [0.7, 0, 0.7]
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Number.POSITIVE_INFINITY,
-                    repeatType: 'loop'
-                  }}
-                  style={{ backgroundColor: exp.color }}
-                />
-              )}
-              
-              {/* Title */}
-              <div className="overflow-hidden">
-                <motion.a
-                  href={exp.link}
-                  className="relative inline-block font-bold text-xl"
-                  // whileHover={{ scale: 1.02, x: 5 }}
-                  // transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  style={{ 
-                    color: isHovered ? exp.color : undefined,
-                    willChange: 'transform, color'
-                  }}
-                >
-                  {exp.title}
-                  
-                  {/* animated underline  */}
-                  {/* <motion.span 
+				</span>
+			</motion.h1>
+
+			<div className="relative mt-10">
+				{/* Main vertical timeline line */}
+				<motion.div
+					className="absolute top-0 bottom-0 left-[6px] h-full w-[1px] bg-zinc-800 will-change-transform"
+					variants={timelineVariants}
+				/>
+
+				{experience.map((exp, index) => {
+					const isHovered = hoveredItem === exp.title;
+
+					// Memoize item variants for each experience item
+					const itemVariants = {
+						hidden: { opacity: 0, y: 20 },
+						visible: {
+							opacity: 1,
+							y: 0,
+							transition: { duration: 0.5, delay: 0.3 + index * 0.2 },
+						},
+					};
+
+					// Pre-calculate particle effects for better performance
+					const particleEffects = useMemo(() => {
+						if (!isHovered) return null;
+
+						return [...Array(6)].map(() => {
+							const leftOffset = 50 + (Math.random() - 0.5) * 20;
+							const topOffset = 50 + (Math.random() - 0.5) * 20;
+							const xMovement = (Math.random() - 0.5) * 100;
+							const yMovement = (Math.random() - 0.5) * 60;
+							const width = Math.random() * 4 + 2;
+							const height = Math.random() * 4 + 2;
+							const duration = 1 + Math.random() * 0.5;
+							const delay = Math.random() * 0.5;
+							const uniqueKey = `particle-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`;
+
+							return (
+								<motion.div
+									key={uniqueKey}
+									className="pointer-events-none absolute z-0 rounded-full will-change-transform"
+									initial={{
+										opacity: 0,
+										scale: 0,
+										x: 0,
+										y: 0,
+									}}
+									animate={{
+										opacity: [0, 0.7, 0],
+										scale: [0, 1, 0],
+										x: [0, xMovement],
+										y: [0, yMovement],
+									}}
+									transition={{
+										duration,
+										repeat: Number.POSITIVE_INFINITY,
+										delay,
+										repeatType: "loop",
+									}}
+									style={{
+										left: `${leftOffset}%`,
+										top: `${topOffset}%`,
+										width: `${width}px`,
+										height: `${height}px`,
+										backgroundColor: exp.color,
+										filter: "blur(1px)",
+									}}
+								/>
+							);
+						});
+					}, [isHovered, exp.color]);
+
+					return (
+						<motion.div
+							key={exp.title}
+							className="group relative mt-10 pl-10"
+							variants={itemVariants}
+							onHoverStart={() => handleHoverStart(exp.title)}
+							onHoverEnd={handleHoverEnd}
+						>
+							{/* Card background with glass effect */}
+							<motion.div
+								className="-inset-6 -z-10 absolute rounded-xl backdrop-blur-sm will-change-transform"
+								initial={{ opacity: 0 }}
+								animate={{
+									opacity: isHovered ? 0.1 : 0,
+									backgroundColor: exp.color,
+									boxShadow: isHovered ? `0 0 30px ${exp.color}30` : "none",
+								}}
+								transition={{ duration: 0.3 }}
+							/>
+
+							{/* Timeline dot - positioned correctly */}
+							<motion.div
+								className={
+									"absolute top-1.5 left-0 h-3 w-3 rounded-full border border-zinc-700 bg-[#121212] will-change-transform"
+								}
+								initial={{ scale: 0 }}
+								animate={{
+									scale: 1,
+									backgroundColor: isHovered ? exp.color : "#121212",
+									borderColor: isHovered ? exp.color : "rgb(63, 63, 70)",
+									boxShadow: isHovered ? `0 0 10px ${exp.color}` : "none",
+								}}
+								transition={{
+									type: "spring",
+									stiffness: 300,
+									damping: 15,
+									delay: 0.6 + index * 0.2,
+								}}
+							/>
+
+							{/* Pulse effect for timeline dot when hovered - conditionally rendered */}
+							{isHovered && (
+								<motion.div
+									className="pointer-events-none absolute top-1.5 left-0 h-3 w-3 rounded-full will-change-transform"
+									initial={{ scale: 1, opacity: 0.7 }}
+									animate={{
+										scale: [1, 1.8, 1],
+										opacity: [0.7, 0, 0.7],
+									}}
+									transition={{
+										duration: 2,
+										repeat: Number.POSITIVE_INFINITY,
+										repeatType: "loop",
+									}}
+									style={{ backgroundColor: exp.color }}
+								/>
+							)}
+
+							{/* Title */}
+							<div className="overflow-hidden">
+								<motion.a
+									href={exp.link}
+									className="relative inline-block font-bold text-xl"
+									// whileHover={{ scale: 1.02, x: 5 }}
+									// transition={{ type: "spring", stiffness: 400, damping: 10 }}
+									style={{
+										color: isHovered ? exp.color : undefined,
+										willChange: "transform, color",
+									}}
+								>
+									{exp.title}
+
+									{/* animated underline  */}
+									{/* <motion.span 
                     className="-bottom-1 absolute left-0 h-[2px] will-change-transform"
                     style={{ backgroundColor: exp.color }}
                     initial={{ width: 0 }}
                     animate={{ width: isHovered ? "100%" : "0%" }}
                     transition={{ duration: 0.3 }}
                   /> */}
-                </motion.a>
-              </div>
-              
-              {/* Position and date with animation */}
-              <motion.p 
-                className="mt-2 flex items-center text-gray-500 text-xs"
-                animate={{ 
-                  color: isHovered ? exp.color : "#6b7280",
-                  x: isHovered ? 5 : 0
-                }}
-                transition={{ duration: 0.3 }}
-                style={{ willChange: isHovered ? 'transform, color' : 'auto' }}
-              >
-                <motion.span
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7 + (index * 0.2) }}
-                >
-                  {exp.position}
-                </motion.span>
-                <motion.span 
-                  className="mx-2 opacity-50"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.5 }}
-                  transition={{ delay: 0.8 + (index * 0.2) }}
-                >
-                  |
-                </motion.span>
-                <motion.span
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.9 + (index * 0.2) }}
-                >
-                  {exp.date}
-                </motion.span>
-              </motion.p>
-              
-              {/* Description with character position change */}
-              <motion.p 
-                className="relative mt-5 text-gray-400 text-sm"
-                animate={{ 
-                  color: isHovered ? "#d1d5db" : "#9ca3af",
-                  x: isHovered ? 5 : 0
-                }}
-                transition={{ duration: 0.3 }}
-                style={{ willChange: isHovered ? 'transform, color' : 'auto' }}
-              >
-                {exp.description}
-              </motion.p>
-              
-              {/* View more link - conditionally rendered */}
-              <motion.div
-                className="mt-4 overflow-hidden will-change-transform"
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ 
-                  height: isHovered ? 'auto' : 0,
-                  opacity: isHovered ? 1 : 0
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <motion.a 
-                  href={exp.link}
-                  className="inline-flex items-center text-sm"
-                  style={{ color: exp.color }}
-                  whileHover={{ x: 5 }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View more
-                  <motion.svg 
-                    className="ml-2 h-4 w-4 will-change-transform" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                    animate={{
-                      x: isHovered ? [0, 4, 0] : 0,
-                    }}
-                    transition={{
-                      x: {
-                        duration: 1.5,
-                        repeat: Number.POSITIVE_INFINITY,
-                        repeatType: "loop",
-                        ease: "easeInOut"
-                      }
-                    }}
-                  >
-                    <title>Arrow pointing right</title>
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </motion.svg>
-                </motion.a>
-              </motion.div>
-              
-              {/* Particle effects on hover - optimized with memoization */}
-              {particleEffects}
-            </motion.div>
-          );
-        })}
-      </div>
-      
-      {/* Decorative elements - optimized with will-change */}
-      <motion.div 
-        className="-left-20 pointer-events-none absolute top-1/2 h-40 w-40 rounded-full bg-green-300/5 blur-3xl will-change-transform"
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.1, 0.2, 0.1]
-        }}
-        transition={{ 
-          duration: 5, 
-          repeat: Number.POSITIVE_INFINITY,
-          repeatType: 'loop'
-        }}
-      />
-    </motion.div>
-  );
+								</motion.a>
+							</div>
+
+							{/* Position and date with animation */}
+							<motion.p
+								className="mt-2 flex items-center text-gray-500 text-xs"
+								animate={{
+									color: isHovered ? exp.color : "#6b7280",
+									x: isHovered ? 5 : 0,
+								}}
+								transition={{ duration: 0.3 }}
+								style={{ willChange: isHovered ? "transform, color" : "auto" }}
+							>
+								<motion.span
+									initial={{ opacity: 0, x: -10 }}
+									animate={{ opacity: 1, x: 0 }}
+									transition={{ delay: 0.7 + index * 0.2 }}
+								>
+									{exp.position}
+								</motion.span>
+								<motion.span
+									className="mx-2 opacity-50"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 0.5 }}
+									transition={{ delay: 0.8 + index * 0.2 }}
+								>
+									|
+								</motion.span>
+								<motion.span
+									initial={{ opacity: 0, x: 10 }}
+									animate={{ opacity: 1, x: 0 }}
+									transition={{ delay: 0.9 + index * 0.2 }}
+								>
+									{exp.date}
+								</motion.span>
+							</motion.p>
+
+							{/* Description with character position change */}
+							<motion.p
+								className="relative mt-5 text-gray-400 text-sm"
+								animate={{
+									color: isHovered ? "#d1d5db" : "#9ca3af",
+									x: isHovered ? 5 : 0,
+								}}
+								transition={{ duration: 0.3 }}
+								style={{ willChange: isHovered ? "transform, color" : "auto" }}
+							>
+								{exp.description}
+							</motion.p>
+
+							{/* View more link - conditionally rendered */}
+							<motion.div
+								className="mt-4 overflow-hidden will-change-transform"
+								initial={{ height: 0, opacity: 0 }}
+								animate={{
+									height: isHovered ? "auto" : 0,
+									opacity: isHovered ? 1 : 0,
+								}}
+								transition={{ duration: 0.3 }}
+							>
+								<motion.a
+									href={exp.link}
+									className="inline-flex items-center text-sm"
+									style={{ color: exp.color }}
+									whileHover={{ x: 5 }}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View more
+									<motion.svg
+										className="ml-2 h-4 w-4 will-change-transform"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										animate={{
+											x: isHovered ? [0, 4, 0] : 0,
+										}}
+										transition={{
+											x: {
+												duration: 1.5,
+												repeat: Number.POSITIVE_INFINITY,
+												repeatType: "loop",
+												ease: "easeInOut",
+											},
+										}}
+									>
+										<title>Arrow pointing right</title>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M14 5l7 7m0 0l-7 7m7-7H3"
+										/>
+									</motion.svg>
+								</motion.a>
+							</motion.div>
+
+							{/* Particle effects on hover - optimized with memoization */}
+							{particleEffects}
+						</motion.div>
+					);
+				})}
+			</div>
+
+			{/* Decorative elements - optimized with will-change */}
+			<motion.div
+				className="-left-20 pointer-events-none absolute top-1/2 h-40 w-40 rounded-full bg-green-300/5 blur-3xl will-change-transform"
+				animate={{
+					scale: [1, 1.2, 1],
+					opacity: [0.1, 0.2, 0.1],
+				}}
+				transition={{
+					duration: 5,
+					repeat: Number.POSITIVE_INFINITY,
+					repeatType: "loop",
+				}}
+			/>
+		</motion.div>
+	);
 }

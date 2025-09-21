@@ -1,175 +1,175 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export default function NotFound() {
-  const [isGlitching, setIsGlitching] = useState(false);
-  const glitchInterval = useRef<NodeJS.Timeout | null>(null);
-  const errorTextRef = useRef<HTMLDivElement>(null);
-  const mainRef = useRef<HTMLDivElement>(null);
-  const [isHovering, setIsHovering] = useState(false);
+	const [isGlitching, setIsGlitching] = useState(false);
+	const glitchInterval = useRef<NodeJS.Timeout | null>(null);
+	const errorTextRef = useRef<HTMLDivElement>(null);
+	const mainRef = useRef<HTMLDivElement>(null);
+	const [isHovering, setIsHovering] = useState(false);
 
-  // Glitch effect timing
-  useEffect(() => {
-    const triggerGlitch = () => {
-      setIsGlitching(true);
-      setTimeout(() => setIsGlitching(false), 200);
-    };
+	// Glitch effect timing
+	useEffect(() => {
+		const triggerGlitch = () => {
+			setIsGlitching(true);
+			setTimeout(() => setIsGlitching(false), 200);
+		};
 
-    // Initial glitch
-    setTimeout(triggerGlitch, 500);
+		// Initial glitch
+		setTimeout(triggerGlitch, 500);
 
-    // Set up random glitching
-    glitchInterval.current = setInterval(() => {
-      if (Math.random() > 0.7) {
-        triggerGlitch();
-      }
-    }, 2000);
+		// Set up random glitching
+		glitchInterval.current = setInterval(() => {
+			if (Math.random() > 0.7) {
+				triggerGlitch();
+			}
+		}, 2000);
 
-    return () => {
-      if (glitchInterval.current) {
-        clearInterval(glitchInterval.current);
-      }
-    };
-  }, []);
+		return () => {
+			if (glitchInterval.current) {
+				clearInterval(glitchInterval.current);
+			}
+		};
+	}, []);
 
-  // Text scramble effect
-  const scrambleText = (text: string) => {
-    const chars = "!<>-_\\/[]{}—=+*^?#________";
-    let result = "";
-    for (let i = 0; i < text.length; i++) {
-      if (Math.random() < 0.3) {
-        result += chars[Math.floor(Math.random() * chars.length)];
-      } else {
-        result += text[i];
-      }
-    }
-    return result;
-  };
+	// Text scramble effect
+	const scrambleText = (text: string) => {
+		const chars = "!<>-_\\/[]{}—=+*^?#________";
+		let result = "";
+		for (let i = 0; i < text.length; i++) {
+			if (Math.random() < 0.3) {
+				result += chars[Math.floor(Math.random() * chars.length)];
+			} else {
+				result += text[i];
+			}
+		}
+		return result;
+	};
 
-  return (
-    <main
-      ref={mainRef}
-      className="relative min-h-screen overflow-hidden text-white"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
-      {/* Cosmic background elements */}
-      <div className="-z-10 pointer-events-none fixed inset-0 bg-black">
-        {/* Animated nebula background */}
-        <motion.div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPgogIDxmaWx0ZXIgaWQ9Im5vaXNlIj4KICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjA1IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+CiAgICA8ZmVDb2xvck1hdHJpeCB0eXBlPSJzYXR1cmF0ZSIgdmFsdWVzPSIwIi8+CiAgPC9maWx0ZXI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC4wNSIvPgo8L3N2Zz4=')",
-            backgroundSize: "cover",
-          }}
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.3, 0.2],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-          }}
-        />
+	return (
+		<main
+			ref={mainRef}
+			className="relative min-h-screen overflow-hidden text-white"
+			onMouseEnter={() => setIsHovering(true)}
+			onMouseLeave={() => setIsHovering(false)}
+		>
+			{/* Cosmic background elements */}
+			<div className="-z-10 pointer-events-none fixed inset-0 bg-black">
+				{/* Animated nebula background */}
+				<motion.div
+					className="absolute inset-0 opacity-30"
+					style={{
+						backgroundImage:
+							"url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPgogIDxmaWx0ZXIgaWQ9Im5vaXNlIj4KICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjA1IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+CiAgICA8ZmVDb2xvck1hdHJpeCB0eXBlPSJzYXR1cmF0ZSIgdmFsdWVzPSIwIi8+CiAgPC9maWx0ZXI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC4wNSIvPgo8L3N2Zz4=')",
+						backgroundSize: "cover",
+					}}
+					animate={{
+						scale: [1, 1.1, 1],
+						opacity: [0.2, 0.3, 0.2],
+					}}
+					transition={{
+						duration: 20,
+						repeat: Number.POSITIVE_INFINITY,
+						ease: "easeInOut",
+					}}
+				/>
 
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)]" />
+				<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)]" />
 
-        {/* Animated gradient overlay */}
-        <motion.div
-          className="absolute inset-0 opacity-20"
-          animate={{
-            background: [
-              "radial-gradient(circle at 30% 30%, rgba(52, 211, 153, 0.3) 0%, transparent 70%)",
-              "radial-gradient(circle at 70% 70%, rgba(52, 211, 153, 0.3) 0%, transparent 70%)",
-              "radial-gradient(circle at 30% 70%, rgba(52, 211, 153, 0.3) 0%, transparent 70%)",
-              "radial-gradient(circle at 70% 30%, rgba(52, 211, 153, 0.3) 0%, transparent 70%)",
-            ],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "linear",
-          }}
-        />
+				{/* Animated gradient overlay */}
+				<motion.div
+					className="absolute inset-0 opacity-20"
+					animate={{
+						background: [
+							"radial-gradient(circle at 30% 30%, rgba(52, 211, 153, 0.3) 0%, transparent 70%)",
+							"radial-gradient(circle at 70% 70%, rgba(52, 211, 153, 0.3) 0%, transparent 70%)",
+							"radial-gradient(circle at 30% 70%, rgba(52, 211, 153, 0.3) 0%, transparent 70%)",
+							"radial-gradient(circle at 70% 30%, rgba(52, 211, 153, 0.3) 0%, transparent 70%)",
+						],
+					}}
+					transition={{
+						duration: 20,
+						repeat: Number.POSITIVE_INFINITY,
+						ease: "linear",
+					}}
+				/>
 
-        <motion.div
-          className="pointer-events-none absolute top-0 left-0 h-1 w-full"
-          style={{
-            background:
-              "linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent)",
-          }}
-          animate={{
-            scaleX: [0, 1, 0],
-            opacity: [0, 0.5, 0],
-            x: ["-100%", "0%", "100%"],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-          }}
-        />
+				<motion.div
+					className="pointer-events-none absolute top-0 left-0 h-1 w-full"
+					style={{
+						background:
+							"linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent)",
+					}}
+					animate={{
+						scaleX: [0, 1, 0],
+						opacity: [0, 0.5, 0],
+						x: ["-100%", "0%", "100%"],
+					}}
+					transition={{
+						duration: 8,
+						repeat: Number.POSITIVE_INFINITY,
+						ease: "easeInOut",
+					}}
+				/>
 
-        {/* Animated particles */}
-        {(() => {
-          // Generate particles with unique IDs and random properties
-          const particles = Array.from({ length: 80 }, () => ({
-            id: crypto.randomUUID(),
-            width: Math.random() * 4 + 1,
-            height: Math.random() * 4 + 1,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            background: `rgba(${52 + Math.random() * 30}, ${
-              211 + Math.random() * 30
-            }, ${153 + Math.random() * 30}, ${0.2 + Math.random() * 0.3})`,
-            boxShadow: `0 0 ${Math.random() * 5 + 2}px rgba(52, 211, 153, ${
-              0.3 + Math.random() * 0.4
-            })`,
-            opacity: [0, 0.8, 0],
-            y: [0, -Math.random() * 150 - 50],
-            x: [0, (Math.random() - 0.5) * 80],
-            scale: [0, 1 + Math.random() * 0.5, 0],
-            rotate: [0, Math.random() * 360],
-            duration: Math.random() * 15 + 10,
-            delay: Math.random() * 5,
-          }));
-          return particles.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="pointer-events-none absolute rounded-full"
-              style={{
-                width: particle.width,
-                height: particle.height,
-                left: particle.left,
-                top: particle.top,
-                background: particle.background,
-                filter: "blur(1px)",
-                boxShadow: particle.boxShadow,
-              }}
-              animate={{
-                opacity: particle.opacity,
-                y: particle.y,
-                x: particle.x,
-                scale: particle.scale,
-                rotate: particle.rotate,
-              }}
-              transition={{
-                duration: particle.duration,
-                repeat: Number.POSITIVE_INFINITY,
-                delay: particle.delay,
-                ease: "easeInOut",
-              }}
-            />
-          ));
-        })()}
+				{/* Animated particles */}
+				{(() => {
+					// Generate particles with unique IDs and random properties
+					const particles = Array.from({ length: 80 }, () => ({
+						id: crypto.randomUUID(),
+						width: Math.random() * 4 + 1,
+						height: Math.random() * 4 + 1,
+						left: `${Math.random() * 100}%`,
+						top: `${Math.random() * 100}%`,
+						background: `rgba(${52 + Math.random() * 30}, ${
+							211 + Math.random() * 30
+						}, ${153 + Math.random() * 30}, ${0.2 + Math.random() * 0.3})`,
+						boxShadow: `0 0 ${Math.random() * 5 + 2}px rgba(52, 211, 153, ${
+							0.3 + Math.random() * 0.4
+						})`,
+						opacity: [0, 0.8, 0],
+						y: [0, -Math.random() * 150 - 50],
+						x: [0, (Math.random() - 0.5) * 80],
+						scale: [0, 1 + Math.random() * 0.5, 0],
+						rotate: [0, Math.random() * 360],
+						duration: Math.random() * 15 + 10,
+						delay: Math.random() * 5,
+					}));
+					return particles.map((particle) => (
+						<motion.div
+							key={particle.id}
+							className="pointer-events-none absolute rounded-full"
+							style={{
+								width: particle.width,
+								height: particle.height,
+								left: particle.left,
+								top: particle.top,
+								background: particle.background,
+								filter: "blur(1px)",
+								boxShadow: particle.boxShadow,
+							}}
+							animate={{
+								opacity: particle.opacity,
+								y: particle.y,
+								x: particle.x,
+								scale: particle.scale,
+								rotate: particle.rotate,
+							}}
+							transition={{
+								duration: particle.duration,
+								repeat: Number.POSITIVE_INFINITY,
+								delay: particle.delay,
+								ease: "easeInOut",
+							}}
+						/>
+					));
+				})()}
 
-        {/* Animated grid lines */}
-        {/* <div className="absolute inset-0 overflow-hidden opacity-10">
+				{/* Animated grid lines */}
+				{/* <div className="absolute inset-0 overflow-hidden opacity-10">
           {Array.from({ length: 15 }).map((_, i) => {
             const key = `grid-line-h-${crypto.randomUUID()}`;
             return (
@@ -210,64 +210,65 @@ export default function NotFound() {
           })}
         </div> */}
 
-        {/* Glowing orbs */}
-        {Array.from({ length: 8 }).map(() => {
-          const size = 150 + Math.random() * 200;
-          const orbKey = crypto.randomUUID();
-          return (
-            <motion.div
-              key={orbKey}
-              className="absolute rounded-full blur-3xl"
-              style={{
-                width: size,
-                height: size,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                background: "radial-gradient(circle, rgba(52, 211, 153, 0.3) 0%, rgba(52, 211, 153, 0.1) 50%, transparent 80%)",
-                transform: "translate(-50%, -50%)",
-              }}
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.2, 0.4, 0.2],
-                x: [(Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50],
-                y: [(Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50],
-              }}
-              transition={{
-                duration: 8 + Math.random() * 7,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-                delay: Math.random() * 5,
-              }}
-            />
-          );
-        })}
+				{/* Glowing orbs */}
+				{Array.from({ length: 8 }).map(() => {
+					const size = 150 + Math.random() * 200;
+					const orbKey = crypto.randomUUID();
+					return (
+						<motion.div
+							key={orbKey}
+							className="absolute rounded-full blur-3xl"
+							style={{
+								width: size,
+								height: size,
+								left: `${Math.random() * 100}%`,
+								top: `${Math.random() * 100}%`,
+								background:
+									"radial-gradient(circle, rgba(52, 211, 153, 0.3) 0%, rgba(52, 211, 153, 0.1) 50%, transparent 80%)",
+								transform: "translate(-50%, -50%)",
+							}}
+							animate={{
+								scale: [1, 1.2, 1],
+								opacity: [0.2, 0.4, 0.2],
+								x: [(Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50],
+								y: [(Math.random() - 0.5) * 50, (Math.random() - 0.5) * 50],
+							}}
+							transition={{
+								duration: 8 + Math.random() * 7,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "easeInOut",
+								delay: Math.random() * 5,
+							}}
+						/>
+					);
+				})}
 
-        {/* Hexagon grid pattern */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-5">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <title>Hexagon grid pattern</title>
-            <defs>
-              <pattern
-                id="hexagons"
-                width="50"
-                height="43.4"
-                patternUnits="userSpaceOnUse"
-                patternTransform="scale(5) rotate(0)"
-              >
-                <path
-                  d="M25,17.3 L25,0 L0,8.7 L0,25.9 L25,34.6 L50,25.9 L50,8.7 Z"
-                  fill="none"
-                  stroke="rgba(52, 211, 153, 0.5)"
-                  strokeWidth="0.5"
-                />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hexagons)" />
-          </svg>
-        </div>
+				{/* Hexagon grid pattern */}
+				<div className="pointer-events-none absolute inset-0 overflow-hidden opacity-5">
+					<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+						<title>Hexagon grid pattern</title>
+						<defs>
+							<pattern
+								id="hexagons"
+								width="50"
+								height="43.4"
+								patternUnits="userSpaceOnUse"
+								patternTransform="scale(5) rotate(0)"
+							>
+								<path
+									d="M25,17.3 L25,0 L0,8.7 L0,25.9 L25,34.6 L50,25.9 L50,8.7 Z"
+									fill="none"
+									stroke="rgba(52, 211, 153, 0.5)"
+									strokeWidth="0.5"
+								/>
+							</pattern>
+						</defs>
+						<rect width="100%" height="100%" fill="url(#hexagons)" />
+					</svg>
+				</div>
 
-        {/* Animated wave at bottom */}
-        {/* <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-32">
+				{/* Animated wave at bottom */}
+				{/* <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-32">
           <svg
             width="100%"
             height="100%"
@@ -310,97 +311,97 @@ export default function NotFound() {
             </defs>
           </svg>
         </div> */}
-      </div>
+			</div>
 
-      {/* Content container */}
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-4xl flex-col items-center justify-center px-4 py-20">
-        {/* 404 Display */}
-        <motion.div
-          className="relative mb-12 text-center"
-          animate={{
-            x: isGlitching ? [0, -10, 5, -5, 0] : 0,
-            y: isGlitching ? [0, 5, -5, 3, 0] : 0,
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          <motion.div
-            className="relative inline-block"
-            // animate={{
-            //   rotateX: [0, 10, 0, -10, 0],
-            //   rotateY: [0, -15, 0, 15, 0],
-            //   scale: [1, 1.05, 1, 0.95, 1],
-            // }}
-            // transition={{
-            //   duration: 8,
-            //   repeat: Number.POSITIVE_INFINITY,
-            //   ease: "easeInOut",
-            // }}
-            // style={{
-            //   perspective: "1000px",
-            //   transformStyle: "preserve-3d",
-            // }}
-          >
-            <motion.h1
-              className="relative mx-auto text-center font-bold text-[12rem] leading-none tracking-tighter md:text-[20rem]"
-              style={{ fontFamily: "monospace" }}
-              animate={{
-                textShadow: isGlitching
-                  ? [
-                      "0 0 10px rgba(52, 211, 153, 0.8), 0 0 20px rgba(52, 211, 153, 0.4), 0 0 30px rgba(52, 211, 153, 0.2)",
-                      "5px 0 10px rgba(59, 130, 246, 0.8), -5px 0 20px rgba(59, 130, 246, 0.4), 0 0 30px rgba(59, 130, 246, 0.2)",
-                      "0 0 10px rgba(52, 211, 153, 0.8), 0 0 20px rgba(52, 211, 153, 0.4), 0 0 30px rgba(52, 211, 153, 0.2)",
-                    ]
-                  : "0 0 10px rgba(52, 211, 153, 0.8), 0 0 20px rgba(52, 211, 153, 0.4), 0 0 30px rgba(52, 211, 153, 0.2)",
-              }}
-              transition={{ duration: 0.2 }}
-            >
-              <span
-                className={`absolute inset-0 ${
-                  isGlitching ? "text-blue-500" : "text-green-300"
-                }`}
-                style={{
-                  clipPath: isGlitching
-                    ? "polygon(0 15%, 100% 15%, 100% 40%, 0 40%)"
-                    : "none",
-                  transform: isGlitching ? "translate(-5px, 0)" : "none",
-                  WebkitTextStroke: "2px rgba(0,0,0,0.3)",
-                  filter: "drop-shadow(0 0 15px rgba(52, 211, 153, 0.8))",
-                }}
-              >
-                404
-              </span>
-              <span
-                className={`absolute inset-0 ${
-                  isGlitching ? "text-purple-500" : "text-green-300"
-                }`}
-                style={{
-                  clipPath: isGlitching
-                    ? "polygon(0 60%, 100% 60%, 100% 85%, 0 85%)"
-                    : "none",
-                  transform: isGlitching ? "translate(5px, 0)" : "none",
-                  WebkitTextStroke: "2px rgba(0,0,0,0.3)",
-                  filter: "drop-shadow(0 0 15px rgba(52, 211, 153, 0.8))",
-                }}
-              >
-                404
-              </span>
-              <span
-                className="relative text-green-300"
-                style={{
-                  WebkitTextStroke: "2px rgba(0,0,0,0.3)",
-                  filter: "drop-shadow(0 0 15px rgba(52, 211, 153, 0.8))",
-                  background:
-                    "linear-gradient(to bottom, rgba(52, 211, 153, 1), rgba(16, 185, 129, 1))",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                404
-              </span>
-            </motion.h1>
+			{/* Content container */}
+			<div className="relative z-10 mx-auto flex min-h-screen max-w-4xl flex-col items-center justify-center px-4 py-20">
+				{/* 404 Display */}
+				<motion.div
+					className="relative mb-12 text-center"
+					animate={{
+						x: isGlitching ? [0, -10, 5, -5, 0] : 0,
+						y: isGlitching ? [0, 5, -5, 3, 0] : 0,
+					}}
+					transition={{ duration: 0.2 }}
+				>
+					<motion.div
+						className="relative inline-block"
+						// animate={{
+						//   rotateX: [0, 10, 0, -10, 0],
+						//   rotateY: [0, -15, 0, 15, 0],
+						//   scale: [1, 1.05, 1, 0.95, 1],
+						// }}
+						// transition={{
+						//   duration: 8,
+						//   repeat: Number.POSITIVE_INFINITY,
+						//   ease: "easeInOut",
+						// }}
+						// style={{
+						//   perspective: "1000px",
+						//   transformStyle: "preserve-3d",
+						// }}
+					>
+						<motion.h1
+							className="relative mx-auto text-center font-bold text-[12rem] leading-none tracking-tighter md:text-[20rem]"
+							style={{ fontFamily: "monospace" }}
+							animate={{
+								textShadow: isGlitching
+									? [
+											"0 0 10px rgba(52, 211, 153, 0.8), 0 0 20px rgba(52, 211, 153, 0.4), 0 0 30px rgba(52, 211, 153, 0.2)",
+											"5px 0 10px rgba(59, 130, 246, 0.8), -5px 0 20px rgba(59, 130, 246, 0.4), 0 0 30px rgba(59, 130, 246, 0.2)",
+											"0 0 10px rgba(52, 211, 153, 0.8), 0 0 20px rgba(52, 211, 153, 0.4), 0 0 30px rgba(52, 211, 153, 0.2)",
+										]
+									: "0 0 10px rgba(52, 211, 153, 0.8), 0 0 20px rgba(52, 211, 153, 0.4), 0 0 30px rgba(52, 211, 153, 0.2)",
+							}}
+							transition={{ duration: 0.2 }}
+						>
+							<span
+								className={`absolute inset-0 ${
+									isGlitching ? "text-blue-500" : "text-green-300"
+								}`}
+								style={{
+									clipPath: isGlitching
+										? "polygon(0 15%, 100% 15%, 100% 40%, 0 40%)"
+										: "none",
+									transform: isGlitching ? "translate(-5px, 0)" : "none",
+									WebkitTextStroke: "2px rgba(0,0,0,0.3)",
+									filter: "drop-shadow(0 0 15px rgba(52, 211, 153, 0.8))",
+								}}
+							>
+								404
+							</span>
+							<span
+								className={`absolute inset-0 ${
+									isGlitching ? "text-purple-500" : "text-green-300"
+								}`}
+								style={{
+									clipPath: isGlitching
+										? "polygon(0 60%, 100% 60%, 100% 85%, 0 85%)"
+										: "none",
+									transform: isGlitching ? "translate(5px, 0)" : "none",
+									WebkitTextStroke: "2px rgba(0,0,0,0.3)",
+									filter: "drop-shadow(0 0 15px rgba(52, 211, 153, 0.8))",
+								}}
+							>
+								404
+							</span>
+							<span
+								className="relative text-green-300"
+								style={{
+									WebkitTextStroke: "2px rgba(0,0,0,0.3)",
+									filter: "drop-shadow(0 0 15px rgba(52, 211, 153, 0.8))",
+									background:
+										"linear-gradient(to bottom, rgba(52, 211, 153, 1), rgba(16, 185, 129, 1))",
+									WebkitBackgroundClip: "text",
+									WebkitTextFillColor: "transparent",
+								}}
+							>
+								404
+							</span>
+						</motion.h1>
 
-            {/* Holographic effect */}
-            {/* <motion.div
+						{/* Holographic effect */}
+						{/* <motion.div
               className="pointer-events-none absolute inset-0 opacity-30"
               style={{
                 background:
@@ -418,8 +419,8 @@ export default function NotFound() {
               }}
             /> */}
 
-            {/* 3D layers for depth */}
-            {/* <div
+						{/* 3D layers for depth */}
+						{/* <div
               className="absolute inset-0 opacity-20"
               style={{ transform: "translateZ(-50px)" }}
             >
@@ -435,51 +436,63 @@ export default function NotFound() {
                 404
               </div>
             </div> */}
-          </motion.div>
+					</motion.div>
 
-          {/* Glitch lines */}
-          <AnimatePresence>
-            {isGlitching && (
-              <>
-                <motion.div
-                  className="absolute top-1/4 right-0 left-0 h-1 bg-blue-500"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  exit={{ scaleX: 0 }}
-                  transition={{ duration: 0.1 }}
-                />
-                <motion.div
-                  className="absolute top-2/3 right-0 left-0 h-2 bg-green-500"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  exit={{ scaleX: 0 }}
-                  transition={{ duration: 0.15, delay: 0.05 }}
-                />
-              </>
-            )}
-          </AnimatePresence>
+					{/* Glitch lines */}
+					<AnimatePresence>
+						{isGlitching && (
+							<>
+								<motion.div
+									className="absolute top-1/4 right-0 left-0 h-1 bg-blue-500"
+									initial={{ scaleX: 0 }}
+									animate={{ scaleX: 1 }}
+									exit={{ scaleX: 0 }}
+									transition={{ duration: 0.1 }}
+								/>
+								<motion.div
+									className="absolute top-2/3 right-0 left-0 h-2 bg-green-500"
+									initial={{ scaleX: 0 }}
+									animate={{ scaleX: 1 }}
+									exit={{ scaleX: 0 }}
+									transition={{ duration: 0.15, delay: 0.05 }}
+								/>
+							</>
+						)}
+					</AnimatePresence>
 
-          {/* Decorative circles */}
-          <div className="-z-10 absolute inset-0 flex items-center justify-center">
-            <motion.div
-              className="absolute h-[120%] w-[120%] rounded-full border-2 border-green-300/20 border-dashed"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 120, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-            />
-            <motion.div
-              className="absolute h-[140%] w-[140%] rounded-full border border-green-300/10"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 180, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-            />
-            <motion.div
-              className="absolute h-[160%] w-[160%] rounded-full border border-green-300/5"
-              animate={{ rotate: 180 }}
-              transition={{ duration: 240, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-            />
-          </div>
+					{/* Decorative circles */}
+					<div className="-z-10 absolute inset-0 flex items-center justify-center">
+						<motion.div
+							className="absolute h-[120%] w-[120%] rounded-full border-2 border-green-300/20 border-dashed"
+							animate={{ rotate: 360 }}
+							transition={{
+								duration: 120,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "linear",
+							}}
+						/>
+						<motion.div
+							className="absolute h-[140%] w-[140%] rounded-full border border-green-300/10"
+							animate={{ rotate: -360 }}
+							transition={{
+								duration: 180,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "linear",
+							}}
+						/>
+						<motion.div
+							className="absolute h-[160%] w-[160%] rounded-full border border-green-300/5"
+							animate={{ rotate: 180 }}
+							transition={{
+								duration: 240,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "linear",
+							}}
+						/>
+					</div>
 
-          {/* Decorative tech elements */}
-          {/* <div className="-z-10 absolute inset-0">
+					{/* Decorative tech elements */}
+					{/* <div className="-z-10 absolute inset-0">
             {[...Array(4)].map((_, i) => {
               const uniqueKey = `corner-decoration-${crypto.randomUUID()}`;
               return (
@@ -518,190 +531,190 @@ export default function NotFound() {
               );
             })}
           </div> */}
-        </motion.div>
+				</motion.div>
 
-        {/* Error message with scramble effect */}
-        <div className="relative mb-12">
-          <motion.div
-            ref={errorTextRef}
-            className="mb-6 font-bold font-mono text-2xl md:text-4xl"
-            animate={{
-              opacity: isGlitching ? [1, 0.5, 1] : 1,
-              x: isGlitching ? [0, 3, -3, 0] : 0,
-            }}
-            transition={{ duration: 0.2 }}
-            style={{
-              background:
-                "linear-gradient(to right, #34D399, #10B981, #059669, #10B981, #34D399)",
-              backgroundSize: "200% auto",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              textShadow: "0 0 20px rgba(52, 211, 153, 0.4)",
-            }}
-            whileInView={{
-              backgroundPosition: ["0% center", "200% center"],
-            }}
-            viewport={{ once: false }}
-          >
-            <motion.span
-              animate={{
-                filter: ["blur(0px)", "blur(0.5px)", "blur(0px)"],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              }}
-            >
-              {isGlitching
-                ? scrambleText("ERROR: PAGE_NOT_FOUND")
-                : "ERROR: PAGE_NOT_FOUND"}
-            </motion.span>
-          </motion.div>
+				{/* Error message with scramble effect */}
+				<div className="relative mb-12">
+					<motion.div
+						ref={errorTextRef}
+						className="mb-6 font-bold font-mono text-2xl md:text-4xl"
+						animate={{
+							opacity: isGlitching ? [1, 0.5, 1] : 1,
+							x: isGlitching ? [0, 3, -3, 0] : 0,
+						}}
+						transition={{ duration: 0.2 }}
+						style={{
+							background:
+								"linear-gradient(to right, #34D399, #10B981, #059669, #10B981, #34D399)",
+							backgroundSize: "200% auto",
+							WebkitBackgroundClip: "text",
+							WebkitTextFillColor: "transparent",
+							textShadow: "0 0 20px rgba(52, 211, 153, 0.4)",
+						}}
+						whileInView={{
+							backgroundPosition: ["0% center", "200% center"],
+						}}
+						viewport={{ once: false }}
+					>
+						<motion.span
+							animate={{
+								filter: ["blur(0px)", "blur(0.5px)", "blur(0px)"],
+							}}
+							transition={{
+								duration: 2,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "easeInOut",
+							}}
+						>
+							{isGlitching
+								? scrambleText("ERROR: PAGE_NOT_FOUND")
+								: "ERROR: PAGE_NOT_FOUND"}
+						</motion.span>
+					</motion.div>
 
-          <motion.p
-            className="mx-auto max-w-lg rounded-lg border border-green-500/10 bg-black/20 px-6 py-3 text-lg text-zinc-300 backdrop-blur-sm"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            whileHover={{
-              boxShadow: "0 0 20px rgba(52, 211, 153, 0.2)",
-              borderColor: "rgba(52, 211, 153, 0.3)",
-              scale: 1.02,
-            }}
-          >
-            <motion.span
-              className="inline-block"
-              animate={{
-                opacity: [1, 0.8, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              }}
-            >
-              The page you're looking for is either chilling in the void, got
-              kidnapped, renamed itself to escape you, or just rage quit
-              existence.{" "}
-            </motion.span>
-          </motion.p>
+					<motion.p
+						className="mx-auto max-w-lg rounded-lg border border-green-500/10 bg-black/20 px-6 py-3 text-lg text-zinc-300 backdrop-blur-sm"
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.5 }}
+						whileHover={{
+							boxShadow: "0 0 20px rgba(52, 211, 153, 0.2)",
+							borderColor: "rgba(52, 211, 153, 0.3)",
+							scale: 1.02,
+						}}
+					>
+						<motion.span
+							className="inline-block"
+							animate={{
+								opacity: [1, 0.8, 1],
+							}}
+							transition={{
+								duration: 2,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "easeInOut",
+							}}
+						>
+							The page you're looking for is either chilling in the void, got
+							kidnapped, renamed itself to escape you, or just rage quit
+							existence.{" "}
+						</motion.span>
+					</motion.p>
 
-          {/* Decorative tech elements */}
-          <div className="-z-10 -translate-y-1/2 pointer-events-none absolute top-1/2 right-0 left-0 flex transform justify-between px-4 opacity-20">
-            <motion.div
-              className="h-20 w-20 rounded-full border border-green-300/30"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.2, 0.5, 0.2],
-                rotate: 360,
-              }}
-              transition={{
-                duration: 8,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              }}
-            />
-            <motion.div
-              className="h-20 w-20 rounded-full border border-green-300/30"
-              animate={{
-                scale: [1.2, 1, 1.2],
-                opacity: [0.2, 0.5, 0.2],
-                rotate: -360,
-              }}
-              transition={{
-                duration: 8,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              }}
-            />
-          </div>
-        </div>
+					{/* Decorative tech elements */}
+					<div className="-z-10 -translate-y-1/2 pointer-events-none absolute top-1/2 right-0 left-0 flex transform justify-between px-4 opacity-20">
+						<motion.div
+							className="h-20 w-20 rounded-full border border-green-300/30"
+							animate={{
+								scale: [1, 1.2, 1],
+								opacity: [0.2, 0.5, 0.2],
+								rotate: 360,
+							}}
+							transition={{
+								duration: 8,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "easeInOut",
+							}}
+						/>
+						<motion.div
+							className="h-20 w-20 rounded-full border border-green-300/30"
+							animate={{
+								scale: [1.2, 1, 1.2],
+								opacity: [0.2, 0.5, 0.2],
+								rotate: -360,
+							}}
+							transition={{
+								duration: 8,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "easeInOut",
+							}}
+						/>
+					</div>
+				</div>
 
-        {/* Interactive elements */}
-        <div className="mt-8 flex flex-col items-center justify-center gap-6 md:flex-row">
-          <motion.button
-            className="group relative overflow-hidden rounded-full px-8 py-4"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => window.history.back()}
-          >
-            {/* Button background with animated gradient */}
-            <motion.div
-              className="absolute inset-0 rounded-full bg-gradient-to-r from-zinc-800 via-zinc-700 to-zinc-900"
-              animate={{
-                backgroundPosition: ["0% center", "100% center"],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "mirror",
-                ease: "linear",
-              }}
-              style={{
-                backgroundSize: "200% 100%",
-              }}
-            />
+				{/* Interactive elements */}
+				<div className="mt-8 flex flex-col items-center justify-center gap-6 md:flex-row">
+					<motion.button
+						className="group relative overflow-hidden rounded-full px-8 py-4"
+						whileHover={{ scale: 1.05, y: -2 }}
+						whileTap={{ scale: 0.98 }}
+						onClick={() => window.history.back()}
+					>
+						{/* Button background with animated gradient */}
+						<motion.div
+							className="absolute inset-0 rounded-full bg-gradient-to-r from-zinc-800 via-zinc-700 to-zinc-900"
+							animate={{
+								backgroundPosition: ["0% center", "100% center"],
+							}}
+							transition={{
+								duration: 3,
+								repeat: Number.POSITIVE_INFINITY,
+								repeatType: "mirror",
+								ease: "linear",
+							}}
+							style={{
+								backgroundSize: "200% 100%",
+							}}
+						/>
 
-            {/* Glass overlay */}
-            <div className="absolute inset-0 rounded-full border border-white/10 bg-black/40 backdrop-blur-sm" />
+						{/* Glass overlay */}
+						<div className="absolute inset-0 rounded-full border border-white/10 bg-black/40 backdrop-blur-sm" />
 
-            {/* Shine effect */}
-            <motion.span
-              className="absolute inset-0 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent"
-              initial={{ x: "-100%", opacity: 0 }}
-              whileHover={{
-                x: "200%",
-                opacity: 1,
-                transition: { duration: 1.2, ease: "easeInOut" },
-              }}
-            />
+						{/* Shine effect */}
+						<motion.span
+							className="absolute inset-0 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent"
+							initial={{ x: "-100%", opacity: 0 }}
+							whileHover={{
+								x: "200%",
+								opacity: 1,
+								transition: { duration: 1.2, ease: "easeInOut" },
+							}}
+						/>
 
-            {/* Glow effect */}
-            <motion.div
-              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              style={{
-                boxShadow: "0 0 20px 5px rgba(82, 82, 91, 0.5)",
-              }}
-            />
+						{/* Glow effect */}
+						<motion.div
+							className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+							style={{
+								boxShadow: "0 0 20px 5px rgba(82, 82, 91, 0.5)",
+							}}
+						/>
 
-            {/* Button content */}
-            <span className="relative z-10 flex items-center font-medium text-white">
-              <motion.div
-                className="mr-2 flex items-center justify-center rounded-full bg-green-300 p-1 text-zinc-800"
-                animate={{
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "linear",
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={20}
-                  height={20}
-                  viewBox="0 0 24 24"
-                >
-                  <title>Go Back Icon</title>
-                  <path
-                    fill="currentColor"
-                    d="M5.463 4.433A9.96 9.96 0 0 1 12 2c5.523 0 10 4.477 10 10c0 2.136-.67 4.116-1.81 5.74L17 12h3A8 8 0 0 0 6.46 6.228zm13.074 15.134A9.96 9.96 0 0 1 12 22C6.477 22 2 17.523 2 12c0-2.136.67-4.116 1.81-5.74L7 12H4a8 8 0 0 0 13.54 5.772z"
-                  />
-                </svg>
-                {/* <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24">
+						{/* Button content */}
+						<span className="relative z-10 flex items-center font-medium text-white">
+							<motion.div
+								className="mr-2 flex items-center justify-center rounded-full bg-green-300 p-1 text-zinc-800"
+								animate={{
+									rotate: [0, 360],
+								}}
+								transition={{
+									duration: 4,
+									repeat: Number.POSITIVE_INFINITY,
+									ease: "linear",
+								}}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width={20}
+									height={20}
+									viewBox="0 0 24 24"
+								>
+									<title>Go Back Icon</title>
+									<path
+										fill="currentColor"
+										d="M5.463 4.433A9.96 9.96 0 0 1 12 2c5.523 0 10 4.477 10 10c0 2.136-.67 4.116-1.81 5.74L17 12h3A8 8 0 0 0 6.46 6.228zm13.074 15.134A9.96 9.96 0 0 1 12 22C6.477 22 2 17.523 2 12c0-2.136.67-4.116 1.81-5.74L7 12H4a8 8 0 0 0 13.54 5.772z"
+									/>
+								</svg>
+								{/* <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24">
                   <title>Refresh Icon</title>
                   <path fill="currentColor" d="M21.074 12.154a.75.75 0 0 1 .672.82c-.49 4.93-4.658 8.776-9.724 8.776c-2.724 0-5.364-.933-7.238-2.68L3 20.85a.75.75 0 0 1-.75-.75v-3.96c0-.714.58-1.29 1.291-1.29h3.97a.75.75 0 0 1 .75.75l-2.413 2.407c1.558 1.433 3.78 2.243 6.174 2.243c4.29 0 7.817-3.258 8.232-7.424a.75.75 0 0 1 .82-.672m-18.82-1.128c.49-4.93 4.658-8.776 9.724-8.776c2.724 0 5.364.933 7.238 2.68L21 3.15a.75.75 0 0 1 .75.75v3.96c0 .714-.58 1.29-1.291 1.29h-3.97a.75.75 0 0 1-.75-.75l2.413-2.408c-1.558-1.432-3.78-2.242-6.174-2.242c-4.29 0-7.817 3.258-8.232 7.424a.75.75 0 1 1-1.492-.148" />
                 </svg> */}
-              </motion.div>
-              <span className="font-bold tracking-wide">Go Back</span>
-            </span>
-          </motion.button>
-        </div>
+							</motion.div>
+							<span className="font-bold tracking-wide">Go Back</span>
+						</span>
+					</motion.button>
+				</div>
 
-        {/* Decorative error icon */}
-        {/* <motion.div
+				{/* Decorative error icon */}
+				{/* <motion.div
           className="pointer-events-none absolute right-10 bottom-10 opacity-10"
           animate={{
             scale: [1, 1.1, 1],
@@ -728,8 +741,8 @@ export default function NotFound() {
           </svg>
         </motion.div> */}
 
-        {/* Binary code rain effect */}
-        {/* <div className="pointer-events-none absolute inset-0 overflow-hidden">
+				{/* Binary code rain effect */}
+				{/* <div className="pointer-events-none absolute inset-0 overflow-hidden">
           {[...Array(15)].map(() => {
             const startPos = Math.random() * 100;
             const duration = 10 + Math.random() * 20;
@@ -764,106 +777,106 @@ export default function NotFound() {
           })}
         </div> */}
 
-        {/* Holographic circuit lines */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-10">
-          {[...Array(8)].map(() => {
-            const startX = Math.random() * 100;
-            const startY = Math.random() * 100;
-            const endX = Math.random() * 100;
-            const endY = Math.random() * 100;
-            const circuitLineKey = `circuit-line-${crypto.randomUUID()}`;
+				{/* Holographic circuit lines */}
+				<div className="pointer-events-none absolute inset-0 overflow-hidden opacity-10">
+					{[...Array(8)].map(() => {
+						const startX = Math.random() * 100;
+						const startY = Math.random() * 100;
+						const endX = Math.random() * 100;
+						const endY = Math.random() * 100;
+						const circuitLineKey = `circuit-line-${crypto.randomUUID()}`;
 
-            return (
-              <motion.div
-                key={circuitLineKey}
-                className="absolute bg-gradient-to-r from-green-500 to-green-500/0"
-                style={{
-                  height: "1px",
-                  left: `${startX}%`,
-                  top: `${startY}%`,
-                  width: `${Math.sqrt(
-                    (endX - startX) ** 2 + (endY - startY) ** 2
-                  )}%`,
-                  transform: `rotate(${
-                    Math.atan2(endY - startY, endX - startX) * (180 / Math.PI)
-                  }deg)`,
-                  transformOrigin: "left center",
-                }}
-                animate={{
-                  opacity: [0, 0.8, 0],
-                  scaleX: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  repeat: Number.POSITIVE_INFINITY,
-                  delay: Math.random() * 5,
-                  repeatDelay: Math.random() * 5,
-                }}
-              />
-            );
-          })}
-        </div>
+						return (
+							<motion.div
+								key={circuitLineKey}
+								className="absolute bg-gradient-to-r from-green-500 to-green-500/0"
+								style={{
+									height: "1px",
+									left: `${startX}%`,
+									top: `${startY}%`,
+									width: `${Math.sqrt(
+										(endX - startX) ** 2 + (endY - startY) ** 2,
+									)}%`,
+									transform: `rotate(${
+										Math.atan2(endY - startY, endX - startX) * (180 / Math.PI)
+									}deg)`,
+									transformOrigin: "left center",
+								}}
+								animate={{
+									opacity: [0, 0.8, 0],
+									scaleX: [0, 1, 0],
+								}}
+								transition={{
+									duration: 3 + Math.random() * 2,
+									repeat: Number.POSITIVE_INFINITY,
+									delay: Math.random() * 5,
+									repeatDelay: Math.random() * 5,
+								}}
+							/>
+						);
+					})}
+				</div>
 
-        {/* Floating tech elements */}
-        {Array.from({ length: 12 }).map(() => {
-          const size = 10 + Math.random() * 20;
-          const isSquare = Math.random() > 0.5;
-          const floatingElementKey = `floating-element-${crypto.randomUUID()}`;
+				{/* Floating tech elements */}
+				{Array.from({ length: 12 }).map(() => {
+					const size = 10 + Math.random() * 20;
+					const isSquare = Math.random() > 0.5;
+					const floatingElementKey = `floating-element-${crypto.randomUUID()}`;
 
-          return (
-            <motion.div
-              key={floatingElementKey}
-              className={`absolute ${
-                isSquare ? "rounded-md" : "rounded-full"
-              } pointer-events-none border border-green-300/30`}
-              style={{
-                width: size,
-                height: size,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                opacity: 0.1 + Math.random() * 0.2,
-              }}
-              animate={{
-                y: [0, (Math.random() - 0.5) * 30],
-                x: [0, (Math.random() - 0.5) * 30],
-                rotate: [
-                  0,
-                  Math.random() * 180 * (Math.random() > 0.5 ? 1 : -1),
-                ],
-                opacity: [
-                  0.1 + Math.random() * 0.2,
-                  0.2 + Math.random() * 0.3,
-                  0.1 + Math.random() * 0.2,
-                ],
-              }}
-              transition={{
-                duration: 5 + Math.random() * 10,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-                delay: Math.random() * 5,
-              }}
-            />
-          );
-        })}
+					return (
+						<motion.div
+							key={floatingElementKey}
+							className={`absolute ${
+								isSquare ? "rounded-md" : "rounded-full"
+							} pointer-events-none border border-green-300/30`}
+							style={{
+								width: size,
+								height: size,
+								left: `${Math.random() * 100}%`,
+								top: `${Math.random() * 100}%`,
+								opacity: 0.1 + Math.random() * 0.2,
+							}}
+							animate={{
+								y: [0, (Math.random() - 0.5) * 30],
+								x: [0, (Math.random() - 0.5) * 30],
+								rotate: [
+									0,
+									Math.random() * 180 * (Math.random() > 0.5 ? 1 : -1),
+								],
+								opacity: [
+									0.1 + Math.random() * 0.2,
+									0.2 + Math.random() * 0.3,
+									0.1 + Math.random() * 0.2,
+								],
+							}}
+							transition={{
+								duration: 5 + Math.random() * 10,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "easeInOut",
+								delay: Math.random() * 5,
+							}}
+						/>
+					);
+				})}
 
-        {/* Animated scanline effect */}
-        <motion.div
-          className="pointer-events-none absolute inset-0 overflow-hidden opacity-10"
-          animate={{}}
-        >
-          <motion.div
-            className="absolute right-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-green-300 to-transparent"
-            animate={{
-              top: ["-2px", "100%"],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-            }}
-          />
-        </motion.div>
-      </div>
-    </main>
-  );
+				{/* Animated scanline effect */}
+				<motion.div
+					className="pointer-events-none absolute inset-0 overflow-hidden opacity-10"
+					animate={{}}
+				>
+					<motion.div
+						className="absolute right-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-green-300 to-transparent"
+						animate={{
+							top: ["-2px", "100%"],
+						}}
+						transition={{
+							duration: 8,
+							repeat: Number.POSITIVE_INFINITY,
+							ease: "linear",
+						}}
+					/>
+				</motion.div>
+			</div>
+		</main>
+	);
 }

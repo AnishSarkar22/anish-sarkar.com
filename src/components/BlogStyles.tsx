@@ -1,8 +1,8 @@
 "use client";
 
 export default function BlogStyles() {
-  return (
-    <style jsx global>{`
+	return (
+		<style jsx global>{`
       /* Basic markdown content styling */
       .blog-content {
         position: relative;
@@ -413,5 +413,5 @@ export default function BlogStyles() {
 
 
     `}</style>
-  );
+	);
 }
