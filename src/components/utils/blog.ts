@@ -126,11 +126,22 @@ function parseFrontmatter(fileContent: string): FrontmatterParseResult {
 	const metadata: Partial<Metadata> = {};
 
 	for (const line of frontmatterLines) {
-		const [key, ...values] = line.split(": ");
+		const [rawKey, ...values] = line.split(": ");
+		const key = rawKey?.trim();
+		if (!key) continue;
+
 		let value = values.join(": ").trim();
 		value = value.replace(/^['"](.*)['"]$/, "$1");
-		if (key && value) {
-			metadata[key.trim() as keyof Metadata] = value;
+
+		const k = key as keyof Metadata;
+		// handle numeric frontmatter fields explicitly
+		if (k === "readingTime") {
+			const n = Number(value);
+			if (!Number.isNaN(n))
+				(metadata as Partial<Metadata>)[k] = n as Metadata[typeof k];
+		} else {
+			// other fields are strings
+			(metadata as Partial<Metadata>)[k] = value;
 		}
 	}
 

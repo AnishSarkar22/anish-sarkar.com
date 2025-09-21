@@ -122,6 +122,23 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 						{filteredProjects.map((project, index) => {
 							const isHovered = hoveredIndex === index;
 
+							// Safe container measurements to avoid undefined access
+							const containerWidth = containerRef.current?.offsetWidth ?? 1;
+							const containerHeight = containerRef.current?.offsetHeight ?? 1;
+							const perProjectHeight =
+								containerHeight / Math.max(filteredProjects.length, 1);
+
+							let mouseXPercent = (mousePosition.x / containerWidth) * 100;
+							let mouseYPercent = (mousePosition.y / perProjectHeight) * 100;
+
+							// clamp to reasonable range and guard against NaN/Infinity
+							mouseXPercent = Number.isFinite(mouseXPercent)
+								? Math.max(0, Math.min(mouseXPercent, 100))
+								: 0;
+							mouseYPercent = Number.isFinite(mouseYPercent)
+								? Math.max(0, Math.min(mouseYPercent, 100))
+								: 0;
+
 							return (
 								<motion.div
 									key={project.title}
@@ -406,12 +423,12 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 															scale: [0, 1, 0],
 															x: [
 																`${initialX}%`,
-																`${(mousePosition.x / containerRef.current?.offsetWidth) * 100}%`,
+																`${mouseXPercent}%`,
 																`${initialX}%`,
 															],
 															y: [
 																`${initialY}%`,
-																`${(mousePosition.y / (containerRef.current?.offsetHeight / filteredProjects.length)) * 100}%`,
+																`${mouseYPercent}%`,
 																`${initialY}%`,
 															],
 														}}

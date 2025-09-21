@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function LoadingScreen({
 	children,
-}: { children: React.ReactNode }) {
+}: { children?: React.ReactNode } = {}) {
 	const [loading, setLoading] = useState(true);
 	const [progress, setProgress] = useState(0);
 	const [showContent, setShowContent] = useState(false);

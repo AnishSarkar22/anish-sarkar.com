@@ -12,18 +12,27 @@ import { visit } from "unist-util-visit";
 // Custom plugin to handle Mermaid blocks for better SEO
 function remarkMermaid() {
 	return (tree: import("unist").Node) => {
-		visit(tree, "code", (node: import("mdast").Code) => {
-			if (node.lang === "mermaid") {
-				// Convert code block to HTML with proper semantic markup
-				const mermaidCode = node.value;
-				node.type = "html";
-				node.value = `<div class="mermaid" role="img" aria-label="Mermaid diagram: ${extractDiagramTitle(
-					mermaidCode,
-				)}" data-diagram-type="${extractDiagramType(
-					mermaidCode,
-				)}">${mermaidCode}</div>`;
-			}
-		});
+		visit(
+			tree,
+			"code",
+			(
+				node: import("mdast").Code,
+				index: number | null,
+				parent: import("unist").Parent | null,
+			) => {
+				if (node.lang === "mermaid" && parent && typeof index === "number") {
+					const mermaidCode = node.value;
+					// create an html node and replace the code node in the parent's children array
+					const htmlNode = {
+						type: "html",
+						value: `<div class="mermaid" role="img" aria-label="Mermaid diagram: ${extractDiagramTitle(
+							mermaidCode,
+						)}" data-diagram-type="${extractDiagramType(mermaidCode)}">${mermaidCode}</div>`,
+					} as unknown as import("mdast").Html;
+					parent.children.splice(index, 1, htmlNode as import("mdast").Html);
+				}
+			},
+		);
 	};
 }
 

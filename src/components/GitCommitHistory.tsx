@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { fetchGitHubContributions } from "../utils/githubAPI";
+import { fetchGitHubContributions } from "../utils/githubContributions";
 import { TooltipPortal } from "./utils/TooltipPortal";
 
 interface ContributionDay {
@@ -10,6 +10,18 @@ interface ContributionDay {
 	count: number;
 	level: 0 | 1 | 2 | 3 | 4;
 	tooltip: string;
+}
+
+interface GitHubContributionDay {
+	date: string;
+	contributionCount: number;
+}
+interface GitHubWeek {
+	contributionDays: GitHubContributionDay[];
+}
+interface GitHubCalendar {
+	weeks: GitHubWeek[];
+	totalContributions: number;
 }
 
 // Memoized constants to avoid recreating on each render
@@ -103,7 +115,7 @@ const ContributionCell = memo(
 		useEffect(() => {
 			if (isHovered && ref.current) {
 				const updateRect = () =>
-					setAnchorRect(ref.current?.getBoundingClientRect());
+					setAnchorRect(ref.current?.getBoundingClientRect() ?? null);
 				updateRect();
 				window.addEventListener("scroll", updateRect, true);
 				window.addEventListener("resize", updateRect);
@@ -333,29 +345,29 @@ export default function GitCommitHistory() {
 					throw new Error("Invalid data received");
 				}
 
-				// Transform GitHub data to your UI format
-				const transformedWeeks = calendar.weeks.map((week) =>
-					week.contributionDays.map((day) => {
-						// Map contribution count to level
-						let level: 0 | 1 | 2 | 3 | 4 = 0;
-						if (day.contributionCount === 0) level = 0;
-						else if (day.contributionCount <= 2) level = 1;
-						else if (day.contributionCount <= 5) level = 2;
-						else if (day.contributionCount <= 10) level = 3;
-						else level = 4;
+				const transformedWeeks = (calendar.weeks as GitHubWeek[]).map(
+					(week: GitHubWeek) =>
+						week.contributionDays.map((day: GitHubContributionDay) => {
+							// Map contribution count to level
+							let level: 0 | 1 | 2 | 3 | 4 = 0;
+							if (day.contributionCount === 0) level = 0;
+							else if (day.contributionCount <= 2) level = 1;
+							else if (day.contributionCount <= 5) level = 2;
+							else if (day.contributionCount <= 10) level = 3;
+							else level = 4;
 
-						return {
-							date: day.date,
-							count: day.contributionCount,
-							level: level,
-							tooltip:
-								day.contributionCount === 0
-									? `No contributions on ${new Date(day.date).toDateString()}`
-									: `${day.contributionCount} contribution${
-											day.contributionCount === 1 ? "" : "s"
-										} on ${new Date(day.date).toDateString()}`,
-						};
-					}),
+							return {
+								date: day.date,
+								count: day.contributionCount,
+								level: level,
+								tooltip:
+									day.contributionCount === 0
+										? `No contributions on ${new Date(day.date).toDateString()}`
+										: `${day.contributionCount} contribution${
+												day.contributionCount === 1 ? "" : "s"
+											} on ${new Date(day.date).toDateString()}`,
+							};
+						}),
 				);
 
 				// Calculate streaks from real data
