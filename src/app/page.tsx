@@ -497,6 +497,8 @@ export default function HomePage() {
 											width={60}
 											height={60}
 											className="h-[50px] w-[50px] object-cover grayscale transition-all duration-300 hover:grayscale-0 sm:h-[60px] sm:w-[60px] md:h-[70px] md:w-[70px]"
+											priority
+    										fetchPriority="high"
 										/>
 
 										{/* Cosmic energy overlay */}
@@ -1363,7 +1365,7 @@ export default function HomePage() {
 
 				{/* Main content sections */}
 				<div className="space-y-16">
-					<motion.section
+					{/* <motion.section
 						initial="hidden"
 						whileInView="visible"
 						viewport={{ once: true, margin: "-100px" }}
@@ -1371,9 +1373,14 @@ export default function HomePage() {
 						variants={SimpleVariants}
 					>
 						<GitCommitHistory />
-					</motion.section>
+					</motion.section> */}
+
+					<section>
+						<GitCommitHistory />
+					</section>
+
 					{/* About section */}
-					<motion.section
+					{/* <motion.section
 						initial="hidden"
 						whileInView="visible"
 						viewport={{ once: true, margin: "-100px" }}
@@ -1381,9 +1388,13 @@ export default function HomePage() {
 						variants={SimpleVariants}
 					>
 						<About />
-					</motion.section>
+					</motion.section> */}
 
-					<motion.section
+					<section>
+						<About />
+					</section>
+
+					{/* <motion.section
 						initial="hidden"
 						whileInView="visible"
 						viewport={{ once: true, margin: "-100px" }}
@@ -1391,10 +1402,14 @@ export default function HomePage() {
 						variants={SimpleVariants}
 					>
 						<HobbySection />
-					</motion.section>
+					</motion.section> */}
+
+					<section>
+						<HobbySection />
+					</section>
 
 					{/* Experience section */}
-					<motion.section
+					{/* <motion.section
 						initial="hidden"
 						whileInView="visible"
 						viewport={{ once: true, margin: "-100px" }}
@@ -1402,9 +1417,14 @@ export default function HomePage() {
 						variants={SimpleVariants}
 					>
 						<Experience />
-					</motion.section>
+					</motion.section> */}
+
+					<section>
+						<Experience />
+					</section>
+
 					{/* Education section */}
-					<motion.section
+					{/* <motion.section
 						initial="hidden"
 						whileInView="visible"
 						viewport={{ once: true, margin: "-100px" }}
@@ -1412,10 +1432,14 @@ export default function HomePage() {
 						variants={SimpleVariants}
 					>
 						<Education />
-					</motion.section>
+					</motion.section> */}
+
+					<section>
+						<Education />
+					</section>
 
 					{/* Skills section */}
-					<motion.section
+					{/* <motion.section
 						initial="hidden"
 						whileInView="visible"
 						viewport={{ once: true, margin: "-100px" }}
@@ -1423,10 +1447,14 @@ export default function HomePage() {
 						variants={SimpleVariants}
 					>
 						<SkillsSection />
-					</motion.section>
+					</motion.section> */}
+
+					<section>
+						<SkillsSection />
+					</section>
 
 					{/* Socials section */}
-					<motion.section
+					{/* <motion.section
 						initial="hidden"
 						whileInView="visible"
 						viewport={{ once: true, margin: "-100px" }}
@@ -1434,9 +1462,13 @@ export default function HomePage() {
 						variants={SimpleVariants}
 					>
 						<Socials />
-					</motion.section>
+					</motion.section> */}
 
-					<motion.section
+					<section>
+						<Socials />
+					</section>
+
+					{/* <motion.section
 						className="mb-16"
 						initial="hidden"
 						animate="visible"
@@ -1444,7 +1476,11 @@ export default function HomePage() {
 						variants={SimpleVariants}
 					>
 						<LocationSection />
-					</motion.section>
+					</motion.section> */}
+
+					<section>
+						<LocationSection />
+					</section>
 				</div>
 
 				{/* Footer */}
@@ -1462,8 +1498,8 @@ export default function HomePage() {
 							© {new Date().getFullYear()} Anish Sarkar. All rights reserved.
 						</p>
 						{/* <p className="mt-1">
-              Built with Next.js, Tailwind CSS, and Framer Motion.
-            </p> */}
+							Built with Next.js, Tailwind CSS, and Framer Motion.
+						</p> */}
 					</div>
 				</motion.footer>
 			</main>

@@ -351,12 +351,12 @@ export default function LocationSection() {
 						}}
 					/>
 
-					<motion.h3
+					<motion.h2
 						className="font-medium text-green-300 text-xl"
 						whileHover={{ scale: 1.02 }}
 					>
 						Kolkata, West Bengal, India
-					</motion.h3>
+					</motion.h2>
 
 					<motion.p
 						className="mt-2 text-zinc-400"

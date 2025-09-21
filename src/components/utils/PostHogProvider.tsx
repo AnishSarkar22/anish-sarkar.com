@@ -2,56 +2,78 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
-import { PostHogProvider as PHProvider } from "posthog-js/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+type PostHogWithLoaded = typeof posthog & { __loaded?: boolean };
+type IdleCallbackHandle = number;
+type RequestIdleCallbackType = (
+	cb: (deadline: unknown) => void,
+	opts?: { timeout?: number },
+) => IdleCallbackHandle;
+type CancelIdleCallbackType = (handle: IdleCallbackHandle) => void;
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
-	const [isInitialized, setIsInitialized] = useState(false);
-
+	// Initialize PostHog lazily (idle with timeout fallback)
 	useEffect(() => {
-		// Only initialize on client side
-		if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
-			// Check if PostHog is already initialized
-			if (!posthog.__loaded) {
-				try {
-					posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
-						api_host:
-							process.env.NEXT_PUBLIC_POSTHOG_HOST ||
-							"https://eu.i.posthog.com",
-						person_profiles: "identified_only",
-						capture_pageview: false, // Handle this manually
-						capture_pageleave: true,
-						loaded: (posthog) => {
-							setIsInitialized(true);
-							if (process.env.NODE_ENV === "development") {
-								posthog.debug();
-								console.log("PostHog initialized successfully");
-							}
-						},
-						// SSR-friendly options
-						persistence: "localStorage+cookie",
-						cross_subdomain_cookie: false,
-						secure_cookie: process.env.NODE_ENV === "production",
-					});
-				} catch (error) {
-					console.warn("PostHog initialization failed:", error);
+		if (typeof window === "undefined" || !process.env.NEXT_PUBLIC_POSTHOG_KEY)
+			return;
+
+		const initPosthog = () => {
+			// avoid re-init
+			const ph = posthog as PostHogWithLoaded;
+			if (ph.__loaded) return;
+
+			try {
+				const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+				if (!posthogKey) {
+					console.warn("PostHog key is not defined.");
+					return;
 				}
-			} else {
-				setIsInitialized(true);
+				posthog.init(posthogKey, {
+					api_host:
+						process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com",
+					person_profiles: "identified_only",
+					capture_pageview: false,
+					capture_pageleave: true,
+					autocapture: false,
+					disable_session_recording: true,
+					persistence: "localStorage+cookie",
+					cross_subdomain_cookie: false,
+					secure_cookie: process.env.NODE_ENV === "production",
+				});
+				if (process.env.NODE_ENV === "development") {
+					// enable debug logging in dev
+					try {
+						posthog.debug();
+					} catch {}
+					console.log("PostHog initialized (idle)");
+				}
+			} catch (err) {
+				console.warn("PostHog initialization failed:", err);
 			}
+		};
+
+		const win = window as Window & {
+			requestIdleCallback?: RequestIdleCallbackType;
+			cancelIdleCallback?: CancelIdleCallbackType;
+		};
+
+		if (win.requestIdleCallback) {
+			const id = win.requestIdleCallback(initPosthog, { timeout: 2000 });
+			return () => {
+				if (win.cancelIdleCallback) win.cancelIdleCallback(id);
+			};
 		}
+
+		const t = window.setTimeout(initPosthog, 1000);
+		return () => clearTimeout(t);
 	}, []);
 
-	// Don't render the provider until PostHog is initialized
-	if (!isInitialized) {
-		return <>{children}</>;
-	}
-
 	return (
-		<PHProvider client={posthog}>
+		<>
 			<PostHogPageView />
 			{children}
-		</PHProvider>
+		</>
 	);
 }
 
@@ -61,17 +83,22 @@ function PostHogPageView(): null {
 	const searchParams = useSearchParams();
 
 	useEffect(() => {
-		if (typeof window !== "undefined" && posthog.__loaded) {
-			let url = window.origin + pathname;
-			if (searchParams?.toString()) {
-				url = `${url}?${searchParams.toString()}`;
-			}
+		// Only capture if initialized
+		const ph = posthog as PostHogWithLoaded;
+		if (typeof window !== "undefined" && ph.__loaded) {
+			let url = window.location.origin + pathname;
+			const sp = searchParams?.toString();
+			if (sp) url = `${url}?${sp}`;
 
-			posthog.capture("$pageview", {
-				$current_url: url,
-				$pathname: pathname,
-				$search_params: searchParams?.toString() || "",
-			});
+			try {
+				posthog.capture("$pageview", {
+					$current_url: url,
+					$pathname: pathname,
+					$search_params: sp || "",
+				});
+			} catch (e) {
+				// fail silently
+			}
 		}
 	}, [pathname, searchParams]);
 
