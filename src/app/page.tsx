@@ -498,7 +498,7 @@ export default function HomePage() {
 											height={60}
 											className="h-[50px] w-[50px] object-cover grayscale transition-all duration-300 hover:grayscale-0 sm:h-[60px] sm:w-[60px] md:h-[70px] md:w-[70px]"
 											priority
-    										fetchPriority="high"
+											fetchPriority="high"
 										/>
 
 										{/* Cosmic energy overlay */}
