@@ -1,0 +1,40 @@
+name: Update GitHub Contributions
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM UTC
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  update-contributions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Fetch GitHub Contributions
+        run: |
+          # Fetch data using GitHub GraphQL API
+          curl -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" \
+               -X POST \
+               -d '{"query": "query { user(login: \"${{ github.repository_owner }}\") { contributionsCollection { contributionCalendar { totalContributions weeks { contributionDays { contributionCount date contributionLevel } } } } } }"}' \
+               https://api.github.com/graphql > contributions.json
+          
+          # Validate the response
+          if [ ! -s contributions.json ]; then
+            echo "Error: contributions.json is empty"
+            exit 1
+          fi
+          
+          # Check if the response contains an error
+          if grep -q '"errors"' contributions.json; then
+            echo "GraphQL Error:"
+            cat contributions.json
+            exit 1
+          fi
+      
+      - name: Update Gist
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gist_id: ${{ secrets.GIST_ID }}
+          file_path: contributions.json
+          file_type: text

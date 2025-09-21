@@ -1,75 +1,56 @@
-interface GitHubContributionDay {
-    contributionCount: number;
-    date: string;
-    contributionLevel: number;
-  }
-  
-  interface GitHubContributionWeek {
-    contributionDays: GitHubContributionDay[];
-  }
-  
-  interface GitHubContributionCalendar {
-    totalContributions: number;
-    weeks: GitHubContributionWeek[];
-  }
-  
-  interface GitHubApiResponse {
-    data: {
-      user: {
-        contributionsCollection: {
-          contributionCalendar: GitHubContributionCalendar;
-        };
-      };
-    };
-  }
-  
-  export async function fetchGitHubContributions(username: string, token?: string) {
-    const query = `
-      query($username: String!) {
-        user(login: $username) {
-          contributionsCollection {
-            contributionCalendar {
-              totalContributions
-              weeks {
-                contributionDays {
-                  contributionCount
-                  date
-                  contributionLevel
-                }
-              }
-            }
-          }
-        }
+export async function fetchGitHubContributions() {
+  try {
+    // Fetch from my public gist
+    const response = await fetch(
+      'https://gist.github.com/AnishSarkar22/cf0566a554aa75cbe8fad5e39930958d/raw/contributions.json',
+      { 
+        next: { revalidate: 3600 } // Cache for 1 hour in Next.js
       }
-    `;
-  
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
-  
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
-  
-    const response = await fetch('https://api.github.com/graphql', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        query,
-        variables: { username },
-      }),
-    });
-  
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status}`);
-    }
-  
-    const result: GitHubApiResponse = await response.json();
+    );
     
-    if (!result.data?.user) {
-      throw new Error('User not found');
+    if (!response.ok) {
+      throw new Error('Failed to fetch contributions data');
     }
-  
-    return result.data.user.contributionsCollection.contributionCalendar;
+    
+    const data = await response.json();
+    return data.data.user.contributionsCollection.contributionCalendar;
+  } catch (error) {
+    console.error('Error fetching contributions:', error);
+    // Don't return mock data - let the component handle the error
+    throw error;
   }
-  
+}
+
+// export async function fetchGitHubContributions() {
+//   try {
+//     // Replace with your actual gist ID
+//     const response = await fetch(
+//       'https://gist.githubusercontent.com/AnishSarkar22/YOUR_ACTUAL_GIST_ID/raw/contributions.json',
+//       { 
+//         next: { revalidate: 3600 }, // Cache for 1 hour in Next.js
+//         headers: {
+//           'Accept': 'application/json',
+//         }
+//       }
+//     );
+    
+//     if (!response.ok) {
+//       throw new Error(`Failed to fetch contributions data: ${response.status}`);
+//     }
+    
+//     const data = await response.json();
+    
+//     // Handle the response structure
+//     if (data.data?.user?.contributionsCollection?.contributionCalendar) {
+//       return data.data.user.contributionsCollection.contributionCalendar;
+//     }
+    
+//     // If the structure is different, log it for debugging
+//     console.log('Unexpected data structure:', data);
+//     throw new Error('Invalid data structure received');
+    
+//   } catch (error) {
+//     console.error('Error fetching contributions:', error);
+//     throw error;
+//   }
+// }
