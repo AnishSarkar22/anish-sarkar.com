@@ -294,7 +294,7 @@ export async function GET(request: Request) {
 								textShadow: "0 0 10px rgba(134, 239, 172, 0.7)",
 								position: "relative",
 							}}
-						></span>
+						/>
 					</div>
 
 					{/* Advanced Title */}
