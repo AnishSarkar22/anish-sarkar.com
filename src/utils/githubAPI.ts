@@ -2,7 +2,7 @@ export async function fetchGitHubContributions() {
   try {
     // Fetch from my public gist
     const response = await fetch(
-      'https://gist.github.com/AnishSarkar22/cf0566a554aa75cbe8fad5e39930958d/raw/contributions.json',
+      'https://gist.githubusercontent.com/AnishSarkar22/cf0566a554aa75cbe8fad5e39930958d/raw/contributions.json',
       { 
         next: { revalidate: 3600 } // Cache for 1 hour in Next.js
       }
