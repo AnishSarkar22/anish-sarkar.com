@@ -929,6 +929,7 @@ export default function HomePage() {
 								</motion.div>
 							</div>
 
+							{/* CURRENTLY NOT USED AS IT CAUSES PERFORMANCE ISSUES (code section until line 1362) */}
 							{/* Ultra-cosmic hyper-enhanced online status badge */}
 							{/* <motion.div
 								className="group relative mt-3 ml-0 flex items-center gap-1 overflow-hidden rounded-full border border-zinc-700/30 bg-zinc-800/30 px-2 py-1 sm:mt-0 sm:ml-auto sm:gap-2 sm:px-3 sm:py-1.5"
