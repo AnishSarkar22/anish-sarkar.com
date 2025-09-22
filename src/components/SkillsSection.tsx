@@ -303,7 +303,7 @@ const SkillItem = memo(
 		return (
 			<motion.div
 				ref={itemRef}
-				className="group relative flex items-center justify-between overflow-hidden rounded-xl p-5 backdrop-blur-sm"
+				className="group relative flex items-center justify-between overflow-hidden rounded-xl p-5"
 				style={{
 					backgroundColor: isHovered
 						? `${skill.color}10`

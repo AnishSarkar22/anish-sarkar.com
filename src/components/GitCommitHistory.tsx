@@ -263,7 +263,7 @@ const ContributionCell = memo(
 				</motion.div>
 				<TooltipPortal show={isHovered} anchorRect={anchorRect}>
 					<motion.div
-						className="-translate-x-1/2 z-50 mb-2 whitespace-nowrap rounded border border-emerald-500/20 bg-zinc-800/90 px-1.5 py-0.5 text-sm text-white shadow-lg backdrop-blur-md"
+						className="-translate-x-1/2 z-50 mb-2 whitespace-nowrap rounded border border-emerald-500/20 bg-zinc-800/90 px-1.5 py-0.5 text-sm text-white shadow-lg"
 						initial={{ opacity: 0, y: 8, scale: 0.95 }}
 						animate={{ opacity: 1, y: 0, scale: 1 }}
 						exit={{ opacity: 0, y: 8, scale: 0.95 }}

@@ -47,7 +47,7 @@ export default function BackToTop() {
 		<AnimatePresence>
 			{isVisible && (
 				<motion.button
-					className="fixed right-6 bottom-24 z-30 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-zinc-800/50 bg-zinc-900/80 shadow-lg backdrop-blur-md"
+					className="fixed right-6 bottom-24 z-30 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-zinc-800/50 bg-zinc-900/80 shadow-lg"
 					onClick={scrollToTop}
 					onMouseEnter={() => setIsHovered(true)}
 					onMouseLeave={() => setIsHovered(false)}

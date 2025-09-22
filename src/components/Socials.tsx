@@ -254,7 +254,7 @@ export default function Socials() {
 							>
 								{/* Cosmic background glow effect */}
 								<motion.div
-									className="-z-10 absolute inset-0 rounded-lg backdrop-blur-sm"
+									className="-z-10 absolute inset-0 rounded-lgwh"
 									initial={{ opacity: 0 }}
 									animate={{
 										opacity: isHovered ? 0.15 : 0,

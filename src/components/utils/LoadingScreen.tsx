@@ -122,7 +122,7 @@ export default function LoadingScreen({
 							/>
 
 							{/* Main progress bar background */}
-							<motion.div className="absolute inset-0 overflow-hidden rounded-full border border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
+							<motion.div className="absolute inset-0 overflow-hidden rounded-full border border-zinc-800 bg-zinc-900/80">
 								{/* Progress indicator */}
 								<motion.div
 									className="h-full w-full origin-left"
