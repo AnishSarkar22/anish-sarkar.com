@@ -930,7 +930,7 @@ export default function HomePage() {
 							</div>
 
 							{/* Ultra-cosmic hyper-enhanced online status badge */}
-							<motion.div
+							{/* <motion.div
 								className="group relative mt-3 ml-0 flex items-center gap-1 overflow-hidden rounded-full border border-zinc-700/30 bg-zinc-800/30 px-2 py-1 sm:mt-0 sm:ml-auto sm:gap-2 sm:px-3 sm:py-1.5"
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
@@ -941,7 +941,7 @@ export default function HomePage() {
 									borderColor: "rgba(52, 211, 153, 0.5)",
 								}}
 							>
-								{/* Cosmic nebula background */}
+								// Cosmic nebula background 
 								<motion.div
 									className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 									style={{
@@ -951,7 +951,7 @@ export default function HomePage() {
 									}}
 								/>
 
-								{/* Cosmic energy field */}
+								// Cosmic energy field
 								<motion.div
 									className="absolute inset-0 opacity-0 group-hover:opacity-30"
 									animate={{
@@ -968,7 +968,7 @@ export default function HomePage() {
 									}}
 								/>
 
-								{/* Animated cosmic dust */}
+								// Animated cosmic dust
 								<motion.div
 									className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100"
 									transition={{ duration: 0.3 }}
@@ -1001,12 +1001,12 @@ export default function HomePage() {
 									})}
 								</motion.div>
 
-								{/* Multi-layered animated border effect */}
+								// Multi-layered animated border effect
 								<motion.div
 									className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100"
 									transition={{ duration: 0.3 }}
 								>
-									{/* Top border */}
+									// Top border
 									<motion.div
 										className="absolute top-0 left-0 h-[1px] w-full"
 										style={{
@@ -1023,7 +1023,7 @@ export default function HomePage() {
 										}}
 									/>
 
-									{/* Bottom border */}
+									// Bottom border
 									<motion.div
 										className="absolute right-0 bottom-0 h-[1px] w-full"
 										style={{
@@ -1040,7 +1040,7 @@ export default function HomePage() {
 										}}
 									/>
 
-									{/* Left border */}
+									// Left border
 									<motion.div
 										className="absolute top-0 left-0 h-full w-[1px]"
 										style={{
@@ -1058,7 +1058,7 @@ export default function HomePage() {
 										}}
 									/>
 
-									{/* Right border */}
+									// Right border
 									<motion.div
 										className="absolute right-0 bottom-0 h-full w-[1px]"
 										style={{
@@ -1076,7 +1076,7 @@ export default function HomePage() {
 										}}
 									/>
 
-									{/* Corner accents */}
+									// Corner accents
 									{[0, 1, 2, 3].map((i) => (
 										<motion.div
 											key={`corner-${i}`}
@@ -1113,7 +1113,7 @@ export default function HomePage() {
 									))}
 								</motion.div>
 
-								{/* Ultra-cosmic hyper-enhanced pulsing dot with dimensional effects */}
+								// Ultra-cosmic hyper-enhanced pulsing dot with dimensional effects
 								<motion.div
 									className="relative h-2 w-2 rounded-full sm:h-2.5 sm:w-2.5"
 									style={{
@@ -1148,7 +1148,7 @@ export default function HomePage() {
 										boxShadow: "0 0 25px rgba(52, 211, 153, 1)",
 									}}
 								>
-									{/* Dimensional core with 3D effect */}
+									// Dimensional core with 3D effect
 									<motion.div
 										className="absolute inset-[1px] z-10 rounded-full"
 										style={{
@@ -1169,7 +1169,7 @@ export default function HomePage() {
 										}}
 									/>
 
-									{/* Cosmic energy core */}
+									// Cosmic energy core
 									<motion.div
 										className="absolute inset-0 rounded-full mix-blend-overlay"
 										style={{
@@ -1186,7 +1186,7 @@ export default function HomePage() {
 										}}
 									/>
 
-									{/* Multiple dimensional pulse rings */}
+									// Multiple dimensional pulse rings
 									{[...Array(4)].map((_, i) => {
 										const uniqueKey = `pulse-ring-${i}-${Math.random().toString(36).substr(2, 9)}`;
 										return (
@@ -1218,7 +1218,7 @@ export default function HomePage() {
 										);
 									})}
 
-									{/* Cosmic particle explosion on hover */}
+									// Cosmic particle explosion on hover
 									<motion.div
 										className="pointer-events-none absolute inset-0"
 										initial={{ opacity: 0 }}
@@ -1253,7 +1253,7 @@ export default function HomePage() {
 										))}
 									</motion.div>
 
-									{/* Cosmic flare effect */}
+									// Cosmic flare effect
 									<motion.div
 										className="absolute inset-0 rounded-full bg-white opacity-0"
 										whileHover={{
@@ -1267,7 +1267,7 @@ export default function HomePage() {
 									/>
 								</motion.div>
 
-								{/* Ultra-enhanced cosmic text with dimensional effects */}
+								// Ultra-enhanced cosmic text with dimensional effect
 								<motion.span
 									className="relative font-medium text-[10px] sm:text-xs"
 									style={{
@@ -1289,7 +1289,7 @@ export default function HomePage() {
 										scale: 1.05,
 									}}
 								>
-									{/* Cosmic text background glow */}
+									// Cosmic text background glow
 									<motion.div
 										className="-z-10 absolute inset-0 rounded-lg"
 										style={{
@@ -1307,7 +1307,7 @@ export default function HomePage() {
 											x: { duration: 1.5, repeat: Number.POSITIVE_INFINITY },
 										}}
 									/>
-									{/* Cosmic text shimmer effect */}
+									// Cosmic text shimmer effect
 									<motion.div
 										className="-z-10 absolute inset-0"
 										style={{
@@ -1328,7 +1328,7 @@ export default function HomePage() {
 											},
 										}}
 									/>
-									{/* Cosmic text particles */}
+									// Cosmic text particles 
 									<motion.div
 										className="-z-10 pointer-events-none absolute inset-0"
 										initial={{ opacity: 0 }}
@@ -1358,7 +1358,7 @@ export default function HomePage() {
 									</motion.div>
 									online
 								</motion.span>
-							</motion.div>
+							</motion.div> */}
 						</div>
 					</div>
 				</motion.div>
