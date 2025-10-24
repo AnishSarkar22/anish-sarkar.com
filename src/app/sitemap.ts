@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { fetchBlogPosts } from "~/components/utils/blog";
+import { env } from "~/env";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://anish-sarkar.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	// Fetch all blog posts with metadata

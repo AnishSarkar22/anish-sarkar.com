@@ -65,31 +65,7 @@ export default function Education() {
 		[],
 	);
 
-	// Memoize title animation
-	const titleAnimation = useMemo(
-		() => ({
-			rotate: [0, 5, 0, -5, 0],
-			color: ["#86efac", "#4ade80", "#86efac"],
-			textShadow: [
-				"0 0 0px rgba(134, 239, 172, 0)",
-				"0 0 10px rgba(134, 239, 172, 0.5)",
-				"0 0 0px rgba(134, 239, 172, 0)",
-			],
-		}),
-		[],
-	);
-
-	const titleTransition = useMemo(
-		() => ({
-			duration: 2,
-			repeat: Number.POSITIVE_INFINITY,
-			repeatDelay: 5,
-			times: [0, 0.2, 0.5, 0.8, 1],
-			repeatType: "loop" as const,
-		}),
-		[],
-	);
-
+	// Memoize title animati
 	return (
 		<motion.div
 			className="relative mb-16 text-white will-change-transform"
@@ -142,54 +118,52 @@ export default function Education() {
 						},
 					};
 
-					// Pre-calculate particle effects for better performance
-					const particleEffects = useMemo(() => {
-						if (!isHovered) return null;
+					// Particle effects generated when hovered (no hooks inside loop)
+					const particleEffects = isHovered
+						? [...Array(6)].map((_, i) => {
+								const leftOffset = 50 + (Math.random() - 0.5) * 20;
+								const topOffset = 50 + (Math.random() - 0.5) * 20;
+								const xMovement = (Math.random() - 0.5) * 100;
+								const yMovement = (Math.random() - 0.5) * 60;
+								const width = Math.random() * 4 + 2;
+								const height = Math.random() * 4 + 2;
+								const duration = 1 + Math.random() * 0.5;
+								const delay = Math.random() * 0.5;
 
-						return [...Array(6)].map((_, i) => {
-							const leftOffset = 50 + (Math.random() - 0.5) * 20;
-							const topOffset = 50 + (Math.random() - 0.5) * 20;
-							const xMovement = (Math.random() - 0.5) * 100;
-							const yMovement = (Math.random() - 0.5) * 60;
-							const width = Math.random() * 4 + 2;
-							const height = Math.random() * 4 + 2;
-							const duration = 1 + Math.random() * 0.5;
-							const delay = Math.random() * 0.5;
-
-							return (
-								<motion.div
-									key={`particle-${edu.title}-${i}`}
-									className="pointer-events-none absolute z-0 rounded-full will-change-transform"
-									initial={{
-										opacity: 0,
-										scale: 0,
-										x: 0,
-										y: 0,
-									}}
-									animate={{
-										opacity: [0, 0.7, 0],
-										scale: [0, 1, 0],
-										x: [0, xMovement],
-										y: [0, yMovement],
-									}}
-									transition={{
-										duration,
-										repeat: Number.POSITIVE_INFINITY,
-										delay,
-										repeatType: "loop",
-									}}
-									style={{
-										left: `${leftOffset}%`,
-										top: `${topOffset}%`,
-										width: `${width}px`,
-										height: `${height}px`,
-										backgroundColor: edu.color,
-										filter: "blur(1px)",
-									}}
-								/>
-							);
-						});
-					}, [isHovered, edu.color, edu.title]);
+								return (
+									<motion.div
+										key={`particle-${edu.title}-${i}`}
+										className="pointer-events-none absolute z-0 rounded-full will-change-transform"
+										initial={{
+											opacity: 0,
+											scale: 0,
+											x: 0,
+											y: 0,
+										}}
+										animate={{
+											opacity: [0, 0.7, 0],
+											scale: [0, 1, 0],
+											x: [0, xMovement],
+											y: [0, yMovement],
+										}}
+										transition={{
+											duration,
+											repeat: Number.POSITIVE_INFINITY,
+											delay,
+											repeatType: "loop",
+										}}
+										style={{
+											left: `${leftOffset}%`,
+											top: `${topOffset}%`,
+											width: `${width}px`,
+											height: `${height}px`,
+											backgroundColor: edu.color,
+											filter: "blur(1px)",
+										}}
+									/>
+								);
+						  })
+						: null;
 
 					return (
 						<motion.div

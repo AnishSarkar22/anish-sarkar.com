@@ -3,6 +3,7 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
 import { useEffect } from "react";
+import { env } from "~/env";
 
 type PostHogWithLoaded = typeof posthog & { __loaded?: boolean };
 type IdleCallbackHandle = number;
@@ -15,7 +16,7 @@ type CancelIdleCallbackType = (handle: IdleCallbackHandle) => void;
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
 	// Initialize PostHog lazily (idle with timeout fallback)
 	useEffect(() => {
-		if (typeof window === "undefined" || !process.env.NEXT_PUBLIC_POSTHOG_KEY)
+		if (typeof window === "undefined" || !env.NEXT_PUBLIC_POSTHOG_KEY)
 			return;
 
 		const initPosthog = () => {
@@ -24,14 +25,14 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 			if (ph.__loaded) return;
 
 			try {
-				const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+				const posthogKey = env.NEXT_PUBLIC_POSTHOG_KEY;
 				if (!posthogKey) {
 					console.warn("PostHog key is not defined.");
 					return;
 				}
 				posthog.init(posthogKey, {
 					api_host:
-						process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com",
+						env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com",
 					person_profiles: "identified_only",
 					capture_pageview: false,
 					capture_pageleave: true,
@@ -96,7 +97,7 @@ function PostHogPageView(): null {
 					$pathname: pathname,
 					$search_params: sp || "",
 				});
-			} catch (e) {
+			} catch (_e) {
 				// fail silently
 			}
 		}

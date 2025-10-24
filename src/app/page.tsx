@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { trackEvent } from "~/utils/posthog";
+import { env } from "~/env";
 
 // Dynamically import components for server-side rendering
 const About = dynamic(() => import("~/components/About"), { ssr: true });
@@ -123,7 +124,7 @@ export default function HomePage() {
 		"@context": "https://schema.org",
 		"@type": "Person",
 		name: "Anish Sarkar",
-		url: process.env.NEXT_PUBLIC_SITE_URL,
+		url: env.NEXT_PUBLIC_SITE_URL ?? "https://anish-sarkar.com",
 		sameAs: [
 			"https://github.com/AnishSarkar22",
 			"https://linkedin.com/in/anishsarkar22",

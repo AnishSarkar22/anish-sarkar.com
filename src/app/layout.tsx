@@ -1,5 +1,5 @@
 import "~/styles/globals.css";
-import "~/styles/transition.css";
+// import "~/styles/transition.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
@@ -9,8 +9,9 @@ import BackToTop from "~/components/utils/BackToTop";
 import LoadingScreen from "~/components/utils/LoadingScreen";
 import { PostHogProvider } from "~/components/utils/PostHogProvider";
 import TransitionWrapper from "~/components/utils/TransitionWrapper";
+import { env } from "~/env";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://anish-sarkar.com";
+const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://anish-sarkar.com";
 
 const geistSans = Geist({
 	subsets: ["latin"],
@@ -76,7 +77,7 @@ export const metadata: Metadata = {
 		"max-snippet": -1,
 	},
 	verification: {
-		google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION, // for Google Search Console
+		google: env.NEXT_PUBLIC_GOOGLE_VERIFICATION, // for Google Search Console
 	},
 };
 

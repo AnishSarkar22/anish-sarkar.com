@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { env } from "~/env";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://anish-sarkar.com";
 
 export const metadata: Metadata = {
 	title: "Blog",

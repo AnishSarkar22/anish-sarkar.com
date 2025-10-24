@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 export default function BackButton() {
 	const router = useRouter();
 	const [isHovered, setIsHovered] = useState(false);
-	const [isPressed, setIsPressed] = useState(false);
+	const [_isPressed, setIsPressed] = useState(false);
 	const controls = useAnimationControls();
 	const mouseX = useMotionValue(0);
 	const mouseY = useMotionValue(0);

@@ -7,8 +7,9 @@ import { getAllBlogSlugs, getPostBySlug } from "~/components/utils/blog";
 import TransitionWrapper from "~/components/utils/TransitionWrapper";
 import BlogContent from "./BlogContent";
 import BlogPostClient from "./BlogPostClient";
+import { env } from "~/env";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://anish-sarkar.com";
 
 // Generates static parameters for all existing blog posts
 export async function generateStaticParams() {

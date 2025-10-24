@@ -6,7 +6,7 @@ import { ProjectCards } from "~/components/ProjectCards";
 import { projectList } from "~/components/Projects";
 
 export default function Projects() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [activeCategory, setActiveCategory] = useState("All");
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -241,7 +241,7 @@ export default function Projects() {
             }}
           />
 
-          {categories.map((category, index) => (
+          {categories.map((category, _index) => (
             <motion.button
               key={category}
               onClick={() => setActiveCategory(category)}

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import { env } from "~/env";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://anish-sarkar.com";
 
 export default function robots(): MetadataRoute.Robots {
 	return {

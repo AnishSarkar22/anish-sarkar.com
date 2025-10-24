@@ -1,8 +1,6 @@
 import { ImageResponse } from "next/og";
 export const runtime = "edge";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
 async function loadGoogleFont(font: string, text: string) {
 	const url = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(
 		text,
