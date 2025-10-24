@@ -216,9 +216,7 @@ export default function HomePage() {
 
 				{/* Enhanced Header with profile */}
 				<motion.div
-					className={`${
-						isMobile ? "relative" : "sticky top-4"
-					} z-50 mb-16 overflow-hidden rounded-2xl border border-zinc-800/50 bg-zinc-900/60 shadow-2xl`}
+					className={"relative z-50 mb-16 overflow-hidden rounded-2xl border border-zinc-800/50 bg-zinc-900/60 shadow-2xl"}
 					initial={{ y: -100, opacity: 0 }}
 					animate={{ y: 0, opacity: 1 }}
 					transition={{ duration: 0.3, delay: 0 }}
