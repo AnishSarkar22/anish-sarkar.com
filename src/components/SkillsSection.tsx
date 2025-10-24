@@ -8,7 +8,7 @@ import {
 	useTransform,
 } from "framer-motion";
 import Image from "next/image";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useMemo, useRef, useState } from "react";
 
 // Define interface for skill
 interface Skill {
@@ -125,13 +125,13 @@ const skills: Skill[] = [
 		color: SKILL_COLORS.springboot,
 		category: "Backend",
 	},
-	// {
-	//   id: "react",
-	//   name: "React",
-	//   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-	//   color: SKILL_COLORS.react,
-	//   category: "Frontend",
-	// },
+	{
+		id: "react",
+		name: "React",
+		logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+		color: SKILL_COLORS.react,
+		category: "Frontend",
+	},
 	{
 		id: "html",
 		name: "HTML5",

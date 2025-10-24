@@ -6,7 +6,7 @@ async function loadGoogleFont(font: string, text: string) {
 	try {
 		// Simplify text before loading fonts
 		const simplifiedText = text
-			.replace(/[^\w\s.,?!:;()\[\]{}<>'"]/g, "") // Keep only basic characters
+			.replace(/[^\w\s.,?!:;()[\]{}<>'"]/g, "") // Keep only basic characters
 			.substring(0, 100); // Length limit
 
 		const url = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(

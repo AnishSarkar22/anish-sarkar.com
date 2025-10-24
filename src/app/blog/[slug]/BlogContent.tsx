@@ -18,6 +18,14 @@ export default function BlogContent({ html }: BlogContentProps) {
 
 	useEffect(() => {
 		if (contentRef.current) {
+			// Replace dangerouslySetInnerHTML by parsing the HTML and appending nodes
+			contentRef.current.innerHTML = "";
+			const parser = new DOMParser();
+			const doc = parser.parseFromString(html, "text/html");
+			Array.from(doc.body.childNodes).forEach((node) => {
+				contentRef.current?.appendChild(node.cloneNode(true));
+			});
+
 			// Add click handlers for anchor links
 			const links = contentRef.current.querySelectorAll('a[href^="#"]');
 			for (const link of links) {
@@ -65,14 +73,12 @@ export default function BlogContent({ html }: BlogContentProps) {
 				document.dispatchEvent(event);
 			}
 		}
-	}, []);
+	}, [html]);
 
 	return (
 		<div
 			ref={contentRef}
 			className="blog-content prose prose-invert max-w-none"
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-			dangerouslySetInnerHTML={{ __html: html }}
 		/>
 	);
 }

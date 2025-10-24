@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function NotFound() {
@@ -9,7 +8,9 @@ export default function NotFound() {
 	const glitchInterval = useRef<NodeJS.Timeout | null>(null);
 	const errorTextRef = useRef<HTMLDivElement>(null);
 	const mainRef = useRef<HTMLDivElement>(null);
-	const [isHovering, setIsHovering] = useState(false);
+	const [_isHovering, setIsHovering] = useState(false);
+
+	const patternId = useRef<string>(crypto.randomUUID()).current;
 
 	// Glitch effect timing
 	useEffect(() => {
@@ -249,22 +250,22 @@ export default function NotFound() {
 						<title>Hexagon grid pattern</title>
 						<defs>
 							<pattern
-								id="hexagons"
+								id={patternId}
 								width="50"
 								height="43.4"
 								patternUnits="userSpaceOnUse"
 								patternTransform="scale(5) rotate(0)"
 							>
-								<path
-									d="M25,17.3 L25,0 L0,8.7 L0,25.9 L25,34.6 L50,25.9 L50,8.7 Z"
-									fill="none"
-									stroke="rgba(52, 211, 153, 0.5)"
-									strokeWidth="0.5"
-								/>
-							</pattern>
-						</defs>
-						<rect width="100%" height="100%" fill="url(#hexagons)" />
-					</svg>
+                                 <path
+                                     d="M25,17.3 L25,0 L0,8.7 L0,25.9 L25,34.6 L50,25.9 L50,8.7 Z"
+                                     fill="none"
+                                     stroke="rgba(52, 211, 153, 0.5)"
+                                     strokeWidth="0.5"
+                                 />
+                             </pattern>
+                         </defs>
+						<rect width="100%" height="100%" fill={`url(#${patternId})`} />
+                     </svg>
 				</div>
 
 				{/* Animated wave at bottom */}

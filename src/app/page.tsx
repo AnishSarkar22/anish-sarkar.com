@@ -36,8 +36,8 @@ interface MousePosition {
 }
 
 export default function HomePage() {
-	const [scrollY, setScrollY] = useState(0);
-	const [isLoaded, setIsLoaded] = useState(true);
+	const [_scrollY, setScrollY] = useState(0);
+	const [_isLoaded, setIsLoaded] = useState(true);
 	const [isMobile, setIsMobile] = useState(false);
 	const mousePosition = useRef<MousePosition>({ x: 0, y: 0, down: false });
 	const [hoverProfile, setHoverProfile] = useState(false);
@@ -132,14 +132,6 @@ export default function HomePage() {
 	// }),
 	// }
 
-	// Using the below as fadeInUpVariants is very resource intensive
-	const SimpleVariants = {
-		// hidden: { opacity: 0 },
-		// visible: { opacity: 1, transition: { duration: 0.3 } }
-		hidden: { opacity: 1 },
-		visible: { opacity: 1 },
-	};
-
 	const structuredData = {
 		"@context": "https://schema.org",
 		"@type": "Person",
@@ -163,13 +155,9 @@ export default function HomePage() {
 
 	return (
 		<>
-			<script
-				type="application/ld+json"
-				// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-				dangerouslySetInnerHTML={{
-					__html: JSON.stringify(structuredData),
-				}}
-			/>
+			<script type="application/ld+json">
+				{JSON.stringify(structuredData)}
+			</script>
 			<main className="relative mx-auto flex min-h-screen max-w-3xl flex-col p-8 text-white md:p-16 lg:p-24">
 				{/* Background elements */}
 				<div className="-z-10 fixed inset-0 bg-black">

@@ -10,9 +10,6 @@ export const env = createEnv({
 		NEXT_PUBLIC_GOOGLE_VERIFICATION: z.string().optional(),
 		NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
 		NEXT_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
-		NEXT_PUBLIC_SPOTIFY_CLIENT_ID: z.string().optional(),
-		NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET: z.string().optional(),
-		NEXT_PUBLIC_SPOTIFY_REFRESH_TOKEN: z.string().optional(),
 	},
 	runtimeEnv: {
 		NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
@@ -20,10 +17,5 @@ export const env = createEnv({
 			process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
 		NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
 		NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-		NEXT_PUBLIC_SPOTIFY_CLIENT_ID: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
-		NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET:
-			process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET,
-		NEXT_PUBLIC_SPOTIFY_REFRESH_TOKEN:
-			process.env.NEXT_PUBLIC_SPOTIFY_REFRESH_TOKEN,
 	},
 });

@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 // Configuration
 const GIST_URL =
 	"https://gist.githubusercontent.com/AnishSarkar22/cf0566a554aa75cbe8fad5e39930958d/raw/contributions.json";
-const MAX_AGE_HOURS = 48;
+// const MAX_AGE_HOURS = 48;
 
 interface ContributionDay {
 	date: string;

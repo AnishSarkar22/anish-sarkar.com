@@ -2,15 +2,17 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import type React from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function LoadingScreen({
 	children,
-}: { children?: React.ReactNode } = {}) {
+}: {
+	children?: React.ReactNode;
+} = {}) {
 	const [loading, setLoading] = useState(true);
 	const [progress, setProgress] = useState(0);
 	const [showContent, setShowContent] = useState(false);
-	const [showStartButton, setShowStartButton] = useState(false);
+	const [_showStartButton, setShowStartButton] = useState(false);
 	const [showParticles, setShowParticles] = useState(false);
 
 	// Optimize loading progress - reduce waiting time to 2.5s instead of 4.5s

@@ -3,8 +3,8 @@ import { Suspense } from "react";
 import BackButton from "~/components/BackButton";
 import BlogPostSkeleton from "~/components/BlogPostSkeleton";
 import BlogStyles from "~/components/BlogStyles";
-import TransitionWrapper from "~/components/utils/TransitionWrapper";
 import { getAllBlogSlugs, getPostBySlug } from "~/components/utils/blog";
+import TransitionWrapper from "~/components/utils/TransitionWrapper";
 import BlogContent from "./BlogContent";
 import BlogPostClient from "./BlogPostClient";
 

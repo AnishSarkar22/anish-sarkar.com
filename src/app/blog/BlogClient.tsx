@@ -34,7 +34,7 @@ export default function BlogClient({
 	postsPerPage,
 }: BlogClientProps) {
 	const [hoveredBlog, setHoveredBlog] = useState<string | null>(null);
-	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+	const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	const mainRef = useRef<HTMLDivElement>(null);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredBlogs, setFilteredBlogs] = useState<BlogPost[]>(blogs);
@@ -373,7 +373,7 @@ export default function BlogClient({
 						{/* Cosmic particle effects */}
 						<AnimatePresence>
 							{searchTerm &&
-								[...Array(12)].map((_, i) => {
+								[...Array(12)].map((_, _i) => {
 									const particleKey =
 										typeof crypto !== "undefined" && crypto.randomUUID
 											? crypto.randomUUID()

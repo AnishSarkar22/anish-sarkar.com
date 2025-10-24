@@ -1,6 +1,5 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import TransitionLink from "./utils/TransitionLink";
@@ -163,7 +162,7 @@ const NavBar = () => {
 							/* Collapsed state - just show menu button */
 							<motion.div
 								key="collapsed"
-								className="flex items-center justify-center p-3 "
+								className="flex items-center justify-center p-3"
 								initial={{ opacity: 0, scale: 0.8, width: 0 }}
 								animate={{ opacity: 1, scale: 1, width: "auto" }}
 								exit={{
