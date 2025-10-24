@@ -38,7 +38,7 @@ interface MousePosition {
 export default function HomePage() {
 	const [_scrollY, setScrollY] = useState(0);
 	const [_isLoaded, setIsLoaded] = useState(true);
-	const [isMobile, setIsMobile] = useState(false);
+	const [_isMobile, setIsMobile] = useState(false);
 	const mousePosition = useRef<MousePosition>({ x: 0, y: 0, down: false });
 	const [hoverProfile, setHoverProfile] = useState(false);
 	const [mounted, setMounted] = useState(false);
@@ -118,20 +118,7 @@ export default function HomePage() {
 	if (!mounted) {
 		return null;
 	}
-
-	// const fadeInUpVariants = {
-	// hidden: { opacity: 0, y: 20 },
-	// visible: (i: number) => ({
-	//   opacity: 1,
-	//   y: 0,
-	//   transition: {
-	//     delay: 0.1 * i,
-	//     duration: 0.6,
-	//     ease: "easeOut" as const,
-	//   },
-	// }),
-	// }
-
+	
 	const structuredData = {
 		"@context": "https://schema.org",
 		"@type": "Person",

@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import { type ReactNode, useEffect, useState } from "react";
-// removed: import "~/styles/transition.css";
 
 interface TransitionWrapperProps {
     children: ReactNode;
