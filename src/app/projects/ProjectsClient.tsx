@@ -108,72 +108,6 @@ export default function Projects() {
             ease: "easeInOut",
           }}
         />
-
-        {/* Ultra-enhanced animated cosmic particles */}
-        {/* {(() => {
-          // Generate particle data with unique IDs
-          const particles = Array.from({ length: 30 }, () => ({
-            id: crypto.randomUUID(),
-            width: Math.random() * 4 + 1,
-            height: Math.random() * 4 + 1,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            background: `rgba(${52 + Math.random() * 30}, ${
-              211 + Math.random() * 30
-            }, ${153 + Math.random() * 30}, ${0.2 + Math.random() * 0.3})`,
-            boxShadow: `0 0 ${Math.random() * 5 + 2}px rgba(52, 211, 153, ${
-              0.3 + Math.random() * 0.4
-            })`,
-            animateY: -Math.random() * 150 - 50,
-            animateX: (Math.random() - 0.5) * 80,
-            animateScale: 1 + Math.random() * 0.5,
-            animateRotate: Math.random() * 360,
-            duration: Math.random() * 15 + 10,
-            delay: Math.random() * 5,
-          }));
-          return particles.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="pointer-events-none absolute rounded-full"
-              style={{
-                width: particle.width,
-                height: particle.height,
-                left: particle.left,
-                top: particle.top,
-                background: particle.background,
-                filter: "blur(1px)",
-                boxShadow: particle.boxShadow,
-              }}
-              animate={{
-                opacity: [0, 0.8, 0],
-                y: [0, particle.animateY],
-                x: [0, particle.animateX],
-                scale: [0, particle.animateScale, 0],
-                rotate: [0, particle.animateRotate],
-              }}
-              transition={{
-                duration: particle.duration,
-                repeat: Number.POSITIVE_INFINITY,
-                delay: particle.delay,
-                ease: "easeInOut",
-              }}
-            />
-          ));
-        })()} */}
-
-        {/* Reactive glow effect that follows mouse */}
-
-        {/* Cosmic grid lines */}
-        {/* <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(52, 211, 153, 0.5) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(52, 211, 153, 0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: "80px 80px",
-          }}
-        /> */}
       </div>
 
       <div className="relative z-10 flex-1">
@@ -199,13 +133,6 @@ export default function Projects() {
             </span>{" "}
             <span className="relative">
               projects
-              {/* Animated underline with glow */}
-              {/* <motion.span 
-                className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1, delay: 0.5 }}
-              />  */}
             </span>
           </motion.h1>
           <motion.p
@@ -285,38 +212,6 @@ export default function Projects() {
                   transition={{ duration: 0.2 }}
                 />
               )}
-
-              {/* Cosmic particles on active button */}
-              {/* {category === activeCategory && (
-                Array.from({ length: 5 }).map(() => {
-                  const particleKey = `btn-particle-${crypto.randomUUID()}`;
-                  return (
-                    <motion.div
-                      key={particleKey}
-                      className="pointer-events-none absolute rounded-full bg-green-300/80"
-                      style={{
-                        width: Math.random() * 2 + 1,
-                        height: Math.random() * 2 + 1,
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                        filter: "blur(0.5px)",
-                      }}
-                      animate={{
-                        opacity: [0, 1, 0],
-                        y: [0, (Math.random() - 0.5) * 20],
-                        x: [0, (Math.random() - 0.5) * 20],
-                        scale: [0, 1, 0],
-                      }}
-                      transition={{
-                        duration: 1.5 + Math.random(),
-                        repeat: Number.POSITIVE_INFINITY,
-                        delay: Math.random(),
-                      }}
-                    />
-                  );
-                })
-              )} */}
-
               {/* Text with glow effect for active category */}
               <motion.span
                 animate={{

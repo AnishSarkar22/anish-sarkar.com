@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import Pagination from "~/components/Pagination";
-import TransitionLink from "~/components/utils/TransitionLink";
+// import TransitionLink from "~/components/utils/TransitionLink";
+import Link from "next/link";
 import { trackBlogSearch, trackEvent } from "~/utils/posthog";
 
 // Dynamically import mermaid to avoid SSR issues
@@ -498,7 +499,7 @@ export default function BlogClient({
 								onHoverStart={() => handleBlogHover(blog.slug, blog.title)}
 								onHoverEnd={() => setHoveredBlog(null)}
 							>
-								<TransitionLink
+								<Link
 									href={`/blog/${blog.slug}`}
 									className="block"
 									onClick={() => handleBlogClick(blog.slug, blog.title)}
@@ -673,7 +674,7 @@ export default function BlogClient({
 											</motion.div>
 										</div>
 									</motion.div>
-								</TransitionLink>
+								</Link>
 							</motion.div>
 						))}
 					</AnimatePresence>

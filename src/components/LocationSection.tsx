@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import maplibregl from "maplibre-gl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import "maplibre-gl/dist/maplibre-gl.css";
 
 export default function LocationSection() {
 	const mapContainer = useRef<HTMLDivElement>(null);
@@ -152,14 +151,27 @@ export default function LocationSection() {
     `;
 		document.head.appendChild(style);
 
-		// Set map as loaded when style loads
-		map.current.on("load", () => {
-			setMapLoaded(true);
-		});
+		// Set map as loaded when style loads and ensure canvas sizing is correct
+        const onLoad = () => {
+            setMapLoaded(true);
+            // Increased delay and multiple resize calls to ensure proper rendering
+            setTimeout(() => {
+                map.current?.resize();
+                // Second resize after a longer delay to catch any layout shifts
+                setTimeout(() => map.current?.resize(), 100);
+            }, 100);
+        };
+        map.current.on("load", onLoad);
+
+		// keep map sized when window resizes
+		const handleResize = () => map.current?.resize();
+		window.addEventListener("resize", handleResize);
 
 		// Clean up on unmount
 		return () => {
+			window.removeEventListener("resize", handleResize);
 			if (map.current) {
+				map.current.off("load", onLoad);
 				map.current.remove();
 				map.current = null;
 			}
@@ -169,6 +181,27 @@ export default function LocationSection() {
 			}
 		};
 	}, []);
+
+	// useEffect(() => {
+    //     if (!mapContainer.current || !map.current) return;
+
+    //     const observer = new IntersectionObserver(
+    //         (entries) => {
+    //             entries.forEach((entry) => {
+    //                 if (entry.isIntersecting && map.current) {
+    //                     // Resize when map becomes visible
+    //                     setTimeout(() => map.current?.resize(), 100);
+    //                 }
+    //             });
+    //         },
+    //         { threshold: 0.1 }
+    //     );
+
+    //     observer.observe(mapContainer.current);
+
+    //     return () => observer.disconnect();
+    // }, []);
+	
 
 	return (
 		<motion.div

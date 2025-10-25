@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+// import TransitionLink from "~/components/utils/TransitionLink";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
@@ -26,7 +27,7 @@ export default function Pagination({
 	const prefersReducedMotion = useReducedMotion();
 
 	// Do not show pagination if there is only 1 page
-	if (totalPages <= 1) return null;
+	// if (totalPages <= 1) return null;
 
 	// Handling when clicking on a page
 	const handlePageClick = useCallback(
@@ -164,6 +165,9 @@ export default function Pagination({
 		},
 		[],
 	);
+
+	// Do not show pagination if there is only 1 page
+	if (totalPages <= 1) return null;
 
 	return (
 		<nav

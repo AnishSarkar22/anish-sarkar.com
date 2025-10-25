@@ -19,10 +19,6 @@ interface GitHubContributionDay {
 interface GitHubWeek {
   contributionDays: GitHubContributionDay[];
 }
-interface GitHubCalendar {
-  weeks: GitHubWeek[];
-  totalContributions: number;
-}
 
 // Memoized constants to avoid recreating on each render
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -102,7 +98,6 @@ const ContributionCell = memo(
   ({
     day,
     getContributionColor,
-    getGlowIntensity,
   }: {
     day: ContributionDay;
     getContributionColor: (level: number, isHovered: boolean) => string;
@@ -147,119 +142,6 @@ const ContributionCell = memo(
             transition: { type: "spring", stiffness: 300, damping: 15 },
           }}
         >
-        {/* Particle effect on hover */}
-        {/* {isHovered && day.level > 0 && (
-        <motion.div
-          className="absolute inset-0 overflow-visible"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          {[...Array(Math.min(day.level * 3, 12))].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-[2px] h-[2px] rounded-full bg-emerald-300"
-              initial={{ 
-                x: 0, 
-                y: 0, 
-                opacity: 0,
-                scale: 0
-              }}
-              animate={{ 
-                x: Math.random() * 30 - 15,
-                y: Math.random() * 30 - 15,
-                opacity: [0, 0.8, 0],
-                scale: [0, Math.random() * 0.8 + 0.5, 0]
-              }}
-              transition={{
-                duration: 1 + Math.random(),
-                repeat: Infinity,
-                repeatType: "loop",
-                delay: Math.random() * 0.5,
-                ease: "easeOut"
-              }}
-              style={{
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)"
-              }}
-            />
-          ))}
-        </motion.div>
-      )} */}
-
-          {/* Enhanced neon glow blinking effect */}
-          {/* {isHovered && day.level > 0 && (
-        <motion.div 
-          className="absolute inset-0 rounded-sm"
-          initial={{ opacity: 0 }}
-          animate={{ 
-            opacity: [0.4, 1, 0.4], 
-            boxShadow: [
-              `0 0 ${getGlowIntensity(day.level) * 0.8}px ${getContributionColor(day.level, true)}`,
-              `0 0 ${getGlowIntensity(day.level) * 2.5}px ${getContributionColor(day.level, true)}, 0 0 ${getGlowIntensity(day.level) * 4}px rgba(52, 211, 153, 0.3)`,
-              `0 0 ${getGlowIntensity(day.level) * 0.8}px ${getContributionColor(day.level, true)}`
-            ]
-          }}
-          transition={{ 
-            repeat: Infinity, 
-            duration: 1.2,
-            ease: "easeInOut"
-          }}
-        />
-      )} */}
-
-        {/* Ripple effect */}
-        {/* {isHovered && day.level > 0 && (
-        <motion.div
-          className="absolute rounded-full -inset-1"
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ 
-            opacity: [0, 0.2, 0],
-            scale: [0.8, 2, 3],
-            borderWidth: [1, 0.5, 0]
-          }}
-          transition={{ 
-            repeat: Infinity,
-            duration: 1.5,
-            ease: "easeOut"
-          }}
-          style={{
-            borderColor: getContributionColor(day.level, true),
-            backgroundColor: 'transparent',
-            borderStyle: 'solid'
-          }}
-        />
-      )} */}
-
-          {/* Smaller tooltip with animation */}
-          {/* {isHovered && (
-          <motion.div
-            className="-translate-x-1/2 absolute bottom-full left-1/2 z-50 mb-1.5 transform whitespace-nowrap rounded border border-emerald-500/20 bg-zinc-800/90 px-1.5 py-0.5 text-[7px] text-white shadow-sm backdrop-blur-sm"
-            initial={{ opacity: 0, y: 5, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 5, scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 500, damping: 25 }}
-          >
-            <div className="flex items-center gap-1">
-              {day.level > 0 && (
-                <div
-                  className="h-1.5 w-1.5 rounded-full"
-                  style={{
-                    backgroundColor: getContributionColor(day.level, true),
-                  }}
-                />
-              )}
-              <span>{day.tooltip}</span>
-            </div>
-            <motion.div
-              className="-translate-x-1/2 absolute top-full left-1/2 transform border-[3px] border-transparent border-t-zinc-800/90"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            />
-          </motion.div>
-        )} */}
         </motion.div>
         <TooltipPortal show={isHovered} anchorRect={anchorRect}>
           <motion.div
@@ -439,8 +321,8 @@ export default function GitCommitHistory() {
         const date = new Date(firstDayOfMonth.date);
         const month = date.getMonth();
         if (month !== currentMonth) {
-          // Only add label if there's enough space from the last label
           // Each month label needs about 20px width, so we need at least 20px spacing
+          // so only add label if there is enough space from the last label
           const minSpacing = 20;
           const currentPosition = weekIndex * 12;
 
@@ -489,9 +371,6 @@ export default function GitCommitHistory() {
     return contributions;
   }, [contributions]);
 
-  // Add state for showing help modal
-  const [showHelpModal, setShowHelpModal] = useState(false);
-
   // Add click handler
   const handleHelpClick = () => {
     window.open(
@@ -521,15 +400,6 @@ export default function GitCommitHistory() {
             <span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
               commit
             </span>
-
-            {/* Animated underline with glow */}
-            {/* <motion.span 
-              className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 1, delay: 0.5 }}
-              style={{ boxShadow: '0 2px 10px rgba(134, 239, 172, 0.3)' }}
-            /> */}
 
             {/* Particle burst on hover - optimized with AnimatePresence */}
             <motion.div
@@ -593,6 +463,7 @@ export default function GitCommitHistory() {
         animate={{ opacity: isLoaded ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       >
+        <BackgroundGradient />
         {/* Header with stats - simplified */}
         <div className="relative z-10">
           <motion.div

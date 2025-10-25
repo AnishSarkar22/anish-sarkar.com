@@ -64,19 +64,6 @@ export default function BackToTop() {
 					}}
 					aria-label="Back to top"
 				>
-					{/* Background glow */}
-					{/* {!prefersReducedMotion && (
-            <motion.div 
-              className="-z-10 absolute inset-0"
-              animate={{ 
-                boxShadow: isHovered 
-                  ? "0 0 20px rgba(16, 185, 129, 0.3), inset 0 0 10px rgba(16, 185, 129, 0.2)" 
-                  : "0 0 0 rgba(0, 0, 0, 0)"
-              }}
-              transition={{ duration: 0.2 }}
-            />
-          )} */}
-
 					{/* Icon */}
 					<motion.div
 						// animate={{

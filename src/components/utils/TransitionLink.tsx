@@ -1,3 +1,5 @@
+// Currently not using TransitionLink as it has performance issues instead using next/link in pages
+
 "use client";
 import Link, { type LinkProps } from "next/link";
 import { usePathname, useRouter } from "next/navigation";

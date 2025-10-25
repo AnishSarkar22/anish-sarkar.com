@@ -1,3 +1,4 @@
+// biome-ignore assist/source/organizeImports: not necessary
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import BackButton from "~/components/BackButton";
@@ -92,7 +93,7 @@ export default async function Post({
 			<BlogStyles />
 			<script
 				type="application/ld+json"
-				// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: not necessary
 				dangerouslySetInnerHTML={{
 					__html: JSON.stringify({
 						"@context": "https://schema.org",

@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+// import TransitionLink from "~/components/utils/TransitionLink";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import TransitionWrapper from "~/components/utils/TransitionWrapper";
@@ -20,7 +21,7 @@ export default function BlogPostClient({
 	slug: string;
 }) {
 	const [readingProgress, setReadingProgress] = useState(0);
-	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+	const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	const [startTime] = useState(Date.now());
 	const [hasTrackedRead, setHasTrackedRead] = useState(false);
 
@@ -105,7 +106,7 @@ export default function BlogPostClient({
 	};
 
 	return (
-		<>
+		<TransitionWrapper>
 			{/* Initialize Mermaid */}
 			<MermaidInitializer />
 
@@ -368,6 +369,6 @@ export default function BlogPostClient({
 					</div>
 				</motion.div>
 			</footer>
-		</>
+		</TransitionWrapper>
 	);
 }

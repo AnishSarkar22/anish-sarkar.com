@@ -3,15 +3,13 @@
 import {
 	AnimatePresence,
 	motion,
-	useAnimation,
 	useMotionValue,
-	useTransform,
 } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export default function About() {
-	const [hoveredParagraph, setHoveredParagraph] = useState<number | null>(null);
-	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+	const [_hoveredParagraph, _setHoveredParagraph] = useState<number | null>(null);
+	const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	const sectionRef = useRef<HTMLDivElement>(null);
 	const mouseX = useMotionValue(0);
 	const mouseY = useMotionValue(0);
@@ -70,17 +68,17 @@ export default function About() {
 	}, [handleMouseMove]);
 
 	// Memoize gradient transforms
-	const gradientX = useTransform(mouseX, (val) => val / 2);
-	const gradientY = useTransform(mouseY, (val) => val / 2);
+	// const gradientX = useTransform(mouseX, (val) => val / 2);
+	// const gradientY = useTransform(mouseY, (val) => val / 2);
 
-	// Memoize hover handlers
-	const handleHoverStart = useCallback((index: number) => {
-		setHoveredParagraph(index);
-	}, []);
+	// // Memoize hover handlers
+	// const handleHoverStart = useCallback((index: number) => {
+	// 	setHoveredParagraph(index);
+	// }, []);
 
-	const handleHoverEnd = useCallback(() => {
-		setHoveredParagraph(null);
-	}, []);
+	// const handleHoverEnd = useCallback(() => {
+	// 	setHoveredParagraph(null);
+	// }, []);
 
 	// Memoize animation variants for better performance
 	const sectionVariants = useMemo(
