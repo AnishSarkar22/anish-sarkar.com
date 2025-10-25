@@ -8,17 +8,19 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkRehype from "remark-rehype";
 import { visit } from "unist-util-visit";
+import type { Node, Parent } from "unist";
+import type { Code, Html } from "mdast";
 
 // Custom plugin to handle Mermaid blocks for better SEO
 function remarkMermaid() {
-	return (tree: import("unist").Node) => {
+	return (tree: Node) => {
 		visit(
 			tree,
 			"code",
 			(
-				node: import("mdast").Code,
+				node: Code,
 				index: number | null,
-				parent: import("unist").Parent | null,
+				parent: Parent | null,
 			) => {
 				if (node.lang === "mermaid" && parent && typeof index === "number") {
 					const mermaidCode = node.value;
@@ -28,8 +30,8 @@ function remarkMermaid() {
 						value: `<div class="mermaid" role="img" aria-label="Mermaid diagram: ${extractDiagramTitle(
 							mermaidCode,
 						)}" data-diagram-type="${extractDiagramType(mermaidCode)}">${mermaidCode}</div>`,
-					} as unknown as import("mdast").Html;
-					parent.children.splice(index, 1, htmlNode as import("mdast").Html);
+					} as unknown as Html;
+					parent.children.splice(index, 1, htmlNode as Html);
 				}
 			},
 		);
