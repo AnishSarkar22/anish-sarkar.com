@@ -2,10 +2,10 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
-import Pagination from "~/components/Pagination";
 // import TransitionLink from "~/components/utils/TransitionLink";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import Pagination from "~/components/Pagination";
 import { trackBlogSearch, trackEvent } from "~/utils/posthog";
 
 // Dynamically import mermaid to avoid SSR issues
@@ -813,7 +813,7 @@ export default function BlogClient({
 							/>
 
 							{/* Animated particles */}
-							{[...Array(5)].map(() => {
+							{/* {[...Array(5)].map(() => {
 								const particleKey =
 									typeof crypto !== "undefined" && crypto.randomUUID
 										? crypto.randomUUID()
@@ -841,7 +841,7 @@ export default function BlogClient({
 										}}
 									/>
 								);
-							})}
+							})} */}
 
 							<span className="relative z-10 flex items-center">
 								<svg

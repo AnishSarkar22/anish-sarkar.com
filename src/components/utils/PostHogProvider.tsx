@@ -16,8 +16,7 @@ type CancelIdleCallbackType = (handle: IdleCallbackHandle) => void;
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
 	// Initialize PostHog lazily (idle with timeout fallback)
 	useEffect(() => {
-		if (typeof window === "undefined" || !env.NEXT_PUBLIC_POSTHOG_KEY)
-			return;
+		if (typeof window === "undefined" || !env.NEXT_PUBLIC_POSTHOG_KEY) return;
 
 		const initPosthog = () => {
 			// avoid re-init
@@ -31,8 +30,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 					return;
 				}
 				posthog.init(posthogKey, {
-					api_host:
-						env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com",
+					api_host: env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com",
 					person_profiles: "identified_only",
 					capture_pageview: false,
 					capture_pageleave: true,

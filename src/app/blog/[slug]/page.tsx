@@ -1,4 +1,3 @@
-// biome-ignore assist/source/organizeImports: not necessary
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import BackButton from "~/components/BackButton";
@@ -6,9 +5,9 @@ import BlogPostSkeleton from "~/components/BlogPostSkeleton";
 import BlogStyles from "~/components/BlogStyles";
 import { getAllBlogSlugs, getPostBySlug } from "~/components/utils/blog";
 import TransitionWrapper from "~/components/utils/TransitionWrapper";
+import { env } from "~/env";
 import BlogContent from "./BlogContent";
 import BlogPostClient from "./BlogPostClient";
-import { env } from "~/env";
 
 const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://anish-sarkar.com";
 
@@ -130,10 +129,10 @@ export default async function Post({
 
 						<h1 className="relative mt-6 mb-4 inline-block font-bold text-5xl text-white">
 							{post.metadata.title}
-							<div
+							{/* <div
 								className="-bottom-2 absolute left-0 h-[3px] w-full animate-pulse bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
 								style={{ animationDuration: "3s" }}
-							/>
+							/> */}
 						</h1>
 
 						<div className="mb-12 flex items-center justify-between text-sm">

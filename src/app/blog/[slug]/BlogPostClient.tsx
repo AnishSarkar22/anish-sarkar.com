@@ -121,39 +121,12 @@ export default function BlogPostClient({
 			{/* Main content */}
 			{children}
 
-			{/* add Comments Section if needed */}
-
 			{/* Beautiful Thank You Footnote as Footer */}
 			<footer className="mx-auto max-w-4xl px-6 font-mono">
 				{/* Enhanced separator with animated particles */}
 				<div className="relative my-8 flex h-24 items-center justify-center overflow-hidden">
+					{/* Keep the separator line, remove particles and extra decorations */}
 					<div className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-300/40 to-transparent" />
-
-					{/* Animated particles */}
-					<div className="absolute inset-0 flex items-center justify-center">
-						{["a", "b", "c", "d", "e", "f"].map((particleKey, i) => (
-							<motion.div
-								key={`particle-${particleKey}`}
-								className="absolute h-1 w-1 rounded-full bg-green-300/30"
-								initial={{
-									x: Math.random() * 200 - 100,
-									y: Math.random() * 60 - 30,
-									opacity: 0,
-								}}
-								animate={{
-									y: [Math.random() * 20 - 10, Math.random() * -20 - 10],
-									opacity: [0, 0.8, 0],
-									scale: [0, 1, 0.5],
-								}}
-								transition={{
-									repeat: Number.POSITIVE_INFINITY,
-									duration: 4 + Math.random() * 3,
-									delay: i * 0.5,
-									ease: "easeInOut",
-								}}
-							/>
-						))}
-					</div>
 
 					<motion.div
 						className="absolute h-[1px] w-40"
@@ -167,45 +140,6 @@ export default function BlogPostClient({
 						transition={{ duration: 1.5, ease: "easeOut" }}
 						viewport={{ once: true }}
 					/>
-
-					<motion.div
-						className="absolute flex items-center space-x-4 rounded-full px-6 py-2 backdrop-blur-sm"
-						style={{ background: "rgba(10, 10, 10, 0.3)" }}
-						initial={{ y: 20, opacity: 0 }}
-						whileInView={{ y: 0, opacity: 1 }}
-						transition={{ duration: 0.8, delay: 0.3 }}
-						viewport={{ once: true }}
-					>
-						<motion.div
-							className="h-2 w-2 rounded-full bg-green-300/40"
-							animate={{ scale: [1, 1.5, 1] }}
-							transition={{
-								duration: 2,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "easeInOut",
-							}}
-						/>
-						<motion.div
-							className="h-3 w-3 rounded-full border border-green-300/50 bg-green-300/30"
-							animate={{ scale: [1, 1.2, 1] }}
-							transition={{
-								duration: 2.5,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "easeInOut",
-								delay: 0.3,
-							}}
-						/>
-						<motion.div
-							className="h-2 w-2 rounded-full bg-green-300/40"
-							animate={{ scale: [1, 1.5, 1] }}
-							transition={{
-								duration: 2,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "easeInOut",
-								delay: 0.6,
-							}}
-						/>
-					</motion.div>
 				</div>
 
 				<motion.div
@@ -222,9 +156,9 @@ export default function BlogPostClient({
 						transition={{ delay: 0.2, duration: 1.2 }}
 						viewport={{ once: true }}
 					>
-						<span className="bg-gradient-to-r from-zinc-400 to-zinc-500 bg-clip-text text-transparent">
-							Thanks for reading
-						</span>
+						{/* <span className="bg-gradient-to-r from-zinc-400 to-zinc-500 bg-clip-text text-transparent">
+              Thanks for reading
+            </span> */}
 					</motion.div>
 
 					<motion.h3
@@ -316,9 +250,16 @@ export default function BlogPostClient({
 								viewBox="0 0 24 24"
 								aria-hidden="true"
 							>
-								<path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+								<path
+									fill="none"
+									stroke="currentColor"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="m4 4l11.733 16H20L8.267 4zm0 16l6.768-6.768m2.46-2.46L20 4"
+								/>
 							</svg>
-							Share on Twitter
+							Share on X
 						</motion.a>
 					</motion.div>
 
@@ -326,34 +267,9 @@ export default function BlogPostClient({
 					<div className="relative py-8">
 						<div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-green-300/10 to-transparent" />
 
-						<motion.div
-							className="mb-4 flex items-center justify-center gap-3"
-							initial={{ opacity: 0 }}
-							whileInView={{ opacity: 1 }}
-							transition={{ delay: 0.8, duration: 0.8 }}
-							viewport={{ once: true }}
-						>
-							{["first", "second", "third"].map((particle, i) => (
-								<motion.div
-									key={`footer-particle-${particle}`}
-									className="h-1 w-1 rounded-full bg-green-300/30"
-									animate={{
-										scale: [1, 1.5, 1],
-										opacity: [0.3, 0.6, 0.3],
-									}}
-									transition={{
-										duration: 2,
-										repeat: Number.POSITIVE_INFINITY,
-										delay: i * 0.3,
-										ease: "easeInOut",
-									}}
-								/>
-							))}
-						</motion.div>
-
 						{/* Copyright text */}
 						<motion.div
-							className="flex flex-col items-center text-xs text-zinc-500"
+							className="flex flex-col items-center text-xs text-zinc-300"
 							initial={{ opacity: 0 }}
 							whileInView={{ opacity: 0.7 }}
 							transition={{ delay: 1 }}
@@ -362,7 +278,7 @@ export default function BlogPostClient({
 							<span className="mb-1">
 								© {new Date().getFullYear()} Anish Sarkar
 							</span>
-							<span className="text-[10px] text-zinc-600/50">
+							<span className="text-[10px] text-zinc-300">
 								All rights reserved
 							</span>
 						</motion.div>

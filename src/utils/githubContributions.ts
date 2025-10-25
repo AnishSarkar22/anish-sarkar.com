@@ -16,7 +16,7 @@ export async function fetchGitHubContributions() {
 		return data.data.user.contributionsCollection.contributionCalendar;
 	} catch (error) {
 		console.error("Error fetching contributions:", error);
-		// Don't return mock data - let the component handle the error
+		// we shouldnt return mock data - let the component handle the error
 		throw error;
 	}
 }

@@ -1,14 +1,12 @@
 "use client";
 
-import {
-	AnimatePresence,
-	motion,
-	useMotionValue,
-} from "framer-motion";
+import { AnimatePresence, motion, useMotionValue } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export default function About() {
-	const [_hoveredParagraph, _setHoveredParagraph] = useState<number | null>(null);
+	const [_hoveredParagraph, _setHoveredParagraph] = useState<number | null>(
+		null,
+	);
 	const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	const sectionRef = useRef<HTMLDivElement>(null);
 	const mouseX = useMotionValue(0);

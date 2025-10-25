@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { trackEvent } from "~/utils/posthog";
 import { env } from "~/env";
+import { trackEvent } from "~/utils/posthog";
 
 // Dynamically import components for server-side rendering
 const About = dynamic(() => import("~/components/About"), { ssr: true });
@@ -119,7 +119,7 @@ export default function HomePage() {
 	if (!mounted) {
 		return null;
 	}
-	
+
 	const structuredData = {
 		"@context": "https://schema.org",
 		"@type": "Person",
@@ -204,7 +204,9 @@ export default function HomePage() {
 
 				{/* Enhanced Header with profile */}
 				<motion.div
-					className={"relative z-50 mb-16 overflow-hidden rounded-2xl border border-zinc-800/50 bg-zinc-900/60 shadow-2xl"}
+					className={
+						"relative z-50 mb-16 overflow-hidden rounded-2xl border border-zinc-800/50 bg-zinc-900/60 shadow-2xl"
+					}
 					initial={{ y: -100, opacity: 0 }}
 					animate={{ y: 0, opacity: 1 }}
 					transition={{ duration: 0.3, delay: 0 }}

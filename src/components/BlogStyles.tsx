@@ -143,15 +143,41 @@ export default function BlogStyles() {
 
       /* Horizontal rule */
       .blog-content hr {
-        margin: 3rem 0;
+        margin: 3rem auto;
+        width: 40%;
+        max-width: 360px;
         height: 1px;
         border: none;
-        background: linear-gradient(
-          90deg,
-          rgba(134, 239, 172, 0),
-          rgba(134, 239, 172, 0.5),
-          rgba(134, 239, 172, 0)
-        );
+        /* main soft green gradient + very subtle noise texture */
+        background-image:
+          linear-gradient(
+            90deg,
+            rgba(134, 239, 172, 0) 0%,
+            rgba(134, 239, 172, 0.28) 50%,
+            rgba(134, 239, 172, 0) 100%
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.02) 0px,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px,
+            transparent 3px
+          );
+        background-blend-mode: overlay;
+        opacity: 0.95;
+      }
+      /* Mobile responsiveness: make the rule narrower on small screens */
+      @media (max-width: 768px) {
+        .blog-content hr {
+          width: 50%;
+          max-width: 260px;
+        }
+      }
+      @media (max-width: 420px) {
+        .blog-content hr {
+          width: 36%;
+          max-width: 160px;
+        }
       }
 
       /* Mermaid diagrams - minimal styling that won't interfere */

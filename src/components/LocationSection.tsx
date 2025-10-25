@@ -152,16 +152,16 @@ export default function LocationSection() {
 		document.head.appendChild(style);
 
 		// Set map as loaded when style loads and ensure canvas sizing is correct
-        const onLoad = () => {
-            setMapLoaded(true);
-            // Increased delay and multiple resize calls to ensure proper rendering
-            setTimeout(() => {
-                map.current?.resize();
-                // Second resize after a longer delay to catch any layout shifts
-                setTimeout(() => map.current?.resize(), 100);
-            }, 100);
-        };
-        map.current.on("load", onLoad);
+		const onLoad = () => {
+			setMapLoaded(true);
+			// Increased delay and multiple resize calls to ensure proper rendering
+			setTimeout(() => {
+				map.current?.resize();
+				// Second resize after a longer delay to catch any layout shifts
+				setTimeout(() => map.current?.resize(), 100);
+			}, 100);
+		};
+		map.current.on("load", onLoad);
 
 		// keep map sized when window resizes
 		const handleResize = () => map.current?.resize();
@@ -183,25 +183,24 @@ export default function LocationSection() {
 	}, []);
 
 	// useEffect(() => {
-    //     if (!mapContainer.current || !map.current) return;
+	//     if (!mapContainer.current || !map.current) return;
 
-    //     const observer = new IntersectionObserver(
-    //         (entries) => {
-    //             entries.forEach((entry) => {
-    //                 if (entry.isIntersecting && map.current) {
-    //                     // Resize when map becomes visible
-    //                     setTimeout(() => map.current?.resize(), 100);
-    //                 }
-    //             });
-    //         },
-    //         { threshold: 0.1 }
-    //     );
+	//     const observer = new IntersectionObserver(
+	//         (entries) => {
+	//             entries.forEach((entry) => {
+	//                 if (entry.isIntersecting && map.current) {
+	//                     // Resize when map becomes visible
+	//                     setTimeout(() => map.current?.resize(), 100);
+	//                 }
+	//             });
+	//         },
+	//         { threshold: 0.1 }
+	//     );
 
-    //     observer.observe(mapContainer.current);
+	//     observer.observe(mapContainer.current);
 
-    //     return () => observer.disconnect();
-    // }, []);
-	
+	//     return () => observer.disconnect();
+	// }, []);
 
 	return (
 		<motion.div
