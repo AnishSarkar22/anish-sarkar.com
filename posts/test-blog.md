@@ -16,7 +16,6 @@ Here's a simple Python example that demonstrates basic server functionality:
 print("Hello, World!")
 for i in range(0, 10):
     print(f"Processing request {i + 1}")print(f"Processing request {i + 1}")print(f"Processing request {i + 1}")print(f"Processing request {i + 1}")
-
 ```
 
 Here's inline code: `print("Hello")`

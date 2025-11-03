@@ -58,11 +58,13 @@ export default function BlogStyles() {
       .blog-content pre {
         margin: 2.5rem 0;
         border-radius: 12px;
-        overflow: hidden;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: pre;
+        -webkit-overflow-scrolling: touch;
         background: rgba(0, 0, 0, 0.8);
         border: 1px solid rgba(255, 255, 255, 0.08);
       }
-
       .blog-content pre code {
         display: block;
         padding: 1.5rem;
@@ -70,6 +72,34 @@ export default function BlogStyles() {
         font-size: 0.95rem;
         line-height: 1.7;
         color: #e5e7eb;
+        white-space: pre;
+      }
+      /* Override global scrollbar hide for code blocks */
+      .blog-content pre::-webkit-scrollbar {
+        display: block;
+        height: 10px;
+      }
+      .blog-content pre::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.08);
+        border-radius: 6px;
+      }
+      /* Firefox */
+      .blog-content pre {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,0.08) transparent;
+      }
+      /* Code block wrapper for copy button */
+      .code-block-container {
+        position: relative; /* keep for absolute button */
+        overflow: visible; /* allow button to sit outside pre if needed */
+      }
+      .code-block-container .copy-btn {
+        z-index: 60;
+        touch-action: manipulation;
+      }
+      /* Ensure pre still scrolls horizontally */
+      .code-block-container pre {
+        overflow-x: auto;
       }
 
       /* Inline code */
