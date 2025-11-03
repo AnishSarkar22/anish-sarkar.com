@@ -113,25 +113,22 @@ export default function Projects() {
 			<div className="relative z-10 flex-1">
 				{/* Ultra-enhanced header with animated styling */}
 				<motion.div
-					initial={{ opacity: 0, y: -20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6 }}
+					// initial={{ opacity: 0, y: -20 }}
+					// animate={{ opacity: 1, y: 0 }}
+					// transition={{ duration: 0.6 }}
 					className="mb-16"
 				>
 					<motion.h1
-						className="relative inline-block font-bold text-5xl text-white"
-						initial={{ opacity: 0, x: -20 }}
-						animate={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.5, delay: 0.2 }}
+						className="relative mb-2 inline-block font-bold text-5xl"
 						whileHover={{ scale: 1.03 }}
-						// className="text-5xl font-bold mb-2 relative inline-block"
-						// whileHover={{ scale: 1.03 }}
-						// transition={{ type: "spring", stiffness: 400, damping: 10 }}
+						transition={{ type: "spring", stiffness: 400, damping: 10 }}
 					>
 						<span className="inline-block text-green-300 will-change-transform">
 							&gt;
 						</span>{" "}
-						<span className="relative">projects</span>
+						<span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
+							projects
+						</span>
 					</motion.h1>
 					<motion.p
 						initial={{ opacity: 0 }}
@@ -152,7 +149,7 @@ export default function Projects() {
 					className="relative mb-12 flex flex-wrap gap-3"
 				>
 					{/* Animated background glow for active category */}
-					<motion.div
+					{/* <motion.div
 						className="-z-10 absolute inset-0 rounded-full bg-green-300/5 blur-xl filter"
 						animate={{
 							x: categories.indexOf(activeCategory) * 110,
@@ -164,7 +161,7 @@ export default function Projects() {
 							opacity: { duration: 2, repeat: Number.POSITIVE_INFINITY },
 							scale: { duration: 3, repeat: Number.POSITIVE_INFINITY },
 						}}
-					/>
+					/> */}
 
 					{categories.map((category, _index) => (
 						<motion.button

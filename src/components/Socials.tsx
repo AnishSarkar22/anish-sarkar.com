@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { trackSocialClick } from "~/utils/posthog";
 
 const socials = [
@@ -10,7 +10,7 @@ const socials = [
 		title: "github",
 		username: "@AnishSarkar22",
 		link: "https://github.com/AnishSarkar22",
-		icon: (props: React.SVGProps<SVGSVGElement>) => (
+		icon: (props: React.SVGProps<SVGSVGElement> & { clipId?: string }) => (
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width={props.size || 24}
@@ -29,7 +29,7 @@ const socials = [
 						/>
 					</g>
 					<defs>
-						<clipPath id="akarIconsGithubFill0">
+						<clipPath id={props.clipId ?? "akarIconsGithubFill0"}>
 							<path fill="#fff" d="M0 0h24v24H0z" />
 						</clipPath>
 					</defs>
@@ -143,10 +143,11 @@ export default function Socials() {
 	const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 	const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	const [isVisible, setIsVisible] = useState(false);
+	const sectionId = useId();
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const element = document.getElementById("socials-section");
+			const element = document.getElementById(sectionId);
 			if (element) {
 				const rect = element.getBoundingClientRect();
 				const isInView = rect.top < window.innerHeight - 100;
@@ -158,7 +159,7 @@ export default function Socials() {
 		handleScroll(); // Check initial position
 
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
+	}, [sectionId]);
 
 	const handleMouseMove = (e: React.MouseEvent) => {
 		setMousePosition({ x: e.clientX, y: e.clientY });
@@ -170,11 +171,14 @@ export default function Socials() {
 	};
 
 	return (
-		<div
-			id="socials-section"
-			className="relative mb-16 text-white"
-			onMouseMove={handleMouseMove}
-		>
+		<section
+            // use a semantic element and unique id; tabIndex makes it focusable for accessibility
+            id={sectionId}
+            aria-label="Social links"
+            tabIndex={-1}
+            className="relative mb-16 text-white"
+            onMouseMove={handleMouseMove}
+        >
 			{/* Cosmic background effect */}
 			<motion.h1
 				className="relative inline-block font-bold text-2xl text-white"
@@ -645,6 +649,6 @@ export default function Socials() {
 					);
 				})}
 			</div>
-		</div>
+		</section>
 	);
 }

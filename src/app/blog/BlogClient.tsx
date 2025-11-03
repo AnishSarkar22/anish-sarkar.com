@@ -156,25 +156,20 @@ export default function BlogClient({
 					className="mb-16"
 				>
 					<motion.h1
-						className="relative inline-block font-bold text-5xl text-white"
-						initial={{ opacity: 0, x: -20 }}
-						animate={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.5, delay: 0.2 }}
+						// className="relative inline-block font-bold text-5xl text-white"
+						// initial={{ opacity: 0, x: -20 }}
+						// animate={{ opacity: 1, x: 0 }}
+						// transition={{ duration: 0.5, delay: 0.2 }}
+						// whileHover={{ scale: 1.03 }}
+
+						className="relative mb-2 inline-block font-bold text-5xl"
 						whileHover={{ scale: 1.03 }}
+						transition={{ type: "spring", stiffness: 400, damping: 10 }}
 					>
 						<span className="inline-block text-green-300 will-change-transform">
 							&gt;
 						</span>{" "}
-						<span className="relative">
-							blogs
-							{/* Animated underline with glow */}
-							{/* <motion.span 
-                className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1, delay: 0.5 }}
-              /> */}
-						</span>
+						<span className="relative">blogs</span>
 					</motion.h1>
 					<motion.p
 						initial={{ opacity: 0 }}

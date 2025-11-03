@@ -11,10 +11,10 @@ export default function MermaidInitializer() {
 			theme: "dark", // Changed to dark theme
 			securityLevel: "loose",
 			themeVariables: {
-				primaryColor: "#34d399",
+				primaryColor: "#ffffff", // OR use `#34d399`
 				primaryTextColor: "#ffffff", // White text
-				primaryBorderColor: "#34d399",
-				lineColor: "#34d399",
+				primaryBorderColor: "#ffffff", // OR use `#34d399`
+				lineColor: "#ffffff", // OR use `#34d399`
 				secondaryColor: "#1e293b", // Dark gray
 				tertiaryColor: "#0f172a", // Very dark
 				background: "transparent", // Transparent background
@@ -22,7 +22,7 @@ export default function MermaidInitializer() {
 				secondaryBkg: "#1e293b", // Dark secondary
 				tertiaryBkg: "#0f172a", // Dark tertiary
 				clusterBkg: "rgba(52, 211, 153, 0.1)",
-				clusterBorder: "#34d399",
+				clusterBorder: "#ffffff", // OR use `#34d399`
 				edgeLabelBackground: "rgba(15, 23, 42, 0.9)",
 			},
 			flowchart: {

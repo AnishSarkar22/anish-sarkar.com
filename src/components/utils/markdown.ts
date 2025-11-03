@@ -1,3 +1,4 @@
+import type { Code, Html } from "mdast";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -7,9 +8,8 @@ import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkRehype from "remark-rehype";
-import { visit } from "unist-util-visit";
 import type { Node, Parent } from "unist";
-import type { Code, Html } from "mdast";
+import { visit } from "unist-util-visit";
 
 // Custom plugin to handle Mermaid blocks for better SEO
 function remarkMermaid() {
@@ -17,11 +17,7 @@ function remarkMermaid() {
 		visit(
 			tree,
 			"code",
-			(
-				node: Code,
-				index: number | null,
-				parent: Parent | null,
-			) => {
+			(node: Code, index: number | null, parent: Parent | null) => {
 				if (node.lang === "mermaid" && parent && typeof index === "number") {
 					const mermaidCode = node.value;
 					// create an html node and replace the code node in the parent's children array
@@ -63,7 +59,7 @@ function extractDiagramTitle(code: string): string {
 
 const processor = remark()
 	.use(remarkGfm)
-	.use(remarkMermaid) // Add this BEFORE remarkRehype
+	.use(remarkMermaid)
 	.use(remarkMath)
 	.use(remarkRehype, { allowDangerousHtml: true })
 	.use(rehypeSlug) // Adds IDs to headings

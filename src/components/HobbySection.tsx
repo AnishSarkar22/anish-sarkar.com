@@ -415,29 +415,29 @@ export default function HobbySection() {
 	);
 
 	// Memoize title animation
-	const titleAnimation = useMemo(
-		() => ({
-			rotate: [0, 5, 0, -5, 0],
-			color: ["#86efac", "#4ade80", "#86efac"],
-			textShadow: [
-				"0 0 0px rgba(134, 239, 172, 0)",
-				"0 0 10px rgba(134, 239, 172, 0.5)",
-				"0 0 0px rgba(134, 239, 172, 0)",
-			],
-		}),
-		[],
-	);
+	// const titleAnimation = useMemo(
+	// 	() => ({
+	// 		rotate: [0, 5, 0, -5, 0],
+	// 		color: ["#86efac", "#4ade80", "#86efac"],
+	// 		textShadow: [
+	// 			"0 0 0px rgba(134, 239, 172, 0)",
+	// 			"0 0 10px rgba(134, 239, 172, 0.5)",
+	// 			"0 0 0px rgba(134, 239, 172, 0)",
+	// 		],
+	// 	}),
+	// 	[],
+	// );
 
-	const titleTransition = useMemo(
-		() => ({
-			duration: 2,
-			repeat: Number.POSITIVE_INFINITY,
-			repeatDelay: 5,
-			times: [0, 0.2, 0.5, 0.8, 1],
-			repeatType: "loop" as const,
-		}),
-		[],
-	);
+	// const titleTransition = useMemo(
+	// 	() => ({
+	// 		duration: 2,
+	// 		repeat: Number.POSITIVE_INFINITY,
+	// 		repeatDelay: 5,
+	// 		times: [0, 0.2, 0.5, 0.8, 1],
+	// 		repeatType: "loop" as const,
+	// 	}),
+	// 	[],
+	// );
 
 	return (
 		<motion.div

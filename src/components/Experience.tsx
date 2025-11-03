@@ -53,7 +53,7 @@ export default function Experience() {
 	);
 
 	// Memoize title animation
-	const titleAnimation = useMemo(
+	const _titleAnimation = useMemo(
 		() => ({
 			rotate: [0, 5, 0, -5, 0],
 			color: ["#86efac", "#4ade80", "#86efac"],
@@ -66,7 +66,7 @@ export default function Experience() {
 		[],
 	);
 
-	const titleTransition = useMemo(
+	const _titleTransition = useMemo(
 		() => ({
 			duration: 2,
 			repeat: Number.POSITIVE_INFINITY,

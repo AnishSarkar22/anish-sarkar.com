@@ -95,7 +95,7 @@ export default function LocationSection() {
 
 		// Add marker to map
 		const markerElement = createPulsingMarker();
-		const marker = new maplibregl.Marker(markerElement)
+		const _marker = new maplibregl.Marker(markerElement)
 			.setLngLat(kolkataCoords)
 			.addTo(map.current);
 
@@ -367,7 +367,7 @@ export default function LocationSection() {
 				>
 					{/* Circle indicator */}
 					<motion.div
-						className="absolute top-1.5 left-0 h-3 w-3 rounded-full bg-green-300"
+						className="absolute top-2 left-0 h-3 w-3 rounded-full bg-green-300"
 						animate={{
 							scale: [1, 1.2, 1],
 							boxShadow: [
@@ -385,7 +385,7 @@ export default function LocationSection() {
 
 					<motion.h2
 						className="font-medium text-green-300 text-xl"
-						whileHover={{ scale: 1.02 }}
+						// whileHover={{ scale: 1.02 }}
 					>
 						Kolkata, West Bengal, India
 					</motion.h2>

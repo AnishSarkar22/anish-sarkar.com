@@ -39,7 +39,7 @@ export default function PhotosClient() {
 	const [hoveredPhoto, setHoveredPhoto] = useState<string | null>(null);
 	const [isLoaded, setIsLoaded] = useState<{ [key: string]: boolean }>({});
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-	const [isChangingCategory, setIsChangingCategory] = useState(false);
+	const [_isChangingCategory, setIsChangingCategory] = useState(false);
 	const mainRef = useRef<HTMLDivElement>(null);
 
 	// Memoize image list to avoid recreating each render
@@ -132,12 +132,12 @@ export default function PhotosClient() {
 	// Prevent unwanted scroll effects
 	useEffect(() => {
 		// Save current scroll position
-		let lastScrollPosition = window.scrollY;
+		let _lastScrollPosition = window.scrollY;
 
 		const handleScroll = () => {
 			// Do not perform any action while scrolling
 			// Update only the last scroll position
-			lastScrollPosition = window.scrollY;
+			_lastScrollPosition = window.scrollY;
 		};
 
 		window.addEventListener("scroll", handleScroll, { passive: true });
