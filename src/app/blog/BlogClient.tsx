@@ -177,12 +177,11 @@ export default function BlogClient({
 						transition={{ delay: 0.7 }}
 						className="mt-3 max-w-xl text-gray-400"
 					>
-						Thoughts, ideas, and explorations on technology, programming, and
-						life.
+						insights and experiments on software, systems, and life.
 					</motion.p>
 				</motion.div>
 
-				{/* Ultra-enhanced Search bar with cosmic styling - Completely redesigned */}
+				{/* Ultra-enhanced Search bar with cosmic styling */}
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -191,7 +190,7 @@ export default function BlogClient({
 				>
 					<div className="group relative">
 						{/* Glowing background effect */}
-						<motion.div
+						{/* <motion.div
 							className="-inset-1 absolute rounded-2xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
 							animate={{
 								background: [
@@ -201,9 +200,9 @@ export default function BlogClient({
 								],
 							}}
 							transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY }}
-						/>
+						/> */}
 
-						{/* Main input field with enhanced styling */}
+						{/* Main input field */}
 						<div className="relative overflow-hidden rounded-2xl shadow-[0_0_25px_rgba(0,0,0,0.3)] backdrop-blur-lg">
 							{/* Animated border */}
 							<motion.div
@@ -211,7 +210,7 @@ export default function BlogClient({
 								initial={{ opacity: 0.5 }}
 								animate={{ opacity: 1 }}
 								style={{
-									background: "linear-gradient(90deg, #18181b, #27272a)",
+									background: "linear-gradient(90deg, #18181b, #18181b)",
 									border: "1px solid rgba(63, 63, 70, 0.5)",
 								}}
 								whileHover={{
@@ -252,7 +251,7 @@ export default function BlogClient({
 								placeholder="Search articles..."
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
-								className="relative z-10 w-full bg-transparent px-6 py-5 pr-16 pl-16 text-lg text-white backdrop-blur-xl focus:outline-none"
+								className="relative z-10 w-full bg-transparent px-6 py-5 pr-16 pl-16 text-lg text-white placeholder-zinc-500 backdrop-blur-xl focus:outline-none"
 							/>
 						</div>
 
@@ -309,107 +308,35 @@ export default function BlogClient({
 							</motion.div>
 						</motion.div>
 
-						{/* Enhanced clear button with futuristic design - Adjusted Y position */}
+						{/* Clear button */}
 						{searchTerm && (
-							<motion.button
+							<button
+								type="button"
 								onClick={() => setSearchTerm("")}
-								className="-translate-y-1/2 absolute top-[calc(50%-8px)] right-5 z-20 flex items-center justify-center text-gray-400 transition-colors duration-300 hover:text-green-300"
-								initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
-								animate={{ opacity: 1, scale: 1, rotate: 0 }}
-								exit={{ opacity: 0, scale: 0.8, rotate: 90 }}
-								whileHover={{
-									scale: 1.2,
-								}}
-								whileTap={{ scale: 0.9 }}
+								className="-translate-y-1/2 absolute top-1/2 right-4 z-20 text-gray-400 hover:text-green-300"
+								aria-label="Clear search"
 							>
-								<motion.div className="relative flex items-center justify-center">
-									{/* Pulsing background */}
-									<motion.div
-										className="absolute inset-0 rounded-full opacity-0 hover:opacity-20"
-										animate={{
-											scale: [1, 1.2, 1],
-											opacity: [0, 0.2, 0],
-										}}
-										transition={{
-											duration: 2,
-											repeat: Number.POSITIVE_INFINITY,
-										}}
-										style={{
-											background:
-												"radial-gradient(circle, rgba(52, 211, 153, 0.8), transparent 70%)",
-										}}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+								>
+									<title>Clear search</title>
+									<path
+										d="m7 7l10 10M7 17L17 7"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2.5}
 									/>
-
-									{/* Rotating X icon */}
-									<motion.div
-										whileHover={{ rotate: 90 }}
-										transition={{ type: "spring", stiffness: 300, damping: 10 }}
-										className="flex h-6 w-6 items-center justify-center"
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											className="h-5 w-5"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-										>
-											<title>Clear search</title>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={1.5}
-												d="M6 18L18 6M6 6l12 12"
-											/>
-										</svg>
-									</motion.div>
-								</motion.div>
-							</motion.button>
+								</svg>
+							</button>
 						)}
-
-						{/* Cosmic particle effects */}
-						<AnimatePresence>
-							{searchTerm &&
-								[...Array(12)].map((_, _i) => {
-									const particleKey =
-										typeof crypto !== "undefined" && crypto.randomUUID
-											? crypto.randomUUID()
-											: `search-particle-${Math.random().toString(36).substr(2, 9)}`;
-									return (
-										<motion.div
-											key={particleKey}
-											className="pointer-events-none absolute z-10 rounded-full"
-											initial={{
-												x: "50%",
-												y: "50%",
-												opacity: 0,
-												scale: 0,
-											}}
-											animate={{
-												x: `${50 + (Math.random() * 140 - 70)}%`,
-												y: `${50 + (Math.random() * 140 - 70)}%`,
-												opacity: [0, Math.random() * 0.5 + 0.3, 0],
-												scale: [0, Math.random() * 1 + 0.5, 0],
-											}}
-											exit={{ opacity: 0, scale: 0 }}
-											transition={{
-												duration: 1.5 + Math.random() * 2,
-												repeat: Number.POSITIVE_INFINITY,
-												delay: Math.random() * 0.5,
-											}}
-											style={{
-												width: `${Math.random() * 3 + 1}px`,
-												height: `${Math.random() * 3 + 1}px`,
-												background: `rgba(${52 + Math.random() * 30}, ${211 + Math.random() * 30}, ${153 + Math.random() * 30}, ${Math.random() * 0.5 + 0.5})`,
-												boxShadow: `0 0 ${Math.random() * 5 + 2}px rgba(52, 211, 153, ${Math.random() * 0.5 + 0.5})`,
-												filter: `blur(${Math.random() * 1}px)`,
-											}}
-										/>
-									);
-								})}
-						</AnimatePresence>
 					</div>
 
-					{/* Enhanced search results counter with futuristic design */}
+					{/* Search results counter */}
 					<AnimatePresence>
 						{searchTerm && (
 							<motion.div
@@ -421,31 +348,7 @@ export default function BlogClient({
 							>
 								<motion.div
 									className="flex items-center rounded-full border border-zinc-800/50 bg-zinc-900/80 px-4 py-2 shadow-lg backdrop-blur-md"
-									whileHover={{
-										scale: 1.05,
-										boxShadow: "0 0 20px rgba(52, 211, 153, 0.2)",
-										borderColor: "rgba(52, 211, 153, 0.3)",
-									}}
-									transition={{ type: "spring", stiffness: 400, damping: 10 }}
 								>
-									{/* Animated dot */}
-									<motion.div
-										className="mr-2 h-2.5 w-2.5 rounded-full bg-green-300"
-										animate={{
-											scale: [1, 1.3, 1],
-											opacity: [0.7, 1, 0.7],
-											boxShadow: [
-												"0 0 0px rgba(52, 211, 153, 0.5)",
-												"0 0 10px rgba(52, 211, 153, 0.8)",
-												"0 0 0px rgba(52, 211, 153, 0.5)",
-											],
-										}}
-										transition={{
-											duration: 2,
-											repeat: Number.POSITIVE_INFINITY,
-										}}
-									/>
-
 									{/* Result text with gradient */}
 									<div className="flex items-center">
 										<motion.span
@@ -475,7 +378,7 @@ export default function BlogClient({
 					</AnimatePresence>
 				</motion.div>
 
-				{/* Enhanced blog list with incredible hover effects */}
+				{/* Enhanced blog list with hover effects */}
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
@@ -544,38 +447,6 @@ export default function BlogClient({
 												}}
 											/>
 										)}
-
-										{/* Particle effects on hover */}
-										{hoveredBlog === blog.slug &&
-											[...Array(10)].map((_, i) => {
-												const particleKey =
-													typeof crypto !== "undefined" && crypto.randomUUID
-														? crypto.randomUUID()
-														: `particle-${blog.slug}-${i}-${Math.random().toString(36).substr(2, 9)}`;
-												return (
-													<motion.div
-														key={particleKey}
-														className="absolute h-1 w-1 rounded-full bg-green-300/40"
-														initial={{
-															x: "50%",
-															y: "50%",
-															opacity: 0,
-														}}
-														animate={{
-															x: `${50 + (Math.random() * 100 - 50)}%`,
-															y: `${50 + (Math.random() * 100 - 50)}%`,
-															opacity: [0, 0.8, 0],
-															scale: [0, 1, 0],
-														}}
-														transition={{
-															duration: 1 + Math.random() * 2,
-															repeat: Number.POSITIVE_INFINITY,
-															delay: Math.random() * 0.5,
-														}}
-													/>
-												);
-											})}
-
 										<div className="relative z-10 block">
 											<motion.h2
 												className="font-semibold text-white text-xl transition-colors duration-300 group-hover:text-green-300"
@@ -649,14 +520,6 @@ export default function BlogClient({
 													fill="none"
 													viewBox="0 0 24 24"
 													stroke="currentColor"
-													animate={{
-														x: hoveredBlog === blog.slug ? [0, 4, 0] : 0,
-													}}
-													transition={{
-														duration: 1.5,
-														repeat: Number.POSITIVE_INFINITY,
-														repeatType: "loop",
-													}}
 												>
 													<title>Arrow right</title>
 													<path
@@ -731,13 +594,12 @@ export default function BlogClient({
 				)}
 
 				{/* Enhanced footer */}
-				<motion.div
+				{/* <motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ delay: 1.2, duration: 0.5 }}
 					className="mt-20 text-center"
 				>
-					{/* Cosmic divider */}
 					<div className="relative mx-auto mb-10 h-[1px] w-full overflow-hidden">
 						<motion.div
 							className="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-600 to-transparent opacity-50"
@@ -768,7 +630,7 @@ export default function BlogClient({
 						Want to go back to the main page?
 					</p>
 
-					{/* Ultra-cosmic back to home button */}
+
 					<motion.div
 						className="group relative inline-block"
 						whileHover={{ scale: 1.05 }}
@@ -790,7 +652,7 @@ export default function BlogClient({
 								}}
 							/>
 
-							{/* Animated border */}
+
 							<motion.span
 								className="absolute inset-0 rounded-xl border border-green-300/30 opacity-0 group-hover:opacity-100"
 								animate={{
@@ -806,38 +668,6 @@ export default function BlogClient({
 									repeatType: "loop",
 								}}
 							/>
-
-							{/* Animated particles */}
-							{/* {[...Array(5)].map(() => {
-								const particleKey =
-									typeof crypto !== "undefined" && crypto.randomUUID
-										? crypto.randomUUID()
-										: Math.random().toString(36).substr(2, 9);
-								return (
-									<motion.span
-										key={particleKey}
-										className="absolute h-1 w-1 rounded-full bg-green-300/60"
-										initial={{
-											x: "50%",
-											y: "50%",
-											opacity: 0,
-										}}
-										animate={{
-											x: `${50 + (Math.random() * 100 - 50)}%`,
-											y: `${50 + (Math.random() * 100 - 50)}%`,
-											opacity: [0, 0.8, 0],
-											scale: [0, 1, 0],
-										}}
-										transition={{
-											duration: 1 + Math.random() * 2,
-											repeat: Number.POSITIVE_INFINITY,
-											repeatDelay: Math.random() * 0.5,
-											delay: Math.random() * 0.5,
-										}}
-									/>
-								);
-							})} */}
-
 							<span className="relative z-10 flex items-center">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -858,7 +688,7 @@ export default function BlogClient({
 							</span>
 						</motion.a>
 					</motion.div>
-				</motion.div>
+				</motion.div> */}
 			</div>
 		</main>
 	);
