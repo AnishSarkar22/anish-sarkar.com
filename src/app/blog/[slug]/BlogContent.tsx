@@ -44,60 +44,60 @@ export default function BlogContent({ html }: BlogContentProps) {
 
 			// Add copy button to code blocks
 			const codeBlocks = contentRef.current.querySelectorAll("pre");
-            for (const block of codeBlocks) {
-                // wrap <pre> in a div.code-block-container so CSS selectors apply
-                const wrapper = document.createElement("div");
-                wrapper.className = "code-block-container relative";
-                block.parentNode?.insertBefore(wrapper, block);
-                wrapper.appendChild(block);
+			for (const block of codeBlocks) {
+				// wrap <pre> in a div.code-block-container so CSS selectors apply
+				const wrapper = document.createElement("div");
+				wrapper.className = "code-block-container relative";
+				block.parentNode?.insertBefore(wrapper, block);
+				wrapper.appendChild(block);
 
-                const button = document.createElement("button");
-                button.type = "button";
-                button.innerHTML = COPY_ICON;
-                button.className =
-                    "copy-btn absolute top-2 right-2 px-2 py-1 bg-zinc-700 text-white rounded hover:bg-zinc-600 transition-colors";
-                button.setAttribute("aria-label", "Copy code");
+				const button = document.createElement("button");
+				button.type = "button";
+				button.innerHTML = COPY_ICON;
+				button.className =
+					"copy-btn absolute top-2 right-2 px-2 py-1 bg-zinc-700 text-white rounded hover:bg-zinc-600 transition-colors";
+				button.setAttribute("aria-label", "Copy code");
 
-                // robust copy function with clipboard fallback
-                const doCopy = async () => {
-                    const code = block.querySelector("code");
-                    if (!code) return;
-                    const text = code.textContent || "";
-                    try {
-                        await navigator.clipboard.writeText(text);
-                        button.innerHTML = CHECK_ICON;
-                    } catch {
-                        // fallback for older mobile browsers
-                        const ta = document.createElement("textarea");
-                        ta.value = text;
-                        ta.style.position = "fixed";
-                        ta.style.left = "-9999px";
-                        document.body.appendChild(ta);
-                        ta.select();
-                        try {
-                            document.execCommand("copy");
-                            button.innerHTML = CHECK_ICON;
-                        } catch {
-                            // ignore
-                        }
-                        document.body.removeChild(ta);
-                    }
-                    setTimeout(() => {
-                        button.innerHTML = COPY_ICON;
-                    }, 2000);
-                };
+				// robust copy function with clipboard fallback
+				const doCopy = async () => {
+					const code = block.querySelector("code");
+					if (!code) return;
+					const text = code.textContent || "";
+					try {
+						await navigator.clipboard.writeText(text);
+						button.innerHTML = CHECK_ICON;
+					} catch {
+						// fallback for older mobile browsers
+						const ta = document.createElement("textarea");
+						ta.value = text;
+						ta.style.position = "fixed";
+						ta.style.left = "-9999px";
+						document.body.appendChild(ta);
+						ta.select();
+						try {
+							document.execCommand("copy");
+							button.innerHTML = CHECK_ICON;
+						} catch {
+							// ignore
+						}
+						document.body.removeChild(ta);
+					}
+					setTimeout(() => {
+						button.innerHTML = COPY_ICON;
+					}, 2000);
+				};
 
-                // support both click and touchend to improve mobile reliability
-                button.addEventListener("click", doCopy);
-                button.addEventListener("touchend", (e) => {
-                    e.preventDefault();
-                    doCopy();
-                });
+				// support both click and touchend to improve mobile reliability
+				button.addEventListener("click", doCopy);
+				button.addEventListener("touchend", (e) => {
+					e.preventDefault();
+					doCopy();
+				});
 
-                // ensure wrapper doesn't clip the button
-                wrapper.style.position = "relative";
-                wrapper.appendChild(button);
-            }
+				// ensure wrapper doesn't clip the button
+				wrapper.style.position = "relative";
+				wrapper.appendChild(button);
+			}
 
 			// Trigger Mermaid re-initialization after content is loaded
 			const mermaidElements = contentRef.current.querySelectorAll(".mermaid");

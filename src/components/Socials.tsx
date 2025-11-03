@@ -172,13 +172,13 @@ export default function Socials() {
 
 	return (
 		<section
-            // use a semantic element and unique id; tabIndex makes it focusable for accessibility
-            id={sectionId}
-            aria-label="Social links"
-            tabIndex={-1}
-            className="relative mb-16 text-white"
-            onMouseMove={handleMouseMove}
-        >
+			// use a semantic element and unique id; tabIndex makes it focusable for accessibility
+			id={sectionId}
+			aria-label="Social links"
+			tabIndex={-1}
+			className="relative mb-16 text-white"
+			onMouseMove={handleMouseMove}
+		>
 			{/* Cosmic background effect */}
 			<motion.h1
 				className="relative inline-block font-bold text-2xl text-white"

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noUnknownAtRules: this is required for importing tailwind */
 @import "maplibre-gl/dist/maplibre-gl.css";
 @tailwind base;
 @tailwind components;

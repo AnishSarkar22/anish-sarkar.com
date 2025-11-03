@@ -189,7 +189,8 @@ export default function BlogPostClient({
 						transition={{ delay: 0.5 }}
 						viewport={{ once: true }}
 					>
-						Sharing helps others discover it and lets me make more content like this.
+						Sharing helps others discover it and lets me make more content like
+						this.
 					</motion.p>
 
 					<motion.div

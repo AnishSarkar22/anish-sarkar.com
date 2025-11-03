@@ -77,6 +77,66 @@ export default function Experience() {
 		[],
 	);
 
+	// Pre-generate particle effects map (here as hooks must be called unconditionally)
+	const particleEffectsMap = useMemo(() => {
+		const map: Record<string, React.ReactNode | null> = {};
+
+		experience.forEach((exp) => {
+			// Only generate particles for the currently hovered item
+			if (!hoveredItem || hoveredItem !== exp.title) {
+				map[exp.title] = null;
+				return;
+			}
+
+			map[exp.title] = [...Array(6)].map(() => {
+				const leftOffset = 50 + (Math.random() - 0.5) * 20;
+				const topOffset = 50 + (Math.random() - 0.5) * 20;
+				const xMovement = (Math.random() - 0.5) * 100;
+				const yMovement = (Math.random() - 0.5) * 60;
+				const width = Math.random() * 4 + 2;
+				const height = Math.random() * 4 + 2;
+				const duration = 1 + Math.random() * 0.5;
+				const delay = Math.random() * 0.5;
+				const uniqueKey = `particle-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`;
+
+				return (
+					<motion.div
+						key={uniqueKey}
+						className="pointer-events-none absolute z-0 rounded-full will-change-transform"
+						initial={{
+							opacity: 0,
+							scale: 0,
+							x: 0,
+							y: 0,
+						}}
+						animate={{
+							opacity: [0, 0.7, 0],
+							scale: [0, 1, 0],
+							x: [0, xMovement],
+							y: [0, yMovement],
+						}}
+						transition={{
+							duration,
+							repeat: Number.POSITIVE_INFINITY,
+							delay,
+							repeatType: "loop",
+						}}
+						style={{
+							left: `${leftOffset}%`,
+							top: `${topOffset}%`,
+							width: `${width}px`,
+							height: `${height}px`,
+							backgroundColor: exp.color,
+							filter: "blur(1px)",
+						}}
+					/>
+				);
+			});
+		});
+
+		return map;
+	}, [hoveredItem]);
+
 	return (
 		<motion.div
 			className="relative mb-16 text-white will-change-transform"
@@ -97,15 +157,6 @@ export default function Experience() {
 					<span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
 						experience
 					</span>
-
-					{/* Animated underline with glow */}
-					{/* <motion.span
-            className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
-            initial={{ width: 0 }}
-            animate={{ width: "100%" }}
-            transition={{ duration: 1, delay: 0.5 }}
-            style={{ boxShadow: '0 2px 10px rgba(134, 239, 172, 0.3)' }}
-          /> */}
 				</span>
 			</motion.h1>
 
@@ -129,55 +180,8 @@ export default function Experience() {
 						},
 					};
 
-					// Pre-calculate particle effects for better performance
-					const particleEffects = useMemo(() => {
-						if (!isHovered) return null;
-
-						return [...Array(6)].map(() => {
-							const leftOffset = 50 + (Math.random() - 0.5) * 20;
-							const topOffset = 50 + (Math.random() - 0.5) * 20;
-							const xMovement = (Math.random() - 0.5) * 100;
-							const yMovement = (Math.random() - 0.5) * 60;
-							const width = Math.random() * 4 + 2;
-							const height = Math.random() * 4 + 2;
-							const duration = 1 + Math.random() * 0.5;
-							const delay = Math.random() * 0.5;
-							const uniqueKey = `particle-${Math.random().toString(36).substr(2, 9)}-${Date.now()}`;
-
-							return (
-								<motion.div
-									key={uniqueKey}
-									className="pointer-events-none absolute z-0 rounded-full will-change-transform"
-									initial={{
-										opacity: 0,
-										scale: 0,
-										x: 0,
-										y: 0,
-									}}
-									animate={{
-										opacity: [0, 0.7, 0],
-										scale: [0, 1, 0],
-										x: [0, xMovement],
-										y: [0, yMovement],
-									}}
-									transition={{
-										duration,
-										repeat: Number.POSITIVE_INFINITY,
-										delay,
-										repeatType: "loop",
-									}}
-									style={{
-										left: `${leftOffset}%`,
-										top: `${topOffset}%`,
-										width: `${width}px`,
-										height: `${height}px`,
-										backgroundColor: exp.color,
-										filter: "blur(1px)",
-									}}
-								/>
-							);
-						});
-					}, [isHovered, exp.color]);
+					// Retrieve pre-generated particle effects for this item
+					const particleEffects = particleEffectsMap[exp.title];
 
 					return (
 						<motion.div

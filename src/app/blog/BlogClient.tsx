@@ -346,9 +346,7 @@ export default function BlogClient({
 								transition={{ duration: 0.3 }}
 								className="absolute top-full right-4 z-20 mt-4"
 							>
-								<motion.div
-									className="flex items-center rounded-full border border-zinc-800/50 bg-zinc-900/80 px-4 py-2 shadow-lg backdrop-blur-md"
-								>
+								<motion.div className="flex items-center rounded-full border border-zinc-800/50 bg-zinc-900/80 px-4 py-2 shadow-lg backdrop-blur-md">
 									{/* Result text with gradient */}
 									<div className="flex items-center">
 										<motion.span
