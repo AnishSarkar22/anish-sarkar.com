@@ -15,8 +15,11 @@ Here's a simple Python example that demonstrates basic server functionality:
 ```python
 print("Hello, World!")
 for i in range(0, 10):
-    print(f"Processing request {i + 1}")
+    print(f"Processing request {i + 1}")print(f"Processing request {i + 1}")print(f"Processing request {i + 1}")print(f"Processing request {i + 1}")
+
 ```
+
+Here's inline code: `print("Hello")`
 
 ## System Architecture Overview
 
@@ -28,7 +31,7 @@ graph TB
     User[User Dashboard]
 
     %% Core Application
-    subgraph "Loopr Backend"
+    subgraph "My app backend"
         API[SvelteKit App<br/>REST API]
         Appwrite[Appwrite BaaS<br/>Auth + Database]
     end
@@ -111,3 +114,7 @@ graph TB
 ## Link
 
 [link of something](https://anish-sarkar.com)
+
+## Image
+
+![image](/blog-images/photo1.jpg)

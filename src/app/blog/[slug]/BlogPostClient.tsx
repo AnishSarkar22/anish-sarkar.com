@@ -122,10 +122,9 @@ export default function BlogPostClient({
 			{children}
 
 			{/* Beautiful Thank You Footnote as Footer */}
-			<footer className="mx-auto max-w-4xl px-6 font-mono">
-				{/* Enhanced separator with animated particles */}
-				<div className="relative my-8 flex h-24 items-center justify-center overflow-hidden">
-					{/* Keep the separator line, remove particles and extra decorations */}
+			<footer className="mx-auto mt-20 max-w-4xl px-6 font-mono">
+				{/* Separator */}
+				{/* <div className="relative my-8 flex h-24 items-center justify-center overflow-hidden">
 					<div className="absolute h-[1px] w-full bg-gradient-to-r from-transparent via-green-300/40 to-transparent" />
 
 					<motion.div
@@ -140,7 +139,7 @@ export default function BlogPostClient({
 						transition={{ duration: 1.5, ease: "easeOut" }}
 						viewport={{ once: true }}
 					/>
-				</div>
+				</div> */}
 
 				<motion.div
 					className="relative mb-16 text-center"
@@ -169,7 +168,7 @@ export default function BlogPostClient({
 						viewport={{ once: true }}
 					>
 						<span className="relative z-10 bg-gradient-to-r from-green-300 via-emerald-300 to-teal-300 bg-clip-text text-transparent">
-							Enjoyed this article?
+							Enjoyed this?
 						</span>
 						<motion.span
 							className="-bottom-2 -translate-x-1/2 absolute left-1/2 h-1 w-36 rounded-full opacity-20"
@@ -178,7 +177,7 @@ export default function BlogPostClient({
 							}}
 							initial={{ width: 0 }}
 							whileInView={{ width: "36%" }}
-							transition={{ delay: 0.8, duration: 1 }}
+							// transition={{ delay: 0.8, duration: 1 }}
 							viewport={{ once: true }}
 						/>
 					</motion.h3>
@@ -190,9 +189,7 @@ export default function BlogPostClient({
 						transition={{ delay: 0.5 }}
 						viewport={{ once: true }}
 					>
-						If you found this content valuable, consider sharing it with others
-						who might benefit. Your support helps me create more content like
-						this.
+						Sharing helps others discover it and lets me make more content like this.
 					</motion.p>
 
 					<motion.div
@@ -232,7 +229,7 @@ export default function BlogPostClient({
 						</Link>
 
 						<motion.a
-							href="https://twitter.com/intent/tweet"
+							href="https://x.com/intent/post"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="inline-flex items-center rounded-full border border-green-300/20 bg-gradient-to-r from-green-300/10 to-emerald-500/10 px-5 py-2.5 text-green-300 text-sm backdrop-blur-sm transition-all hover:from-green-300/20 hover:to-emerald-500/20"
@@ -253,9 +250,9 @@ export default function BlogPostClient({
 								<path
 									fill="none"
 									stroke="currentColor"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="2"
 									d="m4 4l11.733 16H20L8.267 4zm0 16l6.768-6.768m2.46-2.46L20 4"
 								/>
 							</svg>
@@ -265,7 +262,7 @@ export default function BlogPostClient({
 
 					{/* Enhanced bottom design */}
 					<div className="relative py-8">
-						<div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-green-300/10 to-transparent" />
+						<div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
 						{/* Copyright text */}
 						<motion.div

@@ -18,7 +18,6 @@ export default function BlogContent({ html }: BlogContentProps) {
 
 	useEffect(() => {
 		if (contentRef.current) {
-			// Replace dangerouslySetInnerHTML by parsing the HTML and appending nodes
 			contentRef.current.innerHTML = "";
 			const parser = new DOMParser();
 			const doc = parser.parseFromString(html, "text/html");
