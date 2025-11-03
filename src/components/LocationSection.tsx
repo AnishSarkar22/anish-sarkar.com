@@ -266,68 +266,6 @@ export default function LocationSection() {
 						}}
 					>
 						<div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-
-						{/* Animated border */}
-						<motion.div
-							className="absolute top-0 left-0 h-[1px] w-full"
-							style={{
-								background:
-									"linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.7), transparent)",
-							}}
-							animate={{
-								left: ["-100%", "100%"],
-							}}
-							transition={{
-								duration: 2,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "linear",
-							}}
-						/>
-						<motion.div
-							className="absolute right-0 bottom-0 h-[1px] w-full"
-							style={{
-								background:
-									"linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.7), transparent)",
-							}}
-							animate={{
-								right: ["-100%", "100%"],
-							}}
-							transition={{
-								duration: 2,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "linear",
-							}}
-						/>
-						<motion.div
-							className="absolute top-0 left-0 h-full w-[1px]"
-							style={{
-								background:
-									"linear-gradient(180deg, transparent, rgba(52, 211, 153, 0.7), transparent)",
-							}}
-							animate={{
-								top: ["-100%", "100%"],
-							}}
-							transition={{
-								duration: 2,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "linear",
-							}}
-						/>
-						<motion.div
-							className="absolute right-0 bottom-0 h-full w-[1px]"
-							style={{
-								background:
-									"linear-gradient(180deg, transparent, rgba(52, 211, 153, 0.7), transparent)",
-							}}
-							animate={{
-								bottom: ["-100%", "100%"],
-							}}
-							transition={{
-								duration: 2,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "linear",
-							}}
-						/>
 					</motion.div>
 
 					{/* Loading indicator */}
@@ -385,7 +323,6 @@ export default function LocationSection() {
 
 					<motion.h2
 						className="font-medium text-green-300 text-xl"
-						// whileHover={{ scale: 1.02 }}
 					>
 						Kolkata, West Bengal, India
 					</motion.h2>
