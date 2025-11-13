@@ -585,13 +585,14 @@ const CategorySection = memo(
 					<span className="relative z-10 bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
 						{category}
 					</span>
-					<motion.span
+					{/* Underline with glow */}
+					{/* <motion.span
 						className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
 						initial={{ width: 0 }}
 						animate={{ width: "100%" }}
 						transition={{ duration: 0.8, delay: 0.2 }}
 						style={{ boxShadow: "0 1px 8px rgba(134, 239, 172, 0.4)" }}
-					/>
+					/> */}
 				</motion.h2>
 
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">

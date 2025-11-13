@@ -321,9 +321,7 @@ export default function LocationSection() {
 						}}
 					/>
 
-					<motion.h2
-						className="font-medium text-green-300 text-xl"
-					>
+					<motion.h2 className="font-medium text-green-300 text-xl">
 						Kolkata, West Bengal, India
 					</motion.h2>
 

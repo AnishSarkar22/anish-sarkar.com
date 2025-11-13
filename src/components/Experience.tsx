@@ -5,9 +5,17 @@ import { useCallback, useMemo, useState } from "react";
 
 const experience = [
 	{
+		title: "React Development Intern",
+		position: "AppYard Infotech",
+		date: "(Nov 2025 - present)",
+		// description:
+		// 	"Developing applications",
+		color: "#4ade80",
+	},
+	{
 		title: "Reseach Intern",
 		position: "IEEE Computational Intelligence Society",
-		date: "(Jun 2025 - present)",
+		date: "(Jun 2025 - July 2025)",
 		description:
 			"Enhanced the evolutionary computation and Genetic Algorithms for optimizing ligand-protein interaction energy and benchmarking NBGA performance with TSPLIB datasets",
 		link: "https://github.com/AnishSarkar22/nbga-optimization",
@@ -314,51 +322,53 @@ export default function Experience() {
 							</motion.p>
 
 							{/* View more link - conditionally rendered */}
-							<motion.div
-								className="mt-4 overflow-hidden will-change-transform"
-								initial={{ height: 0, opacity: 0 }}
-								animate={{
-									height: isHovered ? "auto" : 0,
-									opacity: isHovered ? 1 : 0,
-								}}
-								transition={{ duration: 0.3 }}
-							>
-								<motion.a
-									href={exp.link}
-									className="inline-flex items-center text-sm"
-									style={{ color: exp.color }}
-									whileHover={{ x: 5 }}
-									target="_blank"
-									rel="noopener noreferrer"
+							{exp.link && (
+								<motion.div
+									className="mt-4 overflow-hidden will-change-transform"
+									initial={{ height: 0, opacity: 0 }}
+									animate={{
+										height: isHovered ? "auto" : 0,
+										opacity: isHovered ? 1 : 0,
+									}}
+									transition={{ duration: 0.3 }}
 								>
-									View more
-									<motion.svg
-										className="ml-2 h-4 w-4 will-change-transform"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-										animate={{
-											x: isHovered ? [0, 4, 0] : 0,
-										}}
-										transition={{
-											x: {
-												duration: 1.5,
-												repeat: Number.POSITIVE_INFINITY,
-												repeatType: "loop",
-												ease: "easeInOut",
-											},
-										}}
+									<motion.a
+										href={exp.link}
+										className="inline-flex items-center text-sm"
+										style={{ color: exp.color }}
+										whileHover={{ x: 5 }}
+										target="_blank"
+										rel="noopener noreferrer"
 									>
-										<title>Arrow pointing right</title>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M14 5l7 7m0 0l-7 7m7-7H3"
-										/>
-									</motion.svg>
-								</motion.a>
-							</motion.div>
+										View more
+										<motion.svg
+											className="ml-2 h-4 w-4 will-change-transform"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											animate={{
+												x: isHovered ? [0, 4, 0] : 0,
+											}}
+											transition={{
+												x: {
+													duration: 1.5,
+													repeat: Number.POSITIVE_INFINITY,
+													repeatType: "loop",
+													ease: "easeInOut",
+												},
+											}}
+										>
+											<title>Arrow pointing right</title>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M14 5l7 7m0 0l-7 7m7-7H3"
+											/>
+										</motion.svg>
+									</motion.a>
+								</motion.div>
+							)}
 
 							{/* Particle effects on hover - optimized with memoization */}
 							{particleEffects}

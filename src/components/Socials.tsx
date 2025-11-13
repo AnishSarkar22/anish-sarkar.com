@@ -272,7 +272,7 @@ export default function Socials() {
 								>
 									{isHovered && (
 										<>
-											<motion.div
+											{/* <motion.div
 												className="absolute top-0 left-0 h-[1px] w-full"
 												style={{
 													background: `linear-gradient(90deg, transparent, ${social.color}, transparent)`,
@@ -285,8 +285,8 @@ export default function Socials() {
 													repeat: Number.POSITIVE_INFINITY,
 													ease: "linear",
 												}}
-											/>
-											<motion.div
+											/> */}
+											{/* <motion.div
 												className="absolute right-0 bottom-0 h-[1px] w-full"
 												style={{
 													background: `linear-gradient(90deg, transparent, ${social.color}, transparent)`,
@@ -299,8 +299,8 @@ export default function Socials() {
 													repeat: Number.POSITIVE_INFINITY,
 													ease: "linear",
 												}}
-											/>
-											<motion.div
+											/> */}
+											{/* <motion.div
 												className="absolute top-0 left-0 h-full w-[1px]"
 												style={{
 													background: `linear-gradient(0deg, transparent, ${social.color}, transparent)`,
@@ -313,8 +313,8 @@ export default function Socials() {
 													repeat: Number.POSITIVE_INFINITY,
 													ease: "linear",
 												}}
-											/>
-											<motion.div
+											/> */}
+											{/* <motion.div
 												className="absolute right-0 bottom-0 h-full w-[1px]"
 												style={{
 													background: `linear-gradient(0deg, transparent, ${social.color}, transparent)`,
@@ -327,7 +327,7 @@ export default function Socials() {
 													repeat: Number.POSITIVE_INFINITY,
 													ease: "linear",
 												}}
-											/>
+											/> */}
 										</>
 									)}
 								</motion.div>
@@ -459,7 +459,7 @@ export default function Socials() {
                         </motion.span>
                       )} */}
 
-											{/* if you dont want animation for the username, use the below */}
+											{/* if you dont want animation for the username, use below */}
 											<span
 												className="inline-block text-sm"
 												style={{
