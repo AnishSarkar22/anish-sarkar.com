@@ -294,14 +294,14 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 													transition={{ duration: 0.3 }}
 												>
 													{project.title}
-													<motion.div
+													{/* <motion.div
 														className="mt-1 h-px bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
 														initial={{ scaleX: 0 }}
 														animate={{
 															scaleX: isHovered ? 1 : 0,
 														}}
 														transition={{ duration: 0.6, ease: "easeOut" }}
-													/>
+													/> */}
 												</motion.h3>
 											</div>
 

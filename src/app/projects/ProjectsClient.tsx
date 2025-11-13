@@ -400,34 +400,6 @@ export default function Projects() {
 										/>
 									</motion.span>
 								</motion.div>
-
-								{/* Subtle floating particles */}
-								{/* {[...Array(5)].map(() => {
-                  const particleKey = `sign-particle-${crypto.randomUUID()}`;
-                  return (
-                    <motion.div
-                      key={particleKey}
-                      className="absolute rounded-full bg-green-300/60"
-                      style={{
-                        width: Math.random() * 2 + 1,
-                        height: Math.random() * 2 + 1,
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                        filter: "blur(0.5px)",
-                      }}
-                      animate={{
-                        opacity: [0, 0.6, 0],
-                        y: [0, (Math.random() - 0.5) * 15],
-                        x: [0, (Math.random() - 0.5) * 15],
-                      }}
-                      transition={{
-                        duration: 2 + Math.random() * 2,
-                        repeat: Number.POSITIVE_INFINITY,
-                        delay: Math.random() * 2,
-                      }}
-                    />
-                  );
-                })} */}
 							</motion.div>
 						</motion.div>
 
