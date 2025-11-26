@@ -62,7 +62,7 @@ export const projectList: Project[] = [
 		description:
 			"Platform that matches mentors and mentees, enabling skill-building and career growth through smart features and easy communication",
 		link: "https://github.com/AnishSarkar22/SIH-2024",
-		technologies: ["React Native", "Socket.io", "Express", "PostgreSQL", "AWS"],
+		technologies: ["React", "Socket.io", "Express", "PostgreSQL", "AWS"],
 	},
 	{
 		title: "Conway's Game of Life",

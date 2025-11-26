@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import NavBar from "~/components/NavBar";
 import NavTooltips from "~/components/NavTooltips";
 import BackToTop from "~/components/utils/BackToTop";
-import LoadingScreen from "~/components/utils/LoadingScreen";
+// import LoadingScreen from "~/components/utils/LoadingScreen";
 import { PostHogProvider } from "~/components/utils/PostHogProvider";
 import TransitionWrapper from "~/components/utils/TransitionWrapper";
 import { env } from "~/env";
@@ -89,7 +89,7 @@ export default function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable} relative overflow-x-hidden bg-black font-mono text-foreground antialiased`}
 			>
 				{/* Loading Screen */}
-				<LoadingScreen />
+				{/* <LoadingScreen /> */}
 
 				{/* NavBar wrapper */}
 				<div className="relative z-50">

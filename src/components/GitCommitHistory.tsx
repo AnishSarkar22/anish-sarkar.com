@@ -21,7 +21,6 @@ interface GitHubWeek {
 }
 
 // Memoized constants to avoid recreating on each render
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = [
 	"Jan",
 	"Feb",
@@ -52,13 +51,6 @@ const HOVER_COLORS = [
 ];
 const GLOW_INTENSITIES = [0, 2, 5, 10, 15];
 
-// Memoized components for better performance
-const WeekdayLabel = memo(({ day }: { day: string }) => (
-	<div className="h-[11px] pr-1 text-right text-[10px] text-zinc-500/70">
-		{day}
-	</div>
-));
-
 const LegendItem = memo(
 	({
 		level,
@@ -68,7 +60,7 @@ const LegendItem = memo(
 		getContributionColor: (level: number, isHovered: boolean) => string;
 	}) => (
 		<motion.div
-			className="mx-0.5 h-2 w-2 rounded-sm"
+			className="mx-0.3 h-2 w-2 rounded-sm"
 			style={{ backgroundColor: getContributionColor(level, false) }}
 			whileHover={{
 				scale: 1.3,
@@ -128,20 +120,20 @@ const ContributionCell = memo(
 
 		return (
 			<>
-				<motion.div
-					ref={ref}
-					className="group relative h-[10px] w-[10px] rounded-sm"
-					style={{
-						backgroundColor: getContributionColor(day.level, isHovered),
-					}}
-					onHoverStart={() => setIsHovered(true)}
-					onHoverEnd={() => setIsHovered(false)}
-					whileHover={{
-						scale: 1.5,
-						zIndex: 10,
-						transition: { type: "spring", stiffness: 300, damping: 15 },
-					}}
-				/>
+			<motion.div
+				ref={ref}
+				className="group relative h-[10px] w-[10px] rounded-sm border-[0.9px] border-gray-500/20"
+				style={{
+					backgroundColor: getContributionColor(day.level, isHovered),
+				}}
+				onHoverStart={() => setIsHovered(true)}
+				onHoverEnd={() => setIsHovered(false)}
+				whileHover={{
+					scale: 1.5,
+					zIndex: 10,
+					transition: { type: "spring", stiffness: 300, damping: 15 },
+				}}
+			/>
 				<TooltipPortal show={isHovered} anchorRect={anchorRect}>
 					<motion.div
 						className="-translate-x-1/2 z-50 mb-2 whitespace-nowrap rounded border border-emerald-500/20 bg-zinc-800/90 px-1.5 py-0.5 text-sm text-white shadow-lg"
@@ -310,47 +302,42 @@ export default function GitCommitHistory() {
 
 	// Memoized month labels calculation
 	const monthLabels = useMemo(() => {
-		const labels: { month: string; position: number }[] = [];
+		const labels: { month: string; weekIndex: number }[] = [];
 		let currentMonth = -1;
-		let lastPosition = -1;
-
+		let foundDecember = false;
+	
+		// First pass: collect all months that appear in the data, starting from December
 		contributions.forEach((week, weekIndex) => {
 			const firstDayOfMonth = week.find((d) => d?.date !== "");
 			if (firstDayOfMonth) {
 				const date = new Date(firstDayOfMonth.date);
 				const month = date.getMonth();
-				if (month !== currentMonth) {
-					// Each month label needs about 20px width, so we need at least 20px spacing
-					// so only add label if there is enough space from the last label
-					const minSpacing = 20;
-					const currentPosition = weekIndex * 12;
-
-					if (
-						currentPosition - lastPosition >= minSpacing ||
-						lastPosition === -1
-					) {
-						currentMonth = month;
-						labels.push({
-							month: MONTHS[month] ?? "",
-							position: currentPosition,
-						});
-						lastPosition = currentPosition;
-					}
+				
+				// Start collecting from December (month 11)
+				if (!foundDecember && month === 11) {
+					foundDecember = true;
+				}
+				
+				if (foundDecember && month !== currentMonth) {
+					currentMonth = month;
+					labels.push({
+						month: MONTHS[month] ?? "",
+						weekIndex: weekIndex,
+					});
 				}
 			}
 		});
-
-		return labels;
+	
+		// Second pass: calculate even spacing
+		const totalWidth = contributions.length * 12; // 12px per week
+		const spacing = labels.length > 1 ? totalWidth / (labels.length - 1) : 0;
+	
+		// Map to evenly spaced positions
+		return labels.map((label, index) => ({
+			month: label.month,
+			position: index === 0 ? 0 : index * spacing,
+		}));
 	}, [contributions]);
-
-	// Memoized weekday labels for rendering optimization
-	const weekdayLabels = useMemo(
-		() =>
-			WEEKDAYS.filter((_, i) => i % 2 === 0).map((day) => (
-				<WeekdayLabel key={day} day={day} />
-			)),
-		[],
-	);
 
 	// Memoized legend items for rendering optimization
 	const legendItems = useMemo(
@@ -551,12 +538,12 @@ export default function GitCommitHistory() {
 				<div className="scrollbar-thin scrollbar-thumb-zinc-700/30 scrollbar-track-transparent relative z-10 overflow-x-auto">
 					<div className="min-w-[700px]">
 						<div className="flex">
-							<div
+							{/* <div
 								className="flex flex-col justify-between pt-5 text-[10px] text-zinc-500/70"
 								style={{ height: `${7 * 10 + 6}px` }}
 							>
 								{weekdayLabels}
-							</div>
+							</div> */}
 
 							<div className="relative flex-1">
 								{/* Month labels */}
@@ -601,38 +588,6 @@ export default function GitCommitHistory() {
 							<span className="ml-1">More</span>
 						</div>
 					</div>
-				</div>
-
-				{/* Footer with minimal effects - without Activity and Overview buttons */}
-				<div className="relative z-10 mt-1 flex items-center justify-end">
-					<motion.div
-						className="flex cursor-pointer items-center text-[8px] text-zinc-500/70 transition-colors hover:text-zinc-400/80"
-						onClick={handleHelpClick}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: isLoaded ? 1 : 0 }}
-						transition={{ duration: 0.3, delay: 0.3 }}
-					>
-						<div className="mr-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-zinc-800/30">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="6"
-								height="6"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								className="text-emerald-400"
-							>
-								<title>Learn more icon</title>
-								<circle cx="12" cy="12" r="10" />
-								<path d="m12 16 4-4-4-4" />
-								<path d="M8 12h8" />
-							</svg>
-						</div>
-						<span>Learn how GitHub counts contributions</span>
-					</motion.div>
 				</div>
 			</motion.div>
 		</div>
