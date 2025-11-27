@@ -712,41 +712,6 @@ export default function HomePage() {
 											))}
 										</span>
 									</motion.span>
-
-									{/* Animated underline with glow */}
-									{/* <motion.span
-                  className="-bottom-1 absolute left-0 h-[2px]"
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  style={{
-                    background:
-                      "linear-gradient(90deg, rgba(52, 211, 153, 0) 0%, rgba(52, 211, 153, 1) 50%, rgba(52, 211, 153, 0) 100%)",
-                  }}
-                  transition={{ duration: 1, delay: 0.8 }}
-                /> */}
-
-									{/* Animated cosmic particles under text */}
-									{[...Array(3)].map((_, i) => {
-										const uniqueKey = `name-particle-${i}-${Math.random().toString(36).substr(2, 9)}`;
-										return (
-											<motion.div
-												key={uniqueKey}
-												className="absolute bottom-0 h-1 w-1 rounded-full bg-green-300"
-												style={{ left: `${20 + i * 30}%` }}
-												animate={{
-													y: [0, -10, 0],
-													opacity: [0, 0.8, 0],
-													scale: [0.5, 1.5, 0.5],
-												}}
-												transition={{
-													duration: 2,
-													repeat: Number.POSITIVE_INFINITY,
-													delay: i * 0.7,
-													repeatDelay: 3,
-												}}
-											/>
-										);
-									})}
 								</motion.h1>
 
 								{/* Username section with enhanced effects */}
@@ -1342,119 +1307,43 @@ export default function HomePage() {
 
 				{/* Main content sections */}
 				<div className="space-y-16">
-					{/* <motion.section
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true, margin: "-100px" }}
-						custom={2}
-						variants={SimpleVariants}
-					>
-						<GitCommitHistory />
-					</motion.section> */}
-
+					
+					{/* Git commit history */}
 					<section>
 						<GitCommitHistory />
 					</section>
 
 					{/* About section */}
-					{/* <motion.section
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true, margin: "-100px" }}
-						custom={1}
-						variants={SimpleVariants}
-					>
-						<About />
-					</motion.section> */}
-
 					<section>
 						<About />
 					</section>
 
-					{/* <motion.section
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true, margin: "-100px" }}
-						custom={1}
-						variants={SimpleVariants}
-					>
-						<HobbySection />
-					</motion.section> */}
-
+					{/* Hobby Section */}
 					<section>
 						<HobbySection />
 					</section>
 
 					{/* Experience section */}
-					{/* <motion.section
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true, margin: "-100px" }}
-						custom={2}
-						variants={SimpleVariants}
-					>
-						<Experience />
-					</motion.section> */}
-
 					<section>
 						<Experience />
 					</section>
 
 					{/* Education section */}
-					{/* <motion.section
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true, margin: "-100px" }}
-						custom={3}
-						variants={SimpleVariants}
-					>
+					{/* <section>
 						<Education />
-					</motion.section> */}
-
-					<section>
-						<Education />
-					</section>
+					</section> */}
 
 					{/* Skills section */}
-					{/* <motion.section
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true, margin: "-100px" }}
-						custom={1}
-						variants={SimpleVariants}
-					>
-						<SkillsSection />
-					</motion.section> */}
-
 					<section>
 						<SkillsSection />
 					</section>
 
 					{/* Socials section */}
-					{/* <motion.section
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true, margin: "-100px" }}
-						custom={4}
-						variants={SimpleVariants}
-					>
-						<Socials />
-					</motion.section> */}
-
 					<section>
 						<Socials />
 					</section>
 
-					{/* <motion.section
-						className="mb-16"
-						initial="hidden"
-						animate="visible"
-						custom={5} // Adjust this number depending on display order.
-						variants={SimpleVariants}
-					>
-						<LocationSection />
-					</motion.section> */}
-
+					{/* Location section */}
 					<section>
 						<LocationSection />
 					</section>
@@ -1474,9 +1363,6 @@ export default function HomePage() {
 						<p>
 							© {new Date().getFullYear()} Anish Sarkar. All rights reserved.
 						</p>
-						{/* <p className="mt-1">
-							Built with Next.js, Tailwind CSS, and Framer Motion.
-						</p> */}
 					</div>
 				</motion.footer>
 			</main>

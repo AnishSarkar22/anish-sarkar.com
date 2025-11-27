@@ -462,9 +462,9 @@ const NavBar = () => {
 								/>
 
 								{/* DIVIDER */}
-								<div className="flex items-center">
+								{/* <div className="flex items-center">
 									<div className="mx-5 h-6 w-px bg-zinc-600/50" />
-								</div>
+								</div> */}
 
 								{/* BLOG BUTTON */}
 								{/* <NavItem
@@ -581,12 +581,13 @@ const NavBar = () => {
                   setHoveredIcon={setHoveredIcon}
                 />
 
-                <div className="flex items-center">
+				{/* DIVIDER */}
+                {/* <div className="flex items-center">
                   <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div> */}
 
 								{/* Collapse button */}
-								<motion.button
+								{/* <motion.button
 									onClick={toggleCollapse}
 									className="group relative ml-5 flex h-10 w-10 items-center justify-center"
 									whileHover={{
@@ -602,7 +603,6 @@ const NavBar = () => {
 										scale: { type: "spring", stiffness: 500, damping: 10 },
 									}}
 								>
-									{/* Always visible background */}
 									<motion.div
 										className="absolute inset-0 rounded-full bg-zinc-800/50 transition-all duration-300 group-hover:bg-zinc-800/10"
 										animate={{
@@ -615,7 +615,7 @@ const NavBar = () => {
 										}}
 									/>
 
-									{/* Icon with animation */}
+
 									<motion.div
 										initial={{ rotate: 0 }}
 										animate={{ rotate: 0 }}
@@ -654,7 +654,7 @@ const NavBar = () => {
 										</svg>
 									</motion.div>
 
-									{/* Always visible halo effect around button */}
+
 									<motion.div
 										className="absolute inset-0 rounded-full"
 										animate={{
@@ -671,7 +671,7 @@ const NavBar = () => {
 										}}
 									/>
 
-									{/* Enhanced radial glow on hover */}
+
 									<motion.div
 										className="absolute inset-0 rounded-full opacity-30 transition-opacity duration-300 group-hover:opacity-100"
 										style={{
@@ -679,7 +679,7 @@ const NavBar = () => {
 												"radial-gradient(circle at center, rgba(134, 239, 172, 0.3) 0%, transparent 70%)",
 										}}
 									/>
-								</motion.button>
+								</motion.button> */}
 							</motion.div>
 						)}
 					</AnimatePresence>
