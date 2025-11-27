@@ -90,12 +90,12 @@ const skills: Skill[] = [
 	//   category: "Languages",
 	// },
 	{
-	  id: "node",
-	  name: "Node.js",
-	  level: 3,
-	  logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-	  color: SKILL_COLORS.node,
-	  category: "Backend"
+		id: "node",
+		name: "Node.js",
+		level: 3,
+		logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+		color: SKILL_COLORS.node,
+		category: "Backend",
 	},
 	// {
 	// 	id: "django",

@@ -1307,7 +1307,6 @@ export default function HomePage() {
 
 				{/* Main content sections */}
 				<div className="space-y-16">
-					
 					{/* Git commit history */}
 					<section>
 						<GitCommitHistory />

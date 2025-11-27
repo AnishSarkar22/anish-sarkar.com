@@ -218,7 +218,6 @@ export default function Projects() {
 
 					{/* Cosmic light rays */}
 				</motion.div>
-
 			</div>
 		</main>
 	);

@@ -582,7 +582,7 @@ const NavBar = () => {
                 />
 
 				{/* DIVIDER */}
-                {/* <div className="flex items-center">
+								{/* <div className="flex items-center">
                   <div className="mx-5 h-6 w-px bg-zinc-600/50" />
                 </div> */}
 

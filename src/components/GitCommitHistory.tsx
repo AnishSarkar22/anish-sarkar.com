@@ -120,20 +120,20 @@ const ContributionCell = memo(
 
 		return (
 			<>
-			<motion.div
-				ref={ref}
-				className="group relative h-[10px] w-[10px] rounded-sm border-[0.9px] border-gray-500/20"
-				style={{
-					backgroundColor: getContributionColor(day.level, isHovered),
-				}}
-				onHoverStart={() => setIsHovered(true)}
-				onHoverEnd={() => setIsHovered(false)}
-				whileHover={{
-					scale: 1.5,
-					zIndex: 10,
-					transition: { type: "spring", stiffness: 300, damping: 15 },
-				}}
-			/>
+				<motion.div
+					ref={ref}
+					className="group relative h-[10px] w-[10px] rounded-sm border-[0.9px] border-gray-500/20"
+					style={{
+						backgroundColor: getContributionColor(day.level, isHovered),
+					}}
+					onHoverStart={() => setIsHovered(true)}
+					onHoverEnd={() => setIsHovered(false)}
+					whileHover={{
+						scale: 1.5,
+						zIndex: 10,
+						transition: { type: "spring", stiffness: 300, damping: 15 },
+					}}
+				/>
 				<TooltipPortal show={isHovered} anchorRect={anchorRect}>
 					<motion.div
 						className="-translate-x-1/2 z-50 mb-2 whitespace-nowrap rounded border border-emerald-500/20 bg-zinc-800/90 px-1.5 py-0.5 text-sm text-white shadow-lg"
@@ -305,19 +305,19 @@ export default function GitCommitHistory() {
 		const labels: { month: string; weekIndex: number }[] = [];
 		let currentMonth = -1;
 		let foundDecember = false;
-	
+
 		// First pass: collect all months that appear in the data, starting from December
 		contributions.forEach((week, weekIndex) => {
 			const firstDayOfMonth = week.find((d) => d?.date !== "");
 			if (firstDayOfMonth) {
 				const date = new Date(firstDayOfMonth.date);
 				const month = date.getMonth();
-				
+
 				// Start collecting from December (month 11)
 				if (!foundDecember && month === 11) {
 					foundDecember = true;
 				}
-				
+
 				if (foundDecember && month !== currentMonth) {
 					currentMonth = month;
 					labels.push({
@@ -327,11 +327,11 @@ export default function GitCommitHistory() {
 				}
 			}
 		});
-	
+
 		// Second pass: calculate even spacing
 		const totalWidth = contributions.length * 12; // 12px per week
 		const spacing = labels.length > 1 ? totalWidth / (labels.length - 1) : 0;
-	
+
 		// Map to evenly spaced positions
 		return labels.map((label, index) => ({
 			month: label.month,

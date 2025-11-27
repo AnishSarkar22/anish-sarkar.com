@@ -390,7 +390,11 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 
 												{/* GitHub Button */}
 												<a
-													href={project.link.includes('github.com') ? project.link : `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, '-')}`}
+													href={
+														project.link.includes("github.com")
+															? project.link
+															: `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, "-")}`
+													}
 													target="_blank"
 													rel="noopener noreferrer"
 													onClick={(e) => {
