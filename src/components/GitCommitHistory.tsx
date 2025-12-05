@@ -483,8 +483,8 @@ export default function GitCommitHistory() {
 						<h3 className="font-medium text-green-400 text-xs">
 							{isLoaded ? (
 								<>
-									{totalContributions.toLocaleString()} contributions in the last
-									year
+									{totalContributions.toLocaleString()} contributions in the
+									last year
 								</>
 							) : (
 								<>

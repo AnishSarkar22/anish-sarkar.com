@@ -277,7 +277,9 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 													rel="noopener noreferrer"
 													onClick={(e) => {
 														e.stopPropagation();
-														const githubUrl = project.link.includes("github.com")
+														const githubUrl = project.link.includes(
+															"github.com",
+														)
 															? project.link
 															: `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, "-")}`;
 														trackProjectView(project.title, githubUrl);
