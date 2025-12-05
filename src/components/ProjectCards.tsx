@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 // import TransitionLink from "~/components/utils/TransitionLink";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { trackEvent, trackProjectView } from "~/utils/posthog";
 import { projectList } from "./Projects";
 
@@ -13,7 +13,6 @@ interface ProjectCardsProps {
 
 export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	// Filter projects based on active category
@@ -21,23 +20,6 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 		if (activeCategory === "All") return true;
 		return project.technologies.includes(activeCategory);
 	});
-
-	useEffect(() => {
-		const handleMouseMove = (e: MouseEvent) => {
-			if (containerRef.current) {
-				const rect = containerRef.current.getBoundingClientRect();
-				setMousePosition({
-					x: e.clientX - rect.left,
-					y: e.clientY - rect.top,
-				});
-			}
-		};
-
-		window.addEventListener("mousemove", handleMouseMove);
-		return () => {
-			window.removeEventListener("mousemove", handleMouseMove);
-		};
-	}, []);
 
 	// Track project card interaction (for posthog analytics)
 	interface Project {
@@ -123,23 +105,6 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 						{filteredProjects.map((project, index) => {
 							const isHovered = hoveredIndex === index;
 
-							// Safe container measurements to avoid undefined access
-							const containerWidth = containerRef.current?.offsetWidth ?? 1;
-							const containerHeight = containerRef.current?.offsetHeight ?? 1;
-							const perProjectHeight =
-								containerHeight / Math.max(filteredProjects.length, 1);
-
-							let mouseXPercent = (mousePosition.x / containerWidth) * 100;
-							let mouseYPercent = (mousePosition.y / perProjectHeight) * 100;
-
-							// clamp to reasonable range and guard against NaN/Infinity
-							mouseXPercent = Number.isFinite(mouseXPercent)
-								? Math.max(0, Math.min(mouseXPercent, 100))
-								: 0;
-							mouseYPercent = Number.isFinite(mouseYPercent)
-								? Math.max(0, Math.min(mouseYPercent, 100))
-								: 0;
-
 							return (
 								<motion.div
 									key={project.title}
@@ -156,10 +121,6 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 									}}
 									onHoverEnd={() => setHoveredIndex(null)}
 									onClick={() => handleProjectClick(project)} // for posthog analytics
-									whileHover={{
-										y: -2,
-										transition: { type: "spring", stiffness: 300, damping: 15 },
-									}}
 									layout
 								>
 									{/* Liquid gradient border effect */}
@@ -254,35 +215,86 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 										</svg>
 									</motion.div>
 
-									{/* Magnetic liquid blob effect */}
-									{isHovered && (
-										<motion.div
-											className="pointer-events-none absolute"
-											initial={{ opacity: 0 }}
-											animate={{
-												opacity: 1,
-												x: mousePosition.x - 100,
-												y: mousePosition.y - 100,
-											}}
-											transition={{
-												type: "spring",
-												damping: 20,
-												stiffness: 300,
-												mass: 0.5,
-											}}
-											style={{
-												width: 200,
-												height: 200,
-												filter: "blur(40px)",
-												background:
-													"radial-gradient(circle, rgba(134,239,172,0.15) 0%, transparent 70%)",
-												zIndex: 0,
-											}}
-										/>
-									)}
-
 									{/* Content container with minimalist design */}
 									<div className="relative z-10 bg-zinc-900/20 p-6 backdrop-blur-sm">
+										{/* Live and GitHub buttons - always visible in top right */}
+										<div className="absolute top-4 right-4 z-20 flex gap-2.5">
+											{/* Live Button */}
+											<a
+												href={project.link}
+												target="_blank"
+												rel="noopener noreferrer"
+												onClick={(e) => {
+													e.stopPropagation();
+													handleProjectClick(project);
+												}}
+												className="group/btn relative inline-flex items-center gap-2 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-3 py-2.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-green-400/60 hover:bg-zinc-800/80 hover:shadow-green-400/20 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 active:scale-95 md:px-4 md:py-2.5 md:text-sm"
+												aria-label="View live project"
+											>
+												{/* Glow effect on hover */}
+												<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover/btn:opacity-100" />
+
+												<svg
+													className="group-hover/btn:-translate-y-0.5 h-4 w-4 flex-shrink-0 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:text-green-400 md:h-[18px] md:w-[18px]"
+													fill="none"
+													stroke="currentColor"
+													viewBox="0 0 24 24"
+												>
+													<title>External link icon</title>
+													<path
+														strokeLinecap="round"
+														strokeLinejoin="round"
+														strokeWidth={2}
+														d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
+													/>
+												</svg>
+												<span className="hidden whitespace-nowrap transition-colors duration-300 group-hover/btn:text-green-400 md:inline">
+													Live
+												</span>
+											</a>
+
+											{/* GitHub Button */}
+											<a
+												href={
+													project.link.includes("github.com")
+														? project.link
+														: `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, "-")}`
+												}
+												target="_blank"
+												rel="noopener noreferrer"
+												onClick={(e) => {
+													e.stopPropagation();
+													trackEvent("project_card_click", {
+														project_title: project.title,
+														project_technologies: project.technologies,
+														project_featured: project.featured || false,
+														click_type: "github_link",
+													});
+												}}
+												className="group/btn relative inline-flex items-center gap-2 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-3 py-2.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-green-400/60 hover:bg-zinc-800/80 hover:shadow-green-400/20 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 active:scale-95 md:px-4 md:py-2.5 md:text-sm"
+												aria-label="View project on GitHub"
+											>
+												{/* Glow effect on hover */}
+												<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover/btn:opacity-100" />
+
+												<svg
+													className="h-4 w-4 flex-shrink-0 transition-transform duration-300 group-hover/btn:rotate-12 group-hover/btn:text-green-400 md:h-[18px] md:w-[18px]"
+													fill="none"
+													stroke="currentColor"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													strokeWidth="2"
+													viewBox="0 0 24 24"
+												>
+													<title>GitHub icon</title>
+													<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2c2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2a4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6c-.6.6-.6 1.2-.5 2V21" />
+												</svg>
+												<span className="hidden whitespace-nowrap transition-colors duration-300 group-hover/btn:text-green-400 md:inline">
+													GitHub
+												</span>
+											</a>
+										</div>
+
 										<Link href={project.link} className="block">
 											{/* Minimalist title with elegant underline effect */}
 											<div className="overflow-hidden">
@@ -294,238 +306,31 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 													transition={{ duration: 0.3 }}
 												>
 													{project.title}
-													{/* <motion.div
-														className="mt-1 h-px bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
-														initial={{ scaleX: 0 }}
-														animate={{
-															scaleX: isHovered ? 1 : 0,
-														}}
-														transition={{ duration: 0.6, ease: "easeOut" }}
-													/> */}
 												</motion.h3>
 											</div>
 
 											{/* Clean description with subtle animation */}
-											<motion.p
-												className="mt-3 text-gray-300/80 text-sm leading-relaxed"
-												animate={{
-													opacity: isHovered ? 1 : 0.7,
-												}}
-												transition={{ duration: 0.3 }}
-											>
+											<p className="mt-3 text-gray-300/80 text-sm leading-relaxed">
 												{project.description}
-											</motion.p>
+											</p>
 
 											{/* Minimalist technology tags */}
 											<div className="mt-4 flex flex-wrap gap-2">
-												{project.technologies.map((tech, techIndex) => (
-													<motion.span
+												{project.technologies.map((tech) => (
+													<span
 														key={tech}
-														className="rounded-full border px-2.5 py-0.5 text-xs"
-														initial={{ opacity: 0, x: -5 }}
-														animate={{
-															opacity: 1,
-															x: 0,
-															borderColor:
-																tech === activeCategory
-																	? "rgba(134, 239, 172, 0.5)"
-																	: isHovered
-																		? "rgba(134, 239, 172, 0.3)"
-																		: "rgba(39, 39, 42, 0.3)",
-															color:
-																tech === activeCategory
-																	? "#86efac"
-																	: isHovered
-																		? "rgba(134, 239, 172, 0.9)"
-																		: "#a1a1aa",
-															backgroundColor: "transparent",
-														}}
-														transition={{
-															duration: 0.3,
-															delay: isHovered ? 0.1 + techIndex * 0.03 : 0,
-														}}
+														className={`rounded-full border px-2.5 py-0.5 text-xs ${
+															tech === activeCategory
+																? "border-green-400/50 text-green-400"
+																: "border-zinc-800/30 text-zinc-400"
+														}`}
 													>
 														{tech}
-													</motion.span>
+													</span>
 												))}
 											</div>
-
-											{/* Live and GitHub buttons - appear on hover */}
-											<motion.div
-												className="mt-5 flex gap-3 overflow-hidden"
-												initial={{ height: 0, opacity: 0 }}
-												animate={{
-													height: isHovered ? "auto" : 0,
-													opacity: isHovered ? 1 : 0,
-												}}
-												transition={{ duration: 0.3 }}
-											>
-												{/* Live Button */}
-												<a
-													href={project.link}
-													target="_blank"
-													rel="noopener noreferrer"
-													onClick={(e) => {
-														e.stopPropagation();
-														handleProjectClick(project);
-													}}
-													className="inline-flex items-center gap-2 rounded-lg border border-zinc-700/50 bg-zinc-800/80 px-4 py-2 font-medium text-sm text-white transition-colors hover:border-zinc-600/50 hover:bg-zinc-700/80"
-												>
-													<svg
-														className="h-4 w-4"
-														fill="none"
-														stroke="currentColor"
-														viewBox="0 0 24 24"
-													>
-														<title>External link icon</title>
-														<path
-															strokeLinecap="round"
-															strokeLinejoin="round"
-															strokeWidth={2}
-															d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-														/>
-													</svg>
-													Live
-												</a>
-
-												{/* GitHub Button */}
-												<a
-													href={
-														project.link.includes("github.com")
-															? project.link
-															: `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, "-")}`
-													}
-													target="_blank"
-													rel="noopener noreferrer"
-													onClick={(e) => {
-														e.stopPropagation();
-														trackEvent("project_card_click", {
-															project_title: project.title,
-															project_technologies: project.technologies,
-															project_featured: project.featured || false,
-															click_type: "github_link",
-														});
-													}}
-													className="inline-flex items-center gap-2 rounded-lg border border-zinc-700/50 bg-zinc-800/80 px-4 py-2 font-medium text-sm text-white transition-colors hover:border-zinc-600/50 hover:bg-zinc-700/80"
-												>
-													<svg
-														className="h-4 w-4"
-														fill="currentColor"
-														viewBox="0 0 24 24"
-													>
-														<title>GitHub icon</title>
-														<path
-															fillRule="evenodd"
-															d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.197 22 16.425 22 12.017 22 6.484 17.522 2 12 2z"
-															clipRule="evenodd"
-														/>
-													</svg>
-													GitHub
-												</a>
-											</motion.div>
 										</Link>
 									</div>
-
-									{/* Unique magnetic particles effect */}
-									{isHovered && (
-										<AnimatePresence>
-											{[...Array(8)].map((_, i) => {
-												const size = Math.random() * 3 + 1;
-												const initialX = Math.random() * 100;
-												const initialY = Math.random() * 100;
-
-												return (
-													<motion.div
-														key={`${project.title}-magnetic-particle-${i}`}
-														className="absolute rounded-full bg-green-300/80"
-														initial={{
-															opacity: 0,
-															x: `${initialX}%`,
-															y: `${initialY}%`,
-															scale: 0,
-														}}
-														animate={{
-															opacity: [0, 0.8, 0],
-															scale: [0, 1, 0],
-															x: [
-																`${initialX}%`,
-																`${mouseXPercent}%`,
-																`${initialX}%`,
-															],
-															y: [
-																`${initialY}%`,
-																`${mouseYPercent}%`,
-																`${initialY}%`,
-															],
-														}}
-														exit={{ opacity: 0, scale: 0 }}
-														transition={{
-															duration: 2 + Math.random() * 2,
-															ease: "easeInOut",
-															repeat: Number.POSITIVE_INFINITY,
-															repeatType: "loop",
-														}}
-														style={{
-															width: `${size}px`,
-															height: `${size}px`,
-															boxShadow: "0 0 4px rgba(134,239,172,0.8)",
-														}}
-													/>
-												);
-											})}
-										</AnimatePresence>
-									)}
-
-									{/* Unique hover interaction effect - liquid splash */}
-									{isHovered && (
-										<motion.div
-											className="pointer-events-none absolute inset-0 overflow-hidden"
-											initial={{ opacity: 0 }}
-											animate={{ opacity: 1 }}
-											exit={{ opacity: 0 }}
-										>
-											<svg className="absolute inset-0 h-full w-full">
-												<title>Liquid splash effect</title>
-												<defs>
-													<radialGradient
-														id={`splash-${index}`}
-														cx="50%"
-														cy="50%"
-														r="50%"
-														fx="50%"
-														fy="50%"
-													>
-														<stop
-															offset="0%"
-															stopColor="#86efac"
-															stopOpacity="0.3"
-														/>
-														<stop
-															offset="100%"
-															stopColor="#86efac"
-															stopOpacity="0"
-														/>
-													</radialGradient>
-												</defs>
-												<motion.circle
-													cx={mousePosition.x}
-													cy={mousePosition.y}
-													r="10"
-													fill={`url(#splash-${index})`}
-													initial={{ scale: 0 }}
-													animate={{
-														scale: [0, 5],
-														opacity: [0.7, 0],
-													}}
-													transition={{
-														duration: 1,
-														repeat: Number.POSITIVE_INFINITY,
-														repeatDelay: 0.5,
-													}}
-												/>
-											</svg>
-										</motion.div>
-									)}
 								</motion.div>
 							);
 						})}

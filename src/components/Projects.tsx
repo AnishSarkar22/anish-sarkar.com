@@ -45,7 +45,7 @@ export const projectList: Project[] = [
 		technologies: ["Java", "Docker", "Nginx", "HTML", "JUnit"],
 	},
 	{
-		title: "Peer-to-Peer Video Call Web Application",
+		title: "WebRTC Video Call App",
 		description: "WebRTC peer-to-peer video call web app",
 		link: "https://github.com/AnishSarkar22/WebRTC-Video-Call",
 		technologies: [

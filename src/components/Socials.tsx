@@ -44,9 +44,15 @@ const socials = [
 				{...props}
 			>
 				<title>LinkedIn</title>
-				<g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-					<path d="M8 11v5m0-8v.01M12 16v-5m4 5v-3a2 2 0 1 0-4 0"/>
-					<path d="M3 7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/>
+				<g
+					fill="none"
+					stroke="currentColor"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth="2"
+				>
+					<path d="M8 11v5m0-8v.01M12 16v-5m4 5v-3a2 2 0 1 0-4 0" />
+					<path d="M3 7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z" />
 				</g>
 			</svg>
 		),
@@ -136,9 +142,15 @@ const socials = [
 				{...props}
 			>
 				<title>Instagram</title>
-				<g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-					<path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/>
-					<path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0m7.5-4.5v.01"/>
+				<g
+					fill="none"
+					stroke="currentColor"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth="2"
+				>
+					<path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z" />
+					<path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0m7.5-4.5v.01" />
 				</g>
 			</svg>
 		),
@@ -157,9 +169,15 @@ const socials = [
 				{...props}
 			>
 				<title>Steam</title>
-				<g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-					<path d="M16.5 5a4.5 4.5 0 1 1-.653 8.953L11.5 16.962V17a3 3 0 0 1-2.824 3H8.5a3 3 0 0 1-2.94-2.402L3 16.5V13l3.51 1.755a2.99 2.99 0 0 1 2.834-.635l2.727-3.818A4.5 4.5 0 0 1 16.5 5"/>
-					<circle cx="16.5" cy="9.5" r="1" fill="currentColor"/>
+				<g
+					fill="none"
+					stroke="currentColor"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth="2"
+				>
+					<path d="M16.5 5a4.5 4.5 0 1 1-.653 8.953L11.5 16.962V17a3 3 0 0 1-2.824 3H8.5a3 3 0 0 1-2.94-2.402L3 16.5V13l3.51 1.755a2.99 2.99 0 0 1 2.834-.635l2.727-3.818A4.5 4.5 0 0 1 16.5 5" />
+					<circle cx="16.5" cy="9.5" r="1" fill="currentColor" />
 				</g>
 			</svg>
 		),
@@ -256,7 +274,9 @@ export default function Socials() {
 								href={value.url}
 								target="_blank"
 								rel="noopener noreferrer"
-								onClick={() => handleSocialClick(value.name.toLowerCase(), value.url)}
+								onClick={() =>
+									handleSocialClick(value.name.toLowerCase(), value.url)
+								}
 								className="group flex items-center border-zinc-200 border-b dark:border-b-zinc-800"
 							>
 								<value.icon
