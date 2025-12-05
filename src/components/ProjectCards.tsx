@@ -215,89 +215,12 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 
 									{/* Content container with minimalist design */}
 									<div className="relative z-10 bg-zinc-900/20 p-6 backdrop-blur-sm">
-										{/* Live and GitHub buttons - always visible in top right */}
-										<div className="absolute top-4 right-4 z-20 flex gap-2.5">
-											{/* Live Button */}
-											<a
-												href={project.link}
-												target="_blank"
-												rel="noopener noreferrer"
-												onClick={(e) => {
-													e.stopPropagation();
-													handleProjectClick(project);
-												}}
-												className="group/btn relative inline-flex items-center gap-2 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-3 py-2.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-green-400/60 hover:bg-zinc-800/80 hover:shadow-green-400/20 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 active:scale-95 md:px-4 md:py-2.5 md:text-sm"
-												aria-label="View live project"
-											>
-												{/* Glow effect on hover */}
-												<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover/btn:opacity-100" />
-
-												<svg
-													className="group-hover/btn:-translate-y-0.5 h-4 w-4 flex-shrink-0 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:text-green-400 md:h-[18px] md:w-[18px]"
-													fill="none"
-													stroke="currentColor"
-													viewBox="0 0 24 24"
-												>
-													<title>External link icon</title>
-													<path
-														strokeLinecap="round"
-														strokeLinejoin="round"
-														strokeWidth={2}
-														d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
-													/>
-												</svg>
-												<span className="hidden whitespace-nowrap transition-colors duration-300 group-hover/btn:text-green-400 md:inline">
-													Live
-												</span>
-											</a>
-
-											{/* GitHub Button */}
-											<a
-												href={
-													project.link.includes("github.com")
-														? project.link
-														: `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, "-")}`
-												}
-												target="_blank"
-												rel="noopener noreferrer"
-												onClick={(e) => {
-													e.stopPropagation();
-													trackEvent("project_card_click", {
-														project_title: project.title,
-														project_technologies: project.technologies,
-														project_featured: project.featured || false,
-														click_type: "github_link",
-													});
-												}}
-												className="group/btn relative inline-flex items-center gap-2 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-3 py-2.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-green-400/60 hover:bg-zinc-800/80 hover:shadow-green-400/20 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 active:scale-95 md:px-4 md:py-2.5 md:text-sm"
-												aria-label="View project on GitHub"
-											>
-												{/* Glow effect on hover */}
-												<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover/btn:opacity-100" />
-
-												<svg
-													className="h-4 w-4 flex-shrink-0 transition-transform duration-300 group-hover/btn:rotate-12 group-hover/btn:text-green-400 md:h-[18px] md:w-[18px]"
-													fill="none"
-													stroke="currentColor"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth="2"
-													viewBox="0 0 24 24"
-												>
-													<title>GitHub icon</title>
-													<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2c2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2a4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6c-.6.6-.6 1.2-.5 2V21" />
-												</svg>
-												<span className="hidden whitespace-nowrap transition-colors duration-300 group-hover/btn:text-green-400 md:inline">
-													GitHub
-												</span>
-											</a>
-										</div>
-
+										{/* Title section */}
 										<div className="block">
 											{/* Minimalist title with elegant underline effect */}
 											<div className="overflow-hidden">
 												<motion.h3
-													className="inline-block font-medium text-xl"
+													className="inline-block font-medium text-base md:text-xl"
 													animate={{
 														color: isHovered ? "#86efac" : "#ffffff",
 													}}
@@ -307,26 +230,108 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 												</motion.h3>
 											</div>
 
-											{/* Clean description with subtle animation */}
-											<p className="mt-3 text-gray-300/80 text-sm leading-relaxed">
-												{project.description}
-											</p>
+											{/* Live and GitHub buttons - below title on mobile, top right on desktop */}
+											<div className="mt-3 flex gap-1.5 md:absolute md:top-4 md:right-4 md:z-20 md:mt-0 md:gap-2.5">
+												{/* Live Button */}
+												<a
+													href={project.link}
+													target="_blank"
+													rel="noopener noreferrer"
+													onClick={(e) => {
+														e.stopPropagation();
+														handleProjectClick(project);
+													}}
+													className="group/btn relative inline-flex items-center gap-1 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-2 py-1.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 md:gap-2 md:px-4 md:py-2.5 md:text-sm md:active:scale-95 md:hover:scale-105 md:hover:border-green-400/60 md:hover:bg-zinc-800/80 md:hover:shadow-green-400/20 md:hover:shadow-xl"
+													aria-label="View live project"
+												>
+													{/* Glow effect on hover */}
+													<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 md:group-hover/btn:opacity-100" />
 
-											{/* Minimalist technology tags */}
-											<div className="mt-4 flex flex-wrap gap-2">
-												{project.technologies.map((tech) => (
-													<span
-														key={tech}
-														className={`rounded-full border px-2.5 py-0.5 text-xs ${
-															tech === activeCategory
-																? "border-green-400/50 text-green-400"
-																: "border-zinc-800/30 text-zinc-400"
-														}`}
+													<svg
+														className="md:group-hover/btn:-translate-y-0.5 h-3 w-3 flex-shrink-0 transition-transform duration-300 md:h-[18px] md:w-[18px] md:group-hover/btn:translate-x-0.5 md:group-hover/btn:text-green-400"
+														fill="none"
+														stroke="currentColor"
+														viewBox="0 0 24 24"
 													>
-														{tech}
+														<title>External link icon</title>
+														<path
+															strokeLinecap="round"
+															strokeLinejoin="round"
+															strokeWidth={2}
+															d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
+														/>
+													</svg>
+													<span className="whitespace-nowrap transition-colors duration-300 md:group-hover/btn:text-green-400">
+														Live
 													</span>
-												))}
+												</a>
+
+												{/* GitHub Button */}
+												<a
+													href={
+														project.link.includes("github.com")
+															? project.link
+															: `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, "-")}`
+													}
+													target="_blank"
+													rel="noopener noreferrer"
+													onClick={(e) => {
+														e.stopPropagation();
+														const githubUrl = project.link.includes("github.com")
+															? project.link
+															: `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, "-")}`;
+														trackProjectView(project.title, githubUrl);
+														trackEvent("project_card_click", {
+															project_title: project.title,
+															project_technologies: project.technologies,
+															project_featured: project.featured || false,
+															click_type: "github_link",
+														});
+													}}
+													className="group/btn relative inline-flex items-center gap-1 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-2 py-1.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 md:gap-2 md:px-4 md:py-2.5 md:text-sm md:active:scale-95 md:hover:scale-105 md:hover:border-green-400/60 md:hover:bg-zinc-800/80 md:hover:shadow-green-400/20 md:hover:shadow-xl"
+													aria-label="View project on GitHub"
+												>
+													{/* Glow effect on hover */}
+													<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 md:group-hover/btn:opacity-100" />
+
+													<svg
+														className="h-3 w-3 flex-shrink-0 transition-transform duration-300 md:h-[18px] md:w-[18px] md:group-hover/btn:rotate-12 md:group-hover/btn:text-green-400"
+														fill="none"
+														stroke="currentColor"
+														strokeLinecap="round"
+														strokeLinejoin="round"
+														strokeWidth="2"
+														viewBox="0 0 24 24"
+													>
+														<title>GitHub icon</title>
+														<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2c2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2a4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6c-.6.6-.6 1.2-.5 2V21" />
+													</svg>
+													<span className="whitespace-nowrap transition-colors duration-300 md:group-hover/btn:text-green-400">
+														GitHub
+													</span>
+												</a>
 											</div>
+										</div>
+
+										{/* Clean description with subtle animation */}
+										<p className="mt-3 text-gray-300/80 text-xs leading-relaxed md:text-sm">
+											{project.description}
+										</p>
+
+										{/* Minimalist technology tags */}
+										<div className="mt-4 flex flex-wrap gap-2">
+											{project.technologies.map((tech) => (
+												<span
+													key={tech}
+													className={`rounded-full border px-2.5 py-0.5 text-xs ${
+														tech === activeCategory
+															? "border-green-400/50 text-green-400"
+															: "border-zinc-800/30 text-zinc-400"
+													}`}
+												>
+													{tech}
+												</span>
+											))}
 										</div>
 									</div>
 								</motion.div>

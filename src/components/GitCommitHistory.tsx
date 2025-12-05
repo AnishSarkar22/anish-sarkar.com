@@ -51,6 +51,30 @@ const HOVER_COLORS = [
 ];
 const GLOW_INTENSITIES = [0, 2, 5, 10, 15];
 
+// Generate placeholder structure for 53 weeks (typical GitHub contribution graph)
+const generatePlaceholderWeeks = (): ContributionDay[][] => {
+	const weeks: ContributionDay[][] = [];
+	const today = new Date();
+	const startDate = new Date(today);
+	startDate.setDate(startDate.getDate() - 365); // Go back 1 year
+
+	for (let week = 0; week < 53; week++) {
+		const weekDays: ContributionDay[] = [];
+		for (let day = 0; day < 7; day++) {
+			const date = new Date(startDate);
+			date.setDate(date.getDate() + week * 7 + day);
+			weekDays.push({
+				date: date.toISOString().split("T")[0],
+				count: -1, // Use -1 to indicate placeholder
+				level: 0,
+				tooltip: "",
+			});
+		}
+		weeks.push(weekDays);
+	}
+	return weeks;
+};
+
 const LegendItem = memo(
 	({
 		level,
@@ -90,10 +114,12 @@ const ContributionCell = memo(
 	({
 		day,
 		getContributionColor,
+		isLoaded,
 	}: {
 		day: ContributionDay;
 		getContributionColor: (level: number, isHovered: boolean) => string;
 		getGlowIntensity: (level: number) => number;
+		isLoaded: boolean;
 	}) => {
 		const [isHovered, setIsHovered] = useState(false);
 		const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
@@ -113,9 +139,11 @@ const ContributionCell = memo(
 			}
 		}, [isHovered]);
 
-		// Skip rendering cells that are not visible
-		if (day.count < 0) {
-			return <div className="h-[10px] w-[10px]" />;
+		// Show placeholder cell structure
+		if (day.count < 0 || !isLoaded) {
+			return (
+				<div className="h-[10px] w-[10px] rounded-sm border-[0.9px] border-gray-500/20 bg-zinc-800/20" />
+			);
 		}
 
 		return (
@@ -126,6 +154,9 @@ const ContributionCell = memo(
 					style={{
 						backgroundColor: getContributionColor(day.level, isHovered),
 					}}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.3 }}
 					onHoverStart={() => setIsHovered(true)}
 					onHoverEnd={() => setIsHovered(false)}
 					whileHover={{
@@ -166,10 +197,12 @@ const ContributionWeek = memo(
 		week,
 		getContributionColor,
 		getGlowIntensity,
+		isLoaded,
 	}: {
 		week: ContributionDay[];
 		getContributionColor: (level: number, isHovered: boolean) => string;
 		getGlowIntensity: (level: number) => number;
+		isLoaded: boolean;
 	}) => (
 		<div className="grid grid-rows-7 gap-[2px]">
 			{week.map((day, dayIndex) => (
@@ -178,14 +211,22 @@ const ContributionWeek = memo(
 					day={day}
 					getContributionColor={getContributionColor}
 					getGlowIntensity={getGlowIntensity}
+					isLoaded={isLoaded}
 				/>
 			))}
 		</div>
 	),
 );
 
+// Skeleton component for stats
+const StatSkeleton = memo(() => (
+	<div className="h-3 w-8 animate-pulse rounded bg-zinc-700/30" />
+));
+
 export default function GitCommitHistory() {
-	const [contributions, setContributions] = useState<ContributionDay[][]>([]);
+	const [contributions, setContributions] = useState<ContributionDay[][]>(() =>
+		generatePlaceholderWeeks(),
+	);
 	const [totalContributions, setTotalContributions] = useState(0);
 	const [currentStreak, setCurrentStreak] = useState(0);
 	const [longestStreak, setLongestStreak] = useState(0);
@@ -357,15 +398,6 @@ export default function GitCommitHistory() {
 		return contributions;
 	}, [contributions]);
 
-	// Add click handler
-	const handleHelpClick = () => {
-		window.open(
-			"https://docs.github.com/en/account-and-profile/reference/why-are-my-contributions-not-showing-up-on-my-profile#about-your-contribution-graph",
-			"_blank",
-			"noopener,noreferrer",
-		);
-	};
-
 	return (
 		<div className="w-full">
 			<motion.div
@@ -443,32 +475,25 @@ export default function GitCommitHistory() {
 			</motion.div>
 
 			{/* Simplified card without container and background */}
-			<motion.div
-				className="relative overflow-hidden"
-				initial={{ opacity: 0 }}
-				animate={{ opacity: isLoaded ? 1 : 0 }}
-				transition={{ duration: 0.3 }}
-			>
+			<div className="relative overflow-hidden">
 				<BackgroundGradient />
 				{/* Header with stats - simplified */}
 				<div className="relative z-10">
-					<motion.div
-						className="mb-1 flex items-center gap-1"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: isLoaded ? 1 : 0 }}
-						transition={{ duration: 0.3, delay: 0.1 }}
-					>
+					<motion.div className="mb-1 flex items-center gap-1">
 						<h3 className="font-medium text-green-400 text-xs">
-							{totalContributions.toLocaleString()} contributions in the last
-							year
+							{isLoaded ? (
+								<>
+									{totalContributions.toLocaleString()} contributions in the last
+									year
+								</>
+							) : (
+								<>
+									<StatSkeleton /> contributions in the last year
+								</>
+							)}
 						</h3>
 					</motion.div>
-					<motion.div
-						className="mb-2 grid grid-cols-2 gap-1 text-[10px]"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: isLoaded ? 1 : 0 }}
-						transition={{ duration: 0.3, delay: 0.2 }}
-					>
+					<motion.div className="mb-2 grid grid-cols-2 gap-1 text-[10px]">
 						<div className="flex items-center gap-1 rounded p-1">
 							<div className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-zinc-800/30">
 								<svg
@@ -490,10 +515,16 @@ export default function GitCommitHistory() {
 							<div>
 								<div className="text-zinc-400/80">Current Streak</div>
 								<div className="flex items-center font-medium text-white">
-									{currentStreak}
-									<span className="ml-0.5">
-										day{currentStreak !== 1 ? "s" : ""}
-									</span>
+									{isLoaded ? (
+										<>
+											{currentStreak}
+											<span className="ml-0.5">
+												day{currentStreak !== 1 ? "s" : ""}
+											</span>
+										</>
+									) : (
+										<StatSkeleton />
+									)}
 								</div>
 							</div>
 						</div>
@@ -524,10 +555,16 @@ export default function GitCommitHistory() {
 							<div>
 								<div className="text-zinc-400/80">Longest Streak</div>
 								<div className="flex items-center font-medium text-white">
-									{longestStreak}
-									<span className="ml-0.5">
-										day{longestStreak !== 1 ? "s" : ""}
-									</span>
+									{isLoaded ? (
+										<>
+											{longestStreak}
+											<span className="ml-0.5">
+												day{longestStreak !== 1 ? "s" : ""}
+											</span>
+										</>
+									) : (
+										<StatSkeleton />
+									)}
 								</div>
 							</div>
 						</div>
@@ -538,13 +575,6 @@ export default function GitCommitHistory() {
 				<div className="scrollbar-thin scrollbar-thumb-zinc-700/30 scrollbar-track-transparent relative z-10 overflow-x-auto">
 					<div className="min-w-[700px]">
 						<div className="flex">
-							{/* <div
-								className="flex flex-col justify-between pt-5 text-[10px] text-zinc-500/70"
-								style={{ height: `${7 * 10 + 6}px` }}
-							>
-								{weekdayLabels}
-							</div> */}
-
 							<div className="relative flex-1">
 								{/* Month labels */}
 								<div className="flex h-5 text-[10px] text-zinc-500/70">
@@ -563,17 +593,19 @@ export default function GitCommitHistory() {
 
 								{/* Contribution cells with hover glow effect */}
 								<div className="grid grid-flow-col gap-[2px]">
-									{visibleContributions.map((week) => {
+									{visibleContributions.map((week, weekIndex) => {
 										// Use the first valid date in the week as the key, fallback to joining all dates
 										const weekKey =
 											week.find((d) => d.date)?.date ||
-											week.map((d) => d.date).join("-");
+											week.map((d) => d.date).join("-") ||
+											`week-${weekIndex}`;
 										return (
 											<ContributionWeek
 												key={weekKey}
 												week={week}
 												getContributionColor={getContributionColor}
 												getGlowIntensity={getGlowIntensity}
+												isLoaded={isLoaded}
 											/>
 										);
 									})}
@@ -589,7 +621,7 @@ export default function GitCommitHistory() {
 						</div>
 					</div>
 				</div>
-			</motion.div>
+			</div>
 		</div>
 	);
 }

@@ -81,7 +81,7 @@ export default function Projects() {
 					className="mb-16"
 				>
 					<motion.h1
-						className="relative mb-2 inline-block font-bold text-5xl"
+						className="relative mb-2 inline-block font-bold text-3xl md:text-5xl"
 						whileHover={{ scale: 1.03 }}
 						transition={{ type: "spring", stiffness: 400, damping: 10 }}
 					>
