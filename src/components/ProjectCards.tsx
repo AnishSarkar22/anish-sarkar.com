@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 // import TransitionLink from "~/components/utils/TransitionLink";
-import Link from "next/link";
 import { useRef, useState } from "react";
 import { trackEvent, trackProjectView } from "~/utils/posthog";
 import { projectList } from "./Projects";
@@ -108,7 +107,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 							return (
 								<motion.div
 									key={project.title}
-									className="group relative cursor-pointer overflow-hidden rounded-lg border border-zinc-800/50"
+									className="group relative overflow-hidden rounded-lg border border-zinc-800/50"
 									initial={{ opacity: 0, y: 20 }}
 									animate={{ opacity: 1, y: 0 }}
 									transition={{
@@ -120,7 +119,6 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 										handleProjectHover(project); // for posthog analytics
 									}}
 									onHoverEnd={() => setHoveredIndex(null)}
-									onClick={() => handleProjectClick(project)} // for posthog analytics
 									layout
 								>
 									{/* Liquid gradient border effect */}
@@ -295,7 +293,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 											</a>
 										</div>
 
-										<Link href={project.link} className="block">
+										<div className="block">
 											{/* Minimalist title with elegant underline effect */}
 											<div className="overflow-hidden">
 												<motion.h3
@@ -329,7 +327,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 													</span>
 												))}
 											</div>
-										</Link>
+										</div>
 									</div>
 								</motion.div>
 							);
