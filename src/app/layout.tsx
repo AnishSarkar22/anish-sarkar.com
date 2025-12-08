@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
 	title: {
-		default: "Anish Sarkar | Portfolio",
+		default: "Anish Sarkar | Software Developer",
 		template: "%s | Anish Sarkar",
 	},
 	description:
@@ -44,11 +44,11 @@ export const metadata: Metadata = {
 	authors: [{ name: "Anish Sarkar" }],
 	creator: "Anish Sarkar",
 	openGraph: {
-		title: "Anish Sarkar | Portfolio",
+		title: "Anish Sarkar | Software Developer",
 		description:
 			"University Undergrad, full time coder, and AIML enthusiast. Explore my projects, blog posts, and technical journey.",
 		url: siteUrl,
-		siteName: "Anish Sarkar Portfolio",
+		siteName: "Anish Sarkar - Software Developer",
 		locale: "en_US",
 		type: "website",
 		images: [
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Anish Sarkar | Portfolio",
+		title: "Anish Sarkar | Software Developer",
 		description: "University Undergrad, full time coder, and AIML enthusiast",
 		images: [`${siteUrl}/og/home`],
 		creator: "@AnishSarkar22",
