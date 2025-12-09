@@ -31,6 +31,7 @@ export const metadata: Metadata = {
 		"University Undergrad, full time coder, and AIML enthusiast. Explore my projects, blog posts, and technical journey in backend development, machine learning, and modern web technologies.",
 	keywords: [
 		"Anish Sarkar",
+		"Software Developer",
 		"Portfolio",
 		"Backend Developer",
 		"AIML",
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
 		type: "website",
 		images: [
 			{
-				url: `${siteUrl}/og/home`,
+				url: `${siteUrl}/og-image.png`,
 				width: 1200,
 				height: 630,
 				alt: "Anish Sarkar - Backend Developer & AIML Enthusiast",
@@ -64,7 +65,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "Anish Sarkar | Software Developer",
 		description: "University Undergrad, full time coder, and AIML enthusiast",
-		images: [`${siteUrl}/og/home`],
+		images: [`${siteUrl}/og-image.png`],
 		creator: "@AnishSarkar22",
 	},
 	robots: {
