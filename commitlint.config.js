@@ -1,0 +1,25 @@
+export default {
+    extends: ['@commitlint/config-conventional'],
+    rules: {
+      'type-enum': [
+        2,
+        'always',
+        [
+          'feat',     // New feature
+          'fix',      // Bug fix
+          'docs',     // Documentation changes
+          'style',    // Code style changes (formatting, etc.)
+          'refactor', // Code refactoring
+          'perf',     // Performance improvements
+          'test',     // Adding or updating tests
+          'build',    // Build system changes
+          'ci',       // CI/CD changes
+          'chore',    // Other changes that don't modify src or test files
+          'revert',   // Revert a previous commit
+        ],
+      ],
+      'header-max-length': [0],
+      'body-max-line-length': [0], // Disable the rule
+    },
+  };
+  
