@@ -23,20 +23,23 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 	// Track project card interaction (for posthog analytics)
 	interface Project {
 		title: string;
-		link: string;
+		link?: string;  // Changed from required to optional
 		description: string;
 		technologies: string[];
 		featured?: boolean;
+		githubLink?: string;
 	}
 
 	const handleProjectClick = (project: Project) => {
-		trackProjectView(project.title, project.link);
-		trackEvent("project_card_click", {
-			project_title: project.title,
-			project_technologies: project.technologies,
-			project_featured: project.featured || false,
-			click_type: "external_link",
-		});
+		if (project.link) {  // Only track if link exists
+			trackProjectView(project.title, project.link);
+			trackEvent("project_card_click", {
+				project_title: project.title,
+				project_technologies: project.technologies,
+				project_featured: project.featured || false,
+				click_type: "external_link",
+			});
+		}
 	};
 	// for posthog analytics
 	const handleProjectHover = (project: Project) => {
@@ -230,88 +233,86 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 												</motion.h3>
 											</div>
 
-											{/* Live and GitHub buttons - below title on mobile, top right on desktop */}
+											
 											<div className="mt-3 flex gap-1.5 md:absolute md:top-4 md:right-4 md:z-20 md:mt-0 md:gap-2.5">
-												{/* Live Button */}
-												<a
-													href={project.link}
-													target="_blank"
-													rel="noopener noreferrer"
-													onClick={(e) => {
-														e.stopPropagation();
-														handleProjectClick(project);
-													}}
-													className="group/btn relative inline-flex items-center gap-1 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-2 py-1.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 md:gap-2 md:px-4 md:py-2.5 md:text-sm md:active:scale-95 md:hover:scale-105 md:hover:border-green-400/60 md:hover:bg-zinc-800/80 md:hover:shadow-green-400/20 md:hover:shadow-xl"
-													aria-label="View live project"
-												>
-													{/* Glow effect on hover */}
-													<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 md:group-hover/btn:opacity-100" />
-
-													<svg
-														className="md:group-hover/btn:-translate-y-0.5 h-3 w-3 flex-shrink-0 transition-transform duration-300 md:h-[18px] md:w-[18px] md:group-hover/btn:translate-x-0.5 md:group-hover/btn:text-green-400"
-														fill="none"
-														stroke="currentColor"
-														viewBox="0 0 24 24"
+												{/* Live Button - only show if link exists */}
+												{project.link && (
+													<a
+														href={project.link}
+														target="_blank"
+														rel="noopener noreferrer"
+														onClick={(e) => {
+															e.stopPropagation();
+															handleProjectClick(project);
+														}}
+														className="group/btn relative inline-flex items-center gap-1 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-2 py-1.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 md:gap-2 md:px-4 md:py-2.5 md:text-sm md:active:scale-95 md:hover:scale-105 md:hover:border-green-400/60 md:hover:bg-zinc-800/80 md:hover:shadow-green-400/20 md:hover:shadow-xl"
+														aria-label="View live project"
 													>
-														<title>External link icon</title>
-														<path
-															strokeLinecap="round"
-															strokeLinejoin="round"
-															strokeWidth={2}
-															d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
-														/>
-													</svg>
-													<span className="whitespace-nowrap transition-colors duration-300 md:group-hover/btn:text-green-400">
-														Live
-													</span>
-												</a>
+														{/* Live and GitHub buttons - below title on mobile, top right on desktop */}
+														<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 md:group-hover/btn:opacity-100" />
 
-												{/* GitHub Button */}
-												<a
-													href={
-														project.link.includes("github.com")
-															? project.link
-															: `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, "-")}`
-													}
-													target="_blank"
-													rel="noopener noreferrer"
-													onClick={(e) => {
-														e.stopPropagation();
-														const githubUrl = project.link.includes(
-															"github.com",
-														)
-															? project.link
-															: `https://github.com/AnishSarkar22/${project.title.toLowerCase().replace(/\s+/g, "-")}`;
-														trackProjectView(project.title, githubUrl);
-														trackEvent("project_card_click", {
-															project_title: project.title,
-															project_technologies: project.technologies,
-															project_featured: project.featured || false,
-															click_type: "github_link",
-														});
-													}}
-													className="group/btn relative inline-flex items-center gap-1 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-2 py-1.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 md:gap-2 md:px-4 md:py-2.5 md:text-sm md:active:scale-95 md:hover:scale-105 md:hover:border-green-400/60 md:hover:bg-zinc-800/80 md:hover:shadow-green-400/20 md:hover:shadow-xl"
-													aria-label="View project on GitHub"
-												>
-													{/* Glow effect on hover */}
-													<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 md:group-hover/btn:opacity-100" />
+														<svg
+															className="md:group-hover/btn:-translate-y-0.5 h-3 w-3 flex-shrink-0 transition-transform duration-300 md:h-[18px] md:w-[18px] md:group-hover/btn:translate-x-0.5 md:group-hover/btn:text-green-400"
+															fill="none"
+															stroke="currentColor"
+															viewBox="0 0 24 24"
+														>
+															<title>External link icon</title>
+															<path
+																strokeLinecap="round"
+																strokeLinejoin="round"
+																strokeWidth={2}
+																d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
+															/>
+														</svg>
+														<span className="whitespace-nowrap transition-colors duration-300 md:group-hover/btn:text-green-400">
+															Live
+														</span>
+													</a>
+												)}
 
-													<svg
-														className="h-3 w-3 flex-shrink-0 transition-transform duration-300 md:h-[18px] md:w-[18px] md:group-hover/btn:rotate-12 md:group-hover/btn:text-green-400"
-														fill="none"
-														stroke="currentColor"
-														strokeLinecap="round"
-														strokeLinejoin="round"
-														strokeWidth="2"
-														viewBox="0 0 24 24"
-													>
-														<title>GitHub icon</title>
-														<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2c2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2a4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6c-.6.6-.6 1.2-.5 2V21" />
-													</svg>
-													<span className="whitespace-nowrap transition-colors duration-300 md:group-hover/btn:text-green-400">
-														GitHub
-													</span>
-												</a>
+												{/* GitHub Button - only show if githubLink exists */}
+												{project.githubLink && (() => {
+													const githubLink = project.githubLink;
+													return (
+														<a
+															href={githubLink}
+															target="_blank"
+															rel="noopener noreferrer"
+															onClick={(e) => {
+																e.stopPropagation();
+																trackProjectView(project.title, githubLink);
+																trackEvent("project_card_click", {
+																	project_title: project.title,
+																	project_technologies: project.technologies,
+																	project_featured: project.featured || false,
+																	click_type: "github_link",
+																});
+															}}
+															className="group/btn relative inline-flex items-center gap-1 rounded-full border border-zinc-700/40 bg-zinc-900/60 px-2 py-1.5 font-medium text-white text-xs shadow-black/30 shadow-lg backdrop-blur-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400/50 focus:ring-offset-2 focus:ring-offset-zinc-900 md:gap-2 md:px-4 md:py-2.5 md:text-sm md:active:scale-95 md:hover:scale-105 md:hover:border-green-400/60 md:hover:bg-zinc-800/80 md:hover:shadow-green-400/20 md:hover:shadow-xl"
+															aria-label="View project on GitHub"
+														>
+															{/* Glow effect on hover */}
+															<div className="absolute inset-0 rounded-full bg-green-400/20 opacity-0 blur-xl transition-opacity duration-300 md:group-hover/btn:opacity-100" />
+
+															<svg
+																className="h-3 w-3 flex-shrink-0 transition-transform duration-300 md:h-[18px] md:w-[18px] md:group-hover/btn:rotate-12 md:group-hover/btn:text-green-400"
+																fill="none"
+																stroke="currentColor"
+																strokeLinecap="round"
+																strokeLinejoin="round"
+																strokeWidth="2"
+																viewBox="0 0 24 24"
+															>
+																<title>GitHub icon</title>
+																<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2c2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2a4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6c-.6.6-.6 1.2-.5 2V21" />
+															</svg>
+															<span className="whitespace-nowrap transition-colors duration-300 md:group-hover/btn:text-green-400">
+																GitHub
+															</span>
+														</a>
+													);
+												})()}
 											</div>
 										</div>
 
