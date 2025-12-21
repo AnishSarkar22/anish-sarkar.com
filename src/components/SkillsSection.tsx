@@ -92,7 +92,6 @@ const skills: Skill[] = [
 	{
 		id: "node",
 		name: "Node.js",
-		level: 3,
 		logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
 		color: SKILL_COLORS.node,
 		category: "Backend",
@@ -369,68 +368,6 @@ const SkillItem = memo(
 						))}
 				</AnimatePresence>
 
-				{/* Motion contour effect */}
-				{isHovered && (
-					<>
-						<motion.div
-							className="absolute top-0 left-0 h-[1.5px] w-full"
-							style={{
-								background: `linear-gradient(90deg, transparent, ${skill.color}, transparent)`,
-							}}
-							animate={{
-								left: ["-100%", "100%"],
-							}}
-							transition={{
-								duration: 2,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "linear",
-							}}
-						/>
-						<motion.div
-							className="absolute right-0 bottom-0 h-[1.5px] w-full"
-							style={{
-								background: `linear-gradient(90deg, transparent, ${skill.color}, transparent)`,
-							}}
-							animate={{
-								right: ["-100%", "100%"],
-							}}
-							transition={{
-								duration: 2,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "linear",
-							}}
-						/>
-						<motion.div
-							className="absolute top-0 left-0 h-full w-[1.5px]"
-							style={{
-								background: `linear-gradient(180deg, transparent, ${skill.color}, transparent)`,
-							}}
-							animate={{
-								top: ["-100%", "100%"],
-							}}
-							transition={{
-								duration: 2.5,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "linear",
-							}}
-						/>
-						<motion.div
-							className="absolute right-0 bottom-0 h-full w-[1.5px]"
-							style={{
-								background: `linear-gradient(180deg, transparent, ${skill.color}, transparent)`,
-							}}
-							animate={{
-								bottom: ["-100%", "100%"],
-							}}
-							transition={{
-								duration: 2.5,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "linear",
-							}}
-						/>
-					</>
-				)}
-
 				{/* Mouse glow effect */}
 				{isHovered && (
 					<motion.div
@@ -585,14 +522,6 @@ const CategorySection = memo(
 					<span className="relative z-10 bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
 						{category}
 					</span>
-					{/* Underline with glow */}
-					{/* <motion.span
-						className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0"
-						initial={{ width: 0 }}
-						animate={{ width: "100%" }}
-						transition={{ duration: 0.8, delay: 0.2 }}
-						style={{ boxShadow: "0 1px 8px rgba(134, 239, 172, 0.4)" }}
-					/> */}
 				</motion.h2>
 
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -667,15 +596,6 @@ export default function SkillsSection() {
 					<span className="animate-shimmer bg-[length:200%_100%] bg-gradient-to-r from-white via-green-200 to-white bg-clip-text text-transparent">
 						skills
 					</span>
-
-					{/* Animated underline with glow */}
-					{/* <motion.span
-            className="-bottom-1 absolute left-0 h-[2px] bg-gradient-to-r from-green-300/0 via-green-300 to-green-300/0 will-change-transform"
-            initial={{ width: 0 }}
-            animate={{ width: "100%" }}
-            transition={{ duration: 1, delay: 0.5 }}
-            style={{ boxShadow: '0 2px 10px rgba(134, 239, 172, 0.3)' }}
-          /> */}
 				</span>
 			</motion.h1>
 
