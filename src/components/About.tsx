@@ -253,6 +253,112 @@ export default function About() {
 					</div>
 				))}
 			</div>
+
+			{/* Contact Buttons Row */}
+			<motion.div
+				className="mt-6 flex items-center justify-center gap-3"
+				initial={{ opacity: 0, y: 10 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.4, delay: 0.8 }}
+			>
+				{/* Resume Button */}
+				<motion.a
+					href="/resume.pdf"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="contact-btn group inline-flex cursor-pointer items-center gap-2 text-gray-300 text-xs transition-all duration-200 hover:text-white"
+					style={{
+						backgroundColor: "rgb(26, 27, 28)",
+						borderRadius: "6px",
+						padding: "4px 8px",
+						height: "28px",
+						boxShadow: `
+							0px 0px 1px 0px rgba(0, 0, 0, 0.4),
+							0px 8px 16px -8px rgba(0, 0, 0, 0.3),
+							inset 0px 1px 1px 0px rgba(255, 255, 255, 0.06),
+							inset 0px -1px 1px 0px rgba(0, 0, 0, 0.15)
+						`,
+					}}
+					whileHover={{
+						scale: 1.02,
+						backgroundColor: "rgba(26, 27, 28, 0.78)",
+					}}
+					whileTap={{ scale: 0.98 }}
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="14"
+						height="14"
+						viewBox="0 0 14 14"
+					>
+						<title>Resume</title>
+						<g fill="none">
+							<path
+								fill="#8fbffa"
+								d="M2.5 0A1.5 1.5 0 0 0 1 1.5v11A1.5 1.5 0 0 0 2.5 14h9a1.5 1.5 0 0 0 1.5-1.5v-8a.5.5 0 0 0-.146-.354l-4-4A.5.5 0 0 0 8.5 0z"
+							/>
+							<path
+								fill="#2859c5"
+								fillRule="evenodd"
+								d="m7.29 10.838l-.103.104a.625.625 0 0 1-.884 0l-.104-.104a1 1 0 0 1-.292-.292L4.053 8.692a.625.625 0 0 1 .442-1.067h1.25V4a1 1 0 0 1 2 0v3.625h1.25a.625.625 0 0 1 .442 1.067l-1.854 1.854a1 1 0 0 1-.292.292Z"
+								clipRule="evenodd"
+							/>
+						</g>
+					</svg>
+					<span>Resume</span>
+				</motion.a>
+
+				{/* OR Separator */}
+				<span
+					className="inline-block font-bold text-gray-500 text-xs"
+					style={{ transform: "rotate(-12deg)" }}
+				>
+					OR
+				</span>
+
+				{/* Email Me Button */}
+				<motion.a
+					href="mailto:anishsarkar282@gmail.com"
+					className="contact-btn group inline-flex cursor-pointer items-center gap-2 text-gray-300 text-xs transition-all duration-200 hover:text-white"
+					style={{
+						backgroundColor: "rgb(26, 27, 28)",
+						borderRadius: "6px",
+						padding: "4px 8px",
+						height: "28px",
+						boxShadow: `
+							0px 0px 1px 0px rgba(0, 0, 0, 0.4),
+							0px 8px 16px -8px rgba(0, 0, 0, 0.3),
+							inset 0px 1px 1px 0px rgba(255, 255, 255, 0.06),
+							inset 0px -1px 1px 0px rgba(0, 0, 0, 0.15)
+						`,
+					}}
+					whileHover={{
+						scale: 1.02,
+						backgroundColor: "rgba(26, 27, 28, 0.78)",
+					}}
+					whileTap={{ scale: 0.98 }}
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="14"
+						height="14"
+						viewBox="0 0 14 14"
+					>
+						<title>Email Me</title>
+						<g fill="none" fillRule="evenodd" clipRule="evenodd">
+							<path
+								fill="#8fbffa"
+								d="M1.55 5.381q.237.075.482.07c2.352-.04 4.722-.023 7.137-.006q1.566.012 3.158.017q.072 0 .144-.006q.036.11.056.228a19.5 19.5 0 0 1 .262 3.144a20 20 0 0 1-.283 3.227a1.47 1.47 0 0 1-1.289 1.219c-1.352.15-2.757.25-4.217.25c-1.198 0-2.37-.108-3.476-.21h-.002q-.353-.034-.696-.063a1.48 1.48 0 0 1-1.344-1.221a19.3 19.3 0 0 1-.013-6.358q.026-.154.08-.29Z"
+							/>
+							<path
+								fill="#2859c5"
+								d="M4.933 8.11c0-.345.28-.624.625-.624h2.884a.625.625 0 1 1 0 1.25H5.558a.625.625 0 0 1-.625-.625ZM7 .77c-1.815 0-3.582.044-5.25.124c-.497.024-1.016.304-1.225.843A4 4 0 0 0 .25 3.193c0 .48.093.94.254 1.38c.218.594.8.888 1.347.879c2.352-.04 4.723-.024 7.137-.007q1.567.012 3.159.017c.56.002 1.13-.315 1.343-.902a4 4 0 0 0 .26-1.367c0-.499-.102-.98-.274-1.433c-.208-.548-.732-.842-1.245-.865A112 112 0 0 0 7 .77"
+							/>
+						</g>
+					</svg>
+					<span>Email Me</span>
+				</motion.a>
+			</motion.div>
 			{/* Enhanced decorative elements - optimized with reduced animation complexity */}
 			<motion.div
 				className="-right-20 -z-10 pointer-events-none absolute top-1/2 h-60 w-60 rounded-full will-change-transform"

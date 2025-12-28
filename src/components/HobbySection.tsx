@@ -251,31 +251,6 @@ const HobbyTag = memo(
 							</motion.span>
 						))}
 					</motion.span>
-
-					{/* Underline effect */}
-					<motion.span
-						className="absolute bottom-0 left-0 h-[1px] w-full"
-						initial={{ scaleX: 0, opacity: 0 }}
-						animate={
-							isHovered
-								? {
-										scaleX: 1,
-										opacity: 1,
-									}
-								: {
-										scaleX: 0,
-										opacity: 0,
-									}
-						}
-						transition={{
-							duration: 0.4,
-							ease: "easeInOut",
-						}}
-						style={{
-							background: `linear-gradient(to right, ${hobby.color}00, ${hobby.color}, ${hobby.color}00)`,
-							transformOrigin: "left",
-						}}
-					/>
 				</motion.span>
 
 				{/* Shine effect */}

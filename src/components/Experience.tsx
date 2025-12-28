@@ -5,11 +5,18 @@ import { useCallback, useMemo, useState } from "react";
 
 const experience = [
 	{
+		title: "Software Development Intern",
+		position: "SurfSense",
+		date: "(Dec 2025 - Present)",
+		description:
+			"Contributing to an open-source AI-powered personal knowledge assistant",
+		link: "https://github.com/MODSetter/SurfSense",
+		color: "#22d3ee",
+	},
+	{
 		title: "React Development Intern",
 		position: "AppYard Infotech",
-		date: "(Nov 2025 - present)",
-		// description:
-		// 	"Developing applications",
+		date: "(Nov 2025 - Dec 2025)",
 		color: "#4ade80",
 	},
 	{
@@ -171,7 +178,7 @@ export default function Experience() {
 			<div className="relative mt-10">
 				{/* Main vertical timeline line */}
 				<motion.div
-					className="absolute top-0 bottom-0 left-[6px] h-full w-[1px] bg-zinc-800 will-change-transform"
+					className="absolute top-0 left-[6px] h-[calc(100%-2.5rem)] w-[1px] bg-zinc-800 will-change-transform"
 					variants={timelineVariants}
 				/>
 

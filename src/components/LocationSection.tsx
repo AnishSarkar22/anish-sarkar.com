@@ -295,7 +295,7 @@ export default function LocationSection() {
 
 				{/* Location info */}
 				<motion.div
-					className="relative mt-6 pl-6"
+					className="mt-6"
 					initial={{ opacity: 0, y: 20 }}
 					animate={{
 						opacity: 1,
@@ -303,36 +303,37 @@ export default function LocationSection() {
 						transition: { duration: 0.5, delay: 0.5 },
 					}}
 				>
-					{/* Circle indicator */}
-					<div className="-left-1 absolute top-0 text-green-300">
+					{/* Location heading with icon */}
+					<div className="flex items-center gap-2">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							className="h-6 w-6"
+							width="18"
+							height="18"
+							viewBox="0 0 14 14"
 							role="img"
 							aria-labelledby="locationTitle"
 						>
-							<title id="locationTitle">Location pin</title>
-							<path
-								fill="currentColor"
-								d="M6.72 16.64a1 1 0 1 1 .56 1.92c-.5.146-.86.3-1.091.44c.238.143.614.303 1.136.452C8.48 19.782 10.133 20 12 20s3.52-.218 4.675-.548c.523-.149.898-.309 1.136-.452c-.23-.14-.59-.294-1.09-.44a1 1 0 0 1 .559-1.92c.668.195 1.28.445 1.75.766c.435.299.97.82.97 1.594c0 .783-.548 1.308-.99 1.607c-.478.322-1.103.573-1.786.768C15.846 21.77 14 22 12 22s-3.846-.23-5.224-.625c-.683-.195-1.308-.446-1.786-.768c-.442-.3-.99-.824-.99-1.607c0-.774.535-1.295.97-1.594c.47-.321 1.082-.571 1.75-.766M12 7.5c-1.54 0-2.502 1.667-1.732 3c.357.619 1.017 1 1.732 1c1.54 0 2.502-1.667 1.732-3A2 2 0 0 0 12 7.5"
-							/>
-							<path
-								fill="currentColor"
-								d="M12 2a7.5 7.5 0 0 1 7.5 7.5c0 2.568-1.4 4.656-2.85 6.14a16.4 16.4 0 0 1-1.853 1.615c-.594.446-1.952 1.282-1.952 1.282a1.71 1.71 0 0 1-1.69 0a21 21 0 0 1-1.952-1.282A16.4 16.4 0 0 1 7.35 15.64C5.9 14.156 4.5 12.068 4.5 9.5A7.5 7.5 0 0 1 12 2"
-								opacity="0.3"
-							/>
+							<title id="locationTitle">Location</title>
+							<g fill="none">
+								<path
+									fill="#8fbffa"
+									d="M7 .25c-2.092 0-3.797.59-4.979 1.771S.25 4.908.25 7s.59 3.797 1.771 4.979S4.908 13.75 7 13.75s3.797-.59 4.979-1.771S13.75 9.092 13.75 7s-.59-3.797-1.771-4.979S9.092.25 7 .25"
+								/>
+								<path
+									fill="#2859c5"
+									fillRule="evenodd"
+									d="M8.576 4.332a1.043 1.043 0 0 1 1.092 1.093C9.6 7 8.926 8.655 8.023 10.187a.73.73 0 0 1-.761.348a.79.79 0 0 1-.631-.55a9 9 0 0 0-.375-1.017c-.149-.326-.308-.591-.47-.753s-.428-.322-.754-.47a9 9 0 0 0-1.017-.375a.79.79 0 0 1-.55-.631a.73.73 0 0 1 .35-.761C5.344 5.074 7 4.4 8.575 4.332Z"
+									clipRule="evenodd"
+								/>
+							</g>
 						</svg>
+						<motion.h2 className="font-medium text-white text-xl">
+							Kolkata, West Bengal, India
+						</motion.h2>
 					</div>
 
-					<motion.h2 className="font-medium text-green-300 text-xl">
-						Kolkata, West Bengal, India
-					</motion.h2>
-
 					<motion.p
-						className="mt-2 text-zinc-400"
+						className="mt-2 pl-[26px] text-zinc-400"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ delay: 0.7 }}
