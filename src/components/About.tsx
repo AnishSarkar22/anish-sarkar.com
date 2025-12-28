@@ -268,22 +268,34 @@ export default function About() {
 					rel="noopener noreferrer"
 					className="contact-btn group inline-flex cursor-pointer items-center gap-2 text-gray-300 text-xs transition-all duration-200 hover:text-white"
 					style={{
-						backgroundColor: "rgb(26, 27, 28)",
+						background: "linear-gradient(to bottom, #2a2b2c, #161718)",
 						borderRadius: "6px",
 						padding: "4px 8px",
 						height: "28px",
+						
 						boxShadow: `
-							0px 0px 1px 0px rgba(0, 0, 0, 0.4),
-							0px 8px 16px -8px rgba(0, 0, 0, 0.3),
-							inset 0px 1px 1px 0px rgba(255, 255, 255, 0.06),
-							inset 0px -1px 1px 0px rgba(0, 0, 0, 0.15)
+							0px 4px 10px -2px rgba(0, 0, 0, 0.5),
+							0px 0px 0px 1px rgba(0, 0, 0, 0.2),
+							inset 0px 1px 0px 0px rgba(255, 255, 255, 0.08),
+							inset 0px -1px 0px 0px rgba(0, 0, 0, 0.2)
 						`,
 					}}
 					whileHover={{
 						scale: 1.02,
-						backgroundColor: "rgba(26, 27, 28, 0.78)",
+						background: "linear-gradient(to bottom, #2d2e2f, #191a1b)",
+						boxShadow: `
+							0px 6px 15px -3px rgba(0, 0, 0, 0.6),
+							0px 0px 0px 1px rgba(0, 0, 0, 0.2),
+							inset 0px 1px 0px 0px rgba(255, 255, 255, 0.12)
+						`,
 					}}
-					whileTap={{ scale: 0.98 }}
+					whileTap={{
+						scale: 0.96,
+						boxShadow: `
+							inset 0px 2px 4px 0px rgba(0, 0, 0, 0.4),
+							0px 1px 2px 0px rgba(0, 0, 0, 0.2)
+						`,
+					}}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -321,22 +333,34 @@ export default function About() {
 					href="mailto:anishsarkar282@gmail.com"
 					className="contact-btn group inline-flex cursor-pointer items-center gap-2 text-gray-300 text-xs transition-all duration-200 hover:text-white"
 					style={{
-						backgroundColor: "rgb(26, 27, 28)",
+						background: "linear-gradient(to bottom, #2a2b2c, #161718)",
 						borderRadius: "6px",
 						padding: "4px 8px",
 						height: "28px",
+						
 						boxShadow: `
-							0px 0px 1px 0px rgba(0, 0, 0, 0.4),
-							0px 8px 16px -8px rgba(0, 0, 0, 0.3),
-							inset 0px 1px 1px 0px rgba(255, 255, 255, 0.06),
-							inset 0px -1px 1px 0px rgba(0, 0, 0, 0.15)
+							0px 4px 10px -2px rgba(0, 0, 0, 0.5),
+							0px 0px 0px 1px rgba(0, 0, 0, 0.2),
+							inset 0px 1px 0px 0px rgba(255, 255, 255, 0.08),
+							inset 0px -1px 0px 0px rgba(0, 0, 0, 0.2)
 						`,
 					}}
 					whileHover={{
 						scale: 1.02,
-						backgroundColor: "rgba(26, 27, 28, 0.78)",
+						background: "linear-gradient(to bottom, #2d2e2f, #191a1b)",
+						boxShadow: `
+							0px 6px 15px -3px rgba(0, 0, 0, 0.6),
+							0px 0px 0px 1px rgba(0, 0, 0, 0.2),
+							inset 0px 1px 0px 0px rgba(255, 255, 255, 0.12)
+						`,
 					}}
-					whileTap={{ scale: 0.98 }}
+					whileTap={{
+						scale: 0.96,
+						boxShadow: `
+							inset 0px 2px 4px 0px rgba(0, 0, 0, 0.4),
+							0px 1px 2px 0px rgba(0, 0, 0, 0.2)
+						`,
+					}}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
