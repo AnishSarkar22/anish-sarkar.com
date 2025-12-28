@@ -36,20 +36,19 @@ const MONTHS = [
 	"Dec",
 ];
 const BASE_COLORS = [
-	"rgba(22, 27, 34, 0.1)",
-	"rgba(52, 211, 153, 0.4)",
-	"rgba(52, 211, 153, 0.6)",
-	"rgba(52, 211, 153, 0.8)",
-	"rgba(52, 211, 153, 1)",
+	"#161b22", // Level 0
+	"#0e4429", // Level 1
+	"#006d32", // Level 2
+	"#26a641", // Level 3
+	"#39d353", // Level 4
 ];
 const HOVER_COLORS = [
-	"rgba(22, 27, 34, 0.2)",
-	"rgba(52, 211, 153, 0.5)",
-	"rgba(52, 211, 153, 0.7)",
-	"rgba(52, 211, 153, 0.9)",
-	"rgba(52, 211, 153, 1)",
+	"#1c2128", // Level 0 hover
+	"#135e38", // Level 1 hover
+	"#008c40", // Level 2 hover
+	"#2dbd4f", // Level 3 hover
+	"#47e362", // Level 4 hover
 ];
-const GLOW_INTENSITIES = [0, 2, 5, 10, 15];
 
 // Generate placeholder structure for 53 weeks (typical GitHub contribution graph)
 const generatePlaceholderWeeks = (): ContributionDay[][] => {
@@ -84,13 +83,8 @@ const LegendItem = memo(
 		getContributionColor: (level: number, isHovered: boolean) => string;
 	}) => (
 		<motion.div
-			className="mx-0.3 h-2 w-2 rounded-sm"
+			className="h-[10px] w-[10px] rounded-sm border-[0.9px] border-gray-500/20"
 			style={{ backgroundColor: getContributionColor(level, false) }}
-			whileHover={{
-				scale: 1.3,
-				boxShadow:
-					level > 0 ? `0 0 ${level * 3}px rgba(52, 211, 153, 0.7)` : "none",
-			}}
 		/>
 	),
 );
@@ -102,7 +96,7 @@ const BackgroundGradient = memo(() => (
 			className="absolute inset-0 opacity-5"
 			style={{
 				background:
-					"radial-gradient(circle at 50% 50%, rgba(52, 211, 153, 0.3) 0%, transparent 70%)",
+					"radial-gradient(circle at 50% 50%, rgba(38, 166, 65, 0.2) 0%, transparent 70%)",
 				filter: "blur(50px)",
 			}}
 		/>
@@ -115,29 +109,14 @@ const ContributionCell = memo(
 		day,
 		getContributionColor,
 		isLoaded,
+		onHover,
 	}: {
 		day: ContributionDay;
 		getContributionColor: (level: number, isHovered: boolean) => string;
-		getGlowIntensity: (level: number) => number;
 		isLoaded: boolean;
+		onHover: (day: ContributionDay, rect: DOMRect | null) => void;
 	}) => {
-		const [isHovered, setIsHovered] = useState(false);
-		const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
 		const ref = useRef<HTMLDivElement>(null);
-
-		useEffect(() => {
-			if (isHovered && ref.current) {
-				const updateRect = () =>
-					setAnchorRect(ref.current?.getBoundingClientRect() ?? null);
-				updateRect();
-				window.addEventListener("scroll", updateRect, true);
-				window.addEventListener("resize", updateRect);
-				return () => {
-					window.removeEventListener("scroll", updateRect, true);
-					window.removeEventListener("resize", updateRect);
-				};
-			}
-		}, [isHovered]);
 
 		// Show placeholder cell structure
 		if (day.count < 0 || !isLoaded) {
@@ -147,46 +126,20 @@ const ContributionCell = memo(
 		}
 
 		return (
-			<>
-				<motion.div
-					ref={ref}
-					className="group relative h-[10px] w-[10px] rounded-sm border-[0.9px] border-gray-500/20"
-					style={{
-						backgroundColor: getContributionColor(day.level, isHovered),
-					}}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ duration: 0.3 }}
-					onHoverStart={() => setIsHovered(true)}
-					onHoverEnd={() => setIsHovered(false)}
-					whileHover={{
-						scale: 1.5,
-						zIndex: 10,
-						transition: { type: "spring", stiffness: 300, damping: 15 },
-					}}
-				/>
-				<TooltipPortal show={isHovered} anchorRect={anchorRect}>
-					<motion.div
-						className="-translate-x-1/2 z-50 mb-2 whitespace-nowrap rounded border border-emerald-500/20 bg-zinc-800/90 px-1.5 py-0.5 text-sm text-white shadow-lg"
-						initial={{ opacity: 0, y: 8, scale: 0.95 }}
-						animate={{ opacity: 1, y: 0, scale: 1 }}
-						exit={{ opacity: 0, y: 8, scale: 0.95 }}
-						transition={{ type: "spring", stiffness: 500, damping: 25 }}
-					>
-						<div className="flex items-center gap-2">
-							{day.level > 0 && (
-								<div
-									className="h-3 w-3 rounded-full"
-									style={{
-										backgroundColor: getContributionColor(day.level, true),
-									}}
-								/>
-							)}
-							<span>{day.tooltip}</span>
-						</div>
-					</motion.div>
-				</TooltipPortal>
-			</>
+			<motion.div
+				ref={ref}
+				className="group relative h-[10px] w-[10px] rounded-sm border-[0.9px] border-gray-500/20"
+				style={{
+					backgroundColor: getContributionColor(day.level, false), // Cell color handled by parent's isHovered check for simplicity or just keep it static for now as we don't need local isHovered
+				}}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.3 }}
+				onHoverStart={() => {
+					if (ref.current) onHover(day, ref.current.getBoundingClientRect());
+				}}
+				onHoverEnd={() => onHover(day, null)}
+			/>
 		);
 	},
 );
@@ -196,13 +149,13 @@ const ContributionWeek = memo(
 	({
 		week,
 		getContributionColor,
-		getGlowIntensity,
 		isLoaded,
+		onHover,
 	}: {
 		week: ContributionDay[];
 		getContributionColor: (level: number, isHovered: boolean) => string;
-		getGlowIntensity: (level: number) => number;
 		isLoaded: boolean;
+		onHover: (day: ContributionDay, rect: DOMRect | null) => void;
 	}) => (
 		<div className="grid grid-rows-7 gap-[2px]">
 			{week.map((day, dayIndex) => (
@@ -210,8 +163,8 @@ const ContributionWeek = memo(
 					key={day.date || `empty-${dayIndex}`}
 					day={day}
 					getContributionColor={getContributionColor}
-					getGlowIntensity={getGlowIntensity}
 					isLoaded={isLoaded}
+					onHover={onHover}
 				/>
 			))}
 		</div>
@@ -230,7 +183,97 @@ export default function GitCommitHistory() {
 	const [totalContributions, setTotalContributions] = useState(0);
 	const [currentStreak, setCurrentStreak] = useState(0);
 	const [longestStreak, setLongestStreak] = useState(0);
+	const [hoveredDay, setHoveredDay] = useState<ContributionDay | null>(null);
+	const [hoveredRect, setHoveredRect] = useState<DOMRect | null>(null);
+	const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+	// Centralized tooltip hover handler
+	const handleCellHover = useCallback(
+		(day: ContributionDay, rect: DOMRect | null) => {
+			if (rect) {
+				setHoveredDay(day);
+				setHoveredRect(rect);
+			} else {
+				setHoveredDay(null);
+				setHoveredRect(null);
+			}
+		},
+		[],
+	);
+
+	// Update rect if container scrolls while tooltip is open
+	useEffect(() => {
+		if (!hoveredDay || !scrollContainerRef.current) return;
+
+		const updateRect = () => {
+			// Find the active cell element to get its new viewport position
+			const cellElements = document.querySelectorAll(
+				'[class*="group relative h-[10px] w-[10px] rounded-sm"]',
+			);
+			for (const el of Array.from(cellElements)) {
+				// This is slightly expensive but works for now.
+				// Better: store a ref to the cell instead of just DOMRect.
+				// For now, let's just use the scroll listener to close or update.
+			}
+			// simplest approach to avoid stale tooltip on scroll: close it
+			setHoveredDay(null);
+			setHoveredRect(null);
+		};
+
+		const container = scrollContainerRef.current;
+		container.addEventListener("scroll", updateRect);
+		window.addEventListener("scroll", updateRect, true);
+		window.addEventListener("resize", updateRect);
+
+		return () => {
+			container.removeEventListener("scroll", updateRect);
+			window.removeEventListener("scroll", updateRect, true);
+			window.removeEventListener("resize", updateRect);
+		};
+	}, [hoveredDay]);
+
 	const [isLoaded, setIsLoaded] = useState(false);
+
+	// Memoize animation variants for better performance
+	const sectionVariants = useMemo(
+		() => ({
+			hidden: { opacity: 0, y: 20 },
+			visible: { opacity: 1, y: 0 },
+		}),
+		[],
+	);
+
+	const titleVariants = useMemo(
+		() => ({
+			hidden: { opacity: 0, x: -20 },
+			visible: { opacity: 1, x: 0 },
+		}),
+		[],
+	);
+
+	// Optimize particle rendering with useMemo
+	const titleParticles = useMemo(
+		() =>
+			[...Array(10)].map((_, i) => {
+				const randomX = (Math.random() - 0.5) * 50;
+				const randomY = (Math.random() - 0.5) * 50;
+				const duration = 0.8 + Math.random() * 0.5;
+				const delay = Math.random() * 0.2;
+				const width = Math.random() * 4 + 2;
+				const height = Math.random() * 4 + 2;
+
+				return {
+					randomX,
+					randomY,
+					duration,
+					delay,
+					width,
+					height,
+					key: `title-particle-${i}`,
+				};
+			}),
+		[],
+	);
 
 	// Memoized functions to avoid recreating on each render
 	const getContributionColor = useCallback(
@@ -242,11 +285,6 @@ export default function GitCommitHistory() {
 		},
 		[],
 	);
-
-	const getGlowIntensity = useCallback((level: number) => {
-		const safeLevel = Math.max(0, Math.min(level, GLOW_INTENSITIES.length - 1));
-		return GLOW_INTENSITIES[safeLevel] ?? 0;
-	}, []);
 
 	useEffect(() => {
 		let isMounted = true;
@@ -399,15 +437,20 @@ export default function GitCommitHistory() {
 	}, [contributions]);
 
 	return (
-		<div className="w-full">
+		<motion.div
+			className="w-full"
+			variants={sectionVariants}
+			initial="hidden"
+			animate="visible"
+			transition={{ duration: 0.6 }}
+		>
 			<motion.div
-				initial={{ opacity: 0, y: -5 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.3 }}
+				variants={titleVariants}
+				transition={{ duration: 0.5, delay: 0.2 }}
 				className="relative mb-2"
 			>
 				<motion.h2
-					className="relative mb-1 inline-block font-bold text-3xl"
+					className="relative mb-1 inline-block font-bold text-2xl"
 					whileHover={{ scale: 1.03 }}
 					transition={{ type: "spring", stiffness: 400, damping: 10 }}
 				>
@@ -426,48 +469,38 @@ export default function GitCommitHistory() {
 							whileHover={{ opacity: 1 }}
 						>
 							<AnimatePresence>
-								{[...Array(10)].map((_, i) => {
-									const randomX = (Math.random() - 0.5) * 50;
-									const randomY = (Math.random() - 0.5) * 50;
-									const duration = 0.8 + Math.random() * 0.5;
-									const delay = Math.random() * 0.2;
-									const width = Math.random() * 4 + 2;
-									const height = Math.random() * 4 + 2;
-
-									const uniqueKey = `title-particle-${i}-${randomX}-${randomY}-${width}-${height}`;
-									return (
-										<motion.div
-											key={uniqueKey}
-											className="absolute rounded-full bg-green-300"
-											initial={{
-												opacity: 0,
-												scale: 0,
-												x: 0,
-												y: 0,
-											}}
-											whileHover={{
-												opacity: [0, 0.8, 0],
-												scale: [0, 1, 0],
-												x: [0, randomX],
-												y: [0, randomY],
-											}}
-											transition={{
-												duration: duration,
-												repeat: Number.POSITIVE_INFINITY,
-												delay: delay,
-												repeatType: "loop",
-											}}
-											style={{
-												left: "50%",
-												top: "50%",
-												width: `${width}px`,
-												height: `${height}px`,
-												filter: "blur(1px)",
-												willChange: "transform, opacity",
-											}}
-										/>
-									);
-								})}
+								{titleParticles.map((particle) => (
+									<motion.div
+										key={particle.key}
+										className="absolute rounded-full bg-green-300"
+										initial={{
+											opacity: 0,
+											scale: 0,
+											x: 0,
+											y: 0,
+										}}
+										whileHover={{
+											opacity: [0, 0.8, 0],
+											scale: [0, 1, 0],
+											x: [0, particle.randomX],
+											y: [0, particle.randomY],
+										}}
+										transition={{
+											duration: particle.duration,
+											repeat: Number.POSITIVE_INFINITY,
+											delay: particle.delay,
+											repeatType: "loop",
+										}}
+										style={{
+											left: "50%",
+											top: "50%",
+											width: `${particle.width}px`,
+											height: `${particle.height}px`,
+											filter: "blur(1px)",
+											willChange: "transform, opacity",
+										}}
+									/>
+								))}
 							</AnimatePresence>
 						</motion.div>
 					</span>
@@ -479,31 +512,17 @@ export default function GitCommitHistory() {
 				<BackgroundGradient />
 				{/* Header with stats - simplified */}
 				<div className="relative z-10">
-					<motion.div className="mb-1 flex items-center gap-1">
-						<h3 className="font-medium text-green-400 text-xs">
-							{isLoaded ? (
-								<>
-									{totalContributions.toLocaleString()} contributions in the
-									last year
-								</>
-							) : (
-								<>
-									<StatSkeleton /> contributions in the last year
-								</>
-							)}
-						</h3>
-					</motion.div>
 					<motion.div className="mb-2 grid grid-cols-2 gap-1 text-[10px]">
 						<div className="flex items-center gap-1 rounded p-1">
 							<div className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-zinc-800/30">
 								<svg
-									fill="#81C784"
+									fill="#fb923c"
 									height="8px"
 									width="8px"
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 24 24"
 									xmlSpace="preserve"
-									className="text-emerald-400"
+									className="text-[#fb923c]"
 								>
 									<title>Current Streak Icon</title>
 									<path
@@ -541,7 +560,7 @@ export default function GitCommitHistory() {
 									width="1em"
 									height="1em"
 									viewBox="0 0 24 24"
-									className="text-emerald-400"
+									className="text-[#fbbf24]"
 								>
 									<title>Longest Streak Icon</title>
 									<path
@@ -575,7 +594,10 @@ export default function GitCommitHistory() {
 				</div>
 
 				{/* Contribution graph with minimal effects */}
-				<div className="scrollbar-thin scrollbar-thumb-zinc-700/30 scrollbar-track-transparent relative z-10 overflow-x-auto">
+				<div
+					ref={scrollContainerRef}
+					className="scrollbar-thin scrollbar-thumb-zinc-700/30 scrollbar-track-transparent relative z-10 overflow-x-auto"
+				>
 					<div className="min-w-[700px]">
 						<div className="flex">
 							<div className="relative flex-1">
@@ -607,24 +629,60 @@ export default function GitCommitHistory() {
 												key={weekKey}
 												week={week}
 												getContributionColor={getContributionColor}
-												getGlowIntensity={getGlowIntensity}
 												isLoaded={isLoaded}
+												onHover={handleCellHover}
 											/>
 										);
 									})}
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
 
-						{/* Legend - simplified */}
-						<div className="mt-1 flex items-center justify-end text-[8px] text-zinc-500/70">
-							<span className="mr-1">Less</span>
-							<div className="flex items-center gap-[2px]">{legendItems}</div>
-							<span className="ml-1">More</span>
+				<TooltipPortal show={!!hoveredDay} anchorRect={hoveredRect}>
+					{hoveredDay && (
+						<div
+							className="whitespace-nowrap rounded px-1 py-0.5 font-medium text-white"
+							style={{
+								backgroundColor: "#1b1f23",
+								boxShadow:
+									"0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15)",
+								fontSize: "10px",
+							}}
+						>
+							<strong>{hoveredDay.count}</strong> contribution
+							{hoveredDay.count !== 1 ? "s" : ""} on{" "}
+							{new Date(hoveredDay.date).toLocaleDateString("en-US", {
+								month: "short",
+								day: "numeric",
+								year: "numeric",
+							})}
 						</div>
+					)}
+				</TooltipPortal>
+
+				{/* Legend & Stats - fixed at bottom */}
+				<div className="mt-2 flex items-center justify-between text-[10px] text-white">
+					<div className="font-medium">
+						{isLoaded ? (
+							<>
+								This year, I achieved {totalContributions.toLocaleString()}{" "}
+								contributions
+							</>
+						) : (
+							<>
+								This year, I achieved <StatSkeleton /> contributions
+							</>
+						)}
+					</div>
+					<div className="flex items-center">
+						<span className="mr-1">Less</span>
+						<div className="flex items-center gap-[2px]">{legendItems}</div>
+						<span className="ml-1">More</span>
 					</div>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	);
 }

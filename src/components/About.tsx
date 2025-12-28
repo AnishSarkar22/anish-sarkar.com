@@ -148,7 +148,7 @@ export default function About() {
 	return (
 		<motion.section
 			ref={sectionRef}
-			className="relative mb-16 space-y-6 overflow-hidden rounded-xl p-4 will-change-transform"
+			className="relative mb-16 w-full space-y-6 overflow-hidden will-change-transform"
 			variants={sectionVariants}
 			initial="hidden"
 			animate="visible"
@@ -160,7 +160,7 @@ export default function About() {
 				className="relative"
 			>
 				<motion.h2
-					className="relative mb-2 inline-block font-bold text-3xl"
+					className="relative mb-2 inline-block font-bold text-2xl"
 					whileHover={{ scale: 1.03 }}
 					transition={{ type: "spring", stiffness: 400, damping: 10 }}
 				>

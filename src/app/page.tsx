@@ -287,7 +287,7 @@ export default function HomePage() {
 
 								{/* Orbital ring */}
 								<motion.div
-									className="-inset-2 absolute rounded-full opacity-0"
+									className="-inset-1 absolute rounded-full opacity-0"
 									animate={{
 										opacity: hoverProfile ? 0.7 : 0,
 										rotate: [0, 360],
@@ -308,7 +308,7 @@ export default function HomePage() {
 
 								{/* Pulsing glow */}
 								<motion.div
-									className="-inset-1.5 absolute rounded-full"
+									className="-inset-0 absolute rounded-full"
 									animate={{
 										boxShadow: hoverProfile
 											? [
@@ -324,37 +324,6 @@ export default function HomePage() {
 									}}
 									transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
 								/>
-
-								{/* Rotating cosmic border */}
-								<motion.div
-									className="-inset-0.5 absolute rounded-full opacity-70"
-									style={{
-										background:
-											"conic-gradient(from 0deg, rgba(52, 211, 153, 0), rgba(52, 211, 153, 0.8), rgba(52, 211, 153, 0))",
-									}}
-									animate={{ rotate: [0, 360] }}
-									transition={{
-										duration: 8,
-										repeat: Number.POSITIVE_INFINITY,
-										ease: "linear",
-									}}
-								/>
-
-								{/* Secondary rotating border (opposite direction) */}
-								<motion.div
-									className="-inset-1 absolute rounded-full opacity-30"
-									style={{
-										background:
-											"conic-gradient(from 180deg, rgba(52, 211, 153, 0), rgba(52, 211, 153, 0.4), rgba(52, 211, 153, 0))",
-									}}
-									animate={{ rotate: [360, 0] }}
-									transition={{
-										duration: 12,
-										repeat: Number.POSITIVE_INFINITY,
-										ease: "linear",
-									}}
-								/>
-
 								<div className="relative z-10 flex items-center justify-center overflow-hidden rounded-full border-2 border-green-300/30">
 									<motion.div
 										whileHover={{
@@ -365,89 +334,6 @@ export default function HomePage() {
 										}}
 										transition={{ duration: 0.3 }}
 									>
-										{/* Cosmic energy rays on hover */}
-										<motion.div
-											className="pointer-events-none absolute inset-0 z-20"
-											initial={{ opacity: 0 }}
-											whileHover={{ opacity: 1 }}
-										>
-											{[...Array(12)].map((_, i) => (
-												<motion.div
-													key={`avatar-ray-${i}-${Math.random().toString(36).substr(2, 9)}`}
-													className="absolute top-1/2 left-1/2 h-[1px] w-full origin-left"
-													style={{
-														rotate: `${i * 30}deg`,
-														background:
-															"linear-gradient(90deg, rgba(52, 211, 153, 0.8) 0%, rgba(52, 211, 153, 0) 100%)",
-														opacity: 0,
-													}}
-													whileHover={{
-														opacity: [0, 0.8, 0],
-														scaleX: [0, 1.5, 0],
-													}}
-													transition={{
-														duration: 1.5,
-														repeat: Number.POSITIVE_INFINITY,
-														delay: i * 0.1,
-														repeatDelay: 0.5,
-													}}
-												/>
-											))}
-										</motion.div>
-
-										{/* Cosmic energy burst on hover */}
-										<motion.div
-											className="pointer-events-none absolute inset-0 z-10 rounded-full"
-											initial={{ opacity: 0 }}
-											whileHover={{ opacity: 1 }}
-										>
-											<motion.div
-												className="absolute inset-0 rounded-full"
-												style={{
-													background:
-														"radial-gradient(circle, rgba(52, 211, 153, 0.4) 0%, rgba(52, 211, 153, 0) 70%)",
-												}}
-												whileHover={{
-													scale: [1, 1.5, 1],
-													opacity: [0, 0.8, 0],
-												}}
-												transition={{
-													duration: 2,
-													repeat: Number.POSITIVE_INFINITY,
-												}}
-											/>
-
-											{/* Cosmic particles explosion */}
-											{[...Array(20)].map((_, i) => (
-												<motion.div
-													key={`avatar-particle-${i}-${Math.random().toString(36).substr(2, 9)}`}
-													className="absolute h-1 w-1 rounded-full bg-green-300"
-													style={{
-														top: "50%",
-														left: "50%",
-														opacity: 0,
-													}}
-													whileHover={{
-														opacity: [0, 1, 0],
-														scale: [0, 0.5 + ((i * 0.1) % 2), 0],
-														x: [
-															0,
-															((i % 2 === 0 ? 1 : -1) * (15 + i * 2)) % 60,
-														],
-														y: [
-															0,
-															((i % 3 === 0 ? 1 : -1) * (10 + i * 3)) % 60,
-														],
-													}}
-													transition={{
-														duration: 1 + ((i * 0.1) % 1),
-														repeat: Number.POSITIVE_INFINITY,
-														delay: (i * 0.1) % 0.5,
-													}}
-												/>
-											))}
-										</motion.div>
-
 										{/* Holographic overlay effect */}
 										<motion.div
 											className="pointer-events-none absolute inset-0 rounded-full mix-blend-overlay"
@@ -479,23 +365,6 @@ export default function HomePage() {
 
 										{/* Cosmic energy overlay */}
 										<motion.div className="absolute inset-0 bg-gradient-to-tr from-green-500/10 to-transparent opacity-0 transition-opacity duration-300 hover:opacity-60" />
-
-										{/* Cosmic flare effect */}
-										<motion.div
-											className="absolute inset-0 bg-white opacity-0"
-											animate={
-												hoverProfile
-													? {
-															opacity: [0, 0.3, 0],
-															scale: [0.8, 1.2, 0.8],
-														}
-													: {}
-											}
-											transition={{
-												duration: 1.5,
-												repeat: hoverProfile ? 1 : 0,
-											}}
-										/>
 									</motion.div>
 								</div>
 							</motion.div>
