@@ -74,14 +74,9 @@ export default function Projects() {
 
 			<div className="relative z-10 flex-1">
 				{/* Ultra-enhanced header with animated styling */}
-				<motion.div
-					// initial={{ opacity: 0, y: -20 }}
-					// animate={{ opacity: 1, y: 0 }}
-					// transition={{ duration: 0.6 }}
-					className="mb-16"
-				>
+				<motion.div className="mb-16">
 					<motion.h1
-						className="relative mb-2 inline-block font-bold text-3xl md:text-5xl"
+						className="relative mb-2 inline-block font-bold font-pixel text-3xl md:text-5xl"
 						whileHover={{ scale: 1.03 }}
 						transition={{ type: "spring", stiffness: 400, damping: 10 }}
 					>

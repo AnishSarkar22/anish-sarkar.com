@@ -9,6 +9,7 @@ export type Metadata = {
 	date: string;
 	discussionId?: string;
 	readingTime?: number;
+	image?: string;
 };
 
 export type FrontmatterParseResult = {
@@ -79,7 +80,7 @@ export const fetchBlogPosts = cache(async (): Promise<MDXFileData[]> => {
 // Function to get all blog slugs
 export const getAllBlogSlugs = cache(async (): Promise<string[]> => {
 	const posts = await fetchBlogPosts();
-	return posts.map((post) => post.slug);
+	return posts.map((post: MDXFileData) => post.slug);
 });
 
 // Function to get posts by slug
@@ -89,10 +90,11 @@ export const getPostBySlug = cache(
 		const posts = await fetchBlogPosts();
 		console.log(
 			"Available posts:",
-			posts.map((p) => p.slug),
+			posts.map((p: MDXFileData) => p.slug),
 		);
 
-		const foundPost = posts.find((post) => post.slug === slug) ?? null;
+		const foundPost =
+			posts.find((post: MDXFileData) => post.slug === slug) ?? null;
 		console.log("Found post:", foundPost);
 
 		return foundPost;

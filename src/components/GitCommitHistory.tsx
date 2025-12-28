@@ -450,7 +450,7 @@ export default function GitCommitHistory() {
 				className="relative mb-2"
 			>
 				<motion.h2
-					className="relative mb-1 inline-block font-bold text-2xl"
+					className="relative mb-1 inline-block font-bold font-pixel text-2xl"
 					whileHover={{ scale: 1.03 }}
 					transition={{ type: "spring", stiffness: 400, damping: 10 }}
 				>

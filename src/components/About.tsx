@@ -160,7 +160,7 @@ export default function About() {
 				className="relative"
 			>
 				<motion.h2
-					className="relative mb-2 inline-block font-bold text-2xl"
+					className="relative mb-2 inline-block font-bold font-pixel text-2xl"
 					whileHover={{ scale: 1.03 }}
 					transition={{ type: "spring", stiffness: 400, damping: 10 }}
 				>
@@ -272,7 +272,7 @@ export default function About() {
 						borderRadius: "6px",
 						padding: "4px 8px",
 						height: "28px",
-						
+
 						boxShadow: `
 							0px 4px 10px -2px rgba(0, 0, 0, 0.5),
 							0px 0px 0px 1px rgba(0, 0, 0, 0.2),
@@ -337,7 +337,7 @@ export default function About() {
 						borderRadius: "6px",
 						padding: "4px 8px",
 						height: "28px",
-						
+
 						boxShadow: `
 							0px 4px 10px -2px rgba(0, 0, 0, 0.5),
 							0px 0px 0px 1px rgba(0, 0, 0, 0.2),

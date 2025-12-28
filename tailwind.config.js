@@ -7,8 +7,9 @@ const config = {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ["var(--font-geist-sans)"],
-				mono: ["var(--font-geist-mono)"],
+				sans: ["var(--font-jetbrains-mono)"],
+				mono: ["var(--font-jetbrains-mono)"],
+				pixel: ["var(--font-pixelify-sans)"],
 			},
 			colors: {
 				background: "#000000",

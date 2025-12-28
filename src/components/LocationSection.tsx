@@ -210,7 +210,7 @@ export default function LocationSection() {
 			animate="visible"
 		>
 			<motion.h1
-				className="relative inline-block font-bold text-2xl text-white"
+				className="relative inline-block font-bold font-pixel text-2xl text-white"
 				variants={titleVariants}
 				transition={{ type: "spring", stiffness: 400, damping: 10 }}
 				whileHover={{ scale: 1.03 }}
@@ -327,7 +327,7 @@ export default function LocationSection() {
 								/>
 							</g>
 						</svg>
-						<motion.h2 className="font-medium text-white text-xl">
+						<motion.h2 className="font-medium font-pixel text-white text-xl">
 							Kolkata, West Bengal, India
 						</motion.h2>
 					</div>

@@ -424,7 +424,7 @@ export default function HobbySection() {
 			<BackgroundGradient />
 
 			<motion.h1
-				className="relative inline-block font-bold text-2xl text-white"
+				className="relative inline-block font-bold font-pixel text-2xl text-white"
 				variants={titleVariants}
 				whileHover={{ scale: 1.03 }}
 				transition={{ type: "spring", stiffness: 400, damping: 10 }}

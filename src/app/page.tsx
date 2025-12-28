@@ -148,7 +148,7 @@ export default function HomePage() {
 			</script>
 			<main className="relative mx-auto flex min-h-screen max-w-3xl flex-col p-8 text-white md:p-16 lg:p-24">
 				{/* Background elements */}
-				<div className="-z-10 fixed inset-0 bg-black">
+				<div className="-z-10 fixed inset-0 bg-transparent">
 					<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)]" />
 					<motion.div
 						className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-transparent via-green-300/30 to-transparent"

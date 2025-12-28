@@ -161,25 +161,13 @@ export default function BlogPostClient({
 					</motion.div>
 
 					<motion.h3
-						className="relative mb-4 font-medium text-3xl"
+						className="relative mb-4 font-medium text-3xl text-white"
 						initial={{ opacity: 0 }}
 						whileInView={{ opacity: 1 }}
 						transition={{ delay: 0.4 }}
 						viewport={{ once: true }}
 					>
-						<span className="relative z-10 bg-gradient-to-r from-green-300 via-emerald-300 to-teal-300 bg-clip-text text-transparent">
-							Enjoyed this?
-						</span>
-						<motion.span
-							className="-bottom-2 -translate-x-1/2 absolute left-1/2 h-1 w-36 rounded-full opacity-20"
-							style={{
-								background: "linear-gradient(to right, #10b981, #34d399)",
-							}}
-							initial={{ width: 0 }}
-							whileInView={{ width: "36%" }}
-							// transition={{ delay: 0.8, duration: 1 }}
-							viewport={{ once: true }}
-						/>
+						Enjoyed this?
 					</motion.h3>
 
 					<motion.p
@@ -233,12 +221,12 @@ export default function BlogPostClient({
 							href="https://x.com/intent/post"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="inline-flex items-center rounded-full border border-green-300/20 bg-gradient-to-r from-green-300/10 to-emerald-500/10 px-5 py-2.5 text-green-300 text-sm backdrop-blur-sm transition-all hover:from-green-300/20 hover:to-emerald-500/20"
-							onClick={() => handleSocialShare("twitter", window.location.href)} // for posthog analytics
+							className="inline-flex items-center rounded-full border border-zinc-800/50 bg-zinc-900/50 px-5 py-2.5 text-zinc-300 text-sm backdrop-blur-sm transition-all hover:bg-zinc-800/70"
+							onClick={() => handleSocialShare("twitter", window.location.href)}
 							whileHover={{
 								scale: 1.05,
 								y: -2,
-								boxShadow: "0 10px 25px -5px rgba(52, 211, 153, 0.3)",
+								boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)",
 							}}
 							whileTap={{ scale: 0.98 }}
 						>

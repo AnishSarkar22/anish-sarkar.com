@@ -1,6 +1,6 @@
 import "~/styles/globals.css";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono, Pixelify_Sans } from "next/font/google";
 import { Suspense } from "react";
 import NavBar from "~/components/NavBar";
 import NavTooltips from "~/components/NavTooltips";
@@ -11,14 +11,14 @@ import { env } from "~/env";
 
 const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://anish-sarkar.com";
 
-const geistSans = Geist({
+const jetbrainsMono = JetBrains_Mono({
 	subsets: ["latin"],
-	variable: "--font-geist-sans",
+	variable: "--font-jetbrains-mono",
 });
 
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
+const pixelifySans = Pixelify_Sans({
 	subsets: ["latin"],
+	variable: "--font-pixelify-sans",
 });
 
 export const metadata: Metadata = {
@@ -86,7 +86,7 @@ export default function RootLayout({
 	return (
 		<html lang="en" className="dark">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} relative overflow-x-hidden bg-black font-mono text-foreground antialiased`}
+				className={`${jetbrainsMono.variable} ${pixelifySans.variable} relative overflow-x-hidden font-sans text-foreground antialiased`}
 			>
 				{/* NavBar wrapper */}
 				<div className="relative z-50">

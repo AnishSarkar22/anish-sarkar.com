@@ -245,7 +245,7 @@ export default function Socials() {
 		>
 			{/* Heading */}
 			<motion.h1
-				className="relative inline-block font-bold text-2xl text-white"
+				className="relative inline-block font-bold font-pixel text-2xl text-white"
 				initial={false}
 				animate={{
 					opacity: 1,

@@ -514,7 +514,7 @@ const CategorySection = memo(
 		return (
 			<div className="mb-10">
 				<motion.h2
-					className="relative mb-4 inline-block font-semibold text-white/90 text-xl"
+					className="relative mb-4 inline-block font-pixel font-semibold text-white/90 text-xl"
 					initial={{ opacity: 0, x: -10 }}
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5 }}
@@ -584,7 +584,7 @@ export default function SkillsSection() {
 			animate="visible"
 		>
 			<motion.h1
-				className="relative inline-block font-bold text-2xl text-white"
+				className="relative inline-block font-bold font-pixel text-2xl text-white"
 				variants={titleVariants}
 				whileHover={{ scale: 1.03 }}
 				transition={{ type: "spring", stiffness: 400, damping: 10 }}

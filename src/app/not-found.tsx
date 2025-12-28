@@ -15,55 +15,7 @@ export default function NotFound() {
 	}, []);
 
 	return (
-		<main className="relative min-h-screen overflow-hidden bg-black text-white">
-			{/* Glitch background */}
-			<div className="-z-10 fixed inset-0">
-				{/* Digital noise overlay */}
-				<div
-					className="glitch-overlay absolute inset-0 opacity-[0.15]"
-					style={{
-						backgroundImage:
-							"url('data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E')",
-					}}
-				/>
-
-				{/* Grid pattern */}
-				<div className="absolute inset-0 opacity-10">
-					<div
-						className="h-full w-full"
-						style={{
-							backgroundImage:
-								"linear-gradient(rgba(52,211,153,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(52,211,153,0.1) 1px, transparent 1px)",
-							backgroundSize: "50px 50px",
-						}}
-					/>
-				</div>
-
-				{/* Glitch color overlays */}
-				<motion.div
-					className="absolute inset-0 mix-blend-screen"
-					animate={{
-						opacity: glitchActive ? [0, 0.3, 0] : 0,
-					}}
-					transition={{ duration: 0.2 }}
-					style={{
-						background:
-							"linear-gradient(90deg, transparent, rgba(52,211,153,0.5), transparent)",
-					}}
-				/>
-				<motion.div
-					className="absolute inset-0 mix-blend-screen"
-					animate={{
-						opacity: glitchActive ? [0, 0.3, 0] : 0,
-					}}
-					transition={{ duration: 0.2, delay: 0.05 }}
-					style={{
-						background:
-							"linear-gradient(90deg, transparent, rgba(107,114,128,0.4), transparent)",
-					}}
-				/>
-			</div>
-
+		<main className="relative min-h-screen overflow-hidden text-white">
 			{/* Content */}
 			<div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4">
 				{/* Error message with glitch */}
@@ -155,31 +107,6 @@ export default function NotFound() {
 					<span className="absolute bottom-2 left-2 text-gray-500/50">[</span>
 					<span className="absolute right-2 bottom-2 text-gray-500/50">]</span>
 				</motion.button>
-
-				{/* Binary code rain effect */}
-				<div className="pointer-events-none absolute inset-0 overflow-hidden opacity-20">
-					{Array.from({ length: 20 }).map((_, i) => (
-						<motion.div
-							key={i}
-							className="absolute font-mono text-green-300/60 text-xs"
-							style={{
-								left: `${(i * 5) % 100}%`,
-								top: "-10%",
-							}}
-							animate={{
-								y: ["0vh", "110vh"],
-							}}
-							transition={{
-								duration: Math.random() * 3 + 2,
-								repeat: Number.POSITIVE_INFINITY,
-								delay: Math.random() * 2,
-								ease: "linear",
-							}}
-						>
-							{Math.random() > 0.5 ? "1" : "0"}
-						</motion.div>
-					))}
-				</div>
 			</div>
 		</main>
 	);

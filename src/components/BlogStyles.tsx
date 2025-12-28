@@ -45,29 +45,30 @@ export default function BlogStyles() {
 
       /* Links */
       .blog-content a {
-        color: #86efac;
-        text-decoration: none;
-        font-weight: 500;
+        color: #f9fafb;
+        font-weight: 800;
+        transition: all 0.2s ease;
       }
 
       .blog-content a:hover {
-        color: #4ade80;
+        color: #ffffff;
+        text-decoration-color: rgba(255, 255, 255, 0.8);
       }
 
       /* Code blocks */
       .blog-content pre {
-        margin: 2.5rem 0;
-        border-radius: 12px;
+        margin: 0 !important;
+        border-radius: 0 0 12px 12px;
         overflow-x: auto;
         overflow-y: hidden;
         white-space: pre;
         -webkit-overflow-scrolling: touch;
-        background: rgba(0, 0, 0, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #121212 !important;
+        border: none !important;
       }
       .blog-content pre code {
         display: block;
-        padding: 1.5rem;
+        padding: 1.25rem 1.5rem;
         font-family: "JetBrains Mono", monospace;
         font-size: 0.95rem;
         line-height: 1.7;
@@ -77,25 +78,42 @@ export default function BlogStyles() {
       /* Override global scrollbar hide for code blocks */
       .blog-content pre::-webkit-scrollbar {
         display: block;
-        height: 10px;
+        height: 8px;
       }
       .blog-content pre::-webkit-scrollbar-thumb {
         background: rgba(255,255,255,0.08);
-        border-radius: 6px;
+        border-radius: 4px;
       }
       /* Firefox */
       .blog-content pre {
         scrollbar-width: thin;
         scrollbar-color: rgba(255,255,255,0.08) transparent;
       }
-      /* Code block wrapper for copy button */
+      /* Code block wrapper for header and code */
       .code-block-container {
-        position: relative; /* keep for absolute button */
-        overflow: visible; /* allow button to sit outside pre if needed */
+        border-radius: 12px;
+        background: #000000;
+        border: 1px solid rgba(63, 63, 70, 0.4);
+        box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+      .code-block-header {
+        background: #000000;
+        border-bottom: 1px solid rgba(63, 63, 70, 0.4);
+      }
+      .code-block-title {
+        opacity: 0.8;
+        letter-spacing: 0.05em;
+        text-transform: lowercase;
       }
       .code-block-container .copy-btn {
-        z-index: 60;
         touch-action: manipulation;
+        opacity: 0.7;
+        transition: all 0.2s ease;
+      }
+      .code-block-container .copy-btn:hover {
+        opacity: 0.9;
+        transform: scale(1.02);
       }
       /* Ensure pre still scrolls horizontally */
       .code-block-container pre {
@@ -106,7 +124,6 @@ export default function BlogStyles() {
       .blog-content code:not(pre code) {
         font-family: "JetBrains Mono", monospace;
         background: rgba(255, 255, 255, 0.1);
-        color: #86efac;
         padding: 0.2rem 0.5rem;
         border-radius: 4px;
         font-size: 0.9em;
@@ -142,12 +159,29 @@ export default function BlogStyles() {
         border-bottom: none;
       }
 
-      /* Images */
+      /* Images and Captions */
       .blog-content img {
-        border-radius: 8px;
+        border-radius: 12px;
         max-width: 100%;
         height: auto;
-        margin: 2.5rem 0;
+        display: block;
+        margin: 0;
+        box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+      }
+
+      .image-container {
+        margin: 3rem 0;
+        width: 100%;
+      }
+
+      .image-caption {
+        color: #71717a; /* Zinc 500 */
+        font-size: 0.85rem;
+        margin-top: 1rem;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: -0.01em;
+        text-align: center;
+        opacity: 0.8;
       }
 
       /* Horizontal rule */
@@ -288,14 +322,52 @@ export default function BlogStyles() {
       /* Blockquotes */
       .blog-content blockquote {
         margin: 2.5rem 0;
-        padding: 1.5rem 1.75rem;
-        border-left: 4px solid rgba(255, 255, 255, 0.15);
-        background: rgba(255, 255, 255, 0.07);
-        border-radius: 0 8px 8px 0;
+        padding: 2rem 2.25rem;
+        background: rgba(24, 24, 27, 0.4);
+        border: 1px solid rgba(63, 63, 70, 0.4);
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
       }
+      
+      .blog-content blockquote::before {
+        content: "";
+        position: absolute;
+        top: -4.5rem;
+        right: -1.25rem;
+        width: 140px;
+        height: 140px;
+        background-color: rgba(255, 255, 255, 0.05);
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M20.309 17.708C22.196 15.66 22.006 13.03 22 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.9 2.9 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292m-11.007 0C11.19 15.66 10.999 13.03 10.993 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.9 2.9 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292'/%3E%3C/svg%3E");
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M20.309 17.708C22.196 15.66 22.006 13.03 22 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.9 2.9 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292m-11.007 0C11.19 15.66 10.999 13.03 10.993 13V5a1 1 0 0 0-1-1h-6c-1.103 0-2 .897-2 2v7a1 1 0 0 0 1 1h3.078a2.9 2.9 0 0 1-.429 1.396c-.508.801-1.465 1.348-2.846 1.624l-.803.16V20h1c2.783 0 4.906-.771 6.309-2.292'/%3E%3C/svg%3E");
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        transform: rotate(-12deg);
+        pointer-events: none;
+        z-index: 0;
+      }
+
       .blog-content blockquote p {
-        font-style: italic;
-        color: #d1d5db;
+        position: relative;
+        z-index: 1;
+        font-style: normal !important;
+        color: #d1d5db !important;
+        line-height: 1.8;
+        margin: 0;
+      }
+
+      .blog-content blockquote p::before,
+      .blog-content blockquote p::after {
+        content: none !important;
+      }
+
+      .blog-content blockquote strong {
+        color: #ffffff;
+        font-weight: 700;
       }
       /* Blockquotes - simplified hover */
       /* .blog-content blockquote {

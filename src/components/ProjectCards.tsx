@@ -90,7 +90,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 								/>
 							</svg>
 						</motion.div>
-						<h3 className="mb-2 font-medium text-white/80 text-xl">
+						<h3 className="mb-2 font-medium font-pixel text-white/80 text-xl">
 							No projects found
 						</h3>
 						<p className="text-gray-400/70 text-sm">
@@ -224,7 +224,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 											{/* Minimalist title with elegant underline effect */}
 											<div className="overflow-hidden">
 												<motion.h3
-													className="inline-block font-medium text-base md:text-xl"
+													className="inline-block font-medium font-pixel text-xl md:text-2xl"
 													animate={{
 														color: isHovered ? "#86efac" : "#ffffff",
 													}}
@@ -327,11 +327,7 @@ export function ProjectCards({ activeCategory = "All" }: ProjectCardsProps) {
 											{project.technologies.map((tech) => (
 												<span
 													key={tech}
-													className={`rounded-full border px-2.5 py-0.5 text-xs ${
-														tech === activeCategory
-															? "border-green-400/50 text-green-400"
-															: "border-zinc-800/30 text-zinc-400"
-													}`}
+													className="rounded-full border border-zinc-800/60 px-2.5 py-0.5 text-xs text-zinc-400"
 												>
 													{tech}
 												</span>

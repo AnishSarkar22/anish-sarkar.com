@@ -50,19 +50,17 @@ const NavBar = () => {
 				transition={{ duration: 0.5, delay: 0.2 }}
 			>
 				<motion.div
-					className={`relative w-fit overflow-hidden rounded-full border border-zinc-800 shadow-lg backdrop-blur-md ${
+					className={`relative w-fit overflow-hidden rounded-full shadow-lg backdrop-blur-md ${
 						scrolled ? "bg-zinc-900/80" : "bg-zinc-900/60"
 					}`}
 					whileHover={{
 						scale: 1.02,
-						boxShadow:
-							"0 20px 30px -10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(134, 239, 172, 0.4)",
+						boxShadow: "0 20px 30px -10px rgba(0, 0, 0, 0.7)",
 					}}
 					animate={{
 						width: "auto",
 						height: "auto",
-						boxShadow:
-							"0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(134, 239, 172, 0.3)",
+						boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5)",
 					}}
 					transition={{
 						type: "spring",
@@ -73,17 +71,17 @@ const NavBar = () => {
 					}}
 				>
 					{/* Cosmic background effect */}
-					<motion.div
+					{/* <motion.div
 						className="-z-10 absolute inset-0 opacity-30"
 						animate={{
 							background:
 								"radial-gradient(circle at center, rgba(134, 239, 172, 0.3), transparent 80%)",
 						}}
 						transition={{ duration: 0.5 }}
-					/>
+					/> */}
 
 					{/* Animated particles in background */}
-					<div className="-z-10 absolute inset-0 overflow-hidden">
+					{/* <div className="-z-10 absolute inset-0 overflow-hidden">
 						{[...Array(8)].map(() => {
 							const key = `particle-${Math.random().toString(36).substr(2, 9)}`;
 							return (
@@ -108,10 +106,10 @@ const NavBar = () => {
 								/>
 							);
 						})}
-					</div>
+					</div> */}
 
 					{/* Animated border glow */}
-					<motion.div
+					{/* <motion.div
 						className="-z-5 pointer-events-none absolute inset-0 rounded-full"
 						animate={{
 							boxShadow: [
@@ -125,7 +123,7 @@ const NavBar = () => {
 							repeat: Number.POSITIVE_INFINITY,
 							repeatType: "reverse",
 						}}
-					/>
+					/> */}
 
 					{/* Expanded state - show full navbar */}
 					<motion.div
@@ -485,162 +483,24 @@ const NavItem = ({
 				: {})}
 		>
 			{/* Cosmic background effect */}
-			<motion.div
-				className={`absolute inset-0 overflow-hidden rounded-full ${
-					isActive || isHovered ? "opacity-100" : "opacity-0"
-				}`}
-				initial={{ opacity: 0 }}
-				animate={{
-					opacity: isActive || isHovered ? 1 : 0,
-					scale: isActive || isHovered ? 1 : 0.8,
-				}}
-				transition={{
-					duration: 0.3,
-					type: "spring",
-					stiffness: 500,
-					damping: 15,
-				}}
-			>
-				<motion.div
-					className="absolute inset-0 bg-gradient-to-r from-green-300 to-emerald-400 opacity-80"
-					animate={{
-						background:
-							isHovered && !isActive
-								? "linear-gradient(135deg, rgba(134, 239, 172, 0.9), rgba(110, 231, 183, 0.9))"
-								: "linear-gradient(135deg, rgba(134, 239, 172, 0.8), rgba(110, 231, 183, 0.8))",
-					}}
-					transition={{ duration: 0.5 }}
-				/>
-				<motion.div
-					className="absolute inset-0"
-					animate={{
-						background: [
-							"radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, transparent 50%)",
-							"radial-gradient(circle at 70% 70%, rgba(255,255,255,0.8) 0%, transparent 50%)",
-							"radial-gradient(circle at 30% 70%, rgba(255,255,255,0.8) 0%, transparent 50%)",
-							"radial-gradient(circle at 70% 30%, rgba(255,255,255,0.8) 0%, transparent 50%)",
-							"radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, transparent 50%)",
-						],
-					}}
-					transition={{
-						duration: 8,
-						repeat: Number.POSITIVE_INFINITY,
-						ease: "linear",
-					}}
-				/>
-			</motion.div>
 
-			{/* Main button background with glow */}
-			<motion.div
-				className={`absolute inset-0 rounded-full ${
-					isActive || isHovered ? "bg-green-300" : "bg-zinc-800"
-				}`}
-				initial={{ opacity: 0, scale: 0.8 }}
-				animate={{
-					opacity: isActive || isHovered ? 1 : 0,
-					scale: isActive || isHovered ? 1 : 0.8,
-					boxShadow:
-						isActive || isHovered
-							? "0 0 30px rgba(134,239,172,0.9), inset 0 0 15px rgba(255,255,255,0.5)"
-							: "none",
-				}}
-				transition={{
-					type: "spring",
-					stiffness: 500,
-					damping: 15,
-				}}
-			/>
-
-			{/* Multiple animated rings */}
-			{(isActive || isHovered) && (
-				<>
-					<motion.div
-						className="absolute inset-0 rounded-full border-2 border-green-300/50"
-						initial={{ opacity: 0, scale: 0.6 }}
-						animate={{
-							opacity: [0.7, 0.5, 0.7],
-							scale: [1.1, 1.2, 1.1],
-							rotate: [0, 180, 360],
-						}}
-						transition={{
-							duration: 3,
-							repeat: Number.POSITIVE_INFINITY,
-							ease: "linear",
-						}}
-					/>
-					<motion.div
-						className="absolute inset-0 rounded-full border border-green-200/30"
-						initial={{ opacity: 0, scale: 0.6 }}
-						animate={{
-							opacity: [0.5, 0.3, 0.5],
-							scale: [1.3, 1.4, 1.3],
-							rotate: [0, -180, -360],
-						}}
-						transition={{
-							duration: 4,
-							repeat: Number.POSITIVE_INFINITY,
-							ease: "linear",
-						}}
-					/>
-					<motion.div
-						className="absolute inset-0 rounded-full border border-green-100/20"
-						initial={{ opacity: 0, scale: 0.6 }}
-						animate={{
-							opacity: [0.3, 0.1, 0.3],
-							scale: [1.5, 1.6, 1.5],
-							rotate: [0, 90, 180, 270, 360],
-						}}
-						transition={{
-							duration: 5,
-							repeat: Number.POSITIVE_INFINITY,
-							ease: "linear",
-						}}
-					/>
-				</>
-			)}
-
-			{/* Icon container with cosmic effects */}
 			<div className="relative z-10 flex h-6 w-6 items-center justify-center">
 				<FilledIcon
 					size={22}
 					className={`absolute transition-all duration-300 ${
-						isActive ? "scale-100 text-zinc-900" : "scale-0 text-zinc-900"
-					} ${isHovered && !isActive ? "scale-100" : ""}`}
+						isActive || isHovered
+							? "scale-110 text-white opacity-100"
+							: "scale-0 opacity-0"
+					}`}
 				/>
 				<OutlineIcon
 					size={22}
-					className={`absolute text-white/80 transition-all duration-300 ${
-						isActive || isHovered ? "scale-0" : "scale-100"
+					className={`absolute text-white/60 transition-all duration-300 ${
+						isActive || isHovered
+							? "scale-0 opacity-0"
+							: "scale-100 opacity-100"
 					}`}
 				/>
-
-				{/* Particle effects */}
-				{(isActive || isHovered) && (
-					<motion.div
-						className="absolute inset-0 flex items-center justify-center"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-					>
-						{/* Center beam effect */}
-						<motion.div
-							className="absolute h-full w-full rounded-full"
-							style={{
-								background:
-									"radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, transparent 50%)",
-							}}
-							animate={{
-								opacity: [0.7, 0.3, 0.7],
-								scale: [0.8, 1.2, 0.8],
-							}}
-							transition={{
-								duration: 2,
-								repeat: Number.POSITIVE_INFINITY,
-								ease: "easeInOut",
-							}}
-						/>
-					</motion.div>
-				)}
 			</div>
 		</Link>
 	);

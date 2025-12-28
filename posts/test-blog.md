@@ -112,7 +112,7 @@ graph TB
 
 ## Link
 
-[link of something](https://anish-sarkar.com)
+This is how links are shown [link of something](https://anish-sarkar.com). This is the way.
 
 ## Image
 

@@ -160,7 +160,7 @@ export default function Experience() {
 			animate="visible"
 		>
 			<motion.h1
-				className="relative inline-block font-bold text-2xl text-white"
+				className="relative inline-block font-bold font-pixel text-2xl text-white"
 				variants={titleVariants}
 				whileHover={{ scale: 1.03 }}
 				transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -260,7 +260,7 @@ export default function Experience() {
 							<div className="overflow-hidden">
 								<motion.a
 									href={exp.link}
-									className="relative inline-block font-bold text-xl"
+									className="relative inline-block font-bold text-xl font-pixel"
 									// whileHover={{ scale: 1.02, x: 5 }}
 									// transition={{ type: "spring", stiffness: 400, damping: 10 }}
 									style={{
