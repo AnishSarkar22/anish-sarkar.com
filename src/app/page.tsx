@@ -9,9 +9,9 @@ import { trackEvent } from "~/utils/posthog";
 
 // Dynamically import components for server-side rendering
 const About = dynamic(() => import("~/components/About"), { ssr: true });
-const Education = dynamic(() => import("~/components/Education"), {
-	ssr: true,
-});
+// const Education = dynamic(() => import("~/components/Education"), {
+// 	ssr: true,
+// });
 const Experience = dynamic(() => import("~/components/Experience"), {
 	ssr: true,
 });
@@ -39,7 +39,7 @@ interface MousePosition {
 export default function HomePage() {
 	const [_scrollY, setScrollY] = useState(0);
 	const [_isLoaded, setIsLoaded] = useState(true);
-	const [_isMobile, setIsMobile] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
 	const mousePosition = useRef<MousePosition>({ x: 0, y: 0, down: false });
 	const [hoverProfile, setHoverProfile] = useState(false);
 	const [mounted, setMounted] = useState(false);
@@ -109,6 +109,7 @@ export default function HomePage() {
 
 	// Track profile hover (for posthog analytics)
 	const handleProfileHover = () => {
+		if (isMobile) return;
 		setHoverProfile(true);
 		trackEvent("profile_image_hover", {
 			interaction_type: "hover",
@@ -147,65 +148,10 @@ export default function HomePage() {
 				{JSON.stringify(structuredData)}
 			</script>
 			<main className="relative mx-auto flex min-h-screen max-w-3xl flex-col p-8 text-white md:p-16 lg:p-24">
-				{/* Background elements */}
-				<div className="-z-10 fixed inset-0 bg-transparent">
-					<div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.1),rgba(0,0,0,0)_50%)]" />
-					<motion.div
-						className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-transparent via-green-300/30 to-transparent"
-						animate={{
-							scaleX: [0, 1, 0],
-							opacity: [0, 0.5, 0],
-							x: ["-100%", "0%", "100%"],
-						}}
-						transition={{
-							duration: 8,
-							repeat: Number.POSITIVE_INFINITY,
-							ease: "easeInOut",
-						}}
-					/>
-					<motion.div
-						className="-top-20 -left-20 absolute h-60 w-60 rounded-full opacity-10 blur-3xl"
-						animate={{
-							scale: [1, 1.2, 1],
-							opacity: [0.05, 0.1, 0.05],
-							x: [0, 10, 0],
-							y: [0, 10, 0],
-						}}
-						transition={{
-							duration: 10,
-							repeat: Number.POSITIVE_INFINITY,
-							repeatType: "reverse",
-						}}
-						style={{
-							background:
-								"radial-gradient(circle, #34d399 0%, transparent 70%)",
-						}}
-					/>
-					<motion.div
-						className="-bottom-20 -right-20 absolute h-80 w-80 rounded-full opacity-10 blur-3xl"
-						animate={{
-							scale: [1, 1.1, 1],
-							opacity: [0.05, 0.08, 0.05],
-							x: [0, -10, 0],
-							y: [0, -10, 0],
-						}}
-						transition={{
-							duration: 8,
-							repeat: Number.POSITIVE_INFINITY,
-							repeatType: "reverse",
-							delay: 1,
-						}}
-						style={{
-							background:
-								"radial-gradient(circle, #34d399 0%, transparent 70%)",
-						}}
-					/>
-				</div>
-
 				{/* Enhanced Header with profile */}
 				<motion.div
 					className={
-						"relative z-50 mb-16 overflow-hidden rounded-2xl border border-zinc-800/50 bg-zinc-900/60 shadow-2xl"
+						"relative z-50 mb-16 overflow-hidden rounded-2xl bg-zinc-900/60 shadow-2xl"
 					}
 					initial={{ y: -100, opacity: 0 }}
 					animate={{ y: 0, opacity: 1 }}
@@ -262,21 +208,22 @@ export default function HomePage() {
 							{/* profile image with cosmic effects */}
 							<motion.div
 								className="relative"
-								whileHover={{ scale: 1.05 }}
+								whileHover={isMobile ? {} : { scale: 1.05 }}
 								transition={{ type: "spring", stiffness: 400, damping: 10 }}
 								onHoverStart={handleProfileHover}
-								onHoverEnd={() => setHoverProfile(false)}
+								onHoverEnd={() => !isMobile && setHoverProfile(false)}
 							>
 								{/* Cosmic energy field */}
 								<motion.div
 									className="-inset-3 absolute rounded-full opacity-0"
 									animate={{
-										opacity: hoverProfile ? [0, 0.3, 0] : 0,
-										scale: hoverProfile ? [0.8, 1.2, 0.8] : 0.8,
+										opacity: !isMobile && hoverProfile ? [0, 0.3, 0] : 0,
+										scale: !isMobile && hoverProfile ? [0.8, 1.2, 0.8] : 0.8,
 									}}
 									transition={{
 										duration: 2,
-										repeat: hoverProfile ? Number.POSITIVE_INFINITY : 0,
+										repeat:
+											!isMobile && hoverProfile ? Number.POSITIVE_INFINITY : 0,
 									}}
 									style={{
 										background:
@@ -289,8 +236,8 @@ export default function HomePage() {
 								<motion.div
 									className="-inset-1 absolute rounded-full opacity-0"
 									animate={{
-										opacity: hoverProfile ? 0.7 : 0,
-										rotate: [0, 360],
+										opacity: !isMobile && hoverProfile ? 0.7 : 0,
+										rotate: !isMobile ? [0, 360] : 0,
 									}}
 									transition={{
 										opacity: { duration: 0.3 },
@@ -310,28 +257,36 @@ export default function HomePage() {
 								<motion.div
 									className="-inset-0 absolute rounded-full"
 									animate={{
-										boxShadow: hoverProfile
-											? [
-													"0 0 0 rgba(52, 211, 153, 0)",
-													"0 0 25px rgba(52, 211, 153, 0.7)",
-													"0 0 5px rgba(52, 211, 153, 0.3)",
-												]
-											: [
-													"0 0 0 rgba(52, 211, 153, 0)",
-													"0 0 15px rgba(52, 211, 153, 0.5)",
-													"0 0 0 rgba(52, 211, 153, 0)",
-												],
+										boxShadow:
+											!isMobile && hoverProfile
+												? [
+														"0 0 0 rgba(52, 211, 153, 0)",
+														"0 0 25px rgba(52, 211, 153, 0.7)",
+														"0 0 5px rgba(52, 211, 153, 0.3)",
+													]
+												: !isMobile
+													? [
+															"0 0 0 rgba(52, 211, 153, 0)",
+															"0 0 15px rgba(52, 211, 153, 0.5)",
+															"0 0 0 rgba(52, 211, 153, 0)",
+														]
+													: "none",
 									}}
 									transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
 								/>
-								<div className="relative z-10 flex items-center justify-center overflow-hidden rounded-full border-2 border-green-300/30">
+								<div className="relative z-10 flex items-center justify-center overflow-hidden rounded-full md:border-2 md:border-green-300/30">
 									<motion.div
-										whileHover={{
-											scale: 1.15,
-											filter: "grayscale(0%) contrast(1.1) brightness(1.1)",
-											rotateZ: [0, 5, -5, 0],
-											transition: { duration: 0.8, ease: "easeInOut" },
-										}}
+										whileHover={
+											isMobile
+												? {}
+												: {
+														scale: 1.15,
+														filter:
+															"grayscale(0%) contrast(1.1) brightness(1.1)",
+														rotateZ: [0, 5, -5, 0],
+														transition: { duration: 0.8, ease: "easeInOut" },
+													}
+										}
 										transition={{ duration: 0.3 }}
 									>
 										{/* Holographic overlay effect */}
@@ -342,10 +297,14 @@ export default function HomePage() {
 													"linear-gradient(135deg, rgba(52, 211, 153, 0.3) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(52, 211, 153, 0.3) 100%)",
 												opacity: 0,
 											}}
-											whileHover={{
-												opacity: 0.7,
-												backgroundPosition: ["0% 0%", "100% 100%"],
-											}}
+											whileHover={
+												isMobile
+													? {}
+													: {
+															opacity: 0.7,
+															backgroundPosition: ["0% 0%", "100% 100%"],
+														}
+											}
 											transition={{
 												duration: 2,
 												repeat: Number.POSITIVE_INFINITY,
@@ -358,13 +317,13 @@ export default function HomePage() {
 											alt="Profile Image"
 											width={60}
 											height={60}
-											className="h-[50px] w-[50px] object-cover grayscale transition-all duration-300 hover:grayscale-0 sm:h-[60px] sm:w-[60px] md:h-[70px] md:w-[70px]"
+											className="h-[50px] w-[50px] object-cover grayscale transition-all duration-300 sm:h-[60px] sm:w-[60px] md:h-[70px] md:w-[70px] md:hover:grayscale-0"
 											priority
 											fetchPriority="high"
 										/>
 
 										{/* Cosmic energy overlay */}
-										<motion.div className="absolute inset-0 bg-gradient-to-tr from-green-500/10 to-transparent opacity-0 transition-opacity duration-300 hover:opacity-60" />
+										<motion.div className="absolute inset-0 bg-gradient-to-tr from-green-500/10 to-transparent opacity-0 transition-opacity duration-300 md:hover:opacity-60" />
 									</motion.div>
 								</div>
 							</motion.div>

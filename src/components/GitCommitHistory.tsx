@@ -190,6 +190,9 @@ export default function GitCommitHistory() {
 	// Centralized tooltip hover handler
 	const handleCellHover = useCallback(
 		(day: ContributionDay, rect: DOMRect | null) => {
+			// Disable tooltip on mobile
+			if (typeof window !== "undefined" && window.innerWidth < 768) return;
+
 			if (rect) {
 				setHoveredDay(day);
 				setHoveredRect(rect);
@@ -210,7 +213,7 @@ export default function GitCommitHistory() {
 			const cellElements = document.querySelectorAll(
 				'[class*="group relative h-[10px] w-[10px] rounded-sm"]',
 			);
-			for (const el of Array.from(cellElements)) {
+			for (const _el of Array.from(cellElements)) {
 				// This is slightly expensive but works for now.
 				// Better: store a ref to the cell instead of just DOMRect.
 				// For now, let's just use the scroll listener to close or update.
