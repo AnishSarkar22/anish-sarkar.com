@@ -1,8 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import type React from "react";
-import { useEffect, useId, useState } from "react";
+import { useId } from "react";
 import { trackSocialClick } from "~/utils/posthog";
 
 const socials = [
@@ -211,24 +211,7 @@ const socials = [
 ];
 
 export default function Socials() {
-	const [isVisible, setIsVisible] = useState(false);
 	const sectionId = useId();
-
-	useEffect(() => {
-		const handleScroll = () => {
-			const element = document.getElementById(sectionId);
-			if (element) {
-				const rect = element.getBoundingClientRect();
-				const isInView = rect.top < window.innerHeight - 100;
-				setIsVisible(isInView);
-			}
-		};
-
-		window.addEventListener("scroll", handleScroll);
-		handleScroll(); // Check initial position
-
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, [sectionId]);
 
 	// for posthog analytics
 	const handleSocialClick = (platform: string, url: string) => {
@@ -246,13 +229,8 @@ export default function Socials() {
 			{/* Heading */}
 			<motion.h1
 				className="relative inline-block font-bold font-pixel text-2xl text-white"
-				initial={false}
-				animate={{
-					opacity: 1,
-					textShadow: isVisible ? "0 0 15px rgba(52, 211, 153, 0.5)" : "none",
-				}}
-				transition={{ type: "spring", stiffness: 400, damping: 10 }}
 				whileHover={{ scale: 1.03 }}
+				transition={{ type: "spring", stiffness: 400, damping: 10 }}
 			>
 				<span className="inline-block text-green-300 will-change-transform">
 					&gt;

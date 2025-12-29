@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
+import { Marquee } from "./Marquee";
 
 // Define interface for skill
 interface Skill {
@@ -18,6 +19,39 @@ interface Skill {
 	color: string;
 	category: string;
 }
+
+// Skill item component for the marquee
+const MarqueeSkillItem = memo(({ skill }: { skill: Skill }) => {
+	return (
+		<div
+			className="flex items-center gap-1.5 px-2 py-1"
+			style={{
+				whiteSpace: "nowrap",
+			}}
+		>
+			<div className="relative flex h-4 w-4 items-center justify-center">
+				<Image
+					src={skill.logo}
+					alt={skill.name}
+					width={16}
+					height={16}
+					className="object-contain"
+					style={{
+						filter:
+							skill.id === "nextjs" ||
+							skill.id === "flask" ||
+							skill.id === "bash"
+								? "invert(1)"
+								: "none",
+					}}
+				/>
+			</div>
+			<span className="font-medium text-white text-xs">{skill.name}</span>
+		</div>
+	);
+});
+
+MarqueeSkillItem.displayName = "MarqueeSkillItem";
 
 const orderedCategories = [
 	"Languages",
@@ -333,39 +367,47 @@ const SkillItem = memo(
 				{/* Hover particle effects */}
 				<AnimatePresence>
 					{isHovered &&
-						particles.map((particle) => (
-							<motion.div
-								key={`particle-${particle.x}-${particle.y}-${particle.size}-${particle.delay}`}
-								className="pointer-events-none absolute z-0 rounded-full"
-								initial={{
-									opacity: 0,
-									scale: 0,
-									x: 0,
-									y: 0,
-									top: "50%",
-									left: "50%",
-								}}
-								animate={{
-									opacity: [0, 0.8, 0],
-									scale: [0, Math.random() * 1 + 0.5, 0],
-									x: [0, (Math.random() - 0.5) * 200],
-									y: [0, (Math.random() - 0.5) * 200],
-								}}
-								exit={{ opacity: 0, scale: 0 }}
-								transition={{
-									duration: particle.duration,
-									delay: particle.delay,
-									ease: "easeOut",
-								}}
-								style={{
-									width: particle.size,
-									height: particle.size,
-									backgroundColor: skill.color,
-									filter: "blur(1px)",
-									boxShadow: `0 0 ${particle.size * 2}px ${skill.color}`,
-								}}
-							/>
-						))}
+						particles.map(
+							(particle: {
+								x: any;
+								y: any;
+								size: number;
+								delay: any;
+								duration: any;
+							}) => (
+								<motion.div
+									key={`particle-${particle.x}-${particle.y}-${particle.size}-${particle.delay}`}
+									className="pointer-events-none absolute z-0 rounded-full"
+									initial={{
+										opacity: 0,
+										scale: 0,
+										x: 0,
+										y: 0,
+										top: "50%",
+										left: "50%",
+									}}
+									animate={{
+										opacity: [0, 0.8, 0],
+										scale: [0, Math.random() * 1 + 0.5, 0],
+										x: [0, (Math.random() - 0.5) * 200],
+										y: [0, (Math.random() - 0.5) * 200],
+									}}
+									exit={{ opacity: 0, scale: 0 }}
+									transition={{
+										duration: particle.duration,
+										delay: particle.delay,
+										ease: "easeOut",
+									}}
+									style={{
+										width: particle.size,
+										height: particle.size,
+										backgroundColor: skill.color,
+										filter: "blur(1px)",
+										boxShadow: `0 0 ${particle.size * 2}px ${skill.color}`,
+									}}
+								/>
+							),
+						)}
 				</AnimatePresence>
 
 				{/* Mouse glow effect */}
@@ -575,6 +617,11 @@ export default function SkillsSection() {
 		[],
 	);
 
+	// Split skills into two rows for the marquee
+	const halfIndex = Math.ceil(skills.length / 2);
+	const firstRowSkills = skills.slice(0, halfIndex);
+	const secondRowSkills = skills.slice(halfIndex);
+
 	return (
 		<motion.div
 			ref={sectionRef}
@@ -599,8 +646,37 @@ export default function SkillsSection() {
 				</span>
 			</motion.h1>
 
-			{/* List of skill categories */}
-			<div className="mt-10">
+			{/* Mobile Marquee View */}
+			<div
+				className="relative mt-6 md:hidden"
+				style={{
+					maskImage:
+						"linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+					WebkitMaskImage:
+						"linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+				}}
+			>
+				{/* First row - scrolls left to right */}
+				<div className="mb-3">
+					<Marquee pauseOnHover={false} duration="30s">
+						{firstRowSkills.map((skill) => (
+							<MarqueeSkillItem key={skill.id} skill={skill} />
+						))}
+					</Marquee>
+				</div>
+
+				{/* Second row - scrolls right to left */}
+				<div>
+					<Marquee reverse pauseOnHover={false} duration="30s" delay="-50s">
+						{secondRowSkills.map((skill) => (
+							<MarqueeSkillItem key={skill.id} skill={skill} />
+						))}
+					</Marquee>
+				</div>
+			</div>
+
+			{/* Desktop Grid View - Hidden on mobile */}
+			<div className="mt-10 hidden md:block">
 				{categories.map((category) => (
 					<CategorySection
 						key={category}

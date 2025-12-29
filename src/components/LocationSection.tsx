@@ -333,7 +333,7 @@ export default function LocationSection() {
 					</div>
 
 					<motion.p
-						className="mt-2 pl-[26px] text-zinc-400"
+						className="mt-2 pl-[26px] text-xs text-zinc-400 md:text-sm"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ delay: 0.7 }}

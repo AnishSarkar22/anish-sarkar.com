@@ -1173,3 +1173,30 @@ body::after {
 		opacity: 0.5;
 	}
 }
+
+/* Marquee animations for skills section */
+@keyframes marquee {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(calc(-100% / var(--repeat, 4)));
+	}
+}
+
+@keyframes marquee-reverse {
+	from {
+		transform: translateX(calc(-100% / var(--repeat, 4)));
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+.animate-marquee {
+	animation: marquee var(--duration, 25s) linear infinite;
+}
+
+.animate-marquee-reverse {
+	animation: marquee-reverse var(--duration, 25s) linear infinite;
+}

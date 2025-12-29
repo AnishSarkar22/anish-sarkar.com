@@ -317,7 +317,7 @@ export default function Experience() {
 
 							{/* Description with character position change */}
 							<motion.p
-								className="relative mt-5 text-gray-400 text-sm"
+								className="relative mt-5 text-gray-400 text-xs md:text-sm"
 								animate={{
 									color: isHovered ? "#d1d5db" : "#9ca3af",
 									x: isHovered ? 5 : 0,

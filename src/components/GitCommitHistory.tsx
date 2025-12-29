@@ -1,6 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import type {
+	JSXElementConstructor,
+	ReactElement,
+	ReactNode,
+	ReactPortal,
+} from "react";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fetchGitHubContributions } from "../utils/githubContributions";
 import { TooltipPortal } from "./utils/TooltipPortal";
@@ -389,7 +395,7 @@ export default function GitCommitHistory() {
 		let foundDecember = false;
 
 		// First pass: collect all months that appear in the data, starting from December
-		contributions.forEach((week, weekIndex) => {
+		contributions.forEach((week: any[], weekIndex: any) => {
 			const firstDayOfMonth = week.find((d) => d?.date !== "");
 			if (firstDayOfMonth) {
 				const date = new Date(firstDayOfMonth.date);
@@ -472,38 +478,48 @@ export default function GitCommitHistory() {
 							whileHover={{ opacity: 1 }}
 						>
 							<AnimatePresence>
-								{titleParticles.map((particle) => (
-									<motion.div
-										key={particle.key}
-										className="absolute rounded-full bg-green-300"
-										initial={{
-											opacity: 0,
-											scale: 0,
-											x: 0,
-											y: 0,
-										}}
-										whileHover={{
-											opacity: [0, 0.8, 0],
-											scale: [0, 1, 0],
-											x: [0, particle.randomX],
-											y: [0, particle.randomY],
-										}}
-										transition={{
-											duration: particle.duration,
-											repeat: Number.POSITIVE_INFINITY,
-											delay: particle.delay,
-											repeatType: "loop",
-										}}
-										style={{
-											left: "50%",
-											top: "50%",
-											width: `${particle.width}px`,
-											height: `${particle.height}px`,
-											filter: "blur(1px)",
-											willChange: "transform, opacity",
-										}}
-									/>
-								))}
+								{titleParticles.map(
+									(particle: {
+										key: any;
+										randomX: any;
+										randomY: any;
+										duration: any;
+										delay: any;
+										width: any;
+										height: any;
+									}) => (
+										<motion.div
+											key={particle.key}
+											className="absolute rounded-full bg-green-300"
+											initial={{
+												opacity: 0,
+												scale: 0,
+												x: 0,
+												y: 0,
+											}}
+											whileHover={{
+												opacity: [0, 0.8, 0],
+												scale: [0, 1, 0],
+												x: [0, particle.randomX],
+												y: [0, particle.randomY],
+											}}
+											transition={{
+												duration: particle.duration,
+												repeat: Number.POSITIVE_INFINITY,
+												delay: particle.delay,
+												repeatType: "loop",
+											}}
+											style={{
+												left: "50%",
+												top: "50%",
+												width: `${particle.width}px`,
+												height: `${particle.height}px`,
+												filter: "blur(1px)",
+												willChange: "transform, opacity",
+											}}
+										/>
+									),
+								)}
 							</AnimatePresence>
 						</motion.div>
 					</span>
@@ -606,22 +622,53 @@ export default function GitCommitHistory() {
 							<div className="relative flex-1">
 								{/* Month labels */}
 								<div className="flex h-5 text-[10px] text-zinc-500/70">
-									{monthLabels.map((label) => (
-										<div
-											key={`month-${label.month}-${label.position}`}
-											className="absolute"
-											style={{
-												left: `${label.position}px`,
-											}}
-										>
-											{label.month}
-										</div>
-									))}
+									{monthLabels.map(
+										(label: {
+											month:
+												| string
+												| number
+												| bigint
+												| boolean
+												| ReactElement<
+														unknown,
+														string | JSXElementConstructor<any>
+												  >
+												| Iterable<ReactNode>
+												| ReactPortal
+												| Promise<
+														| string
+														| number
+														| bigint
+														| boolean
+														| ReactPortal
+														| ReactElement<
+																unknown,
+																string | JSXElementConstructor<any>
+														  >
+														| Iterable<ReactNode>
+														| null
+														| undefined
+												  >
+												| null
+												| undefined;
+											position: any;
+										}) => (
+											<div
+												key={`month-${label.month}-${label.position}`}
+												className="absolute"
+												style={{
+													left: `${label.position}px`,
+												}}
+											>
+												{label.month}
+											</div>
+										),
+									)}
 								</div>
 
 								{/* Contribution cells with hover glow effect */}
 								<div className="grid grid-flow-col gap-[2px]">
-									{visibleContributions.map((week, weekIndex) => {
+									{visibleContributions.map((week: any[], weekIndex: any) => {
 										// Use the first valid date in the week as the key, fallback to joining all dates
 										const weekKey =
 											week.find((d) => d.date)?.date ||
