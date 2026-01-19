@@ -31,7 +31,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 				}
 				posthog.init(posthogKey, {
 					api_host: "/ingest",
-					ui_host: "https://eu.posthog.com",
+					ui_host: env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://eu.posthog.com",
 					person_profiles: "identified_only",
 					capture_pageview: false,
 					capture_pageleave: true,
