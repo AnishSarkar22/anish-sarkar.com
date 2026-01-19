@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
+import type React from "react";
+import { useCallback, useRef, useState } from "react";
 
 // Marquee component props interface
 export interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {

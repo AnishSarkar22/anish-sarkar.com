@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 		type: "website",
 		images: [
 			{
-				url: `${siteUrl}/og-image.png`,
+				url: `${siteUrl}/og/home`,
 				width: 1200,
 				height: 630,
 				alt: "Anish Sarkar - Backend Developer & AIML Enthusiast",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "Anish Sarkar | Software Developer",
 		description: "University Undergrad, full time coder, and AIML enthusiast",
-		images: [`${siteUrl}/og-image.png`],
+		images: [`${siteUrl}/og/home`],
 		creator: "@AnishSarkar22",
 	},
 	robots: {

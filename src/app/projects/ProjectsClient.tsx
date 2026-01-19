@@ -6,7 +6,7 @@ import { ProjectCards } from "~/components/ProjectCards";
 
 export default function Projects() {
 	const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-	const [activeCategory, setActiveCategory] = useState("All");
+	const [activeCategory, _setActiveCategory] = useState("All");
 	const mainRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {

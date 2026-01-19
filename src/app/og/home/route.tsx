@@ -129,9 +129,11 @@ export async function GET(request: Request) {
 						style={{
 							width: "300px",
 							height: "3px",
-							background: "linear-gradient(to right, #60a5fa, #a78bfa, #34d399)",
+							background:
+								"linear-gradient(to right, #60a5fa, #a78bfa, #34d399)",
 							borderRadius: "2px",
-							boxShadow: "0 0 30px rgba(96, 165, 250, 0.8), 0 0 60px rgba(167, 139, 250, 0.4)",
+							boxShadow:
+								"0 0 30px rgba(96, 165, 250, 0.8), 0 0 60px rgba(167, 139, 250, 0.4)",
 							marginTop: "4px",
 						}}
 					/>
