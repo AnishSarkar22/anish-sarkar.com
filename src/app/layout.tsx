@@ -11,6 +11,14 @@ import { env } from "~/env";
 
 const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? "https://anish-sarkar.com";
 
+// Automatic versioning - works on Cloudflare Pages and Vercel
+// Priority: NEXT_PUBLIC_BUILD_ID > Cloudflare CF_PAGES_COMMIT_SHA > Vercel VERCEL_GIT_COMMIT_SHA > timestamp
+const OG_IMAGE_VERSION =
+	process.env.NEXT_PUBLIC_BUILD_ID ??
+	process.env.CF_PAGES_COMMIT_SHA?.slice(0, 7) ??
+	process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ??
+	Date.now().toString();
+
 const jetbrainsMono = JetBrains_Mono({
 	subsets: ["latin"],
 	variable: "--font-jetbrains-mono",
@@ -54,7 +62,7 @@ export const metadata: Metadata = {
 		type: "website",
 		images: [
 			{
-				url: `${siteUrl}/og/home`,
+				url: `${siteUrl}/og/home?v=${OG_IMAGE_VERSION}`,
 				width: 1200,
 				height: 630,
 				alt: "Anish Sarkar - Backend Developer & AIML Enthusiast",
@@ -65,7 +73,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "Anish Sarkar | Software Developer",
 		description: "University Undergrad, full time coder, and AIML enthusiast",
-		images: [`${siteUrl}/og/home`],
+		images: [`${siteUrl}/og/home?v=${OG_IMAGE_VERSION}`],
 		creator: "@AnishSarkar22",
 	},
 	robots: {

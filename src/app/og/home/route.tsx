@@ -31,7 +31,7 @@ export async function GET(request: Request) {
 	const fontData = await loadGoogleFont("Geist+Mono", text);
 	const fontDataBold = await loadGoogleFont("Inter:wght@700", text);
 
-	return new ImageResponse(
+	const imageResponse = new ImageResponse(
 		<div
 			style={{
 				height: "100%",
@@ -174,4 +174,12 @@ export async function GET(request: Request) {
 			],
 		},
 	);
+
+	// Add cache headers - cache for 1 hour, then must revalidate
+	imageResponse.headers.set(
+		"Cache-Control",
+		"public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
+	);
+
+	return imageResponse;
 }
